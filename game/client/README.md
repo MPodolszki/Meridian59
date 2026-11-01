@@ -38,4 +38,17 @@ Server-Koordinaten sind KOD-Feineinheiten (64 pro Grid-Feld, Zeile/Spalte 1-basi
 Im Client: 1 Feld = 2,5 m, Spalte → X, Zeile → Z, Winkel 0..4095 → 0..2π.
 Positionen werden wie beim Original-Client höchstens 1×/s gesendet.
 
-Noch nicht gegen den Original-Server getestet. Die Raumgeometrie (.roo) wird noch nicht geladen.
+## Raumgeometrie (Platzhalter)
+
+`rooms/*.json` sind grobe Höhenraster (ein Wert pro Feld), erzeugt mit `game/tools/roo2layout.py`
+aus den Original-`.roo`-Dateien. Sie übernehmen nur den Grundriss (Straße, Gebäude bis Dachhöhe,
+massive Wand), keine Texturen oder Original-Geometrie. Der Client baut daraus Blöcke (`RoomLayout.cs`)
+und verhindert das Laufen durch Gebäude. **Wird durch eigene Karten ersetzt.**
+
+Neu erzeugen (im Repo-Root):
+
+```bash
+python -I game/tools/roo2layout.py game/server/data/world/tos.json resource/rooms game/client/rooms
+```
+
+Noch nicht gegen den Original-Server getestet.

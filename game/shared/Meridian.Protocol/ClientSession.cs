@@ -19,7 +19,8 @@ public abstract record ClientEvent
 {
     public sealed record Status(string Text) : ClientEvent;
     public sealed record LoginFailed(string Reason) : ClientEvent;
-    public sealed record EnteredRoom(uint PlayerId, string RoomName) : ClientEvent;
+    /// <summary>Raum betreten; RoomFile ist der Dateiname aus BP_PLAYER (z. B. "tos.roo").</summary>
+    public sealed record EnteredRoom(uint PlayerId, string RoomName, string RoomFile = "") : ClientEvent;
     public sealed record ObjectAdded(ClientObject Object) : ClientEvent;
     public sealed record ObjectMoved(ClientObject Object) : ClientEvent;
     public sealed record ObjectRemoved(uint Id) : ClientEvent;
@@ -214,10 +215,10 @@ public sealed class ClientSession : IDisposable
                 PlayerId = r.U32();
                 r.U32(); r.U32();               // Icon, Name
                 RoomId = r.U32();
-                r.U32();                        // Raumdatei
+                uint roomFile = r.U32();
                 uint roomName = r.U32();
                 ClearRoom();
-                Enqueue(new ClientEvent.EnteredRoom(PlayerId, Resolve(roomName)));
+                Enqueue(new ClientEvent.EnteredRoom(PlayerId, Resolve(roomName), Resolve(roomFile)));
                 break;
             }
             case GameMessage.RoomContents:

@@ -24,6 +24,9 @@ public partial class Main : Node3D
     private readonly Dictionary<uint, Vector3> _targets = new();
 
     private Camera3D _camera = null!;
+    private MeshInstance3D _grass = null!;
+    private Node3D? _roomGeometry;
+    private RoomLayout? _layout;
     private Control _loginPanel = null!;
     private LineEdit _host = null!, _port = null!, _user = null!, _password = null!;
     private Label _status = null!;
@@ -118,6 +121,7 @@ public partial class Main : Node3D
             },
         };
         AddChild(ground);
+        _grass = ground;
 
         _camera = new Camera3D { Position = new Vector3(0, 6, 10) };
         AddChild(_camera);
@@ -213,6 +217,7 @@ public partial class Main : Node3D
             case ClientEvent.EnteredRoom room:
                 _loginPanel.Visible = false;
                 _status.Text = $"Im Raum: {room.RoomName}";
+                LoadRoomGeometry(room.RoomFile);
                 if (_screenshotPath is not null && _screenshotTimer < 0)
                     _screenshotTimer = 1.5 + _autoWalkSeconds;
                 break;
@@ -228,7 +233,9 @@ public partial class Main : Node3D
                 }
                 else
                 {
-                    _targets[moved.Object.Id] = ToWorld(moved.Object.Row, moved.Object.Col);
+                    var target = ToWorld(moved.Object.Row, moved.Object.Col);
+                    target.Y = GroundHeightAt(target);
+                    _targets[moved.Object.Id] = target;
                     if (_avatars.TryGetValue(moved.Object.Id, out var node))
                         node.Rotation = new Vector3(0, ToYaw(moved.Object.Angle), 0);
                 }
@@ -252,6 +259,53 @@ public partial class Main : Node3D
         }
     }
 
+    /// <summary>Ersetzt die Raumgeometrie (Platzhalter aus rooms/*.json). Ohne Layout bleibt nur die Grasfläche.</summary>
+    private void LoadRoomGeometry(string roomFile)
+    {
+        _roomGeometry?.QueueFree();
+        _roomGeometry = null;
+        _layout = RoomLayout.Load(roomFile);
+        // Die Grasfläche ist nur Rückfallebene für Räume ohne Layout.
+        _grass.Visible = _layout is null;
+        if (_layout is null)
+            return;
+        // Außenbereiche haben Fels/Pflaster, Innenräume Putz/Holz; Außen erkennbar an der Größe.
+        bool outdoors = _layout.Rows * _layout.Cols > 420;
+        _roomGeometry = _layout.Build(CellSize, outdoors);
+        AddChild(_roomGeometry);
+    }
+
+    /// <summary>Feld (0-basiert) unter einer Weltposition.</summary>
+    private static (int Row, int Col) CellAt(Vector3 p) =>
+        ((int)Mathf.Floor(p.Z / CellSize) - 1, (int)Mathf.Floor(p.X / CellSize) - 1);
+
+    private bool CanStandAt(Vector3 p)
+    {
+        if (_layout is null)
+            return true;
+        var (row, col) = CellAt(p);
+        return _layout.IsWalkable(row, col);
+    }
+
+    /// <summary>Oberkante der Geometrie an einer Position (Dach, Wand oder Boden).</summary>
+    private float BlockTopAt(Vector3 p)
+    {
+        var (row, col) = CellAt(p);
+        int f = _layout!.FloorAt(row, col);
+        if (f < 0)
+            return 8f;   // massive Wand
+        return _layout.HeightMeters(f, CellSize) + (_layout.IsWalkable(row, col) ? 0 : 0.25f);
+    }
+
+    private float GroundHeightAt(Vector3 p)
+    {
+        if (_layout is null)
+            return 0;
+        var (row, col) = CellAt(p);
+        int f = _layout.FloorAt(row, col);
+        return f < 0 ? 0 : _layout.HeightMeters(f, CellSize);
+    }
+
     private async void OnChatSubmitted(string text)
     {
         _chatInput.Clear();
@@ -268,7 +322,9 @@ public partial class Main : Node3D
             old.QueueFree();
 
         bool self = o.Id == _session!.PlayerId;
-        var root = new Node3D { Position = ToWorld(o.Row, o.Col), Rotation = new Vector3(0, ToYaw(o.Angle), 0) };
+        var spawn = ToWorld(o.Row, o.Col);
+        spawn.Y = GroundHeightAt(spawn);
+        var root = new Node3D { Position = spawn, Rotation = new Vector3(0, ToYaw(o.Angle), 0) };
         // Eigener Charakter als Zwerg; andere Spieler vorerst als Kapsel, bis Rassen übertragen werden.
         if (self)
             root.AddChild(DwarfModel.Create());
@@ -348,9 +404,15 @@ public partial class Main : Node3D
 
         float speed = Input.IsPhysicalKeyPressed(Key.Shift) ? RunSpeed : WalkSpeed;
         var dir = new Vector3(input.X, 0, input.Y).Normalized().Rotated(Vector3.Up, _yaw);
-        var pos = self.Position + dir * speed * delta;
+        var step = dir * speed * delta;
+        var pos = self.Position;
+        // Kollision mit Wänden/Gebäuden: Achsen getrennt prüfen, damit man an Wänden entlanggleitet.
+        if (CanStandAt(pos + new Vector3(step.X, 0, 0))) pos.X += step.X;
+        if (CanStandAt(pos + new Vector3(0, 0, step.Z))) pos.Z += step.Z;
         // Nicht unter die Ursprungs-Koordinaten (Feld 1) laufen.
-        self.Position = new Vector3(Mathf.Max(pos.X, CellSize), 0, Mathf.Max(pos.Z, CellSize));
+        pos = new Vector3(Mathf.Max(pos.X, CellSize), 0, Mathf.Max(pos.Z, CellSize));
+        pos.Y = GroundHeightAt(pos);
+        self.Position = pos;
     }
 
     /// <summary>Leertaste wie im Original: Tür/Ausgang auf dem aktuellen Feld benutzen.
@@ -372,8 +434,20 @@ public partial class Main : Node3D
         var offset = _cameraMode == "front"
             ? new Vector3(0, 1.6f, -3.2f).Rotated(Vector3.Up, _yaw)
             : new Vector3(0, 3, 5.5f).Rotated(Vector3.Up, _yaw);
-        _camera.Position = self.Position + offset;
-        _camera.LookAt(self.Position + new Vector3(0, 1.1f, 0));
+        var head = self.Position + new Vector3(0, 1.1f, 0);
+        // Einfache Kamera-Kollision: entlang des Kamerastrahls bis zum ersten Gebäude, das höher ist.
+        float allowed = 1f;
+        for (float t = 0.05f; t <= 1f; t += 0.05f)
+        {
+            var probe = self.Position + offset * t;
+            if (_layout is not null && probe.Y < BlockTopAt(probe))
+            {
+                allowed = Mathf.Max(0.15f, t - 0.1f);
+                break;
+            }
+        }
+        _camera.Position = self.Position + offset * allowed;
+        _camera.LookAt(head);
     }
 
     private async void SendPositionIfNeeded(Node3D self)
