@@ -31,7 +31,7 @@ nur für Entwicklung; nicht eingecheckt).
 Pi 4/5 mit **64-Bit**-Raspberry-Pi-OS. Auf dem Entwicklungsrechner bauen (kein .NET auf dem Pi nötig):
 
 ```bash
-dotnet publish game/server/Meridian.Server -c Release -r linux-arm64 --self-contained -o publish/pi
+dotnet publish game/server/Meridian.Server -c Release -r linux-arm64 --self-contained -o game/publish/pi
 ```
 
 Für x64-Linux-Server `-r linux-x64`. Ordner auf den Pi kopieren, dann dort:
@@ -42,7 +42,27 @@ chmod +x Meridian.Server
 ./Meridian.Server --port 5959
 ```
 
-Strg+C bzw. SIGTERM (systemd) beendet den Server sauber. Ein systemd-Service folgt, wenn der Server dauerhaft laufen soll.
+Strg+C bzw. SIGTERM (systemd) beendet den Server sauber.
+
+### Als Dienst auf dem Pi (systemd)
+
+Vom Entwicklungsrechner aus (Git Bash, ssh/scp nötig):
+
+```bash
+game/server/deploy/publish-pi.sh pi@raspberrypi.local
+```
+
+Dann auf dem Pi:
+
+```bash
+sudo ~/meridian-upload/install-pi.sh
+sudo -u meridian /opt/meridian/Meridian.Server add-account Tester geheim --accounts /opt/meridian/data/accounts.json
+sudo systemctl restart meridian-server
+journalctl -u meridian-server -f
+```
+
+Der Dienst läuft als eigener Benutzer `meridian`, Daten liegen in `/opt/meridian/data`.
+Accounts werden beim Start gelesen, nach `add-account` daher neu starten.
 
 ## Optionen
 

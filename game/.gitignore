@@ -11,3 +11,6 @@ TestResults/
 
 # Lokale Laufzeitdaten des Servers
 server/**/accounts.json
+
+# Server-Builds für Deployment
+publish/

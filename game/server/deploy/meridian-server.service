@@ -1,0 +1,22 @@
+# systemd-Dienst für den Meridian-Server (z. B. Raspberry Pi).
+# Installation siehe deploy/install-pi.sh bzw. game/server/README.md.
+[Unit]
+Description=Meridian Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=meridian
+WorkingDirectory=/opt/meridian
+ExecStart=/opt/meridian/Meridian.Server --port 5959 --accounts /opt/meridian/data/accounts.json
+Restart=on-failure
+RestartSec=5
+# SIGTERM beendet den Server sauber (Program.cs)
+KillSignal=SIGTERM
+TimeoutStopSec=10
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/meridian/data
+
+[Install]
+WantedBy=multi-user.target
