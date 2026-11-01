@@ -29,6 +29,9 @@ public sealed record RoomDefinition(int Id, string Name, string Roo)
     public string? Constant { get; init; }
     public string? KodClass { get; init; }
     public string? Music { get; init; }
+    /// <summary>Größe in Feldern (aus der .roo); nötig für Ausgänge am Raumrand.</summary>
+    public int? Rows { get; init; }
+    public int? Cols { get; init; }
     public int? BaseLight { get; init; }
     public bool Outdoors { get; init; }
     /// <summary>Ankunftspunkt (KOD viTeleport_Row/Col).</summary>

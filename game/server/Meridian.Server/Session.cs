@@ -212,7 +212,16 @@ public sealed class Session(int id, TcpClient client, GameServer server)
             {
                 ushort row = r.U16(), col = r.U16();
                 byte speed = r.U8();
-                server.World.Move(_avatar, row, col, speed);
+                switch (server.World.Move(_avatar, row, col, speed))
+                {
+                    case MoveResult.ChangedRoom edge:
+                        Log.Info($"Session {id}: {_avatar.Name} → {edge.Room.Definition.Name} (Rand)");
+                        NotifyRoomChanged();
+                        break;
+                    case MoveResult.Blocked edgeBlocked:
+                        SendText(edgeBlocked.Message ?? "Hier geht es nicht weiter.");
+                        break;
+                }
                 break;
             }
 
@@ -228,6 +237,11 @@ public sealed class Session(int id, TcpClient client, GameServer server)
                         SendText(blocked.Message ?? "Hier geht es nicht weiter.");
                         break;
                 }
+                break;
+
+            case GameMessage.ReqAttack when _avatar is not null:
+                r.U8();   // attack_info
+                server.World.Attack(_avatar, r.U32() & 0x0FFFFFFF, DateTime.UtcNow);
                 break;
 
             case GameMessage.ReqLook when _avatar is not null:
@@ -279,6 +293,7 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         server.World.Enter(_avatar);
         SendPlayer();
         SendRoomContents();
+        SendHealth();
         PostGame(GameReplies.Inventory([]));
         SendEchoPing();
     }
@@ -312,12 +327,39 @@ public sealed class Session(int id, TcpClient client, GameServer server)
             EnsureResource(a.Name);
         foreach (var n in room.Npcs)
             EnsureResource(n.DisplayName);
-        var objects = present.Select(server.World.ToRoomObject).Concat(room.Npcs.Select(server.World.ToRoomObject)).ToList();
+        var monsters = server.World.MonstersIn(room);
+        foreach (var m in monsters)
+        {
+            EnsureResource(m.Kind.Name);
+            EnsureResource(m.Kind.Icon);
+        }
+        var objects = present.Select(server.World.ToRoomObject)
+            .Concat(room.Npcs.Select(server.World.ToRoomObject))
+            .Concat(monsters.Select(server.World.ToRoomObject))
+            .ToList();
         PostGame(GameReplies.RoomContents(room.ObjectId, objects));
     }
 
+    /// <summary>Nach Raumwechsel durch die Welt (Rand-Ausgang, Tod): neuen Raum melden.</summary>
+    public void NotifyRoomChanged()
+    {
+        SendPlayer();
+        SendRoomContents();
+    }
+
+    /// <summary>Lebenspunkte als BP_STAT (Gruppe 1, Nr. 1 – wie user_stat_health im Original).</summary>
+    public void SendHealth()
+    {
+        if (_avatar is null)
+            return;
+        EnsureResource(HealthName);
+        PostGame(GameReplies.Stat(1, 1, server.Resources[HealthName], _avatar.Hp, _avatar.MaxHp));
+    }
+
+    public const string HealthName = "Lebenspunkte";
+
     /// <summary>Systemtext im Chatfenster (BP_MESSAGE mit dynamischer Format-Ressource).</summary>
-    private void SendText(string text)
+    public void SendText(string text)
     {
         EnsureResource(text);
         PostGame(GameReplies.Message(server.Resources[text]));

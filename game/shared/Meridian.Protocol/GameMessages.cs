@@ -78,6 +78,27 @@ public static class GameReplies
 
     public static byte[] Create(RoomObject o) => WriteRoomObject(new PacketWriter((byte)GameMessage.Create), o).ToArray();
 
+    /// <summary>BP_STAT mit einem numerischen Wert (protocol.md 4.9), z. B. Gruppe 1 / Nr. 1 = Lebenspunkte.</summary>
+    public static byte[] Stat(byte group, byte num, uint nameRsc, int value, int max) =>
+        new PacketWriter((byte)GameMessage.Stat)
+            .U8(group).U8(num).U32(nameRsc).U8(1 /* STATS_NUMERIC */).U8(1 /* STAT_INT */)
+            .U32((uint)value).U32(0).U32(100).U32((uint)max).ToArray();
+
+    /// <summary>
+    /// BP_CHANGE mit einmaliger Animation (ANIMATE_ONCE). Konvention des neuen Clients:
+    /// Gruppe 2..4 = Angriff, Gruppe 9 = Sterben.
+    /// </summary>
+    public static byte[] Animate(RoomObject o, ushort low, ushort high, uint periodMs)
+    {
+        var w = new PacketWriter((byte)GameMessage.Change);
+        WriteObjectDesc(w, o);
+        w.U8((byte)AnimationType.Once).U32(periodMs).U16(low).U16(high).U16(1);
+        return w.U8(0).ToArray();
+    }
+
+    public const ushort AttackGroup = 2;
+    public const ushort DeathGroup = 9;
+
     public static byte[] Remove(uint id) => new PacketWriter((byte)GameMessage.Remove).U32(id).ToArray();
 
     /// <summary>BP_MOVE; speed 0 = Teleport, Bit 7 = in Laufrichtung drehen.</summary>

@@ -13,6 +13,8 @@ public sealed record ServerOptions
     public TimeSpan GameTimeout { get; init; } = TimeSpan.FromSeconds(30);
     /// <summary>Weltbeschreibung; ohne Angabe ein einzelner Raum.</summary>
     public WorldDefinition World { get; init; } = WorldDefinition.SingleRoom();
+    /// <summary>Fester Zufallsstartwert (Tests); null = zufällig.</summary>
+    public int? RandomSeed { get; init; }
     /// <summary>Dialogtexte der NPCs.</summary>
     public DialogFile Dialogs { get; init; } = DialogFile.Empty;
     /// <summary>Grafik (.bgf des Clients) für Spieler.</summary>
@@ -38,7 +40,7 @@ public sealed class GameServer
         var world = options.World;
         if (options.ClientResourceDir is { } dir)
             world = world with { Rooms = world.Rooms.Select(r => WithSecurityFromClient(r, dir)).ToList() };
-        World = new World(world, Resources, options.PlayerIcon, options.Dialogs);
+        World = new World(world, Resources, options.PlayerIcon, options.Dialogs, options.RandomSeed);
     }
 
     private static RoomDefinition WithSecurityFromClient(RoomDefinition room, string dir)
@@ -71,6 +73,7 @@ public sealed class GameServer
     {
         if (_listener is null)
             Start();
+        _ = Task.Run(() => TickLoopAsync(ct), CancellationToken.None);
         try
         {
             while (!ct.IsCancellationRequested)
@@ -92,6 +95,24 @@ public sealed class GameServer
             foreach (var s in _sessions.Values)
                 s.Close();
         }
+    }
+
+    /// <summary>Spieltakt der Welt, 4×/s.</summary>
+    private async Task TickLoopAsync(CancellationToken ct)
+    {
+        using var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(250));
+        var last = DateTime.UtcNow;
+        try
+        {
+            while (await timer.WaitForNextTickAsync(ct))
+            {
+                var now = DateTime.UtcNow;
+                try { World.Tick(now, (now - last).TotalSeconds); }
+                catch (Exception ex) { Log.Warn($"Fehler im Spieltakt: {ex}"); }
+                last = now;
+            }
+        }
+        catch (OperationCanceledException) { }
     }
 
     /// <summary>Meldet einen Account als online. Eine ältere Session desselben Accounts wird getrennt

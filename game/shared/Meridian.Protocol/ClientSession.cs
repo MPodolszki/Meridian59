@@ -14,8 +14,14 @@ public sealed class ClientObject(uint id)
     public ushort Angle { get; set; }
     public uint Flags { get; set; }
 
-    /// <summary>OF_PLAYER (include/proto.h) nicht gesetzt → Nicht-Spieler-Figur.</summary>
-    public bool IsNpc => (Flags & 0x00000004) == 0;
+    /// <summary>OF_PLAYER (include/proto.h) nicht gesetzt → Nicht-Spieler-Figur (NPC oder Monster).</summary>
+    public bool IsNpc => (Flags & 0x00000004) == 0 && !IsAttackable;
+
+    /// <summary>OF_ATTACKABLE: Monster, die man angreifen kann.</summary>
+    public bool IsAttackable => (Flags & 0x00000008) != 0;
+
+    /// <summary>Icon-Ressource als Text (z. B. "zombie.bgf"); der Client wählt daran das Modell.</summary>
+    public string Icon { get; set; } = "";
 }
 
 /// <summary>Ereignisse für die Oberfläche. Werden im Thread von <see cref="ClientSession.ProcessEvents"/> ausgelöst.</summary>
@@ -29,6 +35,9 @@ public abstract record ClientEvent
     public sealed record ObjectMoved(ClientObject Object) : ClientEvent;
     public sealed record ObjectRemoved(uint Id) : ClientEvent;
     public sealed record Chat(string Text) : ClientEvent;
+    public sealed record HealthChanged(int Hp, int MaxHp) : ClientEvent;
+    /// <summary>Einmalige Animation eines Objekts (BP_CHANGE): Angriff oder Sterben.</summary>
+    public sealed record ObjectAnimated(uint Id, bool Death) : ClientEvent;
     public sealed record Disconnected(string Reason) : ClientEvent;
 }
 
@@ -99,6 +108,10 @@ public sealed class ClientSession : IDisposable
 
     /// <summary>Objekt anschauen (BP_REQ_LOOK); die Antwort kommt als Chat-Nachricht.</summary>
     public Task LookAsync(uint id) => SendGameAsync(new PacketWriter((byte)GameMessage.ReqLook).U32(id).ToArray());
+
+    /// <summary>Angriff (BP_REQ_ATTACK, attack_info 1 = Nahkampf).</summary>
+    public Task AttackAsync(uint id) =>
+        SendGameAsync(new PacketWriter((byte)GameMessage.ReqAttack).U8(1).U32(id).ToArray());
 
     public Task QuitAsync() => SendGameAsync([(byte)GameMessage.ReqQuit]);
 
@@ -267,6 +280,25 @@ public sealed class ClientSession : IDisposable
                 }
                 break;
             }
+            case GameMessage.Stat:
+            {
+                byte group = r.U8(), num = r.U8();
+                r.U32();                                // Name
+                if (r.U8() == 1 && r.U8() == 1 && group == 1 && num == 1)
+                {
+                    int value = (int)r.U32();
+                    r.U32(); r.U32();                   // min, max (Balken)
+                    Enqueue(new ClientEvent.HealthChanged(value, (int)r.U32()));
+                }
+                break;
+            }
+            case GameMessage.Change:
+            {
+                var o = ReadObjectDesc(ref r);
+                if (PeekOnceAnimation(ref r) is { } low)
+                    Enqueue(new ClientEvent.ObjectAnimated(o.Id, low >= 9));
+                break;
+            }
             case GameMessage.Said:
             {
                 r.U32(); r.U32(); r.U8();
@@ -310,25 +342,48 @@ public sealed class ClientSession : IDisposable
         return sb.ToString();
     }
 
-    private static ClientObject ReadRoomObject(ref PacketReader r)
+    private ClientObject ReadRoomObject(ref PacketReader r)
     {
-        uint rawId = r.U32();
-        var o = new ClientObject(rawId & 0x0FFFFFFF);
-        if (rawId >> 28 == 1)
-            r.U32();                            // amount
-        o.IconRsc = r.U32();
-        o.NameRsc = r.U32();
-        o.Flags = r.U32();
-        r.U32();                                // rarity
-        if (r.U16() != 0) { r.U8(); r.U16(); }  // dlight
-        SkipAnimation(ref r);
-        SkipOverlays(ref r);
+        var o = ReadObjectDesc(ref r);
         o.Row = r.U16();
         o.Col = r.U16();
         o.Angle = r.U16();
         SkipAnimation(ref r);
         SkipOverlays(ref r);
         return o;
+    }
+
+    /// <summary>object_desc (protocol.md 4.5) mit Licht, Animation und Overlays.</summary>
+    private ClientObject ReadObjectDesc(ref PacketReader r)
+    {
+        uint rawId = r.U32();
+        var o = new ClientObject(rawId & 0x0FFFFFFF);
+        if (rawId >> 28 == 1)
+            r.U32();                            // amount
+        o.IconRsc = r.U32();
+        o.Icon = Resolve(o.IconRsc);
+        o.NameRsc = r.U32();
+        o.Flags = r.U32();
+        r.U32();                                // rarity
+        if (r.U16() != 0) { r.U8(); r.U16(); }  // dlight
+        SkipAnimation(ref r);
+        SkipOverlays(ref r);
+        return o;
+    }
+
+    /// <summary>Liest eine Animation; bei ANIMATE_ONCE die untere Gruppe, sonst null.</summary>
+    private static ushort? PeekOnceAnimation(ref PacketReader r)
+    {
+        byte type = r.U8();
+        if (type is 9 or 10)
+        {
+            r.U8();
+            type = r.U8();
+        }
+        if ((AnimationType)type != AnimationType.Once)
+            return null;
+        r.U32();
+        return r.U16();
     }
 
     private static void SkipOverlays(ref PacketReader r)
