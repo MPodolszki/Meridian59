@@ -21,7 +21,7 @@ Client) bauen, dann daraus schrittweise das eigene Spiel entwickeln
 - `game/shared` – gemeinsame C#-Bibliothek (Protokoll), auch für den Client
 - `game/server` – neuer Server
 - `game/tests`  – Tests
-- `game/client` – neuer Client (Godot)
+- `game/client` – neuer Client (Godot 4.7 .NET, C#)
 - `game/docs`   – Dokumentation (Protokoll, Architektur, Entscheidungen)
 
 Der Original-Code (blakserv/, clientd3d/, kod/, include/, doc/ …) bleibt
@@ -47,6 +47,7 @@ Getroffene Entscheidungen werden in game/docs/decisions.md festgehalten.
 - Antworten kurz und auf Deutsch.
 
 ## Nächster Schritt
-Server kann Login und einen einfachen Game-Modus (ein Raum, Bewegung, Chat, mehrere Spieler),
-noch nicht mit dem Original-Client getestet. Als Nächstes: Godot-Client-Grundgerüst
-(nutzt game/shared), dann Test gegen den Original-Client.
+Server: Login + einfacher Game-Modus (ein Raum, Bewegung, Chat, mehrere Spieler).
+Client: Godot-Grundgerüst mit Platzhalter-Grafik (game/client), kompiliert, im Editor noch nicht gestartet.
+Beides noch nicht gegen das Original getestet. Architektur: game/docs/architecture.md.
+Als Nächstes: Client im Godot-Editor starten, eigenes Raumformat (statt .roo), Persistenz.

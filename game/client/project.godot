@@ -1,0 +1,20 @@
+; Engine configuration file.
+; Godot 4.7 (.NET)
+
+config_version=5
+
+[application]
+
+config/name="Meridian"
+config/description="Neuer Client für das Meridian-Projekt"
+run/main_scene="res://Main.tscn"
+config/features=PackedStringArray("4.7", "C#", "Forward Plus")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[dotnet]
+
+project/assembly_name="Meridian.Client"
