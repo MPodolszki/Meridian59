@@ -2,3 +2,12 @@
 .godot/
 export_presets.cfg
 /client/build/
+
+# .NET
+bin/
+obj/
+*.user
+TestResults/
+
+# Lokale Laufzeitdaten des Servers
+server/**/accounts.json

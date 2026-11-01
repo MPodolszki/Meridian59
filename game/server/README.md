@@ -1,3 +1,47 @@
-# Neuer Server
+# Neuer Server (C#/.NET)
 
-Noch leer. Sprache noch offen (siehe ../docs/decisions.md).
+Stand: **nur Login-Modus.** Der Server beantwortet den Login des Original-Clients
+(`AP_GETLOGIN` → `AP_LOGIN` → `AP_LOGINOK`, `AP_GETCHOICE`, `AP_CREDITS`).
+Auf `AP_REQ_GAME` schickt er eine Meldung und meldet den Client ab, weil der Game-Modus fehlt.
+Resync (Beacon-Handshake) ist noch nicht eingebaut; bei Protokollfehlern wird getrennt.
+
+Projekte (Solution `game/Meridian.sln`):
+- `shared/Meridian.Protocol` – Protokoll (Framing, CRC, Security-Hash, Token, Login-Nachrichten), net8.0, auch für den Godot-Client gedacht
+- `server/Meridian.Server` – Server, net9.0
+- `tests/Meridian.Tests` – Unit- und Login-Ablauf-Tests
+
+## Lokal (Windows/Linux)
+
+```bash
+cd game
+dotnet test
+dotnet run --project server/Meridian.Server -- add-account Tester geheim
+dotnet run --project server/Meridian.Server -- --port 5959
+```
+
+Accounts liegen vorerst in `accounts.json` im Arbeitsverzeichnis (MD5-Digest wie im Original,
+nur für Entwicklung; nicht eingecheckt).
+
+## Raspberry Pi / Linux-Server
+
+Pi 4/5 mit **64-Bit**-Raspberry-Pi-OS. Auf dem Entwicklungsrechner bauen (kein .NET auf dem Pi nötig):
+
+```bash
+dotnet publish game/server/Meridian.Server -c Release -r linux-arm64 --self-contained -o publish/pi
+```
+
+Für x64-Linux-Server `-r linux-x64`. Ordner auf den Pi kopieren, dann dort:
+
+```bash
+chmod +x Meridian.Server
+./Meridian.Server add-account Tester geheim
+./Meridian.Server --port 5959
+```
+
+Strg+C bzw. SIGTERM (systemd) beendet den Server sauber. Ein systemd-Service folgt, wenn der Server dauerhaft laufen soll.
+
+## Original-Client verbinden
+
+Der Client bildet den Port aus der Servernummer (`59xx`) oder nimmt `SockPort` aus seiner INI
+(siehe `docs/protocol.md` 1.1). Am einfachsten Server mit `--port 5959` starten und im Client
+Host und Port fest eintragen. Noch nicht mit dem echten Client getestet.

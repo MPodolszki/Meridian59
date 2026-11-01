@@ -39,3 +39,10 @@ implementiert, gute Performance und Werkzeuge, plattformübergreifend.
 
 **Konsequenz:** Desktop (Windows/Linux/macOS) zuerst. Web-Export und Mobile
 sind mit Godot-C# eingeschränkt und werden bei Bedarf neu bewertet.
+
+## 2026-11-01 – Server-Zielplattform: Linux (auch Raspberry Pi)
+Der Server soll primär unter Linux laufen, zum Testen auf einem Raspberry Pi (64-Bit, linux-arm64).
+Gebaut wird self-contained per `dotnet publish -r linux-arm64`, auf dem Pi ist kein .NET nötig.
+Keine Windows-spezifischen APIs im Server.
+
+**Begründung:** Günstiges, einfaches Hosting; Pi als Testserver im Heimnetz.

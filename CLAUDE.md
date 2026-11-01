@@ -17,7 +17,10 @@ Client) bauen, dann daraus schrittweise das eigene Spiel entwickeln
   regelmäßig committen und pushen, vor Arbeitsbeginn `git pull`.
 
 ## Struktur des neuen Codes (im Branch `game`)
+- `game/Meridian.sln` – Solution (dotnet test im Ordner game)
+- `game/shared` – gemeinsame C#-Bibliothek (Protokoll), auch für den Client
 - `game/server` – neuer Server
+- `game/tests`  – Tests
 - `game/client` – neuer Client (Godot)
 - `game/docs`   – Dokumentation (Protokoll, Architektur, Entscheidungen)
 
@@ -28,7 +31,8 @@ unverändert im Repo und dient als Referenz.
 - Das Netzwerkprotokoll wird anfangs vom Original übernommen, damit der neue
   Server mit dem alten Client und der neue Client mit dem alten Server testbar bleibt.
 - Es werden eigene Assets verwendet, keine Original-Assets im neuen Code.
-- Server: C# (.NET). Client: Godot 4 (.NET) mit C#. Gemeinsame C#-Bibliothek
+- Server: C# (.NET), läuft unter Linux (auch Raspberry Pi, linux-arm64).
+  Client: Godot 4 (.NET) mit C#. Gemeinsame C#-Bibliothek
   für Protokoll und Spiellogik. Siehe game/docs/decisions.md.
 
 ## Offene Entscheidungen
@@ -43,5 +47,6 @@ Getroffene Entscheidungen werden in game/docs/decisions.md festgehalten.
 - Antworten kurz und auf Deutsch.
 
 ## Nächster Schritt
-Protokoll-Doku (game/docs/protocol.md) liegt vor (ungetestet). Als Nächstes C#-Projektstruktur anlegen
-und einen minimalen Server bauen, der den Login des Original-Clients beantwortet.
+Login-Server (game/server) steht, noch nicht mit dem Original-Client getestet.
+Als Nächstes: Test gegen den Original-Client (Windows), dann Game-Modus
+(Charakterauswahl, BP_PLAYER, Raum) im Server.
