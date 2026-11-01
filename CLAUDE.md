@@ -28,12 +28,12 @@ unverändert im Repo und dient als Referenz.
 - Das Netzwerkprotokoll wird anfangs vom Original übernommen, damit der neue
   Server mit dem alten Client und der neue Client mit dem alten Server testbar bleibt.
 - Es werden eigene Assets verwendet, keine Original-Assets im neuen Code.
-- Client-Engine: Godot (plattformübergreifend), siehe game/docs/decisions.md.
+- Server: C# (.NET). Client: Godot 4 (.NET) mit C#. Gemeinsame C#-Bibliothek
+  für Protokoll und Spiellogik. Siehe game/docs/decisions.md.
 
 ## Offene Entscheidungen
-- Sprache des Servers
 - Datenbank und Persistenz
-- Ersatz für die Skriptsprache des Originals (Blakod/Kod)
+- Skriptsprache für Inhalte (vorerst Spiellogik direkt in C#)
 
 Getroffene Entscheidungen werden in game/docs/decisions.md festgehalten.
 
@@ -43,5 +43,5 @@ Getroffene Entscheidungen werden in game/docs/decisions.md festgehalten.
 - Antworten kurz und auf Deutsch.
 
 ## Nächster Schritt
-Protokoll-Doku (game/docs/protocol.md) liegt vor (nur aus Code abgeleitet, ungetestet). Als Nächstes Server-Sprache festlegen
+Protokoll-Doku (game/docs/protocol.md) liegt vor (ungetestet). Als Nächstes C#-Projektstruktur anlegen
 und einen minimalen Server bauen, der den Login des Original-Clients beantwortet.
