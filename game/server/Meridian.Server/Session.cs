@@ -200,7 +200,7 @@ public sealed class Session(int id, TcpClient client, GameServer server)
 
             case GameMessage.SendRoomContents:
                 if (_avatar is not null)
-                    SendRoomContents(server.World.Snapshot());
+                    SendRoomContents();
                 break;
 
             case GameMessage.ReqInventory:
@@ -212,7 +212,19 @@ public sealed class Session(int id, TcpClient client, GameServer server)
             {
                 ushort row = r.U16(), col = r.U16();
                 byte speed = r.U8();
-                server.World.Move(_avatar, row, col, speed);
+                switch (server.World.Move(_avatar, row, col, speed))
+                {
+                    case MoveResult.ChangedRoom changed:
+                        Log.Info($"Session {id}: {_avatar.Name} → {changed.Room.Definition.Name}");
+                        SendPlayer();
+                        SendRoomContents();
+                        break;
+                    case MoveResult.Blocked blocked:
+                        // Position zurücksetzen: Spieler an alter Stelle neu melden.
+                        SendText(blocked.Message ?? "Hier geht es nicht weiter.");
+                        PostGame(GameReplies.Move(_avatar.Id, _avatar.Row, _avatar.Col, 0));
+                        break;
+                }
                 break;
             }
 
@@ -257,32 +269,47 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         EnsureResource(InterfaceModule);
         PostGame(GameReplies.LoadModule(server.Resources[InterfaceModule]));
 
-        var present = server.World.Enter(_avatar);
+        server.World.Enter(_avatar);
         SendPlayer();
-        SendRoomContents(present);
+        SendRoomContents();
         PostGame(GameReplies.Inventory([]));
         SendEchoPing();
     }
 
     private void SendPlayer()
     {
-        var room = server.World.Room;
-        EnsureResource(room.RooFile);
+        var room = _avatar!.Room.Definition;
+        string icon = server.World.PlayerIcon;
+        EnsureResource(room.Roo);
         EnsureResource(room.Name);
-        EnsureResource(room.PlayerIcon);
-        EnsureResource(_avatar!.Name);
+        EnsureResource(icon);
+        EnsureResource(_avatar.Name);
         var res = server.Resources;
+        byte light = (byte)Math.Clamp(room.BaseLight ?? 200, 0, 255);
         PostGame(GameReplies.Player(new PlayerInfo(
-            _avatar.Id, res[room.PlayerIcon], res[_avatar.Name],
-            World.RoomId, res[room.RooFile], res[room.Name], room.Security,
-            room.AmbientLight, PlayerLight: 0)));
+            _avatar.Id, res[icon], res[_avatar.Name],
+            _avatar.Room.ObjectId, res[room.Roo], res[room.Name], room.Security,
+            light, PlayerLight: 0)));
+        if (room.Music is { } music)
+        {
+            EnsureResource(music);
+            PostGame(GameReplies.PlayMusic(res[music]));
+        }
     }
 
-    private void SendRoomContents(List<Avatar> present)
+    private void SendRoomContents()
     {
+        var present = server.World.Snapshot(_avatar!.Room);
         foreach (var a in present)
             EnsureResource(a.Name);
-        PostGame(GameReplies.RoomContents(World.RoomId, present.Select(server.World.ToRoomObject).ToList()));
+        PostGame(GameReplies.RoomContents(_avatar.Room.ObjectId, present.Select(server.World.ToRoomObject).ToList()));
+    }
+
+    /// <summary>Systemtext im Chatfenster (BP_MESSAGE mit dynamischer Format-Ressource).</summary>
+    private void SendText(string text)
+    {
+        EnsureResource(text);
+        PostGame(GameReplies.Message(server.Resources[text]));
     }
 
     private void SendEchoPing()

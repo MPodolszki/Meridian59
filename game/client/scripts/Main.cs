@@ -147,7 +147,13 @@ public partial class Main : Node3D
                 AddAvatar(added.Object);
                 break;
             case ClientEvent.ObjectMoved moved:
-                if (moved.Object.Id != _session!.PlayerId)
+                if (moved.Object.Id == _session!.PlayerId)
+                {
+                    // Server korrigiert die eigene Position (z. B. verschlossene Tür).
+                    if (_avatars.TryGetValue(moved.Object.Id, out var selfNode))
+                        selfNode.Position = _lastSentPos = ToWorld(moved.Object.Row, moved.Object.Col);
+                }
+                else
                 {
                     _targets[moved.Object.Id] = ToWorld(moved.Object.Row, moved.Object.Col);
                     if (_avatars.TryGetValue(moved.Object.Id, out var node))
@@ -190,16 +196,20 @@ public partial class Main : Node3D
 
         bool self = o.Id == _session!.PlayerId;
         var root = new Node3D { Position = ToWorld(o.Row, o.Col), Rotation = new Vector3(0, ToYaw(o.Angle), 0) };
-        root.AddChild(new MeshInstance3D
-        {
-            Mesh = new CapsuleMesh { Radius = 0.35f, Height = 1.8f },
-            Position = new Vector3(0, 0.9f, 0),
-            MaterialOverride = new StandardMaterial3D { AlbedoColor = self ? new Color(0.2f, 0.4f, 0.9f) : new Color(0.85f, 0.5f, 0.2f) },
-        });
+        // Eigener Charakter als Zwerg; andere Spieler vorerst als Kapsel, bis Rassen übertragen werden.
+        if (self)
+            root.AddChild(DwarfModel.Create());
+        else
+            root.AddChild(new MeshInstance3D
+            {
+                Mesh = new CapsuleMesh { Radius = 0.35f, Height = 1.8f },
+                Position = new Vector3(0, 0.9f, 0),
+                MaterialOverride = new StandardMaterial3D { AlbedoColor = new Color(0.85f, 0.5f, 0.2f) },
+            });
         root.AddChild(new Label3D
         {
             Text = _session.Resolve(o.NameRsc),
-            Position = new Vector3(0, 2.2f, 0),
+            Position = new Vector3(0, self ? 1.7f : 2.2f, 0),
             Billboard = BaseMaterial3D.BillboardModeEnum.Enabled,
         });
         AddChild(root);
@@ -264,9 +274,10 @@ public partial class Main : Node3D
 
     private void UpdateCamera(Node3D self)
     {
-        var offset = new Vector3(0, 4, 7).Rotated(Vector3.Up, _yaw);
+        // Kamera auf Zwergenhöhe abgestimmt (Kopf bei ca. 1,2 m).
+        var offset = new Vector3(0, 3, 5.5f).Rotated(Vector3.Up, _yaw);
         _camera.Position = self.Position + offset;
-        _camera.LookAt(self.Position + new Vector3(0, 1.5f, 0));
+        _camera.LookAt(self.Position + new Vector3(0, 1.1f, 0));
     }
 
     private async void SendPositionIfNeeded(Node3D self)

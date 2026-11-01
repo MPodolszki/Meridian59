@@ -88,7 +88,7 @@ public sealed class LoginFlowTests : IAsyncLifetime
         Assert.Equal(charId, new PacketReader(player.Payload.AsSpan(1)).U32());
         var contents = await ExpectAsync(c, (byte)GameMessage.RoomContents);
         r = new PacketReader(contents.Payload.AsSpan(1));
-        Assert.Equal(World.RoomId, r.U32());
+        Assert.Equal(_server.World.StartRoom.ObjectId, r.U32());
         Assert.Equal(1, r.U16());
         Assert.Equal(charId, r.U32());
         await ExpectAsync(c, (byte)GameMessage.Inventory);
@@ -120,7 +120,7 @@ public sealed class LoginFlowTests : IAsyncLifetime
         uint bId = new PacketReader(create.Payload.AsSpan(1)).U32();
 
         // B bewegt sich → A bekommt BP_MOVE.
-        await b.SendAsync(new PacketWriter((byte)GameMessage.ReqMove).U16(400).U16(500).U8(18).U32(World.RoomId).ToArray());
+        await b.SendAsync(new PacketWriter((byte)GameMessage.ReqMove).U16(400).U16(500).U8(18).U32(_server.World.StartRoom.ObjectId).ToArray());
         var move = await ExpectAsync(a, (byte)GameMessage.Move);
         var r = new PacketReader(move.Payload.AsSpan(1));
         Assert.Equal(bId, r.U32());

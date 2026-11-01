@@ -43,6 +43,9 @@ public static class GameReplies
     public static byte[] LoadModule(uint moduleRsc) =>
         new PacketWriter((byte)GameMessage.LoadModule).U32(moduleRsc).ToArray();
 
+    public static byte[] PlayMusic(uint musicRsc) =>
+        new PacketWriter((byte)GameMessage.PlayMusic).U32(musicRsc).ToArray();
+
     public static byte[] Quit() => new PacketWriter((byte)GameMessage.Quit).ToArray();
 
     /// <summary>BP_MESSAGE ohne Parameter; der Format-String darf keine Platzhalter enthalten.</summary>

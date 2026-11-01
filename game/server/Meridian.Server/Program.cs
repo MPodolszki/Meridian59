@@ -2,13 +2,15 @@
 using Meridian.Server;
 
 // Aufruf:
-//   Meridian.Server [--port 5959] [--accounts accounts.json] [--client-dir <resource-ordner>] [--room tosinn.roo]
+//   Meridian.Server [--port 5959] [--accounts accounts.json] [--world data/world/tos.json]
+//                   [--client-dir <resource-ordner>] [--player-icon blank.bgf]
 //   Meridian.Server add-account <name> <passwort> [--admin] [--accounts accounts.json]
 
 string accountsPath = "accounts.json";
 int port = 5959;
 string? clientDir = null;
-var room = new RoomOptions();
+string worldPath = Path.Combine(AppContext.BaseDirectory, "data", "world", "tos.json");
+string playerIcon = "blank.bgf";
 var positional = new List<string>();
 bool admin = false;
 
@@ -20,7 +22,8 @@ for (int i = 0; i < args.Length; i++)
         case "--accounts": accountsPath = args[++i]; break;
         case "--admin": admin = true; break;
         case "--client-dir": clientDir = args[++i]; break;
-        case "--room": room = room with { RooFile = args[++i] }; break;
+        case "--world": worldPath = args[++i]; break;
+        case "--player-icon": playerIcon = args[++i]; break;
         default: positional.Add(args[i]); break;
     }
 }
@@ -49,7 +52,18 @@ using var sigint = System.Runtime.InteropServices.PosixSignalRegistration.Create
 using var sigterm = System.Runtime.InteropServices.PosixSignalRegistration.Create(
     System.Runtime.InteropServices.PosixSignal.SIGTERM, ctx => { ctx.Cancel = true; cts.Cancel(); });
 
-var server = new GameServer(new ServerOptions { Port = port, Room = room, ClientResourceDir = clientDir }, accounts);
+var world = File.Exists(worldPath) ? WorldDefinition.Load(worldPath) : WorldDefinition.SingleRoom();
+Log.Info(File.Exists(worldPath)
+    ? $"Welt: {world.Rooms.Count} Räume aus {worldPath}"
+    : $"Keine Weltdatei unter {worldPath} – nur ein Testraum");
+
+var server = new GameServer(new ServerOptions
+{
+    Port = port,
+    World = world,
+    PlayerIcon = playerIcon,
+    ClientResourceDir = clientDir,
+}, accounts);
 server.Start();
 await server.RunAsync(cts.Token);
 Log.Info("Server beendet");
