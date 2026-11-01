@@ -39,6 +39,55 @@ public partial class Main : Node3D
     {
         BuildWorld();
         BuildUi();
+        ApplyCommandLine();
+    }
+
+    /// <summary>
+    /// Für Tests/Entwicklung: godot --path game/client -- --login NAME PASSWORT [--host H] [--port P]
+    /// [--screenshot DATEI] [--walk SEKUNDEN]. Mit --screenshot wird nach dem Betreten des Raums
+    /// (und optionalem Laufen) ein Bild gespeichert und der Client beendet.
+    /// </summary>
+    private void ApplyCommandLine()
+    {
+        string[] args = OS.GetCmdlineUserArgs();
+        for (int i = 0; i < args.Length - 1; i++)
+        {
+            switch (args[i])
+            {
+                case "--host": _host.Text = args[++i]; break;
+                case "--port": _port.Text = args[++i]; break;
+                case "--screenshot": _screenshotPath = args[++i]; break;
+                case "--camera": _cameraMode = args[++i]; break;
+                case "--walk": _autoWalkSeconds = float.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture); break;
+                case "--login" when i + 2 < args.Length:
+                    _user.Text = args[++i];
+                    _password.Text = args[++i];
+                    _autoLogin = true;
+                    break;
+            }
+        }
+        if (_autoLogin)
+            CallDeferred(MethodName.OnConnectPressed);
+    }
+
+    private bool _autoLogin;
+    private string _cameraMode = "behind";   // "front" für Screenshots von vorne
+    private string? _screenshotPath;
+    private float _autoWalkSeconds;
+    private double _screenshotTimer = -1;
+
+    private void UpdateAutomation(double delta)
+    {
+        if (_screenshotPath is null || _screenshotTimer < 0)
+            return;
+        _screenshotTimer -= delta;
+        if (_screenshotTimer > 0)
+            return;
+        var image = GetViewport().GetTexture().GetImage();
+        image.SavePng(_screenshotPath);
+        GD.Print($"Screenshot gespeichert: {_screenshotPath}");
+        _screenshotPath = null;
+        GetTree().Quit();
     }
 
     public override void _ExitTree() => _session?.Dispose();
@@ -56,16 +105,37 @@ public partial class Main : Node3D
         AddChild(new WorldEnvironment { Environment = env });
         AddChild(new DirectionalLight3D { RotationDegrees = new Vector3(-50, 30, 0), ShadowEnabled = true });
 
+        // Boden über die ganze Raumfläche (Räume sind bis ca. 100 Felder = 250 m groß), Gitter alle 1 Feld.
         var ground = new MeshInstance3D
         {
-            Mesh = new PlaneMesh { Size = new Vector2(200, 200) },
-            MaterialOverride = new StandardMaterial3D { AlbedoColor = new Color(0.35f, 0.45f, 0.3f) },
+            Mesh = new PlaneMesh { Size = new Vector2(600, 600) },
+            Position = new Vector3(250, 0, 250),
+            MaterialOverride = new StandardMaterial3D
+            {
+                AlbedoTexture = CreateGridTexture(),
+                Uv1Scale = new Vector3(600 / CellSize, 600 / CellSize, 1),
+                TextureFilter = BaseMaterial3D.TextureFilterEnum.LinearWithMipmapsAnisotropic,
+            },
         };
         AddChild(ground);
 
         _camera = new Camera3D { Position = new Vector3(0, 6, 10) };
         AddChild(_camera);
         _camera.LookAt(Vector3.Zero);
+    }
+
+    /// <summary>Platzhalter-Bodentextur: Gras mit dunklerer Kante, eine Kachel = ein Grid-Feld.</summary>
+    private static ImageTexture CreateGridTexture()
+    {
+        const int size = 64;
+        var image = Image.CreateEmpty(size, size, true, Image.Format.Rgb8);
+        var grass = new Color(0.36f, 0.46f, 0.28f);
+        var edge = new Color(0.30f, 0.39f, 0.23f);
+        for (int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+                image.SetPixel(x, y, x < 2 || y < 2 ? edge : grass);
+        image.GenerateMipmaps();
+        return ImageTexture.CreateFromImage(image);
     }
 
     private void BuildUi()
@@ -143,6 +213,8 @@ public partial class Main : Node3D
             case ClientEvent.EnteredRoom room:
                 _loginPanel.Visible = false;
                 _status.Text = $"Im Raum: {room.RoomName}";
+                if (_screenshotPath is not null && _screenshotTimer < 0)
+                    _screenshotTimer = 1.5 + _autoWalkSeconds;
                 break;
             case ClientEvent.ObjectAdded added:
                 AddAvatar(added.Object);
@@ -237,6 +309,7 @@ public partial class Main : Node3D
     public override void _Process(double delta)
     {
         _session?.ProcessEvents();
+        UpdateAutomation(delta);
 
         // Andere Spieler weich zur gemeldeten Position bewegen.
         foreach (var (id, node) in _avatars)
@@ -257,6 +330,11 @@ public partial class Main : Node3D
             return;
 
         var input = Vector2.Zero;
+        if (_autoWalkSeconds > 0 && _screenshotTimer > 1.5)
+        {
+            input.Y -= 1;          // automatisch geradeaus laufen
+            _yaw += 0.6f * delta;  // und dabei leicht drehen
+        }
         if (Input.IsPhysicalKeyPressed(Key.W)) input.Y -= 1;
         if (Input.IsPhysicalKeyPressed(Key.S)) input.Y += 1;
         if (Input.IsPhysicalKeyPressed(Key.A)) input.X -= 1;
@@ -291,7 +369,9 @@ public partial class Main : Node3D
     private void UpdateCamera(Node3D self)
     {
         // Kamera auf Zwergenhöhe abgestimmt (Kopf bei ca. 1,2 m).
-        var offset = new Vector3(0, 3, 5.5f).Rotated(Vector3.Up, _yaw);
+        var offset = _cameraMode == "front"
+            ? new Vector3(0, 1.6f, -3.2f).Rotated(Vector3.Up, _yaw)
+            : new Vector3(0, 3, 5.5f).Rotated(Vector3.Up, _yaw);
         _camera.Position = self.Position + offset;
         _camera.LookAt(self.Position + new Vector3(0, 1.1f, 0));
     }

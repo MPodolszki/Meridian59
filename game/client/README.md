@@ -1,6 +1,6 @@
 # Neuer Client (Godot 4.7 .NET, C#)
 
-Stand: Platzhalter-Grafik. Anmeldung, automatische Charakterwahl (erster Charakter),
+Stand: Platzhalter-Grafik, in Godot 4.7.2 gestartet und mit dem neuen Server getestet (Tos). Anmeldung, automatische Charakterwahl (erster Charakter),
 ein Raum als Fläche, Spieler als Kapseln mit Namen, Laufen, Drehen, Chat.
 Die Protokoll- und Ablauflogik steckt in `game/shared/Meridian.Protocol` (`ClientSession`),
 das Godot-Projekt macht nur Darstellung und Eingabe (`scripts/Main.cs`).
@@ -12,6 +12,15 @@ das Godot-Projekt macht nur Darstellung und Eingabe (`scripts/Main.cs`).
 3. Vorher den Server starten (siehe `game/server/README.md`) und einen Account anlegen.
 
 Bauen ohne Editor (prüft nur, ob der Code kompiliert): `dotnet build game/client`.
+
+## Automatisch starten (Tests, Screenshots)
+
+```bash
+godot --path game/client -- --login Thorin bart --port 5959 [--host 127.0.0.1] [--camera front] [--walk 3] [--screenshot bild.png]
+```
+
+`--login` meldet sich sofort an. Mit `--screenshot` wird nach dem Betreten des Raums ein Bild gespeichert
+und der Client beendet; `--walk` läuft vorher n Sekunden, `--camera front` zeigt die Figur von vorne.
 
 ## Steuerung
 

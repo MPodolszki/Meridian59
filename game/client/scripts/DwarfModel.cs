@@ -15,6 +15,7 @@ public static class DwarfModel
     private static readonly Color Trousers = new(0.30f, 0.25f, 0.20f);
     private static readonly Color Boots = new(0.22f, 0.15f, 0.10f);
     private static readonly Color Belt = new(0.35f, 0.22f, 0.12f);
+    private static readonly Color Eyes = new(0.08f, 0.06f, 0.05f);
 
     public static Node3D Create()
     {
@@ -41,13 +42,19 @@ public static class DwarfModel
 
         // Kopf: verhältnismäßig groß
         Add(root, new SphereMesh { Radius = 0.18f, Height = 0.36f }, Skin, new Vector3(0, 1.2f, 0));
-        Add(root, new SphereMesh { Radius = 0.04f, Height = 0.08f }, Skin, new Vector3(0, 1.18f, -0.18f));   // Nase
-        // Haare oben und hinten
-        Add(root, new SphereMesh { Radius = 0.19f, Height = 0.24f }, Hair, new Vector3(0, 1.28f, 0.03f));
-        // Vollbart: bis auf die Brust
-        var beard = Add(root, new CylinderMesh { TopRadius = 0.15f, BottomRadius = 0.05f, Height = 0.38f }, Hair, new Vector3(0, 0.98f, -0.12f));
-        beard.RotationDegrees = new Vector3(-12f, 0, 0);
-        beard.Scale = new Vector3(1.1f, 1f, 0.6f);
+        Add(root, new SphereMesh { Radius = 0.045f, Height = 0.09f }, Skin, new Vector3(0, 1.19f, -0.185f));   // Knollennase
+        foreach (float x in new[] { -0.065f, 0.065f })
+        {
+            Add(root, new SphereMesh { Radius = 0.022f, Height = 0.044f }, Eyes, new Vector3(x, 1.235f, -0.16f));
+            Add(root, new BoxMesh { Size = new Vector3(0.08f, 0.03f, 0.04f) }, Hair, new Vector3(x, 1.27f, -0.16f));   // buschige Brauen
+        }
+        // Haare: Oberkopf und Hinterkopf, Stirn bleibt frei
+        Add(root, new SphereMesh { Radius = 0.19f, Height = 0.38f }, Hair, new Vector3(0, 1.27f, 0.05f), scale: new Vector3(1.02f, 0.85f, 0.95f));
+        // Vollbart: vom Kinn bis auf den Bauch, breit an den Wangen
+        var beard = Add(root, new CylinderMesh { TopRadius = 0.17f, BottomRadius = 0.06f, Height = 0.52f }, Hair, new Vector3(0, 0.9f, -0.2f));
+        beard.RotationDegrees = new Vector3(-10f, 0, 0);
+        beard.Scale = new Vector3(1.05f, 1f, 0.45f);
+        Add(root, new SphereMesh { Radius = 0.06f, Height = 0.12f }, Hair, new Vector3(0, 1.11f, -0.2f), scale: new Vector3(2.2f, 1f, 0.8f));   // Schnurrbart
 
         return root;
     }
