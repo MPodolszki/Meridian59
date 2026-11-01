@@ -290,6 +290,91 @@ def add_beard(basemesh, rig):
     print(f"Bart: {len(beard)} + {len(mustache)} Ansatzpunkte, {len(mesh.polygons)} Flächen")
 
 
+FPS = 24
+
+
+def add_animations(rig):
+    """Prozedurale Animationen „Idle“, „Walk“, „Run“ (Schleifen) am game_engine-Skelett.
+
+    Rotationen werden als Achse im Armature-Raum angegeben (Figur schaut nach -Y, +X = linke Seite,
+    +Z oben) und in den lokalen Raum des Knochens umgerechnet. Positiver Winkel um X schwenkt ein
+    nach unten zeigendes Glied nach hinten (+Y)."""
+    from mathutils import Quaternion
+    scene = bpy.context.scene
+    scene.render.fps = FPS
+    bones = rig.pose.bones
+    for pb in bones:
+        pb.rotation_mode = 'QUATERNION'
+    rest = {b.name: b.matrix_local.to_3x3() for b in rig.data.bones}
+
+    def local(name, axis, degrees):
+        a = (rest[name].inverted() @ Vector(axis)).normalized()
+        return Quaternion(a, math.radians(degrees))
+
+    # Arme aus der A-Pose nach unten: aktuellen Winkel zur Horizontalen messen.
+    def arm_down_angle(side):
+        up = rig.data.bones[f"upperarm_{side}"]
+        v = up.tail_local - up.head_local
+        current = math.degrees(math.atan2(-v.z, abs(v.x)))
+        return 78.0 - current                                   # Ziel: fast senkrecht, Zwerge sind breit
+
+    down = {"l": local("upperarm_l", (0, 1, 0), arm_down_angle("l")),
+            "r": local("upperarm_r", (0, 1, 0), -arm_down_angle("r"))}
+
+    def pose(t, kind):
+        """Rotationen (Knochen → Quaternion) und Beckenhöhe für Phase t (0..1)."""
+        w = 2 * math.pi * t
+        rot = {}
+        if kind == "Idle":
+            breath = math.sin(w)
+            amp_leg, amp_arm, knee, bob, lean = 0, 0, 0, 0.004 * breath, 2
+            rot["spine_02"] = local("spine_02", (1, 0, 0), -1.5 * breath)
+            rot["head"] = local("head", (0, 0, 1), 3 * math.sin(w + 1))
+            arm_sway = 2 * breath
+        else:
+            run = kind == "Run"
+            amp_leg, amp_arm = (38, 26) if run else (24, 13)
+            knee = 70 if run else 40
+            lean = 10 if run else 3
+            bob = (0.035 if run else 0.018) * abs(math.cos(w))
+            arm_sway = 0
+            rot["spine_01"] = local("spine_01", (0, 0, 1), (6 if run else 4) * math.sin(w))
+        swing = math.sin(w)
+        for side, sign in (("l", 1), ("r", -1)):
+            phase = swing * sign                                  # Beine gegengleich
+            rot[f"thigh_{side}"] = local(f"thigh_{side}", (1, 0, 0), -amp_leg * phase)
+            # Knie beugt beim Zurückschwingen und in der Schwungphase
+            bend = knee * max(0.0, math.sin(w * 1 + (0 if sign > 0 else math.pi) + math.pi / 2)) if amp_leg else 0
+            rot[f"calf_{side}"] = local(f"calf_{side}", (1, 0, 0), bend)
+            rot[f"foot_{side}"] = local(f"foot_{side}", (1, 0, 0), -0.4 * bend)
+            arm = local(f"upperarm_{side}", (1, 0, 0), amp_arm * phase + arm_sway)   # Arme gegen die Beine
+            rot[f"upperarm_{side}"] = arm @ down[side]
+            rot[f"lowerarm_{side}"] = local(f"lowerarm_{side}", (1, 0, 0), -(12 + (25 if kind == "Run" else 4)))
+        rot["spine_03"] = local("spine_03", (1, 0, 0), -lean)
+        return rot, bob
+
+    for kind, seconds in (("Idle", 3.0), ("Walk", 1.0), ("Run", 0.66)):
+        action = bpy.data.actions.new(kind)
+        action.use_fake_user = True
+        rig.animation_data_create()
+        rig.animation_data.action = action
+        frames = round(seconds * FPS)
+        pelvis_rest = bones["pelvis"].location.copy()
+        for f in range(frames + 1):
+            rot, bob = pose(f / frames, kind)
+            for pb in bones:
+                pb.rotation_quaternion = rot.get(pb.name, Quaternion())
+                pb.keyframe_insert("rotation_quaternion", frame=f)
+            # Becken auf und ab (im lokalen Raum des Beckens entlang Armature-Z)
+            bones["pelvis"].location = pelvis_rest + rest["pelvis"].inverted() @ Vector((0, 0, bob))
+            bones["pelvis"].keyframe_insert("location", frame=f)
+        track = rig.animation_data.nla_tracks.new()
+        track.name = kind
+        track.strips.new(kind, 1, action)
+        rig.animation_data.action = None
+        print(f"Animation {kind}: {frames} Frames")
+
+
 def main(out_glb, preview_png=None):
     reset_scene()
     basemesh = HumanService.create_human(macro_detail_dict=MACRO, feet_on_ground=True)
@@ -313,6 +398,7 @@ def main(out_glb, preview_png=None):
     process_textures()
     if rig is not None:
         add_beard(basemesh, rig)
+        add_animations(rig)
     basemesh.name = "Dwarf"
     if rig is not None:
         rig.name = "DwarfRig"
@@ -325,10 +411,14 @@ def main(out_glb, preview_png=None):
         if obj.type in {'MESH', 'ARMATURE'}:
             obj.select_set(True)
     bpy.ops.export_scene.gltf(filepath=os.path.abspath(out_glb), export_format='GLB',
-                              use_selection=True, export_apply=True, export_yup=True)
+                              use_selection=True, export_apply=True, export_yup=True,
+                              export_animations=True, export_animation_mode='ACTIONS')
     print(f"Exportiert: {out_glb}")
 
     if preview_png:
+        if rig is not None:                                     # Vorschau in Lauf-Pose
+            rig.animation_data.action = bpy.data.actions["Walk"]
+            bpy.context.scene.frame_set(6)
         render_preview(basemesh, preview_png)
 
 

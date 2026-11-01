@@ -30,6 +30,13 @@ public static class DwarfModel
             model.RotationDegrees = new Vector3(0, 180, 0);
             var holder = new Node3D { Name = "Dwarf" };
             holder.AddChild(model);
+            if (model.FindChild("AnimationPlayer", recursive: true, owned: false) is AnimationPlayer player)
+            {
+                // glTF-Animationen werden ohne Schleife importiert.
+                foreach (string name in player.GetAnimationList())
+                    player.GetAnimation(name).LoopMode = Animation.LoopModeEnum.Linear;
+                player.Play("Idle");
+            }
             return holder;
         }
         return CreatePrimitive();
@@ -75,6 +82,18 @@ public static class DwarfModel
         Add(root, new SphereMesh { Radius = 0.06f, Height = 0.12f }, Hair, new Vector3(0, 1.11f, -0.2f), scale: new Vector3(2.2f, 1f, 0.8f));   // Schnurrbart
 
         return root;
+    }
+
+    /// <summary>Spielt „Idle“, „Walk“ oder „Run“ passend zur Geschwindigkeit (m/s), mit kurzer Überblendung.</summary>
+    public static void Animate(Node3D dwarf, float speed)
+    {
+        if (dwarf.FindChild("AnimationPlayer", recursive: true, owned: false) is not AnimationPlayer player)
+            return;
+        string wanted = speed > 5.5f ? "Run" : speed > 0.3f ? "Walk" : "Idle";
+        if (player.CurrentAnimation != wanted && player.HasAnimation(wanted))
+            player.Play(wanted, customBlend: 0.2);
+        // Laufanimation an das Tempo koppeln, damit die Füße nicht rutschen.
+        player.SpeedScale = wanted == "Walk" ? speed / 4f : wanted == "Run" ? speed / 8f : 1f;
     }
 
     private static MeshInstance3D Add(Node3D parent, Mesh mesh, Color color, Vector3 position, Vector3? scale = null)

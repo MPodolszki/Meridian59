@@ -325,20 +325,12 @@ public partial class Main : Node3D
         var spawn = ToWorld(o.Row, o.Col);
         spawn.Y = GroundHeightAt(spawn);
         var root = new Node3D { Position = spawn, Rotation = new Vector3(0, ToYaw(o.Angle), 0) };
-        // Eigener Charakter als Zwerg; andere Spieler vorerst als Kapsel, bis Rassen übertragen werden.
-        if (self)
-            root.AddChild(DwarfModel.Create());
-        else
-            root.AddChild(new MeshInstance3D
-            {
-                Mesh = new CapsuleMesh { Radius = 0.35f, Height = 1.8f },
-                Position = new Vector3(0, 0.9f, 0),
-                MaterialOverride = new StandardMaterial3D { AlbedoColor = new Color(0.85f, 0.5f, 0.2f) },
-            });
+        // Bisher gibt es nur eine Rasse: alle Spieler sind Zwerge. DwarfModel muss direktes Kind sein (Animate).
+        root.AddChild(DwarfModel.Create());
         root.AddChild(new Label3D
         {
             Text = _session.Resolve(o.NameRsc),
-            Position = new Vector3(0, self ? 1.7f : 2.2f, 0),
+            Position = new Vector3(0, 1.7f, 0),
             Billboard = BaseMaterial3D.BillboardModeEnum.Enabled,
         });
         AddChild(root);
@@ -367,10 +359,15 @@ public partial class Main : Node3D
         _session?.ProcessEvents();
         UpdateAutomation(delta);
 
-        // Andere Spieler weich zur gemeldeten Position bewegen.
+        // Andere Spieler weich zur gemeldeten Position bewegen und passend animieren.
         foreach (var (id, node) in _avatars)
-            if (id != _session?.PlayerId && _targets.TryGetValue(id, out var target))
-                node.Position = node.Position.MoveToward(target, RunSpeed * (float)delta);
+        {
+            if (id == _session?.PlayerId || !_targets.TryGetValue(id, out var target))
+                continue;
+            var before = node.Position;
+            node.Position = node.Position.MoveToward(target, RunSpeed * (float)delta);
+            DwarfModel.Animate(node, before.DistanceTo(node.Position) / Mathf.Max((float)delta, 1e-4f));
+        }
 
         if (_session is not { InWorld: true } || !_avatars.TryGetValue(_session.PlayerId, out var self))
             return;
@@ -400,7 +397,10 @@ public partial class Main : Node3D
 
         self.Rotation = new Vector3(0, _yaw, 0);
         if (input == Vector2.Zero)
+        {
+            DwarfModel.Animate(self, 0);
             return;
+        }
 
         float speed = Input.IsPhysicalKeyPressed(Key.Shift) ? RunSpeed : WalkSpeed;
         var dir = new Vector3(input.X, 0, input.Y).Normalized().Rotated(Vector3.Up, _yaw);
@@ -412,7 +412,9 @@ public partial class Main : Node3D
         // Nicht unter die Ursprungs-Koordinaten (Feld 1) laufen.
         pos = new Vector3(Mathf.Max(pos.X, CellSize), 0, Mathf.Max(pos.Z, CellSize));
         pos.Y = GroundHeightAt(pos);
+        var moved = new Vector2(pos.X - self.Position.X, pos.Z - self.Position.Z).Length();
         self.Position = pos;
+        DwarfModel.Animate(self, moved / Mathf.Max(delta, 1e-4f));
     }
 
     /// <summary>Leertaste wie im Original: Tür/Ausgang auf dem aktuellen Feld benutzen.

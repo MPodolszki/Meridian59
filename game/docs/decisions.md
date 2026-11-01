@@ -55,7 +55,7 @@ Türen, Objekte und NPCs stehen in `server/data/world/tos.json`, abgeleitet aus 
 **Begründung:** Wunsch, mit Tos zu beginnen. Abweichung vom Original, dort starten neue Spieler auf Raza.
 
 ## 2026-11-01 – Spielerrasse Zwerg als erste Figur
-Der eigene Charakter wird im neuen Client als Zwerg dargestellt (klein, gedrungen, Bart,
+Die Spielfigur wird im neuen Client als Zwerg dargestellt (klein, gedrungen, Bart,
 Startkleidung ohne Rüstung). Platzhalter aus Grundformen, bis eigene Modelle vorliegen.
 
 ## 2026-11-01 – Charaktermodelle mit MPFB2 (Blender), Assets per Skript
@@ -66,3 +66,7 @@ nicht von Hand. Körper aus MPFB (CC0), Haut/Augen/Haare/Kleidung aus dem MakeHu
 
 **Begründung:** Realistische Figuren mit Skelett, reproduzierbar, eigene bzw. CC0-Assets.
 **Offen:** Animationen; ggf. Git LFS, falls die Modelldateien zahlreich/groß werden.
+
+## 2026-11-01 – Vorerst nur eine Rasse: Zwerge
+Alle Spieler sind Zwerge und werden im Client mit demselben Modell (models/dwarf.glb) dargestellt.
+Weitere Rassen kommen später; dann muss die Rasse über das Protokoll übertragen werden.
