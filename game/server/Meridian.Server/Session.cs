@@ -1,22 +1,38 @@
 using System.Net.Sockets;
+using System.Threading.Channels;
 using Meridian.Protocol;
 
 namespace Meridian.Server;
 
 /// <summary>
-/// Eine Client-Verbindung. Implementiert bisher nur den Login-/Synched-Modus
-/// (protocol.md 3.1/3.2): AP_GETLOGIN → AP_LOGIN → AP_LOGINOK, AP_GETCHOICE, AP_CREDITS.
-/// Auf AP_REQ_GAME antwortet der Server mit einer Meldung und Logoff, da der Game-Modus fehlt.
+/// Eine Client-Verbindung (protocol.md 1.2/3.1).
+/// Login-Modus: AP_GETLOGIN → AP_LOGIN → AP_LOGINOK, AP_GETCHOICE, AP_CREDITS → AP_REQ_GAME → AP_GAME.
+/// Game-Modus: Charakterwahl, Raum betreten, Ping, Bewegung, Chat, BP_REQ_QUIT zurück ins Menü.
+/// Alle ausgehenden Nachrichten laufen in Reihenfolge durch eine Queue, weil der Secure-Token
+/// pro gesendeter Nachricht weiterwandert.
 /// </summary>
 public sealed class Session(int id, TcpClient client, GameServer server)
 {
-    public const string GameNotAvailableText = "Willkommen! Die Spielwelt ist noch im Aufbau.";
+    public const string CharModule = "char.dll";
+    public const string InterfaceModule = "merintr.dll";
+    public const string Motd = "Willkommen auf dem neuen Meridian-Server!";
+
+    /// <summary>Epoche im Game-Modus. Der Server hat noch keine Garbage Collection, sie bleibt konstant.</summary>
+    public const byte Epoch = 1;
+
+    private enum Mode { Synched, Game }
 
     private readonly NetworkStream _stream = client.GetStream();
-    private readonly SemaphoreSlim _sendLock = new(1, 1);
+    private readonly Channel<Outgoing> _outbox = Channel.CreateUnbounded<Outgoing>(new() { SingleReader = true });
+    private readonly HashSet<string> _sentResources = new(StringComparer.Ordinal);
+    private readonly GameCodec _codec = new();
+    private volatile Mode _mode = Mode.Synched;
     private Account? _account;
     private int _failedLogins;
-    private SecurityStream? _security;
+    private Avatar? _avatar;
+
+    /// <summary>Ausgehende Nachricht. Epoch: 0 im Login-Modus, <see cref="Epoch"/> im Game-Modus.</summary>
+    private sealed record Outgoing(byte[] Payload, byte Epoch, byte? NewToken = null);
 
     public int Id => id;
     public string? AccountName => _account?.Name;
@@ -26,26 +42,27 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         Log.Info($"Session {id}: Verbindung von {client.Client.RemoteEndPoint}");
         using var idle = CancellationTokenSource.CreateLinkedTokenSource(serverCt);
         idle.CancelAfter(server.Options.MenuTimeout);
+        var writer = Task.Run(() => WriteLoopAsync(serverCt), CancellationToken.None);
         var reader = new FrameReader(_stream, Framing.MaxClientPayload);
 
         try
         {
-            await SendAsync(LoginReplies.GetLogin());
+            PostLogin(LoginReplies.GetLogin());
             while (await reader.ReadAsync(idle.Token) is { } frame)
             {
-                idle.CancelAfter(server.Options.MenuTimeout);
+                idle.CancelAfter(_mode == Mode.Game ? server.Options.GameTimeout : server.Options.MenuTimeout);
                 if (frame.Header.Length == 0)
                     continue;   // Original ignoriert leere Nachrichten
-                if (frame.Header.Epoch != 0)
-                    throw new ProtocolException($"Epoch {frame.Header.Epoch} im Login-Modus");
-                if (!await HandleLoginMessageAsync(frame))
+                bool keepGoing = _mode == Mode.Game ? HandleGameFrame(frame) : HandleSynchedFrame(frame);
+                if (!keepGoing)
                     break;
             }
         }
         catch (OperationCanceledException) when (!serverCt.IsCancellationRequested)
         {
             Log.Info($"Session {id}: Timeout");
-            await TrySendAsync(LoginReplies.Timeout());
+            if (_mode == Mode.Synched)
+                PostLogin(LoginReplies.Timeout());
         }
         catch (OperationCanceledException) { }
         catch (ProtocolException ex)
@@ -57,14 +74,21 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         catch (ObjectDisposedException) { }
         finally
         {
+            LeaveWorld();
+            _outbox.Writer.TryComplete();
+            await writer;
             Close();
             Log.Info($"Session {id}: getrennt");
         }
     }
 
-    /// <summary>Verarbeitet eine Nachricht. false = Verbindung beenden.</summary>
-    private async Task<bool> HandleLoginMessageAsync(Frame frame)
+    // ---------------------------------------------------------------- Login-Modus
+
+    private bool HandleSynchedFrame(Frame frame)
     {
+        if (frame.Header.Epoch != 0)
+            throw new ProtocolException($"Epoch {frame.Header.Epoch} im Login-Modus");
+
         var type = (LoginMessage)frame.Type;
 
         // Vor erfolgreichem Login wird alles außer AP_LOGIN ignoriert (synched.c).
@@ -74,27 +98,26 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         switch (type)
         {
             case LoginMessage.Login:
-                return await HandleLoginAsync(LoginRequest.Parse(frame.Payload));
+                return HandleLogin(LoginRequest.Parse(frame.Payload));
 
             case LoginMessage.ReqMenu:
-                await SendMenuAsync();
+                SendMenu();
                 return true;
 
             case LoginMessage.ReqGame:
-                Log.Info($"Session {id}: {_account!.Name} möchte ins Spiel (Game-Modus fehlt noch)");
-                await SendAsync(LoginReplies.Message(GameNotAvailableText, LoginAction.Logoff));
+                EnterGameMode();
                 return true;
 
             case LoginMessage.Ping:
                 return true;
 
             default:
-                Log.Info($"Session {id}: Nachricht {type} ({frame.Type}) wird noch nicht unterstützt");
+                Log.Info($"Session {id}: Login-Nachricht {type} ({frame.Type}) wird nicht unterstützt");
                 return true;
         }
     }
 
-    private async Task<bool> HandleLoginAsync(LoginRequest login)
+    private bool HandleLogin(LoginRequest login)
     {
         if (_account is not null)
             return true;   // schon angemeldet
@@ -106,42 +129,214 @@ public sealed class Session(int id, TcpClient client, GameServer server)
             Log.Info($"Session {id}: Login fehlgeschlagen für '{login.Username}' ({_failedLogins}. Versuch)");
             if (_failedLogins >= server.Options.MaxLoginAttempts)
             {
-                await SendAsync(LoginReplies.TooManyLogins());
+                PostLogin(LoginReplies.TooManyLogins());
                 return false;
             }
-            await SendAsync(LoginReplies.LoginFailed());
+            PostLogin(LoginReplies.LoginFailed());
             return true;
         }
 
         _account = account;
         server.ClaimAccount(account.Name, this);
         Log.Info($"Session {id}: {account.Name} angemeldet (Client {login.VersionMajor}.{login.VersionMinor})");
-        await SendAsync(LoginReplies.LoginOk(account.Type));
-        await SendMenuAsync();
+        PostLogin(LoginReplies.LoginOk(account.Type));
+        SendMenu();
         return true;
     }
 
-    private async Task SendMenuAsync()
+    private void SendMenu()
     {
         // Neue Seeds für den Security-Hash im Game-Modus (protocol.md 2.4).
-        _security = new SecurityStream(SecurityStream.CreateSeeds());
-        await SendAsync(LoginReplies.GetChoice(_security.Seeds));
-        await SendAsync(LoginReplies.Credits());
+        _codec.Security = new SecurityStream(SecurityStream.CreateSeeds());
+        PostLogin(LoginReplies.GetChoice(_codec.Security.Seeds));
+        PostLogin(LoginReplies.Credits());
     }
 
-    private async Task SendAsync(byte[] payload)
+    private void EnterGameMode()
     {
-        // Im Login-Modus ist der Secure-Token noch 0 → Type-Byte bleibt unverändert, Epoch = 0.
-        byte[] frame = Framing.FrameServerMessage(payload);
-        await _sendLock.WaitAsync();
-        try { await _stream.WriteAsync(frame); }
-        finally { _sendLock.Release(); }
+        Log.Info($"Session {id}: {_account!.Name} betritt den Game-Modus");
+        PostLogin(new PacketWriter(LoginMessage.Game).ToArray());
+        _mode = Mode.Game;
+        // Der Client lädt beim Eintritt in STATE_GAME seine Ressourcen neu → dynamische neu senden.
+        lock (_sentResources)
+            _sentResources.Clear();
+        EnsureResource(CharModule);
+        PostGame(GameReplies.LoadModule(server.Resources[CharModule]));
     }
 
-    private async Task TrySendAsync(byte[] payload)
+    // ---------------------------------------------------------------- Game-Modus
+
+    private bool HandleGameFrame(Frame frame)
     {
-        try { await SendAsync(payload); }
-        catch (Exception ex) when (ex is IOException or ObjectDisposedException) { }
+        if (!_codec.Verify(frame))
+        {
+            // Original: LogSpoofs/HangupSpoofs sind standardmäßig an.
+            Log.Warn($"Session {id}: Security-Hash falsch (Nachricht {frame.Type}) – trenne");
+            return false;
+        }
+        if (frame.Header.Epoch != Epoch)
+            return true;   // veraltete Epoche: still verwerfen (game.c)
+
+        var type = (GameMessage)frame.Type;
+        var r = new PacketReader(frame.Payload.AsSpan(1));
+        switch (type)
+        {
+            case GameMessage.Ping:
+                SendEchoPing();
+                break;
+
+            case GameMessage.SendCharacters:
+                PostGame(GameReplies.Characters([new CharacterEntry(_account!.CharacterId, _account.Name, false)], Motd));
+                break;
+
+            case GameMessage.UseCharacter:
+                UseCharacter(r.U32() & 0x0FFFFFFF);
+                break;
+
+            case GameMessage.SendPlayer:
+                if (_avatar is not null)
+                    SendPlayer();
+                break;
+
+            case GameMessage.SendRoomContents:
+                if (_avatar is not null)
+                    SendRoomContents(server.World.Snapshot());
+                break;
+
+            case GameMessage.ReqInventory:
+                if (_avatar is not null)
+                    PostGame(GameReplies.Inventory([]));
+                break;
+
+            case GameMessage.ReqMove when _avatar is not null:
+            {
+                ushort row = r.U16(), col = r.U16();
+                byte speed = r.U8();
+                server.World.Move(_avatar, row, col, speed);
+                break;
+            }
+
+            case GameMessage.ReqTurn when _avatar is not null:
+                r.U32();   // eigene ID
+                server.World.Turn(_avatar, r.U16());
+                break;
+
+            case GameMessage.SayTo when _avatar is not null:
+            {
+                var sayType = (SayType)r.U8();
+                string text = r.Str();
+                if (text.Length > 0)
+                {
+                    Log.Info($"Session {id}: {_avatar.Name} sagt: {text}");
+                    server.World.Say(_avatar, sayType, text);
+                }
+                break;
+            }
+
+            case GameMessage.ReqQuit:
+                LeaveWorld();
+                PostGame(GameReplies.Quit());
+                _mode = Mode.Synched;
+                SendMenu();
+                break;
+
+            default:
+                Log.Info($"Session {id}: Game-Nachricht {type} ({frame.Type}) wird noch nicht unterstützt");
+                break;
+        }
+        return true;
+    }
+
+    private void UseCharacter(uint characterId)
+    {
+        if (characterId != _account!.CharacterId || _avatar is not null)
+            return;
+
+        Log.Info($"Session {id}: {_account.Name} betritt die Welt");
+        _avatar = new Avatar(characterId, _account.Name, this);
+        EnsureResource(InterfaceModule);
+        PostGame(GameReplies.LoadModule(server.Resources[InterfaceModule]));
+
+        var present = server.World.Enter(_avatar);
+        SendPlayer();
+        SendRoomContents(present);
+        PostGame(GameReplies.Inventory([]));
+        SendEchoPing();
+    }
+
+    private void SendPlayer()
+    {
+        var room = server.World.Room;
+        EnsureResource(room.RooFile);
+        EnsureResource(room.Name);
+        EnsureResource(room.PlayerIcon);
+        EnsureResource(_avatar!.Name);
+        var res = server.Resources;
+        PostGame(GameReplies.Player(new PlayerInfo(
+            _avatar.Id, res[room.PlayerIcon], res[_avatar.Name],
+            World.RoomId, res[room.RooFile], res[room.Name], room.Security,
+            room.AmbientLight, PlayerLight: 0)));
+    }
+
+    private void SendRoomContents(List<Avatar> present)
+    {
+        foreach (var a in present)
+            EnsureResource(a.Name);
+        PostGame(GameReplies.RoomContents(World.RoomId, present.Select(server.World.ToRoomObject).ToList()));
+    }
+
+    private void SendEchoPing()
+    {
+        var (payload, newToken) = _codec.CreateEchoPing();
+        _outbox.Writer.TryWrite(new Outgoing(payload, Epoch, newToken));
+    }
+
+    private void LeaveWorld()
+    {
+        if (_avatar is null)
+            return;
+        server.World.Leave(_avatar);
+        _avatar = null;
+    }
+
+    // ---------------------------------------------------------------- Senden
+
+    /// <summary>Stellt sicher, dass der Client die String-Ressource kennt (BP_CHANGE_RESOURCE).
+    /// Wird auch von anderen Sessions (über World) aufgerufen.</summary>
+    public void EnsureResource(string value)
+    {
+        lock (_sentResources)
+        {
+            if (_mode != Mode.Game || !_sentResources.Add(value))
+                return;
+            PostGame(GameReplies.ChangeResource(server.Resources[value], value));
+        }
+    }
+
+    /// <summary>Reiht eine Game-Nachricht ein. Threadsicher, wird auch von <see cref="World"/> benutzt.</summary>
+    public void Post(byte[] payload) => _outbox.Writer.TryWrite(new Outgoing(payload, Epoch));
+
+    private void PostGame(byte[] payload) => Post(payload);
+
+    private void PostLogin(byte[] payload) => _outbox.Writer.TryWrite(new Outgoing(payload, 0));
+
+    private async Task WriteLoopAsync(CancellationToken ct)
+    {
+        try
+        {
+            await foreach (var msg in _outbox.Reader.ReadAllAsync(ct))
+            {
+                // Auch AP_*-Nachrichten werden verschleiert, sobald ein Token aktiv ist (protocol.md 2.5).
+                byte[] frame = _codec.FrameServerMessage(msg.Payload, msg.Epoch);
+                if (msg.NewToken is { } token)
+                    _codec.Token.Reset(token);   // erst NACH der Echo-Ping-Nachricht (game.c)
+                await _stream.WriteAsync(frame, ct);
+            }
+        }
+        catch (Exception ex) when (ex is IOException or ObjectDisposedException or OperationCanceledException)
+        {
+            Close();
+        }
     }
 
     public void Close() => client.Close();

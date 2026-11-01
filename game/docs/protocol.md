@@ -702,7 +702,7 @@ Client-Dispatch: zuerst Module (`EVENT_SERVERMSG`), dann `game_handler_table` (`
 
 ### 5.5 Vollständige Layouts der Kern-Nachrichten
 
-**BP_PLAYER** (130) – Pflicht nach Raumwechsel/Login (`clientd3d/server.c:601-642`, `kod/.../user.kod:2460-2494`, `kod/object/active/holder/room.kod:1929-1938`); Länge exakt 61 Byte Payload:
+**BP_PLAYER** (130) – Pflicht nach Raumwechsel/Login (`clientd3d/server.c:601-642`, `kod/.../user.kod:2460-2494`, `kod/object/active/holder/room.kod:1929-1938`); Länge exakt 54 Byte nach dem Type-Byte (korrigiert, `SIZE_LIGHT` = 1):
 
 | Typ | Feld |
 |---|---|

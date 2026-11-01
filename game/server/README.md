@@ -1,9 +1,13 @@
 # Neuer Server (C#/.NET)
 
-Stand: **nur Login-Modus.** Der Server beantwortet den Login des Original-Clients
-(`AP_GETLOGIN` → `AP_LOGIN` → `AP_LOGINOK`, `AP_GETCHOICE`, `AP_CREDITS`).
-Auf `AP_REQ_GAME` schickt er eine Meldung und meldet den Client ab, weil der Game-Modus fehlt.
-Resync (Beacon-Handshake) ist noch nicht eingebaut; bei Protokollfehlern wird getrennt.
+Stand:
+- **Login-Modus** wie das Original (`AP_GETLOGIN` → `AP_LOGIN` → `AP_LOGINOK`, `AP_GETCHOICE`, `AP_CREDITS` → `AP_GAME`).
+- **Game-Modus** mit Security-Hash-Prüfung, Epoche und Type-Byte-Verschleierung (Token/Redbook):
+  Charakterwahl (`char.dll`), ein Raum, mehrere Spieler sehen sich (`BP_CREATE`/`BP_REMOVE`),
+  Bewegung/Drehung (`BP_MOVE`/`BP_TURN`), Chat (`BP_SAID`), Ping/Echo, `BP_REQ_QUIT` zurück ins Menü.
+- Texte und Dateinamen (Module, Raum, Namen) schickt der Server per `BP_CHANGE_RESOURCE` mit eigenen
+  IDs ab `0x00F00000` – keine Abhängigkeit von den kompilierten `.rsc`-Dateien des Originals.
+- Fehlt noch: Resync (Beacon), Charaktererstellung, Inventar/Gegenstände, Stats, Kampf, mehrere Räume, Persistenz.
 
 Projekte (Solution `game/Meridian.sln`):
 - `shared/Meridian.Protocol` – Protokoll (Framing, CRC, Security-Hash, Token, Login-Nachrichten), net8.0, auch für den Godot-Client gedacht
@@ -39,6 +43,15 @@ chmod +x Meridian.Server
 ```
 
 Strg+C bzw. SIGTERM (systemd) beendet den Server sauber. Ein systemd-Service folgt, wenn der Server dauerhaft laufen soll.
+
+## Optionen
+
+| Option | Bedeutung |
+|---|---|
+| `--port 5959` | TCP-Port |
+| `--accounts accounts.json` | Account-Datei |
+| `--room tosinn.roo` | Raumdatei des Clients für den Startraum |
+| `--client-dir <pfad>` | `resource`-Ordner eines Original-Clients: Raum-Security wird aus der `.roo` gelesen (sonst wird der Spieler im Original-Client „blind“) |
 
 ## Original-Client verbinden
 

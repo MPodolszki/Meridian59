@@ -2,11 +2,13 @@
 using Meridian.Server;
 
 // Aufruf:
-//   Meridian.Server [--port 5959] [--accounts accounts.json]
+//   Meridian.Server [--port 5959] [--accounts accounts.json] [--client-dir <resource-ordner>] [--room tosinn.roo]
 //   Meridian.Server add-account <name> <passwort> [--admin] [--accounts accounts.json]
 
 string accountsPath = "accounts.json";
 int port = 5959;
+string? clientDir = null;
+var room = new RoomOptions();
 var positional = new List<string>();
 bool admin = false;
 
@@ -17,6 +19,8 @@ for (int i = 0; i < args.Length; i++)
         case "--port": port = int.Parse(args[++i]); break;
         case "--accounts": accountsPath = args[++i]; break;
         case "--admin": admin = true; break;
+        case "--client-dir": clientDir = args[++i]; break;
+        case "--room": room = room with { RooFile = args[++i] }; break;
         default: positional.Add(args[i]); break;
     }
 }
@@ -45,7 +49,7 @@ using var sigint = System.Runtime.InteropServices.PosixSignalRegistration.Create
 using var sigterm = System.Runtime.InteropServices.PosixSignalRegistration.Create(
     System.Runtime.InteropServices.PosixSignal.SIGTERM, ctx => { ctx.Cancel = true; cts.Cancel(); });
 
-var server = new GameServer(new ServerOptions { Port = port }, accounts);
+var server = new GameServer(new ServerOptions { Port = port, Room = room, ClientResourceDir = clientDir }, accounts);
 server.Start();
 await server.RunAsync(cts.Token);
 Log.Info("Server beendet");

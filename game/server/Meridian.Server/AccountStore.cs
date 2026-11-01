@@ -3,7 +3,8 @@ using Meridian.Protocol;
 
 namespace Meridian.Server;
 
-public sealed record Account(string Name, string PasswordDigestHex, ClientAccountType Type = ClientAccountType.Normal);
+/// <summary>Account mit vorerst genau einem Charakter, der wie der Account heißt.</summary>
+public sealed record Account(string Name, string PasswordDigestHex, ClientAccountType Type = ClientAccountType.Normal, uint CharacterId = 0);
 
 /// <summary>
 /// Vorläufiger Account-Speicher als JSON-Datei. Gespeichert wird der Passwort-Digest des
@@ -13,6 +14,9 @@ public sealed record Account(string Name, string PasswordDigestHex, ClientAccoun
 public sealed class AccountStore
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
+
+    /// <summary>Objekt-IDs der Charaktere beginnen hier (unter 2^28, Tag-Bits frei).</summary>
+    public const uint FirstCharacterId = 1000;
 
     private readonly string _path;
     private readonly Dictionary<string, Account> _accounts;
@@ -37,7 +41,10 @@ public sealed class AccountStore
     {
         if (name.Length is 0 or > LoginRequest.MaxUsernameLength)
             throw new ArgumentException($"Name muss 1..{LoginRequest.MaxUsernameLength} Zeichen haben", nameof(name));
-        _accounts[name] = new Account(name, Convert.ToHexString(PasswordDigest.Compute(password)), type);
+        uint characterId = _accounts.TryGetValue(name, out var existing)
+            ? existing.CharacterId
+            : Math.Max(FirstCharacterId, _accounts.Values.Select(a => a.CharacterId).DefaultIfEmpty(0u).Max() + 1);
+        _accounts[name] = new Account(name, Convert.ToHexString(PasswordDigest.Compute(password)), type, characterId);
         File.WriteAllText(_path, JsonSerializer.Serialize(_accounts.Values.ToList(), JsonOptions));
     }
 

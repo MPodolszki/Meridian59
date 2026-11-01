@@ -47,6 +47,6 @@ Getroffene Entscheidungen werden in game/docs/decisions.md festgehalten.
 - Antworten kurz und auf Deutsch.
 
 ## Nächster Schritt
-Login-Server (game/server) steht, noch nicht mit dem Original-Client getestet.
-Als Nächstes: Test gegen den Original-Client (Windows), dann Game-Modus
-(Charakterauswahl, BP_PLAYER, Raum) im Server.
+Server kann Login und einen einfachen Game-Modus (ein Raum, Bewegung, Chat, mehrere Spieler),
+noch nicht mit dem Original-Client getestet. Als Nächstes: Godot-Client-Grundgerüst
+(nutzt game/shared), dann Test gegen den Original-Client.
