@@ -46,3 +46,14 @@ Gebaut wird self-contained per `dotnet publish -r linux-arm64`, auf dem Pi ist k
 Keine Windows-spezifischen APIs im Server.
 
 **Begründung:** Günstiges, einfaches Hosting; Pi als Testserver im Heimnetz.
+
+## 2026-11-01 – Spielwelt startet in Tos
+Neue Charaktere starten in den „Streets of Tos“ (RID 50, Ankunft 60/18). Tos-Räume, Ausgänge,
+Türen, Objekte und NPCs stehen in `server/data/world/tos.json`, abgeleitet aus `kod/.../tosrm`
+(siehe tos.md). Ausgänge lösen wie im Original erst mit „Gehen/Öffnen“ (BP_REQ_GO, Leertaste) aus.
+
+**Begründung:** Wunsch, mit Tos zu beginnen. Abweichung vom Original, dort starten neue Spieler auf Raza.
+
+## 2026-11-01 – Spielerrasse Zwerg als erste Figur
+Der eigene Charakter wird im neuen Client als Zwerg dargestellt (klein, gedrungen, Bart,
+Startkleidung ohne Rüstung). Platzhalter aus Grundformen, bis eigene Modelle vorliegen.

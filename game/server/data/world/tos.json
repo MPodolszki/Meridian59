@@ -1,0 +1,3242 @@
+{
+  "source": "kod/object/active/holder/room/tosrm (Meridian 59)",
+  "startRoom": 50,
+  "rooms": [
+    {
+      "id": 50,
+      "constant": "RID_TOS",
+      "kodClass": "Tos",
+      "name": "The Streets of Tos",
+      "roo": "tos.roo",
+      "music": "tos.mid",
+      "baseLight": 209,
+      "outdoors": true,
+      "teleport": {
+        "row": 60,
+        "col": 18
+      },
+      "exits": [
+        {
+          "row": 56,
+          "col": 40,
+          "to": 61,
+          "toConstant": "RID_EAST_TOS",
+          "toRow": 26,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 57,
+          "col": 40,
+          "to": 61,
+          "toConstant": "RID_EAST_TOS",
+          "toRow": 26,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 57,
+          "col": 3,
+          "to": 586,
+          "toConstant": "RID_H6",
+          "toRow": 27,
+          "toCol": 40,
+          "rotate": "NONE"
+        },
+        {
+          "row": 58,
+          "col": 3,
+          "to": 586,
+          "toConstant": "RID_H6",
+          "toRow": 27,
+          "toCol": 40,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 18,
+          "to": 950,
+          "toConstant": "RID_DUKE1",
+          "toRow": 42,
+          "toCol": 29,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 19,
+          "to": 950,
+          "toConstant": "RID_DUKE1",
+          "toRow": 42,
+          "toCol": 29,
+          "rotate": "NONE"
+        },
+        {
+          "row": 45,
+          "col": 32,
+          "to": 52,
+          "toConstant": "RID_TOS_INN",
+          "toRow": 4,
+          "toCol": 10,
+          "rotate": "NONE"
+        },
+        {
+          "row": 46,
+          "col": 23,
+          "to": 52,
+          "toConstant": "RID_TOS_INN",
+          "toRow": 3,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 54,
+          "col": 31,
+          "to": 52,
+          "toConstant": "RID_TOS_INN",
+          "toRow": 9,
+          "toCol": 8,
+          "rotate": "NONE"
+        },
+        {
+          "row": 61,
+          "col": 12,
+          "to": 51,
+          "toConstant": "RID_TOS_SMITHY",
+          "toRow": 3,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 61,
+          "col": 13,
+          "to": 51,
+          "toConstant": "RID_TOS_SMITHY",
+          "toRow": 3,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 41,
+          "col": 22,
+          "to": 56,
+          "toConstant": "RID_TOS_TAN",
+          "toRow": 6,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 24,
+          "col": 16,
+          "to": 57,
+          "toConstant": "RID_TOS_GREY",
+          "toRow": 4,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 25,
+          "col": 16,
+          "to": 57,
+          "toConstant": "RID_TOS_GREY",
+          "toRow": 4,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 61,
+          "col": 6,
+          "to": 58,
+          "toConstant": "RID_TOS_FORGOTTEN",
+          "toRow": 3,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 61,
+          "col": 7,
+          "to": 58,
+          "toConstant": "RID_TOS_FORGOTTEN",
+          "toRow": 3,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 25,
+          "col": 23,
+          "to": 53,
+          "toConstant": "RID_TOS_APOTH",
+          "toRow": 7,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 25,
+          "col": 24,
+          "to": 53,
+          "toConstant": "RID_TOS_APOTH",
+          "toRow": 7,
+          "toCol": 3,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 50,
+          "col": 10,
+          "message": "The door to this tavern is locked."
+        },
+        {
+          "row": 50,
+          "col": 11,
+          "message": "The door to this tavern is locked."
+        },
+        {
+          "row": 49,
+          "col": 11,
+          "message": "The door to this tavern is locked."
+        },
+        {
+          "row": 32,
+          "col": 23,
+          "message": "The doors to this residence are locked."
+        },
+        {
+          "row": 33,
+          "col": 23,
+          "message": "The doors to this residence are locked."
+        },
+        {
+          "row": 16,
+          "col": 22
+        },
+        {
+          "row": 17,
+          "col": 22
+        },
+        {
+          "row": 24,
+          "col": 15,
+          "message": "The doors to this residence are locked."
+        },
+        {
+          "row": 25,
+          "col": 15,
+          "message": "The doors to this residence are locked."
+        },
+        {
+          "row": 28,
+          "col": 15,
+          "message": "The doors to this residence are locked."
+        },
+        {
+          "row": 29,
+          "col": 15,
+          "message": "The doors to this residence are locked."
+        },
+        {
+          "row": 34,
+          "col": 15,
+          "message": "The doors to this residence are locked."
+        },
+        {
+          "row": 36,
+          "col": 15,
+          "message": "The doors to this residence are locked."
+        },
+        {
+          "row": 38,
+          "col": 15,
+          "message": "The doors to this residence are locked."
+        },
+        {
+          "row": 61,
+          "col": 8,
+          "message": "The door to this residence is locked."
+        },
+        {
+          "row": 61,
+          "col": 9,
+          "message": "The door to this residence is locked."
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 70,
+          "toConstant": "RID_TOS_GRAVEYARD",
+          "toRow": 28,
+          "toCol": 32,
+          "rotate": "NONE"
+        }
+      ],
+      "objects": [
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 13,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 19,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 21,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 23,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 27,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 30,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 35,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 43,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 50,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 43,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 41,
+          "col": 13,
+          "fineRow": 17,
+          "fineCol": 30,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 61,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 61,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 59,
+          "col": 38,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 31,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 31,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 61,
+          "col": 10,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 17,
+          "col": 16,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 48,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 43,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 41,
+          "col": 15,
+          "fineRow": 17,
+          "fineCol": 30,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 21,
+          "col": 16,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 13,
+          "col": 16,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 28,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 50,
+          "col": 26,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 51,
+          "col": 27,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 51,
+          "col": 28,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 46,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 49,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 59,
+          "col": 29,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 32,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 59,
+          "col": 29,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 49,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 46,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 32,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 28,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 21,
+          "col": 16,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL",
+          "row": 3,
+          "col": 46,
+          "fineRow": 16,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 55,
+          "col": 10,
+          "fineRow": 24,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 55,
+          "col": 28,
+          "fineRow": 8,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 60,
+          "col": 22,
+          "fineRow": 48,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 60,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 49,
+          "col": 22,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Fountain",
+          "row": 56,
+          "col": 18,
+          "fineRow": 36,
+          "fineCol": 36,
+          "angle": 0
+        }
+      ],
+      "npcs": []
+    },
+    {
+      "id": 51,
+      "constant": "RID_TOS_SMITHY",
+      "kodClass": "TosSmithy",
+      "name": "The Freelance Merchant and Menders Shop",
+      "roo": "tossmith.roo",
+      "music": "smithy.mid",
+      "baseLight": 100,
+      "outdoors": false,
+      "teleport": {
+        "row": 3,
+        "col": 3
+      },
+      "exits": [
+        {
+          "row": 2,
+          "col": 2,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 60,
+          "toCol": 12,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 60,
+          "toCol": 12,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "OO_BIGIRON",
+          "row": 3,
+          "col": 7,
+          "fineRow": 30,
+          "fineCol": 31,
+          "angle": 0
+        },
+        {
+          "type": "OO_JUG",
+          "row": 4,
+          "col": 7,
+          "fineRow": 29,
+          "fineCol": 35,
+          "angle": 0
+        },
+        {
+          "type": "OO_BUCKET",
+          "row": 8,
+          "col": 5,
+          "fineRow": 24,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "DynamicLight",
+          "row": 2,
+          "col": 6,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "DynamicLight",
+          "row": 3,
+          "col": 2,
+          "fineRow": 55,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "DynamicLight",
+          "row": 6,
+          "col": 2,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "DynamicLight",
+          "row": 5,
+          "col": 7,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "DynamicLight",
+          "row": 6,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 16,
+          "angle": 0
+        }
+      ],
+      "npcs": []
+    },
+    {
+      "id": 52,
+      "constant": "RID_TOS_INN",
+      "kodClass": "TosInn",
+      "name": "Familiars",
+      "roo": "tosinn.roo",
+      "music": "bar.mid",
+      "baseLight": 164,
+      "outdoors": false,
+      "teleport": {
+        "row": 7,
+        "col": 8
+      },
+      "exits": [
+        {
+          "row": 1,
+          "col": 3,
+          "to": 74,
+          "toConstant": "RID_TOS_INN_CELLAR",
+          "toRow": 2,
+          "toCol": 5,
+          "rotate": "NONE"
+        },
+        {
+          "row": 3,
+          "col": 10,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 45,
+          "toCol": 31,
+          "rotate": "NONE"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 46,
+          "toCol": 22,
+          "rotate": "NONE"
+        },
+        {
+          "row": 10,
+          "col": 8,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 55,
+          "toCol": 31,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 1,
+          "col": 4,
+          "message": "~kPaddock calls out, \"Sorry, we don't have any vacant rooms right now.\""
+        },
+        {
+          "row": 6,
+          "col": 10,
+          "message": "~kPaddock says, \"Hey, keep out of my pantry!\""
+        },
+        {
+          "row": 7,
+          "col": 10,
+          "message": "~kPaddock says, \"Hey, keep out of my pantry!\""
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "message": "~kPaddock mumbles, \"Where do you think you're gonna go?\""
+        }
+      ],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "OO_JUG",
+          "row": 5,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL",
+          "row": 3,
+          "col": 9,
+          "fineRow": 16,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "OO_DECORATIVE_POT",
+          "row": 5,
+          "col": 8,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 2,
+          "col": 2,
+          "fineRow": 8,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 9,
+          "col": 9,
+          "fineRow": 56,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 8,
+          "col": 10,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 8,
+          "col": 9,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 8,
+          "col": 8,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 7,
+          "col": 8,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 6,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 5,
+          "col": 8,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "NewsAnnouncement",
+          "row": 5,
+          "col": 11,
+          "fineRow": 56,
+          "fineCol": 16,
+          "angle": 0
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "TosInnKeeper",
+          "name": "Paddock",
+          "role": "Wirt (Krug, Käse; bedingt: Purpurpilz, Orkzahn)",
+          "row": 7,
+          "col": 9,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 2048
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "constant": "RID_TOS_APOTH",
+      "kodClass": "TosApoth",
+      "name": "Frisconar's Mysticals",
+      "roo": "tosapoth.roo",
+      "music": "song02.mid",
+      "baseLight": 164,
+      "outdoors": false,
+      "teleport": {
+        "row": 7,
+        "col": 3
+      },
+      "exits": [
+        {
+          "row": 6,
+          "col": 2,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 25,
+          "toCol": 22,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "OO_MORTARANDPESTLE",
+          "row": 5,
+          "col": 5,
+          "fineRow": 8,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_FLASK_GREEN",
+          "row": 4,
+          "col": 5,
+          "fineRow": 40,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_FLASK_GREEN",
+          "row": 6,
+          "col": 6,
+          "fineRow": 8,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_FLASK_GREEN",
+          "row": 7,
+          "col": 6,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_JUG",
+          "row": 2,
+          "col": 2,
+          "fineRow": 24,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "OO_FLASK_STAND",
+          "row": 6,
+          "col": 6,
+          "fineRow": 40,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECBOTTLE",
+          "row": 6,
+          "col": 5,
+          "fineRow": 24,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "OO_GOOSE",
+          "row": 5,
+          "col": 6,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_GOOSE",
+          "row": 5,
+          "col": 6,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_FIXINS",
+          "row": 8,
+          "col": 6,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_FIXINS",
+          "row": 8,
+          "col": 6,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_GOLD_BOTTLE",
+          "row": 3,
+          "col": 5,
+          "fineRow": 40,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "DynamicLight",
+          "row": 8,
+          "col": 4,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "DynamicLight",
+          "row": 5,
+          "col": 3,
+          "fineRow": 64,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "DynamicLight",
+          "row": 2,
+          "col": 4,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BookPedestal",
+          "row": 2,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 512
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "TosApothecary",
+          "name": "Frisconar",
+          "role": "Apotheker (Reagenzien, Fackel, Flasche; lehrt Spruch Hospice; bedingt: Solagh)",
+          "row": 4,
+          "col": 6,
+          "fineRow": 10,
+          "fineCol": 32,
+          "angle": 1536
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "constant": "RID_TOS_BANK",
+      "kodClass": "TosBank",
+      "name": "First Royal Bank of Tos",
+      "roo": "tosbank.roo",
+      "music": "bank.mid",
+      "baseLight": 164,
+      "outdoors": false,
+      "teleport": {
+        "row": 3,
+        "col": 6
+      },
+      "exits": [
+        {
+          "row": 6,
+          "col": 9,
+          "to": 61,
+          "toConstant": "RID_EAST_TOS",
+          "toRow": 13,
+          "toCol": 3,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "Sign",
+          "row": 4,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 8,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 6,
+          "col": 6,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 9,
+          "col": 6,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 2,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 3,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "TosBanker",
+          "name": "Skivlat",
+          "role": "Bankier (deposit/withdraw/balance; verkauft Edelsteine: Smaragd, Saphir, Diamant)",
+          "row": 7,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "constant": "RID_TOS_TAN",
+      "kodClass": "TosTan",
+      "name": "Abandoned Building",
+      "roo": "tostan.roo",
+      "music": "tos.mid",
+      "baseLight": 164,
+      "outdoors": false,
+      "teleport": {
+        "row": 6,
+        "col": 4
+      },
+      "exits": [
+        {
+          "row": 6,
+          "col": 3,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 41,
+          "toCol": 21,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "OO_DUNG",
+          "row": 4,
+          "col": 7,
+          "fineRow": 59,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 2,
+          "col": 8,
+          "fineRow": 56,
+          "fineCol": 26,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 6,
+          "col": 7,
+          "fineRow": 44,
+          "fineCol": 29,
+          "angle": 0
+        },
+        {
+          "type": "OO_STONECHAIR",
+          "row": 4,
+          "col": 8,
+          "fineRow": 21,
+          "fineCol": 4,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 2,
+          "col": 3,
+          "fineRow": 55,
+          "fineCol": 34,
+          "angle": 0
+        },
+        {
+          "type": "OO_NESTOBJ2",
+          "row": 2,
+          "col": 6,
+          "fineRow": 57,
+          "fineCol": 17,
+          "angle": 0
+        },
+        {
+          "type": "OO_NESTOBJ1",
+          "row": 6,
+          "col": 5,
+          "fineRow": 11,
+          "fineCol": 33,
+          "angle": 0
+        }
+      ],
+      "npcs": []
+    },
+    {
+      "id": 57,
+      "constant": "RID_TOS_GREY",
+      "kodClass": "TosGrey",
+      "name": "Abandoned Building",
+      "roo": "tosgrey.roo",
+      "music": "tos.mid",
+      "baseLight": 164,
+      "outdoors": false,
+      "teleport": {
+        "row": 4,
+        "col": 4
+      },
+      "exits": [
+        {
+          "row": 4,
+          "col": 7,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 24,
+          "toCol": 17,
+          "rotate": "NONE"
+        },
+        {
+          "row": 5,
+          "col": 7,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 24,
+          "toCol": 17,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "OO_NESTOBJ1",
+          "row": 3,
+          "col": 3,
+          "fineRow": 56,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 5,
+          "col": 2,
+          "fineRow": 24,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "OO_DUNG",
+          "row": 4,
+          "col": 4,
+          "fineRow": 16,
+          "fineCol": 46,
+          "angle": 0
+        },
+        {
+          "type": "OO_NESTOBJ2",
+          "row": 3,
+          "col": 6,
+          "fineRow": 56,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_ROCKB",
+          "row": 3,
+          "col": 3,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_STONECHAIR",
+          "row": 7,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 2,
+          "col": 7,
+          "fineRow": 24,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "OO_ROCKC",
+          "row": 5,
+          "col": 3,
+          "fineRow": 56,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 7,
+          "col": 4,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_ROCKB",
+          "row": 3,
+          "col": 2,
+          "fineRow": 56,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 2,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 7,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_DUNG",
+          "row": 2,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 2,
+          "col": 5,
+          "fineRow": 24,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 7,
+          "col": 2,
+          "fineRow": 8,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "News",
+          "row": 2,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "npcs": []
+    },
+    {
+      "id": 58,
+      "constant": "RID_TOS_FORGOTTEN",
+      "kodClass": "TosForgottenLovers",
+      "name": "Forgotten Lover's Tryst",
+      "roo": "tosforgt.roo",
+      "music": "goodfor.mid",
+      "baseLight": 164,
+      "outdoors": false,
+      "teleport": {
+        "row": 3,
+        "col": 3
+      },
+      "exits": [
+        {
+          "row": 2,
+          "col": 2,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 60,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 60,
+          "toCol": 7,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "Candelabra",
+          "row": 6,
+          "col": 2,
+          "fineRow": 47,
+          "fineCol": 38,
+          "angle": 0
+        },
+        {
+          "type": "OO_BIGURN2",
+          "row": 8,
+          "col": 5,
+          "fineRow": 16,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "OO_JUG",
+          "row": 2,
+          "col": 7,
+          "fineRow": 24,
+          "fineCol": 40,
+          "angle": 0
+        }
+      ],
+      "npcs": []
+    },
+    {
+      "id": 59,
+      "constant": "RID_TOS_FORGET",
+      "kodClass": "TosForgotten",
+      "name": "Hall of the Forgotten Heroes",
+      "roo": "kochoh.roo",
+      "music": "extra01.mid",
+      "baseLight": 164,
+      "outdoors": false,
+      "teleport": {
+        "row": 13,
+        "col": 7
+      },
+      "exits": [
+        {
+          "row": 14,
+          "col": 7,
+          "to": 2000,
+          "toConstant": "RID_KOCATAN",
+          "toRow": 23,
+          "toCol": 30,
+          "rotate": "NONE"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "to": 2014,
+          "toConstant": "RID_KOC_HALL_OF_HEROES_A",
+          "toRow": 2,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "to": 2014,
+          "toConstant": "RID_KOC_HALL_OF_HEROES_A",
+          "toRow": 2,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 3,
+          "col": 11,
+          "to": 2015,
+          "toConstant": "RID_KOC_HALL_OF_HEROES_B",
+          "toRow": 2,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 4,
+          "col": 11,
+          "to": 2015,
+          "toConstant": "RID_KOC_HALL_OF_HEROES_B",
+          "toRow": 2,
+          "toCol": 4,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "BookPedestal",
+          "row": 7,
+          "col": 7,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 1024
+        }
+      ],
+      "npcs": []
+    },
+    {
+      "id": 60,
+      "constant": "RID_TOS_ARENA",
+      "kodClass": "TosArena",
+      "name": "The Arena of Kraanan",
+      "roo": "tosarena.roo",
+      "music": "pk_fm.mid",
+      "baseLight": 164,
+      "outdoors": true,
+      "teleport": {
+        "row": 22,
+        "col": 13
+      },
+      "exits": [
+        {
+          "row": 4,
+          "col": 6,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 22,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 4,
+          "col": 7,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 22,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 5,
+          "col": 7,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 22,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 22,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 7,
+          "col": 4,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 22,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 7,
+          "col": 5,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 22,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 18,
+          "col": 4,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 29,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 18,
+          "col": 5,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 29,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 19,
+          "col": 4,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 29,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 20,
+          "col": 7,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 29,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 21,
+          "col": 6,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 29,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 21,
+          "col": 7,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 29,
+          "toCol": 35,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "ArenaSign1",
+          "row": 13,
+          "col": 19,
+          "fineRow": 0,
+          "fineCol": 31,
+          "angle": 0
+        },
+        {
+          "type": "ArenaSign1",
+          "row": 11,
+          "col": 19,
+          "fineRow": 28,
+          "fineCol": 31,
+          "angle": 0
+        },
+        {
+          "type": "ArenaSign1",
+          "row": 12,
+          "col": 19,
+          "fineRow": 12,
+          "fineCol": 31,
+          "angle": 0
+        },
+        {
+          "type": "ArenaSign1",
+          "row": 13,
+          "col": 19,
+          "fineRow": 52,
+          "fineCol": 31,
+          "angle": 0
+        },
+        {
+          "type": "ArenaSign1",
+          "row": 14,
+          "col": 19,
+          "fineRow": 36,
+          "fineCol": 31,
+          "angle": 0
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "TosWatcher",
+          "name": "Watcher",
+          "role": "Arena-Aufseher (Kampfrichter der Arena des Kraanan)",
+          "row": 13,
+          "col": 20,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 2048
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "constant": "RID_EAST_TOS",
+      "kodClass": "EastTos",
+      "name": "East Ende",
+      "roo": "easttos.roo",
+      "music": "tos.mid",
+      "baseLight": 164,
+      "outdoors": true,
+      "teleport": {
+        "row": 27,
+        "col": 16
+      },
+      "exits": [
+        {
+          "row": 33,
+          "col": 3,
+          "to": 72,
+          "toConstant": "RID_TOS_HALL",
+          "toRow": 9,
+          "toCol": 2,
+          "rotate": "180"
+        },
+        {
+          "row": 13,
+          "col": 2,
+          "to": 54,
+          "toConstant": "RID_TOS_BANK",
+          "toRow": 6,
+          "toCol": 8,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 41,
+          "to": 707,
+          "toConstant": "RID_GUILDH5",
+          "toRow": 32,
+          "toCol": 17,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 42,
+          "to": 707,
+          "toConstant": "RID_GUILDH5",
+          "toRow": 32,
+          "toCol": 18,
+          "rotate": "NONE"
+        },
+        {
+          "row": 26,
+          "col": 1,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 56,
+          "toCol": 39,
+          "rotate": "NONE"
+        },
+        {
+          "row": 26,
+          "col": 26,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 26,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 27,
+          "col": 26,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 27,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 38,
+          "col": 36,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 36,
+          "toCol": 36,
+          "rotate": "NONE"
+        },
+        {
+          "row": 38,
+          "col": 37,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 36,
+          "toCol": 37,
+          "rotate": "NONE"
+        },
+        {
+          "row": 15,
+          "col": 36,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 17,
+          "toCol": 36,
+          "rotate": "NONE"
+        },
+        {
+          "row": 15,
+          "col": 37,
+          "to": 73,
+          "toConstant": "RID_TOS_ARENA2",
+          "toRow": 17,
+          "toCol": 37,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 47,
+          "col": 3
+        },
+        {
+          "row": 40,
+          "col": 1
+        },
+        {
+          "row": 20,
+          "col": 3
+        },
+        {
+          "row": 5,
+          "col": 3
+        },
+        {
+          "row": 2,
+          "col": 6
+        },
+        {
+          "row": 2,
+          "col": 14
+        },
+        {
+          "row": 2,
+          "col": 19
+        },
+        {
+          "row": 2,
+          "col": 27
+        },
+        {
+          "row": 2,
+          "col": 34
+        },
+        {
+          "row": 2,
+          "col": 48
+        },
+        {
+          "row": 2,
+          "col": 53
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "SOUTH",
+          "to": 596,
+          "toConstant": "RID_I6",
+          "toRow": 2,
+          "toCol": 43,
+          "rotate": "ANGLE_SOUTH"
+        }
+      ],
+      "objects": [
+        {
+          "type": "Lamp",
+          "row": 24,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 24,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 30,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 30,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 13,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 13,
+          "col": 38,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 16,
+          "col": 46,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 29,
+          "col": 49,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 24,
+          "col": 49,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 37,
+          "col": 46,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 40,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 40,
+          "col": 38,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 37,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 28,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 25,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 16,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 46,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 46,
+          "col": 38,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 51,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 51,
+          "col": 38,
+          "fineRow": 32,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 3,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 3,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 3,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 3,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 2,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 3,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 3,
+          "col": 39,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 3,
+          "col": 43,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 3,
+          "col": 50,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 3,
+          "col": 54,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 45,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 38,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 35,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 30,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 22,
+          "col": 4,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 17,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 10,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 3,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 25,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 29,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 18,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 34,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 10,
+          "col": 31,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 10,
+          "col": 43,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 44,
+          "col": 31,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 44,
+          "col": 43,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 7,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 10,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 9,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 14,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 14,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 19,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 17,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 37,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 36,
+          "col": 17,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 38,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 41,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 40,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 44,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 44,
+          "col": 17,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 43,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 8,
+          "col": 51,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 11,
+          "col": 49,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 46,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Tree",
+          "row": 42,
+          "col": 50,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Shrub",
+          "row": 25,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 25,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 29,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 29,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 35,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 40,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 47,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 47,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 47,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 47,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 47,
+          "col": 34,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 17,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 12,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 7,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 7,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 7,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 7,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Shrub",
+          "row": 7,
+          "col": 34,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        }
+      ],
+      "npcs": []
+    },
+    {
+      "id": 70,
+      "constant": "RID_TOS_GRAVEYARD",
+      "kodClass": "TosGraveyard",
+      "name": "The Graveyard of Tos",
+      "roo": "tosgrave.roo",
+      "music": "marion.mid",
+      "baseLight": 124,
+      "outdoors": true,
+      "teleport": {
+        "row": 14,
+        "col": 18
+      },
+      "exits": [
+        {
+          "row": 6,
+          "col": 29,
+          "to": 71,
+          "toConstant": "RID_TOS_CRYPT",
+          "toRow": 23,
+          "toCol": 8,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 50,
+          "toCol": 3,
+          "rotate": "NONE"
+        }
+      ],
+      "objects": [
+        {
+          "type": "Tombstone",
+          "row": 19,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Tombstone",
+          "row": 25,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 512
+        },
+        {
+          "type": "Tombstone",
+          "row": 7,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Tombstone",
+          "row": 10,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 2560
+        },
+        {
+          "type": "Tombstone",
+          "row": 10,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 3584
+        },
+        {
+          "type": "Tombstone",
+          "row": 12,
+          "col": 17,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 2048
+        },
+        {
+          "type": "Tombstone",
+          "row": 14,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 512
+        },
+        {
+          "type": "Tombstone",
+          "row": 14,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 2048
+        },
+        {
+          "type": "Tombstone",
+          "row": 17,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 3072
+        },
+        {
+          "type": "Tombstone",
+          "row": 18,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 512
+        },
+        {
+          "type": "Tombstone",
+          "row": 17,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 3072
+        }
+      ],
+      "npcs": []
+    },
+    {
+      "id": 71,
+      "constant": "RID_TOS_CRYPT",
+      "kodClass": "TosCrypt",
+      "name": "The Crypt",
+      "roo": "toscrypt.roo",
+      "music": "ksong.mid",
+      "baseLight": 84,
+      "outdoors": false,
+      "teleport": {
+        "row": 13,
+        "col": 7
+      },
+      "exits": [
+        {
+          "row": 24,
+          "col": 9,
+          "to": 70,
+          "toConstant": "RID_TOS_GRAVEYARD",
+          "toRow": 10,
+          "toCol": 29,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 9,
+          "col": 8,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 1024
+        },
+        {
+          "type": "Brazier",
+          "row": 9,
+          "col": 10,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 1024
+        },
+        {
+          "type": "Brazier",
+          "row": 23,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Brazier",
+          "row": 23,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        }
+      ],
+      "npcs": []
+    },
+    {
+      "id": 72,
+      "constant": "RID_TOS_HALL",
+      "kodClass": "TosHall",
+      "name": "The Adventurer's Hall of Tos",
+      "roo": "toshall.roo",
+      "music": "main.mid",
+      "baseLight": 164,
+      "outdoors": false,
+      "teleport": {
+        "row": 5,
+        "col": 5
+      },
+      "exits": [
+        {
+          "row": 9,
+          "col": 2,
+          "to": 61,
+          "toConstant": "RID_EAST_TOS",
+          "toRow": 33,
+          "toCol": 4,
+          "rotate": "180"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 7,
+          "col": 3,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 11,
+          "col": 3,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 8,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "News",
+          "row": 14,
+          "col": 13,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 0
+        }
+      ],
+      "npcs": []
+    },
+    {
+      "id": 73,
+      "constant": "RID_TOS_ARENA2",
+      "kodClass": "TosArena2",
+      "name": "The Arena of Kraanan",
+      "roo": "tosaren2.roo",
+      "music": "tos.mid",
+      "baseLight": 164,
+      "outdoors": true,
+      "teleport": {
+        "row": 26,
+        "col": 30
+      },
+      "exits": [
+        {
+          "row": 22,
+          "col": 36,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 4,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 22,
+          "col": 37,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 4,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 23,
+          "col": 36,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 4,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 23,
+          "col": 37,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 4,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 24,
+          "col": 34,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 7,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 24,
+          "col": 35,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 7,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 25,
+          "col": 34,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 7,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 25,
+          "col": 35,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 7,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 27,
+          "col": 34,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 18,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 27,
+          "col": 35,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 18,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 28,
+          "col": 34,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 18,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 28,
+          "col": 35,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 18,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 29,
+          "col": 36,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 21,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 29,
+          "col": 37,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 21,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 30,
+          "col": 36,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 21,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 30,
+          "col": 37,
+          "to": 60,
+          "toConstant": "RID_TOS_ARENA",
+          "toRow": 21,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 26,
+          "col": 27,
+          "to": 61,
+          "toConstant": "RID_EAST_TOS",
+          "toRow": 26,
+          "toCol": 25,
+          "rotate": "NONE"
+        },
+        {
+          "row": 27,
+          "col": 27,
+          "to": 61,
+          "toConstant": "RID_EAST_TOS",
+          "toRow": 27,
+          "toCol": 25,
+          "rotate": "NONE"
+        },
+        {
+          "row": 37,
+          "col": 36,
+          "to": 61,
+          "toConstant": "RID_EAST_TOS",
+          "toRow": 39,
+          "toCol": 36,
+          "rotate": "NONE"
+        },
+        {
+          "row": 37,
+          "col": 37,
+          "to": 61,
+          "toConstant": "RID_EAST_TOS",
+          "toRow": 39,
+          "toCol": 37,
+          "rotate": "NONE"
+        },
+        {
+          "row": 16,
+          "col": 36,
+          "to": 61,
+          "toConstant": "RID_EAST_TOS",
+          "toRow": 14,
+          "toCol": 36,
+          "rotate": "NONE"
+        },
+        {
+          "row": 16,
+          "col": 37,
+          "to": 61,
+          "toConstant": "RID_EAST_TOS",
+          "toRow": 14,
+          "toCol": 37,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "ArenaSign2",
+          "row": 25,
+          "col": 33,
+          "fineRow": 24,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "ArenaSign2",
+          "row": 26,
+          "col": 33,
+          "fineRow": 8,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "ArenaSign2",
+          "row": 27,
+          "col": 33,
+          "fineRow": 40,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "ArenaSign2",
+          "row": 26,
+          "col": 33,
+          "fineRow": 56,
+          "fineCol": 16,
+          "angle": 0
+        }
+      ],
+      "npcs": []
+    },
+    {
+      "id": 74,
+      "constant": "RID_TOS_INN_CELLAR",
+      "kodClass": "TosInnCellar",
+      "name": "The Cellar",
+      "roo": "toscellar.roo",
+      "music": "bar.mid",
+      "baseLight": 164,
+      "outdoors": false,
+      "teleport": {
+        "row": 9,
+        "col": 9
+      },
+      "exits": [
+        {
+          "row": 1,
+          "col": 4,
+          "to": 52,
+          "toConstant": "RID_TOS_INN",
+          "toRow": 2,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "to": 52,
+          "toConstant": "RID_TOS_INN",
+          "toRow": 2,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "to": 75,
+          "toConstant": "RID_TOS_SECRET_PASSAGE",
+          "toRow": 4,
+          "toCol": 9,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "npcs": []
+    },
+    {
+      "id": 75,
+      "constant": "RID_TOS_SECRET_PASSAGE",
+      "kodClass": "TosSecretPassage",
+      "name": "Secret Passage",
+      "roo": "toshidden.roo",
+      "music": "ksong.mid",
+      "baseLight": 164,
+      "outdoors": false,
+      "teleport": {
+        "row": 2,
+        "col": 7
+      },
+      "exits": [
+        {
+          "row": 4,
+          "col": 10,
+          "to": 74,
+          "toConstant": "RID_TOS_INN_CELLAR",
+          "toRow": 4,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "to": 76,
+          "toConstant": "RID_TOS_OLD_TAVERN",
+          "toRow": 6,
+          "toCol": 11,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "npcs": []
+    },
+    {
+      "id": 76,
+      "constant": "RID_TOS_OLD_TAVERN",
+      "kodClass": "TosTavern",
+      "name": "Abandoned Fountain Tavern",
+      "roo": "tostavern.roo",
+      "music": "tos.mid",
+      "baseLight": 164,
+      "outdoors": false,
+      "teleport": {
+        "row": 6,
+        "col": 4
+      },
+      "exits": [
+        {
+          "row": 9,
+          "col": 7,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 51,
+          "toCol": 12,
+          "rotate": "NONE"
+        },
+        {
+          "row": 6,
+          "col": 12,
+          "to": 75,
+          "toConstant": "RID_TOS_SECRET_PASSAGE",
+          "toRow": 4,
+          "toCol": 2,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "edgeExits": [],
+      "objects": [],
+      "npcs": []
+    }
+  ]
+}

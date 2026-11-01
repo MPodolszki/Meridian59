@@ -47,7 +47,8 @@ Getroffene Entscheidungen werden in game/docs/decisions.md festgehalten.
 - Antworten kurz und auf Deutsch.
 
 ## Nächster Schritt
-Server: Login + einfacher Game-Modus (ein Raum, Bewegung, Chat, mehrere Spieler).
-Client: Godot-Grundgerüst mit Platzhalter-Grafik (game/client), kompiliert, im Editor noch nicht gestartet.
-Beides noch nicht gegen das Original getestet. Architektur: game/docs/architecture.md.
-Als Nächstes: Client im Godot-Editor starten, eigenes Raumformat (statt .roo), Persistenz.
+Stand: Server mit Login, Game-Modus und der Stadt Tos (18 Räume aus game/server/data/world/tos.json,
+Ausgänge per Leertaste/BP_REQ_GO). Godot-Client mit Zwergen-Figur, nur kompiliert, im Editor noch nicht gestartet.
+Nichts davon gegen das Original getestet. Doku: game/docs/{architecture,protocol,tos}.md.
+Als Nächstes: Objekte/NPCs (Wirt, Bankier, Apotheker) im Server darstellen, Raumgröße für Edge-Exits,
+eigene Raumgeometrie für Tos im Godot-Client, Persistenz (offene Entscheidung).

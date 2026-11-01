@@ -20,6 +20,7 @@ Bauen ohne Editor (prüft nur, ob der Code kompiliert): `dotnet build game/clien
 | W/A/S/D | laufen |
 | Shift | rennen |
 | Q/E oder rechte Maustaste + Maus | drehen |
+| Leertaste | Tür/Ausgang benutzen (wie im Original) |
 | Enter | Chat |
 
 ## Koordinaten

@@ -89,6 +89,9 @@ public sealed class ClientSession : IDisposable
     public Task TurnAsync(ushort angle) =>
         SendGameAsync(new PacketWriter((byte)GameMessage.ReqTurn).U32(PlayerId).U16(angle).ToArray());
 
+    /// <summary>„Gehen/Öffnen“ (Leertaste im Original): Ausgang oder Tür auf dem aktuellen Feld.</summary>
+    public Task GoAsync() => SendGameAsync([(byte)GameMessage.ReqGo]);
+
     public Task QuitAsync() => SendGameAsync([(byte)GameMessage.ReqQuit]);
 
     private async Task SendGameAsync(byte[] payload)

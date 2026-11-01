@@ -8,7 +8,8 @@ namespace Meridian.Client;
 /// <summary>
 /// Einstiegspunkt des Clients. Baut Oberfläche und 3D-Szene im Code auf (Platzhalter-Grafik),
 /// verbindet sich über <see cref="ClientSession"/> und stellt Spieler als Kapseln dar.
-/// Steuerung: WASD laufen, Shift rennen, rechte Maustaste gedrückt halten zum Drehen, Enter für Chat.
+/// Steuerung: WASD laufen, Shift rennen, rechte Maustaste gedrückt halten zum Drehen,
+/// Leertaste Tür/Ausgang benutzen, Enter für Chat.
 /// </summary>
 public partial class Main : Node3D
 {
@@ -229,6 +230,8 @@ public partial class Main : Node3D
             _yaw -= motion.Relative.X * 0.005f;
         if (e is InputEventKey { Pressed: true, Keycode: Key.Enter } && !_chatInput.HasFocus())
             _chatInput.GrabFocus();
+        if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Space } && !_chatInput.HasFocus())
+            GoThroughDoor();
     }
 
     public override void _Process(double delta)
@@ -270,6 +273,19 @@ public partial class Main : Node3D
         var pos = self.Position + dir * speed * delta;
         // Nicht unter die Ursprungs-Koordinaten (Feld 1) laufen.
         self.Position = new Vector3(Mathf.Max(pos.X, CellSize), 0, Mathf.Max(pos.Z, CellSize));
+    }
+
+    /// <summary>Leertaste wie im Original: Tür/Ausgang auf dem aktuellen Feld benutzen.
+    /// Vorher die aktuelle Position melden, da der Server sonst die bis zu 1 s alte kennt.</summary>
+    private async void GoThroughDoor()
+    {
+        if (_session is not { InWorld: true } || !_avatars.TryGetValue(_session.PlayerId, out var self))
+            return;
+        _lastMoveSent = DateTime.UtcNow;
+        _lastSentPos = self.Position;
+        var (row, col) = ToKod(self.Position);
+        await _session.MoveAsync(row, col, running: false);
+        await _session.GoAsync();
     }
 
     private void UpdateCamera(Node3D self)

@@ -54,9 +54,12 @@ public sealed class WorldTests : IAsyncLifetime
         await WaitForAsync(bert, bertEvents, e => e is ClientEvent.EnteredRoom);
         await WaitForAsync(anna, annaEvents, e => e is ClientEvent.ObjectAdded a && a.Object.Id == bert.PlayerId);
 
-        // Bert läuft auf das Ausgangsfeld (12,18) → landet im Gasthaus bei (4,10).
+        // Bert läuft auf das Ausgangsfeld (12,18): noch kein Raumwechsel, erst „Gehen“ löst aus.
         uint bertId = bert.PlayerId;
         await bert.MoveAsync(Room.Fine(12, 10), Room.Fine(18, 50), running: false);
+        await WaitForAsync(anna, annaEvents, e => e is ClientEvent.ObjectMoved { Object.Row: 12 * 64 + 10 });
+        Assert.DoesNotContain(bertEvents, e => e is ClientEvent.EnteredRoom { RoomName: "Gasthaus" });
+        await bert.GoAsync();
         await WaitForAsync(bert, bertEvents, e => e is ClientEvent.EnteredRoom { RoomName: "Gasthaus" });
         await WaitForAsync(bert, bertEvents, e => e is ClientEvent.ObjectAdded { Object: { Row: 4 * 64 + 32, Col: 10 * 64 + 32 } });
         Assert.Equal(_server.World.Rooms.Single(r => r.Definition.Id == 52).ObjectId, bert.RoomId);
@@ -71,25 +74,39 @@ public sealed class WorldTests : IAsyncLifetime
         await anna.ConnectAsync("127.0.0.1", _server.Port, "Anna", "pw");
         await WaitForAsync(anna, events, e => e is ClientEvent.EnteredRoom);
 
+        await anna.GoAsync();   // am Ankunftspunkt ist kein Ausgang
+        await WaitForAsync(anna, events, e => e is ClientEvent.Chat { Text: "Hier ist kein Durchgang." });
+
         await anna.MoveAsync(Room.Fine(50), Room.Fine(10), running: false);
+        await anna.GoAsync();
         await WaitForAsync(anna, events, e => e is ClientEvent.Chat { Text: "Verschlossen." });
-        // Server setzt die eigene Position zurück auf den Ankunftspunkt.
-        await WaitForAsync(anna, events, e => e is ClientEvent.ObjectMoved { Object: { Row: 10 * 64 + 32 } });
 
         await anna.MoveAsync(Room.Fine(57), Room.Fine(3), running: false);
+        await anna.GoAsync();
         await WaitForAsync(anna, events, e => e is ClientEvent.Chat { Text: "Dieser Weg ist noch nicht begehbar." });
     }
 
     [Fact]
-    public void TosJson_LoadsIfPresent()
+    public void TosJson_IsConsistent()
     {
-        string path = Path.Combine(AppContext.BaseDirectory, "data", "world", "tos.json");
-        if (!File.Exists(path))
-            return;   // Weltdaten noch nicht vorhanden
-        var world = WorldDefinition.Load(path);
-        Assert.Contains(world.Rooms, r => r.Id == world.StartRoom);
+        var world = WorldDefinition.Load(Path.Combine(AppContext.BaseDirectory, "data", "world", "tos.json"));
+        Assert.Equal(50, world.StartRoom);
+        Assert.Equal(18, world.Rooms.Count);
         _ = new World(world, new ResourceRegistry(), "blank.bgf");
+
+        // Alle Ausgänge zwischen Tos-Räumen zeigen auf existierende Räume mit Zielfeld ≥ 1.
+        var ids = world.Rooms.Select(r => r.Id).ToHashSet();
+        foreach (var exit in world.Rooms.SelectMany(r => r.Exits).Where(e => ids.Contains(e.To)))
+            Assert.True(exit.ToRow >= 1 && exit.ToCol >= 1);
     }
+
+    [Theory]
+    [InlineData(100, "NONE", 100)]
+    [InlineData(100, "180", 2148)]
+    [InlineData(3000, "180", 952)]
+    [InlineData(100, "ANGLE_SOUTH", 100)]
+    public void RotateAngle_FollowsKod(int angle, string rotate, int expected) =>
+        Assert.Equal(expected, World.RotateAngle((ushort)angle, rotate));
 
     private static List<ClientEvent> Collect(ClientSession s)
     {

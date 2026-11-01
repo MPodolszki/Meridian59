@@ -212,7 +212,12 @@ public sealed class Session(int id, TcpClient client, GameServer server)
             {
                 ushort row = r.U16(), col = r.U16();
                 byte speed = r.U8();
-                switch (server.World.Move(_avatar, row, col, speed))
+                server.World.Move(_avatar, row, col, speed);
+                break;
+            }
+
+            case GameMessage.ReqGo when _avatar is not null:
+                switch (server.World.TryGo(_avatar))
                 {
                     case MoveResult.ChangedRoom changed:
                         Log.Info($"Session {id}: {_avatar.Name} → {changed.Room.Definition.Name}");
@@ -220,13 +225,10 @@ public sealed class Session(int id, TcpClient client, GameServer server)
                         SendRoomContents();
                         break;
                     case MoveResult.Blocked blocked:
-                        // Position zurücksetzen: Spieler an alter Stelle neu melden.
                         SendText(blocked.Message ?? "Hier geht es nicht weiter.");
-                        PostGame(GameReplies.Move(_avatar.Id, _avatar.Row, _avatar.Col, 0));
                         break;
                 }
                 break;
-            }
 
             case GameMessage.ReqTurn when _avatar is not null:
                 r.U32();   // eigene ID

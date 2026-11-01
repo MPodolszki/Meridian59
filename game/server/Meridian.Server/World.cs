@@ -31,10 +31,9 @@ public sealed class Room(RoomDefinition definition)
         definition.Teleport is { } t ? (Fine(t.Row), Fine(t.Col)) : (Fine(5), Fine(5));
 }
 
-/// <summary>Ergebnis einer Bewegung.</summary>
+/// <summary>Ergebnis von „Gehen/Öffnen“.</summary>
 public abstract record MoveResult
 {
-    public sealed record Moved : MoveResult;
     public sealed record ChangedRoom(Room Room) : MoveResult;
     public sealed record Blocked(string? Message) : MoveResult;
 }
@@ -88,33 +87,52 @@ public sealed class World
             Remove(avatar);
     }
 
-    /// <summary>Bewegung des Spielers (BP_REQ_MOVE). Löst Ausgänge und verschlossene Türen aus.</summary>
-    public MoveResult Move(Avatar avatar, ushort row, ushort col, byte speed)
+    /// <summary>Bewegung des Spielers (BP_REQ_MOVE): nur Position, Ausgänge lösen erst mit <see cref="TryGo"/> aus.</summary>
+    public void Move(Avatar avatar, ushort row, ushort col, byte speed)
     {
         lock (_gate)
         {
-            var def = avatar.Room.Definition;
-            int cellRow = row / 64, cellCol = col / 64;
-
-            if (def.LockedDoors.FirstOrDefault(d => d.Row == cellRow && d.Col == cellCol) is { } door)
-                return new MoveResult.Blocked(door.Message ?? "Die Tür ist verschlossen.");
-
-            if (def.Exits.FirstOrDefault(e => e.Row == cellRow && e.Col == cellCol) is { } exit)
-            {
-                if (!_rooms.TryGetValue(exit.To, out var target))
-                    return new MoveResult.Blocked("Dieser Weg ist noch nicht begehbar.");
-                Remove(avatar);
-                Place(avatar, target, Room.Fine(exit.ToRow), Room.Fine(exit.ToCol));
-                return new MoveResult.ChangedRoom(target);
-            }
-
             avatar.Row = row;
             avatar.Col = col;
             // Bit 7: Objekt dreht sich in Laufrichtung.
             Broadcast(avatar, GameReplies.Move(avatar.Id, row, col, (byte)(speed | 0x80)));
-            return new MoveResult.Moved();
         }
     }
+
+    /// <summary>
+    /// „Gehen/Öffnen“ (BP_REQ_GO) wie KOD room.kod SomethingTryGo: erster Eintrag in plExits,
+    /// dessen Feld (Zeile/Spalte, ohne Feinkoordinaten) dem aktuellen Feld entspricht.
+    /// Verschlossene Tür → nur Nachricht. Ausgang → Zielfeld (Mitte), Winkel gemäß ROTATE_*.
+    /// </summary>
+    public MoveResult TryGo(Avatar avatar)
+    {
+        lock (_gate)
+        {
+            var def = avatar.Room.Definition;
+            int cellRow = avatar.Row / 64, cellCol = avatar.Col / 64;
+
+            if (def.LockedDoors.FirstOrDefault(d => d.Row == cellRow && d.Col == cellCol) is { } door)
+                return new MoveResult.Blocked(door.Message ?? "This door is locked.");
+
+            if (def.Exits.FirstOrDefault(e => e.Row == cellRow && e.Col == cellCol) is not { } exit)
+                return new MoveResult.Blocked("Hier ist kein Durchgang.");
+
+            if (!_rooms.TryGetValue(exit.To, out var target))
+                return new MoveResult.Blocked("Dieser Weg ist noch nicht begehbar.");
+
+            Remove(avatar);
+            avatar.Angle = RotateAngle(avatar.Angle, exit.Rotate);
+            Place(avatar, target, Room.Fine(exit.ToRow), Room.Fine(exit.ToCol));
+            return new MoveResult.ChangedRoom(target);
+        }
+    }
+
+    /// <summary>ROTATE_* aus KOD (TranslateAngleChange): "NONE" = keine Drehung, "90"/"180"/… Grad relativ.
+    /// Absolute ANGLE_*-Einträge wirken im Original als keine Drehung.</summary>
+    public static ushort RotateAngle(ushort angle, string? rotate) =>
+        int.TryParse(rotate, out int degrees)
+            ? (ushort)((angle + degrees * 4096 / 360) % 4096)
+            : angle;
 
     public void Turn(Avatar avatar, ushort angle)
     {
