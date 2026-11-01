@@ -71,6 +71,8 @@ Accounts werden beim Start gelesen, nach `add-account` daher neu starten.
 | `--port 5959` | TCP-Port |
 | `--accounts accounts.json` | Account-Datei |
 | `--room tosinn.roo` | Raumdatei des Clients für den Startraum |
+| `--world data/world/tos.json` | Weltbeschreibung (Dialoge aus `data/dialog/<gleicher Name>`) |
+| `--start-room 52` | Startraum überschreiben (zum Testen einzelner Räume) |
 | `--client-dir <pfad>` | `resource`-Ordner eines Original-Clients: Raum-Security wird aus der `.roo` gelesen (sonst wird der Spieler im Original-Client „blind“) |
 
 ## Original-Client verbinden

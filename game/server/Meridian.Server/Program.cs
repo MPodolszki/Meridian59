@@ -3,7 +3,7 @@ using Meridian.Server;
 
 // Aufruf:
 //   Meridian.Server [--port 5959] [--accounts accounts.json] [--world data/world/tos.json]
-//                   [--client-dir <resource-ordner>] [--player-icon blank.bgf]
+//                   [--client-dir <resource-ordner>] [--player-icon blank.bgf] [--start-room 52]
 //   Meridian.Server add-account <name> <passwort> [--admin] [--accounts accounts.json]
 
 string accountsPath = "accounts.json";
@@ -11,6 +11,7 @@ int port = 5959;
 string? clientDir = null;
 string worldPath = Path.Combine(AppContext.BaseDirectory, "data", "world", "tos.json");
 string playerIcon = "blank.bgf";
+int? startRoom = null;
 var positional = new List<string>();
 bool admin = false;
 
@@ -24,6 +25,7 @@ for (int i = 0; i < args.Length; i++)
         case "--client-dir": clientDir = args[++i]; break;
         case "--world": worldPath = args[++i]; break;
         case "--player-icon": playerIcon = args[++i]; break;
+        case "--start-room": startRoom = int.Parse(args[++i]); break;
         default: positional.Add(args[i]); break;
     }
 }
@@ -53,12 +55,19 @@ using var sigterm = System.Runtime.InteropServices.PosixSignalRegistration.Creat
     System.Runtime.InteropServices.PosixSignal.SIGTERM, ctx => { ctx.Cancel = true; cts.Cancel(); });
 
 var world = File.Exists(worldPath) ? WorldDefinition.Load(worldPath) : WorldDefinition.SingleRoom();
+if (startRoom is { } sr)
+    world = world with { StartRoom = sr };   // zum Testen einzelner Räume
 Log.Info(File.Exists(worldPath)
     ? $"Welt: {world.Rooms.Count} Räume aus {worldPath}"
     : $"Keine Weltdatei unter {worldPath} – nur ein Testraum");
 
+// Dialoge liegen neben der Weltdatei: data/world/tos.json → data/dialog/tos.json
+string dialogPath = Path.Combine(Path.GetDirectoryName(worldPath)!, "..", "dialog", Path.GetFileName(worldPath));
+var dialogs = File.Exists(dialogPath) ? DialogFile.Load(dialogPath) : DialogFile.Empty;
+
 var server = new GameServer(new ServerOptions
 {
+    Dialogs = dialogs,
     Port = port,
     World = world,
     PlayerIcon = playerIcon,

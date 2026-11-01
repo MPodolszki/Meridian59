@@ -17,7 +17,9 @@ public sealed class RoomLayout
 
     public int Rows { get; }
     public int Cols { get; }
-    public int Ground { get; }
+    /// <summary>Bezugshöhe des begehbaren Bodens (KOD-Einheiten). Standard: tiefster Boden;
+    /// besser per <see cref="SetGroundAt"/> auf die Höhe am Standort des Spielers setzen.</summary>
+    public int Ground { get; private set; }
     public int Ceiling { get; }
     private readonly int[,] _floor;
 
@@ -56,6 +58,14 @@ public sealed class RoomLayout
         return new RoomLayout(rows, cols, root.GetProperty("ceiling").GetInt32(), floor);
     }
 
+    /// <summary>Setzt die Bezugshöhe auf den Boden des Felds, auf dem der Spieler steht.</summary>
+    public void SetGroundAt(int row, int col)
+    {
+        int f = FloorAt(row, col);
+        if (f >= 0)
+            Ground = f;
+    }
+
     /// <summary>Bodenhöhe des Felds (0-basierter Index), -1 außerhalb.</summary>
     public int FloorAt(int row, int col) =>
         row >= 0 && row < Rows && col >= 0 && col < Cols ? _floor[row, col] : -1;
@@ -63,6 +73,7 @@ public sealed class RoomLayout
     public bool IsWalkable(int row, int col)
     {
         int f = FloorAt(row, col);
+        // Tiefer liegende Bereiche (Stufen, Senken) sind begehbar, höhere nur bis zur Stufenhöhe.
         return f >= 0 && f - Ground <= WalkableRange;
     }
 
@@ -147,16 +158,30 @@ public sealed class RoomLayout
     {
         if (cache.TryGetValue(name, out var m))
             return m;
-        var color = name switch
+        // Name → (Textur in textures/, Kachelgröße in m, Farbton als Rückfall ohne Textur)
+        var (texture, tileMeters, color) = name switch
         {
-            "street" => new Color(0.48f, 0.45f, 0.40f),   // Pflaster
-            "planks" => new Color(0.45f, 0.33f, 0.22f),   // Holzboden
-            "house" => new Color(0.78f, 0.70f, 0.56f),    // verputzte Hauswand
-            "roof" => new Color(0.50f, 0.22f, 0.16f),     // Ziegeldach
-            "rock" => new Color(0.42f, 0.42f, 0.40f),     // Stadtmauer/Fels
-            _ => new Color(0.66f, 0.60f, 0.50f),          // Innenwand
+            "street" => ("cobblestone", 3f, new Color(0.48f, 0.45f, 0.40f)),
+            "planks" => ("planks", 3f, new Color(0.45f, 0.33f, 0.22f)),
+            "house" => ("plaster", 4f, new Color(0.78f, 0.70f, 0.56f)),
+            "roof" => ("roof", 3f, new Color(0.50f, 0.22f, 0.16f)),
+            "rock" => ("stonewall", 4f, new Color(0.42f, 0.42f, 0.40f)),
+            _ => ("plaster", 4f, new Color(0.66f, 0.60f, 0.50f)),
         };
         m = new StandardMaterial3D { AlbedoColor = color, Roughness = 0.95f };
+        string albedo = $"res://textures/{texture}_albedo.png";
+        if (ResourceLoader.Exists(albedo))
+        {
+            m.AlbedoColor = name == "plaster" ? new Color(0.85f, 0.82f, 0.78f) : Colors.White;   // Innenwände etwas dunkler
+            m.AlbedoTexture = GD.Load<Texture2D>(albedo);
+            m.NormalEnabled = true;
+            m.NormalTexture = GD.Load<Texture2D>($"res://textures/{texture}_normal.png");
+            // Triplanar in Weltkoordinaten: Blöcke brauchen keine UVs, Muster läuft über Blockgrenzen weiter.
+            m.Uv1Triplanar = true;
+            m.Uv1WorldTriplanar = true;
+            m.Uv1Scale = Vector3.One / tileMeters;
+            m.TextureFilter = BaseMaterial3D.TextureFilterEnum.LinearWithMipmapsAnisotropic;
+        }
         cache[name] = m;
         return m;
     }

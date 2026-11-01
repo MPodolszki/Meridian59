@@ -30,13 +30,20 @@ und der Client beendet; `--walk` läuft vorher n Sekunden, `--camera front` zeig
 | Shift | rennen |
 | Q/E oder rechte Maustaste + Maus | drehen |
 | Leertaste | Tür/Ausgang benutzen (wie im Original) |
-| Enter | Chat |
+| E | NPC in der Nähe anschauen |
+| Enter | Chat (NPCs antworten auf Begrüßung, ihren Namen und Stichwörter) |
 
 ## Koordinaten
 
 Server-Koordinaten sind KOD-Feineinheiten (64 pro Grid-Feld, Zeile/Spalte 1-basiert).
 Im Client: 1 Feld = 2,5 m, Spalte → X, Zeile → Z, Winkel 0..4095 → 0..2π.
 Positionen werden wie beim Original-Client höchstens 1×/s gesendet.
+
+## Texturen
+
+`textures/*_albedo.png` und `*_normal.png` (Pflaster, Putz, Holzdielen, Dachziegel, Mauerstein) sind eigene,
+prozedural erzeugte Texturen (`game/tools/make_textures.py`). Sie werden triplanar in Weltkoordinaten
+aufgelegt, die Blöcke brauchen daher keine UVs.
 
 ## Raumgeometrie (Platzhalter)
 

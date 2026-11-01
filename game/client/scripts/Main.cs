@@ -22,6 +22,7 @@ public partial class Main : Node3D
     private ClientSession? _session;
     private readonly Dictionary<uint, Node3D> _avatars = new();
     private readonly Dictionary<uint, Vector3> _targets = new();
+    private readonly HashSet<uint> _npcs = new();
 
     private Camera3D _camera = null!;
     private MeshInstance3D _grass = null!;
@@ -241,6 +242,7 @@ public partial class Main : Node3D
                 }
                 break;
             case ClientEvent.ObjectRemoved removed:
+                _npcs.Remove(removed.Id);
                 if (_avatars.Remove(removed.Id, out var gone))
                     gone.QueueFree();
                 _targets.Remove(removed.Id);
@@ -267,8 +269,17 @@ public partial class Main : Node3D
         _layout = RoomLayout.Load(roomFile);
         // Die Grasfläche ist nur Rückfallebene für Räume ohne Layout.
         _grass.Visible = _layout is null;
+        // Die Geometrie wird erst gebaut, wenn die eigene Position bekannt ist (BuildRoomGeometry).
+    }
+
+    /// <summary>Baut die Raumgeometrie mit dem Boden am Standort des Spielers als Bezugshöhe.</summary>
+    private void BuildRoomGeometry(Vector3 playerPosition)
+    {
         if (_layout is null)
             return;
+        _roomGeometry?.QueueFree();
+        var (row, col) = CellAt(playerPosition);
+        _layout.SetGroundAt(row, col);
         // Außenbereiche haben Fels/Pflaster, Innenräume Putz/Holz; Außen erkennbar an der Größe.
         bool outdoors = _layout.Rows * _layout.Cols > 420;
         _roomGeometry = _layout.Build(CellSize, outdoors);
@@ -323,13 +334,18 @@ public partial class Main : Node3D
 
         bool self = o.Id == _session!.PlayerId;
         var spawn = ToWorld(o.Row, o.Col);
+        if (self)
+            BuildRoomGeometry(spawn);
         spawn.Y = GroundHeightAt(spawn);
         var root = new Node3D { Position = spawn, Rotation = new Vector3(0, ToYaw(o.Angle), 0) };
         // Bisher gibt es nur eine Rasse: alle Spieler sind Zwerge. DwarfModel muss direktes Kind sein (Animate).
         root.AddChild(DwarfModel.Create());
+        if (o.IsNpc)
+            _npcs.Add(o.Id);
         root.AddChild(new Label3D
         {
             Text = _session.Resolve(o.NameRsc),
+            Modulate = o.IsNpc ? new Color(1f, 0.85f, 0.3f) : Colors.White,   // NPCs gelb wie in vielen MMOs
             Position = new Vector3(0, 1.7f, 0),
             Billboard = BaseMaterial3D.BillboardModeEnum.Enabled,
         });
@@ -352,6 +368,8 @@ public partial class Main : Node3D
             _chatInput.GrabFocus();
         if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Space } && !_chatInput.HasFocus())
             GoThroughDoor();
+        if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.E } && !_chatInput.HasFocus())
+            LookAtNearestNpc();
     }
 
     public override void _Process(double delta)
@@ -430,6 +448,27 @@ public partial class Main : Node3D
         await _session.GoAsync();
     }
 
+    /// <summary>E: nächsten NPC in Reichweite anschauen (BP_REQ_LOOK, Beschreibung erscheint im Chat).</summary>
+    private async void LookAtNearestNpc()
+    {
+        if (_session is not { InWorld: true } || !_avatars.TryGetValue(_session.PlayerId, out var self))
+            return;
+        uint best = 0;
+        float bestDistance = 4f;
+        foreach (uint id in _npcs)
+        {
+            if (_avatars.TryGetValue(id, out var npc) && npc.Position.DistanceTo(self.Position) < bestDistance)
+            {
+                best = id;
+                bestDistance = npc.Position.DistanceTo(self.Position);
+            }
+        }
+        if (best == 0)
+            _status.Text = "Niemand in der Nähe.";
+        else
+            await _session.LookAsync(best);
+    }
+
     private void UpdateCamera(Node3D self)
     {
         // Kamera auf Zwergenhöhe abgestimmt (Kopf bei ca. 1,2 m).
@@ -448,7 +487,9 @@ public partial class Main : Node3D
                 break;
             }
         }
-        _camera.Position = self.Position + offset * allowed;
+        // Bei Hindernissen nur den Abstand verkürzen, nicht die Höhe – sonst schaut die Kamera von unten.
+        var shortened = new Vector3(offset.X * allowed, Mathf.Max(offset.Y * allowed, Mathf.Min(offset.Y, 2.2f)), offset.Z * allowed);
+        _camera.Position = self.Position + shortened;
         _camera.LookAt(head);
     }
 
@@ -480,8 +521,10 @@ public partial class Main : Node3D
         ((ushort)Mathf.Clamp(p.Z / CellSize * 64f, 64, ushort.MaxValue),
          (ushort)Mathf.Clamp(p.X / CellSize * 64f, 64, ushort.MaxValue));
 
-    // Winkel 0..4095 = 360°.
-    private static float ToYaw(ushort angle) => angle / 4096f * Mathf.Tau;
+    // KOD-Winkel 0..4095 = 360°, 0 = Osten (+Spalte = +X), 1024 = Süden (+Zeile = +Z).
+    // Figuren schauen bei yaw 0 nach -Z, also gilt yaw = -θ - π/2.
+    private static float ToYaw(ushort angle) => -(angle / 4096f * Mathf.Tau) - Mathf.Pi / 2;
 
-    private static ushort ToAngle(float yaw) => (ushort)((int)Mathf.PosMod(yaw / Mathf.Tau * 4096f, 4096f) & 0x0FFF);
+    private static ushort ToAngle(float yaw) =>
+        (ushort)((int)Mathf.PosMod((-yaw - Mathf.Pi / 2) / Mathf.Tau * 4096f, 4096f) & 0x0FFF);
 }

@@ -230,6 +230,11 @@ public sealed class Session(int id, TcpClient client, GameServer server)
                 }
                 break;
 
+            case GameMessage.ReqLook when _avatar is not null:
+                if (server.World.Look(_avatar, r.U32() & 0x0FFFFFFF) is { } description)
+                    SendText(description);
+                break;
+
             case GameMessage.ReqTurn when _avatar is not null:
                 r.U32();   // eigene ID
                 server.World.Turn(_avatar, r.U16());
@@ -301,10 +306,14 @@ public sealed class Session(int id, TcpClient client, GameServer server)
 
     private void SendRoomContents()
     {
-        var present = server.World.Snapshot(_avatar!.Room);
+        var room = _avatar!.Room;
+        var present = server.World.Snapshot(room);
         foreach (var a in present)
             EnsureResource(a.Name);
-        PostGame(GameReplies.RoomContents(_avatar.Room.ObjectId, present.Select(server.World.ToRoomObject).ToList()));
+        foreach (var n in room.Npcs)
+            EnsureResource(n.DisplayName);
+        var objects = present.Select(server.World.ToRoomObject).Concat(room.Npcs.Select(server.World.ToRoomObject)).ToList();
+        PostGame(GameReplies.RoomContents(room.ObjectId, objects));
     }
 
     /// <summary>Systemtext im Chatfenster (BP_MESSAGE mit dynamischer Format-Ressource).</summary>

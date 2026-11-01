@@ -1,0 +1,41 @@
+{
+  "_hinweis": "Eigene Dialogtexte für NPCs, Schlüssel = KOD-Klasse aus world/tos.json. Stichwörter werden ohne Groß-/Kleinschreibung im Gesagten gesucht.",
+  "npcs": {
+    "TosInnKeeper": {
+      "title": "Wirt",
+      "description": "Paddock wischt mit einem fleckigen Tuch über den Tresen. Er ist kräftig gebaut, hat rote Wangen und ein Lachen, das man bis auf die Straße hört.",
+      "greeting": "Willkommen im Familiars, Fremder! Setz dich, ein Krug Bier wärmt die Knochen.",
+      "topics": [
+        { "keywords": ["kaufen", "angebot", "bier", "krug", "essen", "käse", "buy"], "reply": "Ich hab frisches Bier im Krug und guten Käse aus dem Umland. Bezahlen kannst du, sobald die Münzen wieder klingen – der Handel kommt bald." },
+        { "keywords": ["zimmer", "schlafen", "übernachten"], "reply": "Die Zimmer oben sind leider alle belegt. Versuch's später nochmal." },
+        { "keywords": ["neuigkeiten", "gerücht", "news"], "reply": "Am Friedhof westlich der Stadt sollen nachts die Toten umgehen. Ich würde da nach Sonnenuntergang nicht hingehen." }
+      ]
+    },
+    "TosApothecary": {
+      "title": "Apotheker",
+      "description": "Frisconar ist ein hagerer Mann mit fleckigen Fingern. Um ihn herum riecht es nach getrockneten Kräutern, Pilzen und etwas, das man lieber nicht benennen möchte.",
+      "greeting": "Ah, ein Kunde. Kräuter, Pilze, Fackeln – und für die Neugierigen auch das eine oder andere Geheimnis.",
+      "topics": [
+        { "keywords": ["kaufen", "angebot", "kräuter", "pilze", "fackel", "buy"], "reply": "Ich führe Kräuter, Blau- und Rotpilze, Holunderbeeren, Fackeln und leere Flaschen. Der Handel ist noch nicht eröffnet." },
+        { "keywords": ["zauber", "lernen", "spruch", "magie", "hospiz"], "reply": "Ich könnte dir einen Spruch beibringen, der Verletzte schneller genesen lässt. Doch dafür musst du erst die Grundlagen der Magie beherrschen." }
+      ]
+    },
+    "TosBanker": {
+      "title": "Bankier",
+      "description": "Skivlat mustert dich über eine schmale Brille hinweg. Hinter ihm stehen schwere, eisenbeschlagene Truhen.",
+      "greeting": "Willkommen in der Ersten Königlichen Bank von Tos. Ihr Gold ist bei uns sicher – sicherer als in Ihrer Tasche.",
+      "topics": [
+        { "keywords": ["einzahlen", "abheben", "konto", "guthaben", "deposit", "withdraw", "balance"], "reply": "Einzahlen, abheben, Kontostand – sobald Sie Gold besitzen, stehe ich zu Diensten." },
+        { "keywords": ["edelstein", "smaragd", "saphir", "diamant", "kaufen", "buy"], "reply": "Ich handle auch mit Edelsteinen: Smaragde, Saphire, Diamanten. Für Kenner mit gut gefülltem Beutel." }
+      ]
+    },
+    "TosWatcher": {
+      "title": "Arena-Aufseher",
+      "description": "Der Aufseher steht reglos am Rand der Arena. Sein Blick folgt jeder Bewegung auf dem Sand.",
+      "greeting": "Die Arena des Kraanan ist offen für alle, die ihren Mut beweisen wollen.",
+      "topics": [
+        { "keywords": ["kampf", "herausfordern", "arena", "duell", "champion", "challenge"], "reply": "Wer kämpfen will, ruft einen Gegner heraus. Ich wache darüber, dass es ehrlich zugeht. Die Kämpfe beginnen, sobald die Waffen geschmiedet sind." }
+      ]
+    }
+  }
+}

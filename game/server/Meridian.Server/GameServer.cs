@@ -13,6 +13,8 @@ public sealed record ServerOptions
     public TimeSpan GameTimeout { get; init; } = TimeSpan.FromSeconds(30);
     /// <summary>Weltbeschreibung; ohne Angabe ein einzelner Raum.</summary>
     public WorldDefinition World { get; init; } = WorldDefinition.SingleRoom();
+    /// <summary>Dialogtexte der NPCs.</summary>
+    public DialogFile Dialogs { get; init; } = DialogFile.Empty;
     /// <summary>Grafik (.bgf des Clients) für Spieler.</summary>
     public string PlayerIcon { get; init; } = "blank.bgf";
     /// <summary>Optional: Ressourcen-Ordner eines Original-Clients, um die Raum-Security aus den .roo-Dateien zu lesen.</summary>
@@ -36,7 +38,7 @@ public sealed class GameServer
         var world = options.World;
         if (options.ClientResourceDir is { } dir)
             world = world with { Rooms = world.Rooms.Select(r => WithSecurityFromClient(r, dir)).ToList() };
-        World = new World(world, Resources, options.PlayerIcon);
+        World = new World(world, Resources, options.PlayerIcon, options.Dialogs);
     }
 
     private static RoomDefinition WithSecurityFromClient(RoomDefinition room, string dir)

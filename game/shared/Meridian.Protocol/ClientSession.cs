@@ -12,6 +12,10 @@ public sealed class ClientObject(uint id)
     public ushort Row { get; set; }
     public ushort Col { get; set; }
     public ushort Angle { get; set; }
+    public uint Flags { get; set; }
+
+    /// <summary>OF_PLAYER (include/proto.h) nicht gesetzt → Nicht-Spieler-Figur.</summary>
+    public bool IsNpc => (Flags & 0x00000004) == 0;
 }
 
 /// <summary>Ereignisse für die Oberfläche. Werden im Thread von <see cref="ClientSession.ProcessEvents"/> ausgelöst.</summary>
@@ -92,6 +96,9 @@ public sealed class ClientSession : IDisposable
 
     /// <summary>„Gehen/Öffnen“ (Leertaste im Original): Ausgang oder Tür auf dem aktuellen Feld.</summary>
     public Task GoAsync() => SendGameAsync([(byte)GameMessage.ReqGo]);
+
+    /// <summary>Objekt anschauen (BP_REQ_LOOK); die Antwort kommt als Chat-Nachricht.</summary>
+    public Task LookAsync(uint id) => SendGameAsync(new PacketWriter((byte)GameMessage.ReqLook).U32(id).ToArray());
 
     public Task QuitAsync() => SendGameAsync([(byte)GameMessage.ReqQuit]);
 
@@ -311,7 +318,8 @@ public sealed class ClientSession : IDisposable
             r.U32();                            // amount
         o.IconRsc = r.U32();
         o.NameRsc = r.U32();
-        r.U32(); r.U32();                       // flags, rarity
+        o.Flags = r.U32();
+        r.U32();                                // rarity
         if (r.U16() != 0) { r.U8(); r.U16(); }  // dlight
         SkipAnimation(ref r);
         SkipOverlays(ref r);

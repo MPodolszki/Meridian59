@@ -23,6 +23,7 @@ public sealed class Room(RoomDefinition definition)
     public RoomDefinition Definition => definition;
     public uint ObjectId => ObjectIdBase + (uint)definition.Id;
     internal Dictionary<uint, Avatar> Avatars { get; } = new();
+    public List<Npc> Npcs { get; } = new();
 
     /// <summary>KOD-Feinkoordinate für die Mitte eines Grid-Felds.</summary>
     public static ushort Fine(int cell, int fine = 32) => (ushort)(cell * 64 + fine);
@@ -48,11 +49,18 @@ public sealed class World
     private readonly Dictionary<int, Room> _rooms;
     private readonly ResourceRegistry _resources;
 
-    public World(WorldDefinition definition, ResourceRegistry resources, string playerIcon)
+    /// <summary>OF_PLAYER aus include/proto.h: kennzeichnet Spieler; NPCs haben es nicht.</summary>
+    public const uint FlagPlayer = 0x00000004;
+
+    public World(WorldDefinition definition, ResourceRegistry resources, string playerIcon, DialogFile? dialogs = null)
     {
         _resources = resources;
         PlayerIcon = playerIcon;
         _rooms = definition.Rooms.ToDictionary(r => r.Id, r => new Room(r));
+        uint nextNpc = Npc.ObjectIdBase;
+        foreach (var room in _rooms.Values)
+            foreach (var npc in room.Definition.Npcs)
+                room.Npcs.Add(new Npc(++nextNpc, npc, (dialogs ?? DialogFile.Empty).Npcs.GetValueOrDefault(npc.KodClass)));
         StartRoom = _rooms.TryGetValue(definition.StartRoom, out var start)
             ? start
             : throw new InvalidDataException($"Startraum {definition.StartRoom} fehlt in der Weltbeschreibung");
@@ -63,7 +71,23 @@ public sealed class World
     public IReadOnlyCollection<Room> Rooms => _rooms.Values;
 
     public RoomObject ToRoomObject(Avatar a) =>
-        new(a.Id, _resources[a.Name], new ObjectAppearance(_resources[PlayerIcon]), a.Row, a.Col, a.Angle);
+        new(a.Id, _resources[a.Name], new ObjectAppearance(_resources[PlayerIcon]), a.Row, a.Col, a.Angle, FlagPlayer);
+
+    public RoomObject ToRoomObject(Npc n) =>
+        new(n.Id, _resources[n.DisplayName], new ObjectAppearance(_resources[PlayerIcon]), n.Row, n.Col, n.Angle);
+
+    /// <summary>Beschreibung eines Objekts im Raum des Spielers (BP_REQ_LOOK), oder null.</summary>
+    public string? Look(Avatar avatar, uint id)
+    {
+        lock (_gate)
+        {
+            if (avatar.Room.Npcs.FirstOrDefault(n => n.Id == id) is { } npc)
+                return npc.Describe();
+            if (avatar.Room.Avatars.TryGetValue(id, out var other))
+                return other == avatar ? "Das bist du selbst, ein stämmiger Zwerg." : $"Du siehst {other.Name}, einen Zwerg.";
+            return null;
+        }
+    }
 
     public List<Avatar> Snapshot(Room room)
     {
@@ -154,6 +178,18 @@ public sealed class World
                 a.Session.EnsureResource("%q");
                 a.Session.EnsureResource(avatar.Name);
                 a.Session.Post(said);
+            }
+            // NPCs im Raum antworten, wenn sie sich angesprochen fühlen (alle im Raum hören es).
+            foreach (var npc in avatar.Room.Npcs)
+            {
+                if (npc.Reply(text) is not { } reply)
+                    continue;
+                byte[] answer = GameReplies.Said(npc.Id, _resources[npc.DisplayName], SayType.Normal, _resources["%q"], $"{npc.Name}: {reply}");
+                foreach (var a in avatar.Room.Avatars.Values)
+                {
+                    a.Session.EnsureResource(npc.DisplayName);
+                    a.Session.Post(answer);
+                }
             }
         }
     }
