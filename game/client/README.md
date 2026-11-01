@@ -19,6 +19,7 @@ Bauen ohne Editor (prüft nur, ob der Code kompiliert): `dotnet build game/clien
 godot --path game/client -- --login Thorin bart --port 5959 [--host 127.0.0.1] [--camera front] [--walk 3] [--screenshot bild.png]
 ```
 
+`--delay s` wartet vor dem Bild (Standard 1,5 s), `--fight 1` greift automatisch das nächste Monster an.
 `--login` meldet sich sofort an. Mit `--screenshot` wird nach dem Betreten des Raums ein Bild gespeichert
 und der Client beendet; `--walk` läuft vorher n Sekunden, `--camera front` zeigt die Figur von vorne.
 
@@ -31,6 +32,7 @@ und der Client beendet; `--walk` läuft vorher n Sekunden, `--camera front` zeig
 | Q/E oder rechte Maustaste + Maus | drehen |
 | Leertaste | Tür/Ausgang benutzen (wie im Original) |
 | E | NPC in der Nähe anschauen |
+| F | nächstes Monster angreifen (Nahkampf) |
 | Enter | Chat (NPCs antworten auf Begrüßung, ihren Namen und Stichwörter) |
 
 ## Koordinaten

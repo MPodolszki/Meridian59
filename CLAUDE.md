@@ -47,8 +47,9 @@ Getroffene Entscheidungen werden in game/docs/decisions.md festgehalten.
 - Antworten kurz und auf Deutsch.
 
 ## Nächster Schritt
-Stand: Server mit Login, Game-Modus und der Stadt Tos (18 Räume aus game/server/data/world/tos.json,
-Ausgänge per Leertaste/BP_REQ_GO). Godot-Client mit Zwergen-Figur, nur kompiliert, im Editor noch nicht gestartet.
-Nichts davon gegen das Original getestet. Doku: game/docs/{architecture,protocol,tos}.md.
-Als Nächstes: Objekte/NPCs (Wirt, Bankier, Apotheker) im Server darstellen, Raumgröße für Edge-Exits,
-eigene Raumgeometrie für Tos im Godot-Client, Persistenz (offene Entscheidung).
+Stand: Server mit Login, Game-Modus, Tos (18 Räume), NPCs mit Dialogen, Kampf (docs/combat.md),
+Monster auf Friedhof/Krypta. Client (Godot 4.7.2) mit texturiertem Tos, animierten Figuren aus Blender
+(Zwerg, Zombie, Skelett via game/tools/blender/make_character.py), Lebensanzeige, Angriff (F).
+Nichts davon gegen das Original getestet.
+Offen: Handel/Inventar/Gold, Persistenz (offene Entscheidung), Tag-Nacht-Wechsel, Wegfindung für Monster,
+schönere Häuser/Innenräume, Original-Client-Test.

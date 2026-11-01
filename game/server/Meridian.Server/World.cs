@@ -285,7 +285,8 @@ public sealed class World
     {
         if (room.MonsterTable.Count == 0 || now < room.NextSpawn)
             return;
-        room.NextSpawn = now.AddSeconds(room.Monsters.Count == 0 ? 0.5 : 20);
+        // Leerer Raum füllt sich schnell bis zur Hälfte, danach ein neues Monster alle 20 s.
+        room.NextSpawn = now.AddSeconds(room.Monsters.Count < room.MaxMonsters / 2 ? 2 : 20);
         if (room.Monsters.Count(m => m.Alive) >= room.MaxMonsters)
             return;
         int roll = _random.Next(room.MonsterTable.Sum(e => e.Weight));

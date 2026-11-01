@@ -23,6 +23,9 @@ public partial class Main : Node3D
     private readonly Dictionary<uint, Node3D> _avatars = new();
     private readonly Dictionary<uint, Vector3> _targets = new();
     private readonly HashSet<uint> _npcs = new();
+    private readonly HashSet<uint> _monsters = new();
+    private ProgressBar _health = null!;
+    private Label _healthText = null!;
 
     private Camera3D _camera = null!;
     private MeshInstance3D _grass = null!;
@@ -62,6 +65,8 @@ public partial class Main : Node3D
                 case "--port": _port.Text = args[++i]; break;
                 case "--screenshot": _screenshotPath = args[++i]; break;
                 case "--camera": _cameraMode = args[++i]; break;
+                case "--delay": _screenshotDelay = float.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture); break;
+                case "--fight": _autoFight = args[++i] == "1"; break;
                 case "--walk": _autoWalkSeconds = float.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture); break;
                 case "--login" when i + 2 < args.Length:
                     _user.Text = args[++i];
@@ -75,6 +80,9 @@ public partial class Main : Node3D
     }
 
     private bool _autoLogin;
+    private float _screenshotDelay = 1.5f;
+    private bool _autoFight;
+    private double _autoFightTimer;
     private string _cameraMode = "behind";   // "front" für Screenshots von vorne
     private string? _screenshotPath;
     private float _autoWalkSeconds;
@@ -82,6 +90,11 @@ public partial class Main : Node3D
 
     private void UpdateAutomation(double delta)
     {
+        if (_autoFight && _session is { InWorld: true } && (_autoFightTimer -= delta) <= 0)
+        {
+            _autoFightTimer = 1.3;
+            AttackNearestMonster();
+        }
         if (_screenshotPath is null || _screenshotTimer < 0)
             return;
         _screenshotTimer -= delta;
@@ -167,6 +180,13 @@ public partial class Main : Node3D
         _status = new Label { Position = new Vector2(20, 690) };
         ui.AddChild(_status);
 
+        // Lebensanzeige oben links (sichtbar, sobald man im Spiel ist)
+        _health = new ProgressBar { Position = new Vector2(20, 20), Size = new Vector2(260, 22), ShowPercentage = false, Visible = false };
+        _health.AddThemeStyleboxOverride("fill", new StyleBoxFlat { BgColor = new Color(0.7f, 0.1f, 0.1f) });
+        ui.AddChild(_health);
+        _healthText = new Label { Position = new Vector2(28, 20), Visible = false };
+        ui.AddChild(_healthText);
+
         _chatLog = new RichTextLabel
         {
             Position = new Vector2(20, 450),
@@ -215,12 +235,24 @@ public partial class Main : Node3D
                 _status.Text = f.Reason;
                 _loginPanel.Visible = true;
                 break;
+            case ClientEvent.HealthChanged hp:
+                _health.Visible = _healthText.Visible = true;
+                _health.MaxValue = hp.MaxHp;
+                _health.Value = hp.Hp;
+                _healthText.Text = $"Lebenspunkte {hp.Hp} / {hp.MaxHp}";
+                break;
+            case ClientEvent.ObjectAnimated anim:
+                if (_avatars.TryGetValue(anim.Id, out var animated))
+                    CharacterModel.PlayOnce(animated, anim.Death ? "Die" : "Attack");
+                if (anim.Death)
+                    _monsters.Remove(anim.Id);   // tote Monster nicht mehr als Ziel wählen
+                break;
             case ClientEvent.EnteredRoom room:
                 _loginPanel.Visible = false;
                 _status.Text = $"Im Raum: {room.RoomName}";
                 LoadRoomGeometry(room.RoomFile);
                 if (_screenshotPath is not null && _screenshotTimer < 0)
-                    _screenshotTimer = 1.5 + _autoWalkSeconds;
+                    _screenshotTimer = _screenshotDelay + _autoWalkSeconds;
                 break;
             case ClientEvent.ObjectAdded added:
                 AddAvatar(added.Object);
@@ -243,6 +275,7 @@ public partial class Main : Node3D
                 break;
             case ClientEvent.ObjectRemoved removed:
                 _npcs.Remove(removed.Id);
+                _monsters.Remove(removed.Id);
                 if (_avatars.Remove(removed.Id, out var gone))
                     gone.QueueFree();
                 _targets.Remove(removed.Id);
@@ -290,11 +323,18 @@ public partial class Main : Node3D
     private static (int Row, int Col) CellAt(Vector3 p) =>
         ((int)Mathf.Floor(p.Z / CellSize) - 1, (int)Mathf.Floor(p.X / CellSize) - 1);
 
-    private bool CanStandAt(Vector3 p)
+    private bool CanStandAt(Vector3 p, Vector3 from)
     {
         if (_layout is null)
             return true;
         var (row, col) = CellAt(p);
+        // Über den Raumrand hinaus darf man von einem begehbaren Randfeld aus (Rand-Ausgänge, KOD plEdge_Exits).
+        bool outside = row < 0 || col < 0 || row >= _layout.Rows || col >= _layout.Cols;
+        if (outside)
+        {
+            var (fr, fc) = CellAt(from);
+            return _layout.IsWalkable(fr, fc);
+        }
         return _layout.IsWalkable(row, col);
     }
 
@@ -338,15 +378,18 @@ public partial class Main : Node3D
             BuildRoomGeometry(spawn);
         spawn.Y = GroundHeightAt(spawn);
         var root = new Node3D { Position = spawn, Rotation = new Vector3(0, ToYaw(o.Angle), 0) };
-        // Bisher gibt es nur eine Rasse: alle Spieler sind Zwerge. DwarfModel muss direktes Kind sein (Animate).
-        root.AddChild(DwarfModel.Create());
+        // Modell nach Icon (zombie.bgf → models/zombie.glb); Spieler und NPCs sind vorerst Zwerge.
+        root.AddChild(CharacterModel.Create(o.Icon));
+        if (o.IsAttackable)
+            _monsters.Add(o.Id);
         if (o.IsNpc)
             _npcs.Add(o.Id);
         root.AddChild(new Label3D
         {
             Text = _session.Resolve(o.NameRsc),
-            Modulate = o.IsNpc ? new Color(1f, 0.85f, 0.3f) : Colors.White,   // NPCs gelb wie in vielen MMOs
-            Position = new Vector3(0, 1.7f, 0),
+            // NPCs gelb, Monster rot wie in vielen MMOs
+            Modulate = o.IsAttackable ? new Color(1f, 0.35f, 0.3f) : o.IsNpc ? new Color(1f, 0.85f, 0.3f) : Colors.White,
+            Position = new Vector3(0, o.IsAttackable ? 2.0f : 1.7f, 0),
             Billboard = BaseMaterial3D.BillboardModeEnum.Enabled,
         });
         AddChild(root);
@@ -370,6 +413,8 @@ public partial class Main : Node3D
             GoThroughDoor();
         if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.E } && !_chatInput.HasFocus())
             LookAtNearestNpc();
+        if (e is InputEventKey { Pressed: true, Keycode: Key.F } && !_chatInput.HasFocus())
+            AttackNearestMonster();
     }
 
     public override void _Process(double delta)
@@ -384,7 +429,7 @@ public partial class Main : Node3D
                 continue;
             var before = node.Position;
             node.Position = node.Position.MoveToward(target, RunSpeed * (float)delta);
-            DwarfModel.Animate(node, before.DistanceTo(node.Position) / Mathf.Max((float)delta, 1e-4f));
+            CharacterModel.Animate(node, before.DistanceTo(node.Position) / Mathf.Max((float)delta, 1e-4f));
         }
 
         if (_session is not { InWorld: true } || !_avatars.TryGetValue(_session.PlayerId, out var self))
@@ -401,7 +446,7 @@ public partial class Main : Node3D
             return;
 
         var input = Vector2.Zero;
-        if (_autoWalkSeconds > 0 && _screenshotTimer > 1.5)
+        if (_autoWalkSeconds > 0 && _screenshotTimer > _screenshotDelay)
         {
             input.Y -= 1;          // automatisch geradeaus laufen
             _yaw += 0.6f * delta;  // und dabei leicht drehen
@@ -416,7 +461,7 @@ public partial class Main : Node3D
         self.Rotation = new Vector3(0, _yaw, 0);
         if (input == Vector2.Zero)
         {
-            DwarfModel.Animate(self, 0);
+            CharacterModel.Animate(self, 0);
             return;
         }
 
@@ -425,14 +470,19 @@ public partial class Main : Node3D
         var step = dir * speed * delta;
         var pos = self.Position;
         // Kollision mit Wänden/Gebäuden: Achsen getrennt prüfen, damit man an Wänden entlanggleitet.
-        if (CanStandAt(pos + new Vector3(step.X, 0, 0))) pos.X += step.X;
-        if (CanStandAt(pos + new Vector3(0, 0, step.Z))) pos.Z += step.Z;
-        // Nicht unter die Ursprungs-Koordinaten (Feld 1) laufen.
-        pos = new Vector3(Mathf.Max(pos.X, CellSize), 0, Mathf.Max(pos.Z, CellSize));
+        if (CanStandAt(pos + new Vector3(step.X, 0, 0), pos)) pos.X += step.X;
+        if (CanStandAt(pos + new Vector3(0, 0, step.Z), pos)) pos.Z += step.Z;
+        // Ohne Layout: nicht unter die Ursprungs-Koordinaten (Feld 1) laufen. Mit Layout regelt das CanStandAt.
+        if (_layout is null)
+            pos = new Vector3(Mathf.Max(pos.X, CellSize), 0, Mathf.Max(pos.Z, CellSize));
+        // Außerhalb des Rasters sofort melden, damit der Server den Rand-Ausgang auslöst.
+        var (cellRow, cellCol) = CellAt(pos);
+        if (_layout is not null && (cellRow < 0 || cellCol < 0 || cellRow >= _layout.Rows || cellCol >= _layout.Cols))
+            _lastMoveSent = DateTime.MinValue;
         pos.Y = GroundHeightAt(pos);
         var moved = new Vector2(pos.X - self.Position.X, pos.Z - self.Position.Z).Length();
         self.Position = pos;
-        DwarfModel.Animate(self, moved / Mathf.Max(delta, 1e-4f));
+        CharacterModel.Animate(self, moved / Mathf.Max(delta, 1e-4f));
     }
 
     /// <summary>Leertaste wie im Original: Tür/Ausgang auf dem aktuellen Feld benutzen.
@@ -446,6 +496,36 @@ public partial class Main : Node3D
         var (row, col) = ToKod(self.Position);
         await _session.MoveAsync(row, col, running: false);
         await _session.GoAsync();
+    }
+
+    /// <summary>F: nächstes Monster in Reichweite angreifen. Vorher Position melden (Server prüft die Reichweite).</summary>
+    private async void AttackNearestMonster()
+    {
+        if (_session is not { InWorld: true } || !_avatars.TryGetValue(_session.PlayerId, out var self))
+            return;
+        uint best = 0;
+        float bestDistance = 6f;
+        foreach (uint id in _monsters)
+        {
+            if (_avatars.TryGetValue(id, out var m) && m.Position.DistanceTo(self.Position) < bestDistance)
+            {
+                best = id;
+                bestDistance = m.Position.DistanceTo(self.Position);
+            }
+        }
+        if (best == 0)
+        {
+            _status.Text = "Kein Gegner in der Nähe.";
+            return;
+        }
+        // Zum Gegner drehen
+        var dir = _avatars[best].Position - self.Position;
+        _yaw = Mathf.Atan2(-dir.X, -dir.Z);
+        _lastMoveSent = DateTime.UtcNow;
+        _lastSentPos = self.Position;
+        var (row, col) = ToKod(self.Position);
+        await _session.MoveAsync(row, col, running: false);
+        await _session.AttackAsync(best);
     }
 
     /// <summary>E: nächsten NPC in Reichweite anschauen (BP_REQ_LOOK, Beschreibung erscheint im Chat).</summary>
@@ -518,8 +598,8 @@ public partial class Main : Node3D
         new(col / 64f * CellSize, 0, row / 64f * CellSize);
 
     private static (ushort Row, ushort Col) ToKod(Vector3 p) =>
-        ((ushort)Mathf.Clamp(p.Z / CellSize * 64f, 64, ushort.MaxValue),
-         (ushort)Mathf.Clamp(p.X / CellSize * 64f, 64, ushort.MaxValue));
+        ((ushort)Mathf.Clamp(p.Z / CellSize * 64f, 0, ushort.MaxValue),
+         (ushort)Mathf.Clamp(p.X / CellSize * 64f, 0, ushort.MaxValue));
 
     // KOD-Winkel 0..4095 = 360°, 0 = Osten (+Spalte = +X), 1024 = Süden (+Zeile = +Z).
     // Figuren schauen bei yaw 0 nach -Z, also gilt yaw = -θ - π/2.

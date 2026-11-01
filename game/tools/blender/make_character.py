@@ -1,14 +1,16 @@
-"""Erzeugt die Spielfigur „Zwerg“ mit MPFB2 (MakeHuman für Blender) und exportiert sie für Godot.
+"""Erzeugt Spielfiguren mit MPFB2 (MakeHuman für Blender) und exportiert sie für Godot.
+
+Presets: dwarf (Spielerrasse Zwerg), zombie, skeleton (Monster vom Friedhof in Tos).
 
 Voraussetzung: Blender 5.x mit Erweiterung „MPFB“ (extensions.blender.org, ID `mpfb`) und dem
 MakeHuman-System-Asset-Paket (CC0, makehuman_system_assets_cc0.zip, in MPFB über „Load pack“ installiert).
 Aufruf im Hintergrund (im Repo-Root):
 
-    blender -b --factory-startup-off --python game/tools/blender/make_dwarf.py -- \
-        game/client/models/dwarf.glb [vorschau.png]
+    blender -b --python game/tools/blender/make_character.py -- \
+        game/client/models/dwarf.glb [vorschau.png] [--preset dwarf|zombie|skeleton]
 
-Ergebnis: Mesh mit Skelett „game_engine“ (für Animationen), ca. 1,35 m groß. Die mit MPFB
-erzeugten Körper sind CC0 (MakeHuman-Lizenz für Ausgaben), also ein eigenes Asset.
+Ergebnis: Mesh mit Skelett „game_engine“ und Animationen Idle, Walk, Run, Attack, Die.
+Die mit MPFB erzeugten Körper sind CC0 (MakeHuman-Lizenz für Ausgaben), also eigene Assets.
 """
 import math
 import os
@@ -72,6 +74,42 @@ ASSETS = [
     ("Clothes", "clothes", "shoes06"),
 ]
 SKIN = ("skins", "middleage_caucasian_male")
+
+
+BEARD = True
+STYLE = "dwarf"          # Animationsstil: dwarf, zombie, skeleton
+
+# Abweichungen je Preset von den Zwergen-Werten oben.
+PRESETS = {
+    "dwarf": {},
+    "zombie": {
+        "TARGET_HEIGHT_M": 1.72,
+        "MACRO": {"gender": 1.0, "age": 0.55, "muscle": 0.25, "weight": 0.2, "proportions": 0.4,
+                  "height": 0.6, "cupsize": 0.5, "firmness": 0.5,
+                  "race": {"caucasian": 0.8, "african": 0.1, "asian": 0.1}},
+        "TARGETS": [("head", "head-age-incr", 1.0), ("stomach", "stomach-pregnant-decr", 0.6),
+                    ("neck", "neck-scale-horiz-decr", 0.5)],
+        "ASSETS": [("Eyes", "eyes", "high-poly"), ("Eyebrows", "eyebrows", "eyebrow001"),
+                   ("Hair", "hair", "short04"), ("Clothes", "clothes", "male_worksuit01")],
+        # Haut graugrün-faulig, Kleidung verdreckt grau-braun, Haare stumpf grau
+        "RECOLOR": [("lightskinned", (0.42, 0.50, 0.38), (0.42, 0.50, 0.38)),
+                    ("worksuit", (0.26, 0.24, 0.20), (0.42, 0.40, 0.34)),
+                    ("short04", (0.20, 0.20, 0.18), (0.20, 0.20, 0.18))],
+        "BEARD": False,
+        "STYLE": "zombie",
+    },
+    "skeleton": {
+        "TARGET_HEIGHT_M": 1.75,
+        "MACRO": {"gender": 1.0, "age": 0.5, "muscle": 0.3, "weight": 0.1, "proportions": 0.6,
+                  "height": 0.6, "cupsize": 0.5, "firmness": 0.5,
+                  "race": {"caucasian": 0.34, "african": 0.33, "asian": 0.33}},
+        "TARGETS": [],
+        "ASSETS": [],
+        "RECOLOR": [],
+        "BEARD": False,
+        "STYLE": "skeleton",
+    },
+}
 
 
 def asset_path(folder, name, ext):
@@ -293,7 +331,7 @@ def add_beard(basemesh, rig):
 FPS = 24
 
 
-def add_animations(rig):
+def add_animations(rig, style="dwarf"):
     """Prozedurale Animationen „Idle“, „Walk“, „Run“ (Schleifen) am game_engine-Skelett.
 
     Rotationen werden als Achse im Armature-Raum angegeben (Figur schaut nach -Y, +X = linke Seite,
@@ -318,17 +356,27 @@ def add_animations(rig):
         current = math.degrees(math.atan2(-v.z, abs(v.x)))
         return 78.0 - current                                   # Ziel: fast senkrecht, Zwerge sind breit
 
-    down = {"l": local("upperarm_l", (0, 1, 0), arm_down_angle("l")),
-            "r": local("upperarm_r", (0, 1, 0), -arm_down_angle("r"))}
+    down_deg = {"l": arm_down_angle("l"), "r": -arm_down_angle("r")}
+    down = {s: local(f"upperarm_{s}", (0, 1, 0), d) for s, d in down_deg.items()}
+    # Ellbogen-Achse: die seitliche Achse, wie sie nach dem Senken der Oberarme liegt.
+    # Kinder erben die Drehung des Elternknochens, also die Achse in dessen Ruhelage zurückdrehen.
+    elbow_axis = {s: Quaternion((0, 1, 0), -math.radians(d)) @ Vector((1, 0, 0)) for s, d in down_deg.items()}
+
+    def elbow(side, degrees):
+        return local(f"lowerarm_{side}", tuple(elbow_axis[side]), degrees)
+
+    zombie = style == "zombie"
 
     def pose(t, kind):
         """Rotationen (Knochen → Quaternion) und Beckenhöhe für Phase t (0..1)."""
         w = 2 * math.pi * t
         rot = {}
+        if kind in ("Attack", "Die"):
+            return special_pose(t, kind)
         if kind == "Idle":
             breath = math.sin(w)
             amp_leg, amp_arm, knee, bob, lean = 0, 0, 0, 0.004 * breath, 2
-            rot["spine_02"] = local("spine_02", (1, 0, 0), -1.5 * breath)
+            rot["spine_02"] = local("spine_02", (1, 0, 0), 1.5 * breath)
             rot["head"] = local("head", (0, 0, 1), 3 * math.sin(w + 1))
             arm_sway = 2 * breath
         else:
@@ -336,6 +384,8 @@ def add_animations(rig):
             amp_leg, amp_arm = (38, 26) if run else (24, 13)
             knee = 70 if run else 40
             lean = 10 if run else 3
+            if zombie:                                            # schlurfend, kleine Schritte
+                amp_leg, amp_arm, knee = amp_leg * 0.6, 4, knee * 0.5
             bob = (0.035 if run else 0.018) * abs(math.cos(w))
             arm_sway = 0
             rot["spine_01"] = local("spine_01", (0, 0, 1), (6 if run else 4) * math.sin(w))
@@ -347,13 +397,52 @@ def add_animations(rig):
             bend = knee * max(0.0, math.sin(w * 1 + (0 if sign > 0 else math.pi) + math.pi / 2)) if amp_leg else 0
             rot[f"calf_{side}"] = local(f"calf_{side}", (1, 0, 0), bend)
             rot[f"foot_{side}"] = local(f"foot_{side}", (1, 0, 0), -0.4 * bend)
-            arm = local(f"upperarm_{side}", (1, 0, 0), amp_arm * phase + arm_sway)   # Arme gegen die Beine
+            reach = -70 if zombie else 0                          # Zombies strecken die Arme nach vorn
+            arm = local(f"upperarm_{side}", (1, 0, 0), reach + amp_arm * phase + arm_sway)   # Arme gegen die Beine
             rot[f"upperarm_{side}"] = arm @ down[side]
-            rot[f"lowerarm_{side}"] = local(f"lowerarm_{side}", (1, 0, 0), -(12 + (25 if kind == "Run" else 4)))
-        rot["spine_03"] = local("spine_03", (1, 0, 0), -lean)
+            rot[f"lowerarm_{side}"] = elbow(side, -(12 + (25 if kind == "Run" else 4)) * (0.3 if zombie else 1))
+        # Positiver Winkel kippt den nach oben zeigenden Rumpf nach vorn (-Y).
+        rot["spine_03"] = local("spine_03", (1, 0, 0), lean + (18 if zombie else 0))
+        if zombie:
+            rot["head"] = local("head", (0, 1, 0), 12)           # Kopf schief
         return rot, bob
 
-    for kind, seconds in (("Idle", 3.0), ("Walk", 1.0), ("Run", 0.66)):
+    def base_arms():
+        return {f"upperarm_{s}": down[s] for s in ("l", "r")}
+
+    def special_pose(t, kind):
+        rot = base_arms()
+        if kind == "Attack":
+            # Rechter Arm: ausholen (nach oben/hinten), zuschlagen (nach vorn unten), zurück.
+            if t < 0.35:
+                k = t / 0.35
+                swing = -150 * k
+            elif t < 0.55:
+                k = (t - 0.35) / 0.2
+                swing = -150 + 120 * k
+            else:
+                k = (t - 0.55) / 0.45
+                swing = -30 * (1 - k)
+            rot["upperarm_r"] = local("upperarm_r", (1, 0, 0), swing) @ down["r"]
+            rot["lowerarm_r"] = elbow("r", -20)
+            rot["spine_02"] = local("spine_02", (0, 0, 1), 15 * math.sin(math.pi * t))
+            rot["spine_03"] = local("spine_03", (1, 0, 0), 12 * math.sin(math.pi * t))
+            return rot, 0.0
+        # Die: in die Knie gehen und nach hinten umkippen, letzte Pose bleibt liegen.
+        k = min(1.0, t * 1.3)
+        ease = k * k * (3 - 2 * k)
+        rot["pelvis"] = local("pelvis", (1, 0, 0), 80 * ease)
+        for s in ("l", "r"):
+            rot[f"thigh_{s}"] = local(f"thigh_{s}", (1, 0, 0), -50 * ease)
+            rot[f"calf_{s}"] = local(f"calf_{s}", (1, 0, 0), 70 * ease)
+            rot[f"upperarm_{s}"] = local(f"upperarm_{s}", (1, 0, 0), -40 * ease) @ down[s]
+        rot["head"] = local("head", (1, 0, 0), 20 * ease)
+        return rot, -hip_height * 0.82 * ease
+
+    hip_height = (rig.matrix_world @ rig.data.bones["pelvis"].head_local).z
+
+    clips = [("Idle", 3.0), ("Walk", 1.4 if zombie else 1.0), ("Run", 0.66), ("Attack", 0.6), ("Die", 1.2)]
+    for kind, seconds in clips:
         action = bpy.data.actions.new(kind)
         action.use_fake_user = True
         rig.animation_data_create()
@@ -375,7 +464,14 @@ def add_animations(rig):
         print(f"Animation {kind}: {frames} Frames")
 
 
-def main(out_glb, preview_png=None):
+def apply_preset(name):
+    g = globals()
+    for key, value in PRESETS[name].items():
+        g[key] = value
+
+
+def main(out_glb, preview_png=None, preset="dwarf"):
+    apply_preset(preset)
     reset_scene()
     basemesh = HumanService.create_human(macro_detail_dict=MACRO, feet_on_ground=True)
     apply_targets(basemesh)
@@ -394,18 +490,22 @@ def main(out_glb, preview_png=None):
     bpy.ops.object.transform_apply(location=True, rotation=False, scale=False)
 
     rig = HumanService.add_builtin_rig(basemesh, "game_engine", import_weights=True)
-    dress(basemesh)
-    process_textures()
-    if rig is not None:
-        add_beard(basemesh, rig)
-        add_animations(rig)
-    basemesh.name = "Dwarf"
-    if rig is not None:
-        rig.name = "DwarfRig"
-    print(f"Höhe: {height_of(basemesh):.2f} m, Rig: {rig.name if rig else 'keins'}")
+    if STYLE == "skeleton":
+        body = build_skeleton_mesh(rig)
+        bpy.data.objects.remove(basemesh, do_unlink=True)        # nur die Knochen exportieren
+        basemesh = body
+    else:
+        dress(basemesh)
+        process_textures()
+        if BEARD:
+            add_beard(basemesh, rig)
+        basemesh.name = preset.capitalize()
+    add_animations(rig, STYLE)
+    rig.name = preset.capitalize() + "Rig"
+    print(f"Höhe: {height_of(basemesh):.2f} m, Rig: {rig.name}")
 
     os.makedirs(os.path.dirname(os.path.abspath(out_glb)), exist_ok=True)
-    # Alles exportieren, was zum Zwerg gehört (Körper, Kleidung, Haare – hängen am Rig).
+    # Alles exportieren, was zur Figur gehört (Körper, Kleidung, Haare – hängen am Rig).
     bpy.ops.object.select_all(action='DESELECT')
     for obj in bpy.context.scene.objects:
         if obj.type in {'MESH', 'ARMATURE'}:
@@ -416,19 +516,22 @@ def main(out_glb, preview_png=None):
     print(f"Exportiert: {out_glb}")
 
     if preview_png:
-        if rig is not None:                                     # Vorschau in Lauf-Pose
-            rig.animation_data.action = bpy.data.actions["Walk"]
-            bpy.context.scene.frame_set(6)
+        for track in rig.animation_data.nla_tracks:             # nur die gewählte Animation auswerten
+            track.mute = True
+        rig.animation_data.action = bpy.data.actions["Walk"]    # Vorschau in Lauf-Pose
+        bpy.context.scene.frame_set(6)
         render_preview(basemesh, preview_png)
 
 
 def render_preview(obj, path):
     scene = bpy.context.scene
     cam_data = bpy.data.cameras.new("PreviewCam")
+    cam_data.lens = 40
     cam = bpy.data.objects.new("PreviewCam", cam_data)
     scene.collection.objects.link(cam)
-    cam.location = (0.6, -2.6, 1.0)
-    direction = Vector((0, 0, 0.7)) - cam.location
+    top = max((obj.matrix_world @ Vector(c)).z for c in obj.bound_box)
+    cam.location = (1.6, -2.4, top * 0.75)
+    direction = Vector((0, 0, top * 0.5)) - cam.location
     cam.rotation_euler = direction.to_track_quat('-Z', 'Y').to_euler()
     scene.camera = cam
     for loc, energy in (((2, -3, 3), 400), ((-3, -1, 2), 150), ((0, 3, 3), 200)):
@@ -450,6 +553,116 @@ def render_preview(obj, path):
     bpy.ops.render.render(write_still=True)
 
 
+def build_skeleton_mesh(rig):
+    """Knochen-Geometrie aus dem Rig: verjüngte Röhren je Knochen, Gelenkkugeln, Schädel, Rippen, Becken.
+    Jedes Teil ist zu 100 % an seinen Knochen gebunden."""
+    import bmesh
+    from mathutils import Matrix
+    bm = bmesh.new()
+    deform = bm.verts.layers.deform.verify()                     # Gewichte direkt an den Punkten
+    bone_index = {}                                              # Knochenname → Vertex-Gruppen-Index
+
+    def add(geom_verts, bone):
+        idx = bone_index.setdefault(bone, len(bone_index))
+        for v in geom_verts:
+            v[deform][idx] = 1.0
+
+    def tube(a, b, r1, r2, bone, segments=8):
+        d = b - a
+        length = d.length
+        if length < 1e-4:
+            return
+        res = bmesh.ops.create_cone(bm, cap_ends=True, segments=segments, radius1=r1, radius2=r2, depth=length)
+        rot = d.normalized().to_track_quat('Z', 'Y').to_matrix().to_4x4()
+        bmesh.ops.transform(bm, matrix=Matrix.Translation((a + b) / 2) @ rot, verts=res["verts"])
+        add(res["verts"], bone)
+
+    def ball(center, radius, bone, scale=(1, 1, 1)):
+        res = bmesh.ops.create_uvsphere(bm, u_segments=12, v_segments=8, radius=radius)
+        bmesh.ops.transform(bm, matrix=Matrix.Translation(center) @ Matrix.Diagonal((*scale, 1)), verts=res["verts"])
+        add(res["verts"], bone)
+
+    mw = rig.matrix_world
+    skip = ("Root", "ball_", "pelvis", "spine_", "neck_01", "head", "clavicle_")
+    for bone in rig.data.bones:
+        a, b = mw @ bone.head_local, mw @ bone.tail_local
+        if any(bone.name.startswith(s) for s in skip):
+            continue
+        finger = any(bone.name.startswith(f) for f in ("thumb", "index", "middle", "ring", "pinky"))
+        r = 0.006 if finger else max(0.012, bone.length * 0.07)
+        tube(a, b, r, r * 0.75, bone.name)
+        ball(a, r * 1.4, bone.name)
+
+    B = {b.name: (mw @ b.head_local, mw @ b.tail_local) for b in rig.data.bones}
+    # Wirbelsäule aus Wirbeln
+    for name in ("spine_01", "spine_02", "spine_03", "neck_01"):
+        a, b = B[name]
+        for i in range(3):
+            p = a.lerp(b, (i + 0.5) / 3)
+            ball(p + Vector((0, 0.03, 0)), 0.018, name, (1.2, 1.0, 0.7))
+    # Brustkorb: Rippenbögen an spine_02/spine_03
+    for name, count in (("spine_02", 3), ("spine_03", 4)):
+        a, b = B[name]
+        for i in range(count):
+            p = a.lerp(b, (i + 0.5) / count)
+            width = 0.13 - 0.012 * abs(i - count / 2)
+            # Rippenbogen als Kette kurzer Röhren auf einer Ellipse (vorne offen, Brustbein separat)
+            pts = [p + Vector((width * math.sin(a), 0.09 * math.cos(a) - 0.01, -0.02 * (1 - math.cos(a))))
+                   for a in [math.radians(x) for x in range(25, 336, 31)]]
+            for q0, q1 in zip(pts, pts[1:]):
+                tube(q0, q1, 0.007, 0.007, name, segments=6)
+        tube(a + Vector((0, -0.1, 0)), b + Vector((0, -0.1, 0)), 0.012, 0.012, name)   # Brustbein
+    bm.verts.index_update()
+    # Becken, Schulterblätter, Schädel, Kiefer
+    pa, pb_ = B["pelvis"]
+    ball(pa + Vector((0, 0, 0.02)), 0.11, "pelvis", (1.25, 0.7, 0.55))
+    for s, sign in (("l", 1), ("r", -1)):
+        ca, cb = B[f"clavicle_{s}"]
+        tube(ca, cb, 0.012, 0.01, f"clavicle_{s}")
+    ha, hb = B["head"]
+    ball(ha + Vector((0, -0.01, 0.10)), 0.095, "head", (0.85, 1.05, 1.05))
+    ball(ha + Vector((0, -0.06, 0.02)), 0.05, "head", (1.1, 0.8, 0.6))      # Oberkiefer
+    ball(ha + Vector((0, -0.06, -0.025)), 0.045, "head", (1.0, 0.8, 0.45))  # Unterkiefer
+    bm.verts.index_update()
+    first_eye = len(bm.verts)
+    bone_index.setdefault("head", len(bone_index))
+    for x in (-0.032, 0.032):
+        ball(ha + Vector((x, -0.085, 0.10)), 0.022, "head")               # Augenhöhlen (dunkel)
+    bm.verts.index_update()
+
+    mesh = bpy.data.meshes.new("Skeleton")
+    bm.to_mesh(mesh)
+    bm.free()
+    obj = bpy.data.objects.new("Skeleton", mesh)
+    bpy.context.scene.collection.objects.link(obj)
+    # Vertex-Gruppen in derselben Reihenfolge wie die Indizes der Gewichtsebene anlegen.
+    for bone, _ in sorted(bone_index.items(), key=lambda kv: kv[1]):
+        obj.vertex_groups.new(name=bone)
+
+    bone_mat = bpy.data.materials.new("Bone")
+    bsdf = bone_mat.node_tree.nodes["Principled BSDF"]
+    bsdf.inputs["Base Color"].default_value = (0.78, 0.73, 0.60, 1)
+    bsdf.inputs["Roughness"].default_value = 0.6
+    hole_mat = bpy.data.materials.new("EyeSocket")
+    hole_mat.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (0.03, 0.02, 0.02, 1)
+    mesh.materials.append(bone_mat)
+    mesh.materials.append(hole_mat)
+    for poly in mesh.polygons:
+        if all(v >= first_eye for v in poly.vertices):
+            poly.material_index = 1
+    for poly in mesh.polygons:
+        poly.use_smooth = True
+
+    obj.parent = rig
+    obj.modifiers.new("Armature", 'ARMATURE').object = rig
+    return obj
+
+
 if __name__ == "__main__":
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
-    main(argv[0] if argv else "dwarf.glb", argv[1] if len(argv) > 1 else None)
+    preset = "dwarf"
+    if "--preset" in argv:
+        i = argv.index("--preset")
+        preset = argv[i + 1]
+        argv = argv[:i] + argv[i + 2:]
+    main(argv[0] if argv else f"{preset}.glb", argv[1] if len(argv) > 1 else None, preset)
