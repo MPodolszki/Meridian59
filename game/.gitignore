@@ -14,3 +14,7 @@ server/**/accounts.json
 
 # Server-Builds für Deployment
 publish/
+
+# Von Godot beim Import aus .glb entpackte Texturen
+/client/models/*_*.png
+/client/models/*_*.png.import

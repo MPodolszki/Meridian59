@@ -57,3 +57,12 @@ Türen, Objekte und NPCs stehen in `server/data/world/tos.json`, abgeleitet aus 
 ## 2026-11-01 – Spielerrasse Zwerg als erste Figur
 Der eigene Charakter wird im neuen Client als Zwerg dargestellt (klein, gedrungen, Bart,
 Startkleidung ohne Rüstung). Platzhalter aus Grundformen, bis eigene Modelle vorliegen.
+
+## 2026-11-01 – Charaktermodelle mit MPFB2 (Blender), Assets per Skript
+Spielfiguren entstehen mit MPFB2 in Blender, per Skript im Hintergrund (game/tools/blender/make_dwarf.py),
+nicht von Hand. Körper aus MPFB (CC0), Haut/Augen/Haare/Kleidung aus dem MakeHuman-System-Asset-Paket
+(CC0, umgefärbt), Bart als prozedurale Haarkarten. Export als .glb mit Skelett „game_engine“
+(Knochennamen wie das Unreal-Standardskelett) nach game/client/models.
+
+**Begründung:** Realistische Figuren mit Skelett, reproduzierbar, eigene bzw. CC0-Assets.
+**Offen:** Animationen; ggf. Git LFS, falls die Modelldateien zahlreich/groß werden.

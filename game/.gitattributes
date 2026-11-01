@@ -1,3 +1,7 @@
 # Skripte und Dienste laufen auf Linux (Pi) – immer LF
 *.sh      text eol=lf
 *.service text eol=lf
+
+# Binäre Assets
+*.glb binary
+*.png binary
