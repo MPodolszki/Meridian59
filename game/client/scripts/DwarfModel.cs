@@ -17,7 +17,25 @@ public static class DwarfModel
     private static readonly Color Belt = new(0.35f, 0.22f, 0.12f);
     private static readonly Color Eyes = new(0.08f, 0.06f, 0.05f);
 
+    /// <summary>Modell aus Blender/MPFB (game/tools/blender/make_dwarf.py).</summary>
+    private const string ModelPath = "res://models/dwarf.glb";
+
+    /// <summary>Zwerg aus models/dwarf.glb; ohne Datei die Platzhalter-Figur aus Grundformen.</summary>
     public static Node3D Create()
+    {
+        if (ResourceLoader.Exists(ModelPath))
+        {
+            var model = GD.Load<PackedScene>(ModelPath).Instantiate<Node3D>();
+            // glTF schaut nach +Z, die Spielfiguren im Client nach -Z.
+            model.RotationDegrees = new Vector3(0, 180, 0);
+            var holder = new Node3D { Name = "Dwarf" };
+            holder.AddChild(model);
+            return holder;
+        }
+        return CreatePrimitive();
+    }
+
+    public static Node3D CreatePrimitive()
     {
         var root = new Node3D { Name = "Dwarf" };
 
