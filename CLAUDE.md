@@ -43,5 +43,5 @@ Getroffene Entscheidungen werden in game/docs/decisions.md festgehalten.
 - Antworten kurz und auf Deutsch.
 
 ## Nächster Schritt
-Protokoll-Doku (game/docs/protocol.md) prüfen, dann Server-Sprache festlegen
+Protokoll-Doku (game/docs/protocol.md) liegt vor (nur aus Code abgeleitet, ungetestet). Als Nächstes Server-Sprache festlegen
 und einen minimalen Server bauen, der den Login des Original-Clients beantwortet.

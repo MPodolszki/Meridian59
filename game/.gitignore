@@ -1,5 +1,4 @@
-# Godot
+# Godot 4 (.import-Dateien werden committet)
 .godot/
-*.import
 export_presets.cfg
 /client/build/
