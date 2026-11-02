@@ -22,6 +22,22 @@ public partial class Main : Node3D
     private ClientSession? _session;
     private readonly Dictionary<uint, Node3D> _avatars = new();
     private readonly Dictionary<uint, Vector3> _targets = new();
+
+    /// <summary>Bewegung anderer Objekte zwischen zwei Servermeldungen: geschätztes Tempo aus Abstand und Zeit,
+    /// geglättete Ist-Geschwindigkeit (für die Animation) und die vom Server gemeldete Blickrichtung.</summary>
+    private sealed class RemoteMotion
+    {
+        public double LastUpdate;
+        public float Speed;
+        public float VisualSpeed;
+        public float ServerYaw;
+    }
+    private readonly Dictionary<uint, RemoteMotion> _motion = new();
+
+    /// <summary>Eigene Geschwindigkeit (beschleunigt/bremst statt sofort zu starten/stoppen).</summary>
+    private Vector3 _velocity;
+    private const float Acceleration = 28f;   // m/s²
+    private const float Deceleration = 40f;
     private readonly HashSet<uint> _npcs = new();
     private readonly HashSet<uint> _monsters = new();
     private ProgressBar _health = null!;
@@ -305,9 +321,18 @@ public partial class Main : Node3D
                 {
                     var target = ToWorld(moved.Object.Row, moved.Object.Col);
                     target.Y = GroundHeightAt(target);
+                    // Tempo aus Abstand zur vorigen Meldung schätzen, damit Figuren gleichmäßig laufen statt zu sprinten.
+                    double now = Time.GetTicksMsec() / 1000.0;
+                    var m = _motion.TryGetValue(moved.Object.Id, out var mm) ? mm : _motion[moved.Object.Id] = new RemoteMotion { LastUpdate = now };
+                    if (_targets.TryGetValue(moved.Object.Id, out var previous))
+                    {
+                        float dt = (float)Mathf.Clamp(now - m.LastUpdate, 0.15, 1.5);
+                        float estimate = Mathf.Min(previous.DistanceTo(target) / dt, RunSpeed * 1.25f);
+                        m.Speed = m.Speed <= 0 ? estimate : Mathf.Lerp(m.Speed, estimate, 0.5f);
+                    }
+                    m.LastUpdate = now;
+                    m.ServerYaw = ToYaw(moved.Object.Angle);
                     _targets[moved.Object.Id] = target;
-                    if (_avatars.TryGetValue(moved.Object.Id, out var node))
-                        node.Rotation = new Vector3(0, ToYaw(moved.Object.Angle), 0);
                 }
                 break;
             case ClientEvent.ObjectRemoved removed:
@@ -318,6 +343,7 @@ public partial class Main : Node3D
                 if (_avatars.Remove(removed.Id, out var gone))
                     gone.QueueFree();
                 _targets.Remove(removed.Id);
+                _motion.Remove(removed.Id);
                 break;
             case ClientEvent.Chat chat:
                 _chatLog.AppendText(chat.Text + "\n");
@@ -510,14 +536,27 @@ public partial class Main : Node3D
         _session?.ProcessEvents();
         UpdateAutomation(delta);
 
-        // Andere Spieler weich zur gemeldeten Position bewegen und passend animieren.
+        // Andere Figuren gleichmäßig zur gemeldeten Position bewegen, weich drehen und passend animieren.
+        float dtf = (float)delta;
         foreach (var (id, node) in _avatars)
         {
-            if (id == _session?.PlayerId || !_targets.TryGetValue(id, out var target))
+            if (id == _session?.PlayerId || !_targets.TryGetValue(id, out var target) || _floorItems.Contains(id))
                 continue;
+            var m = _motion.TryGetValue(id, out var mm) ? mm : _motion[id] = new RemoteMotion { ServerYaw = node.Rotation.Y };
             var before = node.Position;
-            node.Position = node.Position.MoveToward(target, RunSpeed * (float)delta);
-            CharacterModel.Animate(node, before.DistanceTo(node.Position) / Mathf.Max((float)delta, 1e-4f));
+            float distance = before.DistanceTo(target);
+            // Mit dem geschätzten Tempo laufen; liegt die Figur weit zurück, etwas schneller aufholen.
+            float speed = Mathf.Clamp(Mathf.Max(m.Speed, distance * 1.5f), 0.5f, RunSpeed * 1.5f);
+            node.Position = before.MoveToward(target, speed * dtf);
+            var step = node.Position - before;
+            float actual = new Vector2(step.X, step.Z).Length() / Mathf.Max(dtf, 1e-4f);
+            m.VisualSpeed = Mathf.Lerp(m.VisualSpeed, actual, 1f - Mathf.Exp(-8f * dtf));
+            // In Laufrichtung drehen; im Stand zur gemeldeten Blickrichtung.
+            float wantedYaw = m.VisualSpeed > 0.4f && step.LengthSquared() > 1e-6f
+                ? Mathf.Atan2(-step.X, -step.Z)
+                : m.ServerYaw;
+            node.Rotation = new Vector3(0, Mathf.LerpAngle(node.Rotation.Y, wantedYaw, 1f - Mathf.Exp(-10f * dtf)), 0);
+            CharacterModel.Animate(node, m.VisualSpeed);
         }
 
         if (_session is not { InWorld: true } || !_avatars.TryGetValue(_session.PlayerId, out var self))
@@ -547,19 +586,24 @@ public partial class Main : Node3D
         if (Input.IsPhysicalKeyPressed(Key.E)) _yaw -= 2f * delta;
 
         self.Rotation = new Vector3(0, _yaw, 0);
-        if (input == Vector2.Zero)
+
+        // Weich beschleunigen und abbremsen statt sofort mit voller Geschwindigkeit zu starten/stoppen.
+        float speed = Input.IsPhysicalKeyPressed(Key.Shift) ? RunSpeed : WalkSpeed;
+        var desired = input == Vector2.Zero ? Vector3.Zero : new Vector3(input.X, 0, input.Y).Normalized().Rotated(Vector3.Up, _yaw) * speed;
+        _velocity = _velocity.MoveToward(desired, (desired == Vector3.Zero ? Deceleration : Acceleration) * delta);
+        if (_velocity.LengthSquared() < 1e-4f)
         {
+            _velocity = Vector3.Zero;
+            self.Position = self.Position with { Y = Mathf.Lerp(self.Position.Y, GroundHeightAt(self.Position), 1f - Mathf.Exp(-15f * delta)) };
             CharacterModel.Animate(self, 0);
             return;
         }
 
-        float speed = Input.IsPhysicalKeyPressed(Key.Shift) ? RunSpeed : WalkSpeed;
-        var dir = new Vector3(input.X, 0, input.Y).Normalized().Rotated(Vector3.Up, _yaw);
-        var step = dir * speed * delta;
+        var step = _velocity * delta;
         var pos = self.Position;
         // Kollision mit Wänden/Gebäuden: Achsen getrennt prüfen, damit man an Wänden entlanggleitet.
-        if (CanStandAt(pos + new Vector3(step.X, 0, 0), pos)) pos.X += step.X;
-        if (CanStandAt(pos + new Vector3(0, 0, step.Z), pos)) pos.Z += step.Z;
+        if (CanStandAt(pos + new Vector3(step.X, 0, 0), pos)) pos.X += step.X; else _velocity.X = 0;
+        if (CanStandAt(pos + new Vector3(0, 0, step.Z), pos)) pos.Z += step.Z; else _velocity.Z = 0;
         // Ohne Layout: nicht unter die Ursprungs-Koordinaten (Feld 1) laufen. Mit Layout regelt das CanStandAt.
         if (_layout is null)
             pos = new Vector3(Mathf.Max(pos.X, CellSize), 0, Mathf.Max(pos.Z, CellSize));
@@ -567,7 +611,8 @@ public partial class Main : Node3D
         var (cellRow, cellCol) = CellAt(pos);
         if (_layout is not null && (cellRow < 0 || cellCol < 0 || cellRow >= _layout.Rows || cellCol >= _layout.Cols))
             _lastMoveSent = DateTime.MinValue;
-        pos.Y = GroundHeightAt(pos);
+        // Höhe (Stufen, Bordsteine) weich nachführen statt zu springen.
+        pos.Y = Mathf.Lerp(self.Position.Y, GroundHeightAt(pos), 1f - Mathf.Exp(-15f * delta));
         var moved = new Vector2(pos.X - self.Position.X, pos.Z - self.Position.Z).Length();
         self.Position = pos;
         CharacterModel.Animate(self, moved / Mathf.Max(delta, 1e-4f));
@@ -657,7 +702,11 @@ public partial class Main : Node3D
         }
         // Bei Hindernissen nur den Abstand verkürzen, nicht die Höhe – sonst schaut die Kamera von unten.
         var shortened = new Vector3(offset.X * allowed, Mathf.Max(offset.Y * allowed, Mathf.Min(offset.Y, 2.2f)), offset.Z * allowed);
-        _camera.Position = self.Position + shortened;
+        // Kamera weich nachführen; nur bei großen Sprüngen (Raumwechsel, Teleport) sofort setzen.
+        var wantedCamera = self.Position + shortened;
+        _camera.Position = _camera.Position.DistanceTo(wantedCamera) > 8f
+            ? wantedCamera
+            : _camera.Position.Lerp(wantedCamera, 1f - Mathf.Exp(-12f * (float)GetProcessDeltaTime()));
         // Innenräume haben eine Decke: Kamera darunter halten.
         if (_layout is not null && !_outdoors)
             _camera.Position = _camera.Position with { Y = Mathf.Min(_camera.Position.Y, _layout.CeilingMeters(CellSize) - 0.3f) };
