@@ -1,5 +1,5 @@
 {
-  "_hinweis": "Sprüche aus kod/object/passive/spell (heal.kod, hospice.kod, persench/touchatk/zap.kod, creafood.kod): Nummer (SID_*), Schule (1 Shal'ille, 2 Qor, 3 Kraanan, 4 Faren, 5 Riija, 6 Jala), Stufe, Mana, Zauberzeit (ms), Reagenzien. Standardwerte aus spell.kod: exertion 2, chanceToIncrease 20, castTime 0. Texte eigene Übersetzung.",
+  "_hinweis": "Sprüche aus kod/object/passive/spell (heal.kod, hospice.kod, persench/touchatk/zap.kod, creafood.kod): Nummer (SID_*), Schule (1 Shal'ille, 2 Qor, 3 Kraanan, 4 Faren, 5 Riija, 6 Jala), Stufe, Mana, Zauberzeit (ms), Reagenzien. Standardwerte aus spell.kod: exertion 2, chanceToIncrease 20, castTime 0. Texte eigene Übersetzung. viHit_Factor der Berührungszauber wird im Original nicht ausgewertet und fehlt daher.",
   "spells": [
     {
       "key": "minorheal",
@@ -62,7 +62,6 @@
       "effect": "touchattack",
       "minDamage": 3,
       "maxDamage": 6,
-      "hitFactor": 50,
       "description": "Funken springen von den Fingerspitzen und versengen, was man berührt.",
       "castText": "Funken springen und knistern an deinen Fingerspitzen.",
       "offText": "Die Funken an deinen Fingerspitzen erlöschen.",
@@ -92,6 +91,132 @@
       ],
       "effect": "createfood",
       "description": "Kraanan schenkt dem Hungrigen etwas zu essen.",
+      "castText": "{0} erscheint."
+    },
+    {
+      "key": "holytouch",
+      "sid": 21,
+      "name": "Heilige Berührung",
+      "icon": "iholyt.bgf",
+      "school": 1,
+      "level": 2,
+      "mana": 12,
+      "exertion": 3,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "emerald",
+          "number": 2
+        }
+      ],
+      "effect": "touchattack",
+      "minDamage": 3,
+      "maxDamage": 6,
+      "castText": "Deine Hände baden in Shal'illes Liebe.",
+      "offText": "Deine Hände baden nicht mehr in Shal'illes Liebe.",
+      "hitText": "Shal'illes Licht brennt {0}!"
+    },
+    {
+      "key": "acidtouch",
+      "sid": 45,
+      "name": "Säureberührung",
+      "icon": "iacidtou.bgf",
+      "school": 2,
+      "level": 2,
+      "mana": 10,
+      "exertion": 3,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "entrootberry",
+          "number": 1
+        }
+      ],
+      "effect": "touchattack",
+      "minDamage": 4,
+      "maxDamage": 8,
+      "castText": "Qors ätzender Geifer quillt aus den Poren deiner Hand.",
+      "offText": "Deine Hände triefen nicht mehr vor Säure.",
+      "hitText": "Du siehst {0} unter deiner Berührung vor Qual aufschreien."
+    },
+    {
+      "key": "icyfingers",
+      "sid": 24,
+      "name": "Eisige Finger",
+      "icon": "iicyfing.bgf",
+      "school": 4,
+      "level": 2,
+      "mana": 6,
+      "exertion": 2,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "redmushroom",
+          "number": 1
+        }
+      ],
+      "effect": "touchattack",
+      "minDamage": 5,
+      "maxDamage": 8,
+      "castText": "Ein Hauch absoluter Kälte umhüllt deine Hände.",
+      "offText": "Deine Hände sind nicht mehr von Frost umhüllt.",
+      "hitText": "Deine eisige Berührung lässt Fleisch von {0} schwarz erfrieren."
+    },
+    {
+      "key": "touchofflame",
+      "sid": 20,
+      "name": "Flammenberührung",
+      "icon": "itoucfla.bgf",
+      "school": 4,
+      "level": 2,
+      "mana": 9,
+      "exertion": 2,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "redmushroom",
+          "number": 1
+        }
+      ],
+      "effect": "touchattack",
+      "minDamage": 4,
+      "maxDamage": 9,
+      "castText": "Flammenstöße brechen aus deinen Fingern hervor.",
+      "offText": "Deine Hände sind nicht mehr von Flammen umhüllt.",
+      "hitText": "Deine Flammen versengen {0}!"
+    },
+    {
+      "key": "mystictouch",
+      "sid": 157,
+      "name": "Mystische Berührung",
+      "icon": "imysticc.bgf",
+      "school": 4,
+      "level": 1,
+      "mana": 3,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "mushroom",
+          "number": 1
+        }
+      ],
+      "effect": "mystictouch",
+      "description": "Gibt einem anderen einen Teil der eigenen magischen Kraft.",
+      "castText": "Du spürst, wie fremde magische Kraft in dich strömt."
+    },
+    {
+      "key": "createweapon",
+      "sid": 56,
+      "name": "Waffe erschaffen",
+      "icon": "icremace.bgf",
+      "school": 3,
+      "level": 1,
+      "mana": 15,
+      "castTime": 500,
+      "targets": 0,
+      "reagents": [],
+      "effect": "createweapon",
+      "description": "Kraanan schenkt dem Kämpfer eine Waffe.",
       "castText": "{0} erscheint."
     }
   ],

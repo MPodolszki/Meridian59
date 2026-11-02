@@ -676,7 +676,7 @@ public sealed partial class World
             m.Target ??= avatar;   // angegriffene Monster wehren sich
 
             var touch = TouchStrike(avatar, now);
-            if (_random.NextDouble() > (touch?.HitChance ?? CombatRules.PlayerHitChance))
+            if (_random.NextDouble() > CombatRules.PlayerHitChance)
             {
                 Tell(avatar, $"Du verfehlst {Article(m.Kind, accusative: true)}.");
                 return;

@@ -498,6 +498,70 @@
       "description": "Eine herzhafte Pastete mit Fleischfüllung.",
       "nutrition": 30,
       "filling": 50
+    },
+    {
+      "key": "shortsword",
+      "kodClass": "ShortSword",
+      "name": "Kurzschwert",
+      "icon": "shswd.bgf",
+      "value": 250,
+      "types": [
+        "weapon"
+      ],
+      "article": "ein",
+      "description": "Eine kurze, handliche Klinge.",
+      "slot": "weapon",
+      "weaponType": "thrust",
+      "weaponQuality": "low",
+      "overlay": "shswdov.bgf",
+      "windowOverlay": "povshswd.bgf"
+    },
+    {
+      "key": "scimitar",
+      "kodClass": "Scimitar",
+      "name": "Krummsäbel",
+      "icon": "scimitar.bgf",
+      "value": 150,
+      "types": [
+        "weapon"
+      ],
+      "article": "einen",
+      "description": "Eine geschwungene, scharfe Klinge.",
+      "slot": "weapon",
+      "weaponType": "slash",
+      "weaponQuality": "high",
+      "overlay": "scimov.bgf",
+      "windowOverlay": "povscim.bgf"
+    },
+    {
+      "key": "mysticsword",
+      "kodClass": "MysticSword",
+      "name": "mystisches Schwert",
+      "icon": "mystswd.bgf",
+      "value": 1250,
+      "types": [
+        "weapon"
+      ],
+      "article": "ein",
+      "description": "Eine Klinge, die schwach von innen leuchtet.",
+      "slot": "weapon",
+      "weaponType": "thrust",
+      "weaponQuality": "high",
+      "overlay": "mystwdov.bgf",
+      "windowOverlay": "povmystsw.bgf"
+    },
+    {
+      "key": "entrootberry",
+      "kodClass": "EntrootBerry",
+      "name": "Entwurzbeere",
+      "icon": "darkber.bgf",
+      "value": 60,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Entwurzbeeren",
+      "description": "Eine dunkle, bittere Beere."
     }
   ],
   "treasure": {

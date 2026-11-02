@@ -199,6 +199,25 @@ public sealed partial class World
             Tell(a, target == a ? "Du bist kerngesund." : string.Format(spell.Unnecessary ?? "{0} ist kerngesund.", target.Name));
             return false;
         }
+        if (spell.Effect == "mystictouch" && target is not null)
+        {
+            // mysttch.kod CanPayCosts: nicht auf sich selbst, genug eigenes Mana, Ziel nicht übervoll.
+            if (target == a)
+            {
+                Tell(a, "Mystische Berührung kannst du nicht auf dich selbst wirken.");
+                return false;
+            }
+            if (a.State.Mana <= spell.Mana + 5)
+            {
+                Tell(a, "Du hast nicht genug Mana, um etwas davon abzugeben.");
+                return false;
+            }
+            if (target.State.Mana >= target.State.MaxMana * 3 / 2 || target.State.Mana >= 75)
+            {
+                Tell(a, $"{target.Name} ist bereits voller magischer Kraft.");
+                return false;
+            }
+        }
         if (spell.Effect == "touchattack" && a.Touch is { } t && t.Spell == spell && t.Until > DateTime.UtcNow)
         {
             Tell(a, $"Du bist bereits mit {spell.Name} verzaubert.");
@@ -266,6 +285,25 @@ public sealed partial class World
             case "createfood":
                 CreateFood(a, power, spell);
                 break;
+            case "createweapon":
+                CreateWeapon(a, power, spell);
+                break;
+            case "mystictouch":
+            {
+                // mysttch.kod: Stärke/2 % (10..55) des eigenen Manas, gedeckelt auf 1,5 × Max bzw. 75 beim Ziel.
+                int percent = Math.Clamp(power / 2, 10, 55);
+                int amount = Math.Max(a.State.Mana * percent / 100, 1);
+                amount = Math.Min(amount, a.State.Mana - spell.Mana);
+                amount = Math.Min(amount, target!.State.MaxMana * 3 / 2 - target.State.Mana);
+                amount = Math.Min(amount, 75 - target.State.Mana);
+                if (amount <= 0)
+                    break;
+                Tell(a, $"Du gibst {target.Name} einen Teil deiner magischen Kraft.");
+                ChangeMana(a, -amount);
+                Tell(target, spell.CastText ?? "Magische Kraft strömt in dich.");
+                ChangeMana(target, amount);
+                break;
+            }
             case "touchattack":
             {
                 // GetDuration: Random(Stärke/3, Stärke/2), begrenzt 10..75, × 6 s.
@@ -302,10 +340,23 @@ public sealed partial class World
         Give(a, food);
     }
 
+    /// <summary>creaweap.kod: Wurf Random(Stärke/3, Stärke) bestimmt die Waffe.</summary>
+    private void CreateWeapon(Avatar a, int power, SpellDefinition spell)
+    {
+        int roll = _random.Next(power / 3, power + 1);
+        string key = roll < 20 ? "mace" : roll < 30 ? "shortsword" : roll < 45 ? "hammer" : roll < 60 ? "axe"
+            : roll < 75 ? "longsword" : roll < 95 ? "scimitar" : "mysticsword";
+        if (!_items.TryGet(key, out var kind))
+            return;
+        var weapon = NewItem(kind);
+        Tell(a, string.Format(spell.CastText ?? "{0} erscheint.", Capitalize(weapon.Describe())));
+        Give(a, weapon);
+    }
+
     private static string Capitalize(string s) => s.Length == 0 ? s : char.ToUpperInvariant(s[0]) + s[1..];
 
     /// <summary>Berührungszauber (touchatk.kod FindDamage) statt Waffe/Faust; null = keiner aktiv.</summary>
-    private (int Damage, double HitChance, SpellDefinition Spell)? TouchStrike(Avatar a, DateTime now)
+    private (int Damage, SpellDefinition Spell)? TouchStrike(Avatar a, DateTime now)
     {
         if (a.Touch is not { } t)
             return null;
@@ -317,8 +368,8 @@ public sealed partial class World
         }
         int d = _random.Next(t.Spell.MinDamage, t.Spell.MaxDamage + 1);
         d = d / 2 + d / 2 * t.Power / MagicRules.SpellPowerMax + 1;
-        // viHit_Factor 80 ist der Normalfall; Zap (50) trifft entsprechend seltener.
-        return (Math.Max(d, 1), CombatRules.PlayerHitChance * t.Spell.HitFactor / 80.0, t.Spell);
+        // viHit_Factor wird im Original nicht ausgewertet: Trefferchance wie ein normaler Schlag.
+        return (Math.Max(d, 1), t.Spell);
     }
 
     // ------------------------------------------------------------------ Trance und Mana im Spieltakt

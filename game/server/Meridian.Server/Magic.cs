@@ -18,7 +18,6 @@ public sealed record SpellDefinition(string Key, int Sid, string Name, string Ic
     public string Effect { get; init; } = "";
     public int MinDamage { get; init; } = 3;
     public int MaxDamage { get; init; } = 6;
-    public int HitFactor { get; init; } = 80;
     public string? Description { get; init; }
     public string? CastText { get; init; }
     public string? Unnecessary { get; init; }

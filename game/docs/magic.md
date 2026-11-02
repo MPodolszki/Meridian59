@@ -32,22 +32,33 @@ Im Protokoll Stat-Gruppe 2 (`BP_STAT_GROUP`).
 |---|---|---|---|---|
 | Kleine Heilung (minor heal) | Shal'ille 1 | 3 | 1 Kraut | 1–5 + (Stärke+1)/20 (+Karma/20), max. 10, +2–5 |
 | Hospiz (hospice) | Shal'ille 3 | 10 | 3 Kräuter | −3..3 + Stärke/5 (+Karma/10), 0..25 |
-| Zap | Faren 1 | 6 | 1 blauer Pilz | Berührungszauber: Schläge machen 3–6 Schaden (nach Stärke), Treffer seltener (Faktor 50) |
+| Zap | Faren 1 | 6 | 1 blauer Pilz | Berührungszauber 3–6 |
+| Mystische Berührung (mystic touch) | Faren 1 | 3 | 1 Pilz | gibt einem anderen Spieler Stärke/2 % (10–55) des eigenen Manas, Ziel max. 1,5 × Max bzw. 75 |
+| Waffe erschaffen (create weapon) | Kraanan 1 | 15 | – | Wurf Stärke/3..Stärke: Streitkolben, Kurzschwert, Hammer, Axt, Langschwert, Krummsäbel, mystisches Schwert |
+| Heilige Berührung (holy touch) | Shal'ille 2 | 12 | 2 Smaragde | Berührungszauber 3–6 |
+| Säureberührung (acid touch) | Qor 2 | 10 | 1 Entwurzbeere | Berührungszauber 4–8 |
+| Eisige Finger (icy fingers) | Faren 2 | 6 | 1 roter Pilz | Berührungszauber 5–8 |
+| Flammenberührung (touch of flame) | Faren 2 | 9 | 1 roter Pilz | Berührungszauber 4–9 |
 | Nahrung erschaffen (create food) | Kraanan 1 | 10 | 2 Kräuter, 2 Holunderbeeren | Wurf Stärke/2..Stärke: Apfel, Brot, Trauben, Keule, Pastete, Käse, selten Tintling |
 
 Startsprüche: Kleine Heilung, Zap, Nahrung erschaffen mit `InitialAbility` (Random(Req/2, Req)/2, 1..25) und
 Reagenzien für je 10 Zauber (AddDefaultObjects + AddRealWorldObjects). Bestehende Charaktere bekommen sie beim
 nächsten Einloggen.
 
+Berührungszauber (touchatk.kod): Schaden Random(min, max), davon die Hälfte fest und die Hälfte nach Stärke, +1;
+Dauer Random(Stärke/3, Stärke/2) × 6 s (1–7,5 min); ein neuer ersetzt den alten. `viHit_Factor` setzt das
+Original, wertet ihn aber nirgends aus – Treffer daher wie ein normaler Schlag.
+
 ## Lernen
 Händler mit Sprüchen (Frisconar: Hospiz) bieten sie in der Ladenliste an, wenn `PlayerCanLearn` es erlaubt
 (Sprüche der Stufe davor mit genug Fähigkeit, Lernpunkte-Formel mit POINTS_SLOPE 7, MaxLearnPoints 16).
-Preis 250·2^Stufe. Hospiz (Stufe 3) braucht Stufe-2-Sprüche der Shal'ille – die gibt es noch nicht.
+Preis 250·2^Stufe. Hospiz (Stufe 3) braucht geübte Stufe-2-Sprüche der Shal'ille (Heilige Berührung, bei der Erstellung wählbar).
 
 ## Protokoll
 `BP_SPELLS`/`BP_SPELL_ADD` (object_desc, Ziele, Schule), Stat-Gruppe 3 als Liste (Fähigkeit in %),
 `BP_REQ_CAST`. Godot-Client: Taste **Z** öffnet die Sprüche, Mana-Balken unter Lebenspunkten/Ausdauer.
 
 ## Noch nicht umgesetzt
-Weitere Sprüche (Stufe 2 aufwärts, Riija/Jala), Verzauberungen anderer Art (Segen, Widerstände),
+Persönliche Verzauberungen (Segen, Superstärke, Eile, Widerstände, Entdecken) – sie setzen Kampfwerte voraus,
+die der vereinfachte Kampf noch nicht nutzt; Raumzauber (Licht, Dunkelheit, Nebel), Wände, Riija/Jala,
 Spruch-Murmeln für Umstehende, Karma-Änderung durch Heilen, Raumboni nach Gelände.
