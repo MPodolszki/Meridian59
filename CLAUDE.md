@@ -86,4 +86,8 @@ Godot-Client: WoW-Steuerung/Kamera, Waldränder auf grünen Karten, Spielerlicht
 Einrichtung der Räume: Möbel/Lichter/Zierobjekte aus dem KOD (tools/add_furniture.py) plus Wandausstattung je Raumart (client/README.md).
 
 Godot-Client: Arme korrekt (Gliedmaßen nach Quellrichtung), 29 Clips inkl. Sitzen, Ducken, Tanzen, Schwimmen; detailliertere Texturen. Testdatenbank dauerhaft in ~/.local/share/meridian.
+Monster datengetrieben: alle 62 Arten des Originals in server/data/monsters/monsters.json (tools/make_monsters.py aus docs/kod/monsters_catalog.json), Aggression/Karma, Flucht, Gift, alle Beutetabellen (docs/monsters.md).
+Monster-Modelle: 46 eigene prozedurale Modelle mit Animationen (tools/blender/make_creature.py, creatures.py), Datei = Name der Original-Grafik.
+Zauberschulen Teil 1: 37 von ~150 Sprüchen (Angriff, Schwächung, Fläche, Heilung, Gift heilen; docs/magic.md). Katalog aller Sprüche: docs/kod/spells_catalog.json, docs/spells-original.md (Reihenfolge dort).
+Offen (Magie): Tempel als Lehrer (liegen in der Wildnis), restliche Sprüche (Raumzauber, Wände, Gegenstände, Riija-Illusionen, Jala-Lieder), Monster zaubern, PvP.
 Offen: Wildnis zwischen den Städten, Tempel, Kanalisationen (Jasper, Barloque), Heimatstadt je Spieler, Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.
