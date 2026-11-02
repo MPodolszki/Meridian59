@@ -70,6 +70,8 @@ public partial class Main
             return;
         var spell = _knownSpells[sel[0]];
         await SendOwnPosition();
+        if (_avatars.TryGetValue(_session.PlayerId, out var self))
+            CharacterModel.PlayOnce(self, "Cast");
         await _session.CastAsync(spell.Spell.Id, spell.Targets == 1 ? [_session.PlayerId] : []);
     }
 }

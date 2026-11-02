@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Meridian.Protocol;
 
@@ -41,6 +42,7 @@ public partial class Main : Node3D
     private readonly HashSet<uint> _npcs = new();
     private readonly HashSet<uint> _monsters = new();
     private ProgressBar _health = null!;
+    private int _lastHp = int.MaxValue;
     private Label _healthText = null!;
     private ProgressBar _vigor = null!;
     private Label _vigorText = null!;
@@ -280,6 +282,11 @@ public partial class Main : Node3D
                 _loginPanel.Visible = true;
                 break;
             case ClientEvent.HealthChanged hp:
+                // Trefferreaktion, wenn die eigenen Lebenspunkte sinken (nicht beim ersten Wert und nicht beim Tod).
+                if (_lastHp != int.MaxValue && hp.Hp < _lastHp && hp.Hp > 0
+                    && _session is { InWorld: true } && _avatars.TryGetValue(_session.PlayerId, out var hurt))
+                    CharacterModel.PlayOnce(hurt, "Hit");
+                _lastHp = hp.Hp;
                 _health.Visible = _healthText.Visible = true;
                 _health.MaxValue = hp.MaxHp;
                 _health.Value = hp.Hp;
@@ -296,7 +303,11 @@ public partial class Main : Node3D
                 break;
             case ClientEvent.ObjectAnimated anim:
                 if (_avatars.TryGetValue(anim.Id, out var animated))
-                    CharacterModel.PlayOnce(animated, anim.Death ? "Die" : "Attack");
+                {
+                    // Eigene Figur ohne Waffe: Faustschlag statt Schwerthieb.
+                    bool unarmed = anim.Id == _session!.PlayerId && !_inventory.Any(o => o.Used && o.Icon is "mace.bgf" or "axe.bgf" or "hammer.bgf" or "sword.bgf" or "shswd.bgf" or "scimitar.bgf" or "mystswd.bgf");
+                    CharacterModel.PlayOnce(animated, anim.Death ? "Die" : unarmed ? "Punch" : "Attack");
+                }
                 if (anim.Death)
                     _monsters.Remove(anim.Id);   // tote Monster nicht mehr als Ziel wählen
                 break;

@@ -30,7 +30,7 @@ public static class CharacterModel
         if (Player(holder) is { } player)
         {
             // glTF-Animationen werden ohne Schleife importiert.
-            foreach (string name in new[] { "Idle", "Walk", "Run" })
+            foreach (string name in new[] { "Idle", "Walk", "Run", "Sprint", "Jump_Loop", "Idle_Torch" })
                 if (player.HasAnimation(name))
                     player.GetAnimation(name).LoopMode = Animation.LoopModeEnum.Linear;
             player.Play("Idle");
@@ -38,16 +38,31 @@ public static class CharacterModel
         return holder;
     }
 
-    /// <summary>Spielt „Idle“, „Walk“ oder „Run“ passend zur Geschwindigkeit (m/s), außer während Attack/Die.</summary>
+    /// <summary>Natürliches Tempo der Bewegungsclips (Universal Animation Library) in m/s bei Zwergengröße.</summary>
+    private const float WalkClipSpeed = 1.6f, RunClipSpeed = 4f, SprintClipSpeed = 7f;
+
+    /// <summary>Spielt „Idle“, „Walk“, „Run“ (Joggen) oder „Sprint“ passend zur Geschwindigkeit (m/s), außer während
+    /// einmaliger Animationen. Mit Überblendung und Hysterese, damit die Clips nicht hin- und herspringen.</summary>
     public static void Animate(Node3D figure, float speed)
     {
         if (Player(figure) is not { } player || IsLocked(figure))
             return;
-        string wanted = speed > 5.5f ? "Run" : speed > 0.3f ? "Walk" : "Idle";
-        if (player.CurrentAnimation != wanted && player.HasAnimation(wanted))
-            player.Play(wanted, customBlend: 0.2);
-        // Laufanimation an das Tempo koppeln, damit die Füße weniger rutschen.
-        player.SpeedScale = wanted == "Walk" ? speed / 4f : wanted == "Run" ? speed / 8f : 1f;
+        string current = player.CurrentAnimation;
+        float up = current == "Idle" ? 0.4f : 0.25f;   // Hysterese um die Schwellen
+        string wanted = speed < up ? "Idle"
+            : speed < (current == "Run" ? 2.4f : 2.9f) ? "Walk"
+            : speed < (current == "Sprint" ? 5.6f : 6.2f) || !player.HasAnimation("Sprint") ? "Run"
+            : "Sprint";
+        if (current != wanted && player.HasAnimation(wanted))
+            player.Play(wanted, customBlend: 0.25);
+        // Tempo des Clips an die Geschwindigkeit koppeln (begrenzt), damit die Füße weniger rutschen.
+        player.SpeedScale = wanted switch
+        {
+            "Walk" => Mathf.Clamp(speed / WalkClipSpeed, 0.7f, 1.6f),
+            "Run" => Mathf.Clamp(speed / RunClipSpeed, 0.7f, 1.4f),
+            "Sprint" => Mathf.Clamp(speed / SprintClipSpeed, 0.8f, 1.3f),
+            _ => 1f,
+        };
     }
 
     /// <summary>Einmalige Animation; „Die“ bleibt in der letzten Pose liegen.</summary>
@@ -56,7 +71,7 @@ public static class CharacterModel
         if (Player(figure) is not { } player || !player.HasAnimation(name))
             return;
         player.SpeedScale = 1f;
-        player.Play(name, customBlend: 0.1);
+        player.Play(name, customBlend: 0.15);
         double until = name == "Die" ? double.MaxValue : Time.GetTicksMsec() / 1000.0 + player.GetAnimation(name).Length;
         figure.SetMeta(LockMeta, until);
     }
