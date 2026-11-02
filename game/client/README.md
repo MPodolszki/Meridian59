@@ -30,16 +30,22 @@ und der Client beendet; `--walk` läuft vorher n Sekunden, `--camera front` zeig
 
 | Taste | Aktion |
 |---|---|
-| W/S | vor/zurück |
-| A/D | drehen |
-| Q/E | seitlich gehen |
-| Shift | rennen |
-| rechte Maustaste + Maus | drehen |
-| Linksklick auf Tür | Tür/Ausgang benutzen (bis 4 m) |
-| Leertaste | springen (nur im Client, siehe unten) |
-| E | NPC in der Nähe anschauen |
-| F | nächstes Monster angreifen (Nahkampf) |
-| Enter | Chat (NPCs antworten auf Begrüßung, ihren Namen und Stichwörter) |
+| W / S | vorwärts / rückwärts (rückwärts langsamer) |
+| A / D | drehen; mit gedrückter rechter Maustaste seitlich |
+| Q / E | seitlich gehen |
+| Shift | gehen statt rennen |
+| NumLock | Dauerlauf an/aus |
+| Leertaste | springen |
+| rechte Maustaste ziehen | Figur und Kamera drehen |
+| linke Maustaste ziehen | Kamera um die Figur kreisen lassen |
+| beide Maustasten | vorwärts laufen |
+| Mausrad | Kamera näher/weiter |
+| Linksklick | Tür/Hebel benutzen, Figur anschauen |
+| Ausgangsfeld betreten | hinausgehen |
+| T | nächste Figur anschauen |
+| F | nächstes Monster angreifen |
+| I / B / G / Z | Inventar / Laden / aufheben / Sprüche |
+| Enter | Chat |
 
 ## Koordinaten
 

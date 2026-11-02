@@ -16,8 +16,8 @@ public partial class Main : Node3D
 {
     /// <summary>Meter pro Grid-Feld (64 KOD-Feineinheiten).</summary>
     private const float CellSize = 2.5f;
-    private const float WalkSpeed = 4f;     // m/s
-    private const float RunSpeed = 8f;
+    private const float WalkSpeed = 2.5f;   // m/s (Shift)
+    private const float RunSpeed = 6.5f;    // Standard, wie WoW-Rennen
     private static readonly TimeSpan SendInterval = TimeSpan.FromSeconds(1);   // wie Original-Client
 
     private ClientSession? _session;
@@ -559,15 +559,12 @@ public partial class Main : Node3D
 
     public override void _UnhandledInput(InputEvent e)
     {
-        if (e is InputEventMouseMotion motion && Input.IsMouseButtonPressed(MouseButton.Right))
-            _yaw -= motion.Relative.X * 0.005f;
+        if (HandleControlsInput(e))
+            return;
         if (e is InputEventKey { Pressed: true, Keycode: Key.Enter } && !_chatInput.HasFocus())
             _chatInput.GrabFocus();
-        if (e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left } click)
-            if (!TryActivateAt(click.Position))
-                TryOpenDoorAt(click.Position);
-        if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.E } && !_chatInput.HasFocus())
-            LookAtNearestNpc();
+        if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.T } && !_chatInput.HasFocus())
+            LookAtNearestNpc();   // T: nächste Figur anschauen (E ist seitlich gehen)
         if (e is InputEventKey { Pressed: true, Keycode: Key.F } && !_chatInput.HasFocus())
             AttackNearestMonster();
         if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.I } && !_chatInput.HasFocus())
@@ -628,24 +625,15 @@ public partial class Main : Node3D
             return;
         }
 
-        var input = Vector2.Zero;
+        var (input, speed) = ReadMovement(delta);
         if (_autoWalkSeconds > 0 && _screenshotTimer > _screenshotDelay)
         {
             input.Y -= 1;          // automatisch geradeaus laufen
             _yaw += 0.6f * delta;  // und dabei leicht drehen
         }
-        if (Input.IsPhysicalKeyPressed(Key.W)) input.Y -= 1;
-        if (Input.IsPhysicalKeyPressed(Key.S)) input.Y += 1;
-        // A/D drehen, Q/E seitlich gehen.
-        if (Input.IsPhysicalKeyPressed(Key.A)) _yaw += 2f * delta;
-        if (Input.IsPhysicalKeyPressed(Key.D)) _yaw -= 2f * delta;
-        if (Input.IsPhysicalKeyPressed(Key.Q)) input.X -= 1;
-        if (Input.IsPhysicalKeyPressed(Key.E)) input.X += 1;
 
         self.Rotation = new Vector3(0, _yaw, 0);
 
-        // Weich beschleunigen und abbremsen statt sofort mit voller Geschwindigkeit zu starten/stoppen.
-        float speed = Input.IsPhysicalKeyPressed(Key.Shift) ? RunSpeed : WalkSpeed;
         var desired = input == Vector2.Zero ? Vector3.Zero : new Vector3(input.X, 0, input.Y).Normalized().Rotated(Vector3.Up, _yaw) * speed;
         _velocity = _velocity.MoveToward(desired, (desired == Vector3.Zero ? Deceleration : Acceleration) * delta);
         if (_velocity.LengthSquared() < 1e-4f)
@@ -695,12 +683,16 @@ public partial class Main : Node3D
         foreach (var e in _layout.Exits)
             if (e.Row == row && e.Col == col)
                 target = e.Target;
-        string? hint = target is null ? null : $"Linksklick auf die Tür: hinausgehen{(target.Length > 0 ? " → " + target : "")}";
+        string? hint = target is null ? null : $"Ausgang{(target.Length > 0 ? " → " + target : "")}";
         if (hint == _exitHint)
             return;
         _exitHint = hint;
-        if (hint is not null)
-            _status.Text = hint;
+        if (hint is null)
+            return;
+        _status.Text = hint;
+        // Wer aufs Ausgangsfeld läuft, geht hindurch (Linksklick auf die Tür geht weiterhin).
+        if (_velocity.LengthSquared() > 0.25f)
+            _ = GoThroughDoor();
     }
 
     /// <summary>Reichweite zum Öffnen einer Tür per Klick (Meter vom Spieler zum Ausgangsfeld).</summary>
@@ -801,39 +793,6 @@ public partial class Main : Node3D
             _status.Text = "Niemand in der Nähe.";
         else
             await _session.LookAsync(best);
-    }
-
-    private void UpdateCamera(Node3D self)
-    {
-        // Kamera auf Zwergenhöhe abgestimmt (Kopf bei ca. 1,2 m).
-        var offset = _cameraMode == "front"
-            ? new Vector3(0, 1.6f, -3.2f).Rotated(Vector3.Up, _yaw)
-            : new Vector3(0, 3, 5.5f).Rotated(Vector3.Up, _yaw);
-        // Beim Springen auf Fußhöhe bleiben, damit der Sprung sichtbar ist und die Kamera nicht hüpft.
-        var feet = self.Position with { Y = self.Position.Y - _jumpOffset };
-        var head = feet + new Vector3(0, 1.1f, 0);
-        // Einfache Kamera-Kollision: entlang des Kamerastrahls bis zum ersten Gebäude, das höher ist.
-        float allowed = 1f;
-        for (float t = 0.05f; t <= 1f; t += 0.05f)
-        {
-            var probe = feet + offset * t;
-            if (_layout is not null && probe.Y < BlockTopAt(probe))
-            {
-                allowed = Mathf.Max(0.15f, t - 0.1f);
-                break;
-            }
-        }
-        // Bei Hindernissen nur den Abstand verkürzen, nicht die Höhe – sonst schaut die Kamera von unten.
-        var shortened = new Vector3(offset.X * allowed, Mathf.Max(offset.Y * allowed, Mathf.Min(offset.Y, 2.2f)), offset.Z * allowed);
-        // Kamera weich nachführen; nur bei großen Sprüngen (Raumwechsel, Teleport) sofort setzen.
-        var wantedCamera = feet + shortened;
-        _camera.Position = _camera.Position.DistanceTo(wantedCamera) > 8f
-            ? wantedCamera
-            : _camera.Position.Lerp(wantedCamera, 1f - Mathf.Exp(-12f * (float)GetProcessDeltaTime()));
-        // Innenräume haben eine Decke: Kamera darunter halten.
-        if (_layout is not null && !_outdoors)
-            _camera.Position = _camera.Position with { Y = Mathf.Min(_camera.Position.Y, _layout.CeilingMeters(CellSize) - 0.3f) };
-        _camera.LookAt(head);
     }
 
     private async void SendPositionIfNeeded(Node3D self)

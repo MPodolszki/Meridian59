@@ -33,6 +33,15 @@ public sealed class RazaTests : IAsyncDisposable
     }
 
     [Fact]
+    public async Task Inn_ExitLeadsIntoTheVillage()
+    {
+        var (c, events) = await EnterAsync(1011);
+        await c.MoveAsync(Room.Fine(1), Room.Fine(6), false);
+        await c.GoAsync();
+        await WaitForAsync(c, events, e => e is ClientEvent.EnteredRoom { RoomName: "Raza" });
+    }
+
+    [Fact]
     public async Task Village_HasCows_ThatCannotBeAttacked()
     {
         var (c, events) = await EnterAsync(1012);
