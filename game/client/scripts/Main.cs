@@ -453,7 +453,19 @@ public partial class Main : Node3D
         var (fr, fc) = CellAt(from);
         if (outside)
             return _layout.IsWalkable(fr, fc);
-        return (fr, fc) == (row, col) ? !_layout.IsClosedDoor(row, col) : _layout.CanStep(fr, fc, row, col);
+        if ((fr, fc) == (row, col))
+            return !_layout.IsClosedDoor(row, col);
+        // Notausgang: Kommt man von diesem Feld per Stufe nirgendwohin (grobes Raster), darf man auf jedes Bodenfeld.
+        return _layout.CanStep(fr, fc, row, col) || IsTrapped(fr, fc) && _layout.FloorAt(row, col) >= 0 && !_layout.IsClosedDoor(row, col);
+    }
+
+    private bool IsTrapped(int row, int col)
+    {
+        for (int dr = -1; dr <= 1; dr++)
+            for (int dc = -1; dc <= 1; dc++)
+                if ((dr != 0 || dc != 0) && _layout!.CanStep(row, col, row + dr, col + dc))
+                    return false;
+        return true;
     }
 
     /// <summary>Oberkante der Geometrie an einer Position (Dach, Wand oder Boden).</summary>
@@ -640,9 +652,15 @@ public partial class Main : Node3D
 
         var step = _velocity * delta;
         var pos = self.Position;
-        // Kollision mit Wänden/Gebäuden: Achsen getrennt prüfen, damit man an Wänden entlanggleitet.
-        if (CanStandAt(pos + new Vector3(step.X, 0, 0), pos)) pos.X += step.X; else _velocity.X = 0;
-        if (CanStandAt(pos + new Vector3(0, 0, step.Z), pos)) pos.Z += step.Z; else _velocity.Z = 0;
+        // Kollision: zuerst der ganze Schritt (auch diagonal – manche Wege gehen nur übers Eck weiter), sonst Achsen
+        // getrennt prüfen, damit man an Wänden entlanggleitet.
+        if (CanStandAt(pos + new Vector3(step.X, 0, step.Z), pos))
+            pos += new Vector3(step.X, 0, step.Z);
+        else
+        {
+            if (CanStandAt(pos + new Vector3(step.X, 0, 0), pos)) pos.X += step.X; else _velocity.X = 0;
+            if (CanStandAt(pos + new Vector3(0, 0, step.Z), pos)) pos.Z += step.Z; else _velocity.Z = 0;
+        }
         // Ohne Layout: nicht unter die Ursprungs-Koordinaten (Feld 1) laufen. Mit Layout regelt das CanStandAt.
         if (_layout is null)
             pos = new Vector3(Mathf.Max(pos.X, CellSize), 0, Mathf.Max(pos.Z, CellSize));

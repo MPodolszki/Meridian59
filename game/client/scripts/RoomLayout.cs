@@ -35,6 +35,7 @@ public sealed class RoomLayout
     /// sie per BP_SECTOR_MOVE (Tür des Mausoleums).</summary>
     private readonly Dictionary<int, List<(int Row, int Col)>> _tagCells = new();
     private readonly Dictionary<int, int> _tagCeilings = new();
+    private readonly Dictionary<int, int> _tagFloors = new();
 
     private RoomLayout(int rows, int cols, int ceiling, int[,] floor)
     {
@@ -85,6 +86,7 @@ public sealed class RoomLayout
                 int id = t.GetProperty("id").GetInt32();
                 layout._tagCells[id] = t.GetProperty("cells").EnumerateArray().Select(c => (c[0].GetInt32() - 1, c[1].GetInt32() - 1)).ToList();
                 layout._tagCeilings[id] = t.GetProperty("ceiling").GetInt32();
+                layout._tagFloors[id] = t.GetProperty("floor").GetInt32();
             }
         if (root.TryGetProperty("locked", out var locked))
             foreach (var e in locked.EnumerateArray())
@@ -110,8 +112,11 @@ public sealed class RoomLayout
         if (!_tagCells.TryGetValue(id, out var cells))
             return;
         if (animation == 4)
+        {
+            _tagFloors[id] = height;
             foreach (var (r, c) in cells)
                 _floor[r, c] = height;
+        }
         else if (animation == 5)
             _tagCeilings[id] = height;
     }
@@ -120,7 +125,7 @@ public sealed class RoomLayout
     public bool IsClosedDoor(int row, int col)
     {
         foreach (var (id, cells) in _tagCells)
-            if (_tagCeilings[id] - FloorAt(row, col) < 64 && cells.Contains((row, col)))
+            if (_tagCeilings[id] - _tagFloors[id] < 64 && cells.Contains((row, col)))
                 return true;
         return false;
     }

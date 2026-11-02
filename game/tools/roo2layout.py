@@ -57,10 +57,13 @@ def read_roo(path):
         (flags,) = struct.unpack_from('<I', d, p); p += 4
         if version >= 10:
             p += 1                              # Animationsgeschwindigkeit
+        plane = None
         for sloped in (0x400, 0x800):           # SF_SLOPED_FLOOR / SF_SLOPED_CEILING
             if flags & sloped:
+                if sloped == 0x400:             # Ebene a·x + b·y + c·z + d = 0 (bspload.c LoadSlopeInfo)
+                    plane = tuple(val(p + 4 * i) for i in range(4))
                 p += 46
-        sectors.append((floor_h, ceil_h, flags & 3, sid))   # SF_DEPTH0..3: Wassertiefe; sid: Sektor-ID
+        sectors.append((floor_h, ceil_h, flags & 3, sid, plane))   # SF_DEPTH: Wassertiefe; sid: Sektor-ID
     return width >> 10, height >> 10, leaves, sectors
 
 
@@ -74,6 +77,18 @@ def inside(x, y, poly):
     return hit
 
 
+def sample(leaves, sectors, x, y):
+    """Bodenhöhe (KOD-Einheiten, -1 = kein Boden) und Sektor an einem Punkt (Client-Feineinheiten)."""
+    sector = next((s for s, poly in leaves if inside(x, y, poly)), None)
+    if sector is None or sector >= len(sectors):
+        return -1, None
+    f, c, d, sid, plane = sectors[sector]
+    if plane and plane[2]:
+        # Geneigter Boden: Höhe aus der Ebene (Client-Feineinheiten, 16 je KOD-Einheit)
+        f = round(-(plane[0] * x + plane[1] * y + plane[3]) / plane[2] / 16)
+    return f, sectors[sector]
+
+
 def layout(path):
     cols, rows, leaves, sectors = read_roo(path)
     floor, depth, tags = [], [], {}
@@ -81,18 +96,21 @@ def layout(path):
     for row in range(rows):
         line, wet = [], ''
         for col in range(cols):
-            x, y = col * 1024 + 512, row * 1024 + 512   # Feldmitte in Client-Feineinheiten
-            sector = next((s for s, poly in leaves if inside(x, y, poly)), None)
-            if sector is None or sector >= len(sectors):
-                line.append(-1)
-                wet += '0'
-            else:
-                f, c, d, sid = sectors[sector]
-                line.append(f)
-                if sid:
-                    tags.setdefault(sid, {'id': sid, 'floor': f, 'ceiling': c, 'cells': []})['cells'].append([row + 1, col + 1])
-                wet += str(d)
+            # Fünf Punkte je Feld (Mitte und vier innere Viertelpunkte); die häufigste Höhe gilt, bei Gleichstand die
+            # der Mitte. So verfälschen schmale Sektoren (Rinnen, Kanten), die zufällig die Mitte treffen, das Feld nicht.
+            samples = [sample(leaves, sectors, col * 1024 + 512 + dx, row * 1024 + 512 + dy)
+                       for dx, dy in ((0, 0), (-256, -256), (256, -256), (-256, 256), (256, 256))]
+            heights = [h for h, _ in samples]
+            best = max(heights, key=lambda h: (heights.count(h), h == heights[0]))
+            line.append(best)
+            center = samples[0][1]
+            chosen = next(sec for h, sec in samples if h == best)
+            wet += str(chosen[2]) if chosen else '0'
+            if center:
+                f, c, d, sid, plane = center
                 max_ceiling = max(max_ceiling, c)
+                if sid:   # Sektor-IDs (Türen) nach der Feldmitte, damit schmale Türsektoren erhalten bleiben
+                    tags.setdefault(sid, {'id': sid, 'floor': f, 'ceiling': c, 'cells': []})['cells'].append([row + 1, col + 1])
         floor.append(line)
         depth.append(wet)
     data = {'source': path.name, 'rows': rows, 'cols': cols, 'ceiling': max_ceiling}
