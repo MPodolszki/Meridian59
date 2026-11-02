@@ -94,6 +94,7 @@ public partial class Main
         if (Input.IsPhysicalKeyPressed(Key.D)) { if (rmb) input.X += 1; else _yaw -= TurnSpeed * delta; }
         if (Input.IsPhysicalKeyPressed(Key.Q)) input.X -= 1;
         if (Input.IsPhysicalKeyPressed(Key.E)) input.X += 1;
+        input += _routeInput;   // Test-Automatik (AutoRoute.cs)
         // Rennen ist Standard, Shift geht; rückwärts langsamer.
         float speed = Input.IsPhysicalKeyPressed(Key.Shift) ? WalkSpeed : RunSpeed;
         if (input.Y > 0)

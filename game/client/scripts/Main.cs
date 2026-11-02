@@ -94,6 +94,7 @@ public partial class Main : Node3D
                 case "--shop": _autoShop = args[++i] == "1"; break;
                 case "--create": _autoCreate = args[++i]; break;
                 case "--jump": _autoJump = args[++i] == "1"; break;
+                case "--route": _route = args[++i].Split(',').ToList(); break;
                 case "--cast": _autoCast = args[++i]; break;
                 case "--walk": _autoWalkSeconds = float.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture); break;
                 case "--login" when i + 2 < args.Length:
@@ -321,12 +322,13 @@ public partial class Main : Node3D
                     _monsters.Remove(anim.Id);   // tote Monster nicht mehr als Ziel wählen
                 break;
             case ClientEvent.EnteredRoom room:
+                RouteEnteredRoom(room.RoomName);
                 ResetJump();
                 _loginPanel.Visible = false;
                 _status.Text = $"Im Raum: {room.RoomName}";
                 LoadRoomGeometry(room.RoomFile);
                 if (_screenshotPath is not null && _screenshotTimer < 0)
-                    _screenshotTimer = _screenshotDelay + _autoWalkSeconds;
+                    _screenshotTimer = _route is null ? _screenshotDelay + _autoWalkSeconds : -1;   // Route macht eigene Bilder
                 break;
             case ClientEvent.ObjectAdded added:
                 AddAvatar(added.Object);
@@ -581,6 +583,7 @@ public partial class Main : Node3D
     {
         _session?.ProcessEvents();
         UpdateAutomation(delta);
+        UpdateAutoRoute(delta);
 
         // Andere Figuren gleichmäßig zur gemeldeten Position bewegen, weich drehen und passend animieren.
         float dtf = (float)delta;
@@ -683,16 +686,12 @@ public partial class Main : Node3D
         foreach (var e in _layout.Exits)
             if (e.Row == row && e.Col == col)
                 target = e.Target;
-        string? hint = target is null ? null : $"Ausgang{(target.Length > 0 ? " → " + target : "")}";
+        string? hint = target is null ? null : $"Linksklick auf die Tür: hinausgehen{(target.Length > 0 ? " → " + target : "")}";
         if (hint == _exitHint)
             return;
         _exitHint = hint;
-        if (hint is null)
-            return;
-        _status.Text = hint;
-        // Wer aufs Ausgangsfeld läuft, geht hindurch (Linksklick auf die Tür geht weiterhin).
-        if (_velocity.LengthSquared() > 0.25f)
-            _ = GoThroughDoor();
+        if (hint is not null)
+            _status.Text = hint;
     }
 
     /// <summary>Reichweite zum Öffnen einer Tür per Klick (Meter vom Spieler zum Ausgangsfeld).</summary>

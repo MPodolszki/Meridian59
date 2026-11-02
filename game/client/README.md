@@ -41,7 +41,6 @@ und der Client beendet; `--walk` läuft vorher n Sekunden, `--camera front` zeig
 | beide Maustasten | vorwärts laufen |
 | Mausrad | Kamera näher/weiter |
 | Linksklick | Tür/Hebel benutzen, Figur anschauen |
-| Ausgangsfeld betreten | hinausgehen |
 | T | nächste Figur anschauen |
 | F | nächstes Monster angreifen |
 | I / B / G / Z | Inventar / Laden / aufheben / Sprüche |

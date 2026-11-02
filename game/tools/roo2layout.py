@@ -79,14 +79,15 @@ def inside(x, y, poly):
 
 def sample(leaves, sectors, x, y):
     """Bodenhöhe (KOD-Einheiten, -1 = kein Boden) und Sektor an einem Punkt (Client-Feineinheiten)."""
+    # Blätter verweisen 1-basiert auf Sektoren (0 = keiner), wie bspload.c RoomSwizzle.
     sector = next((s for s, poly in leaves if inside(x, y, poly)), None)
-    if sector is None or sector >= len(sectors):
+    if not sector or sector > len(sectors):
         return -1, None
-    f, c, d, sid, plane = sectors[sector]
+    f, c, d, sid, plane = sectors[sector - 1]
     if plane and plane[2]:
         # Geneigter Boden: Höhe aus der Ebene (Client-Feineinheiten, 16 je KOD-Einheit)
         f = round(-(plane[0] * x + plane[1] * y + plane[3]) / plane[2] / 16)
-    return f, sectors[sector]
+    return f, sectors[sector - 1]
 
 
 def layout(path):
