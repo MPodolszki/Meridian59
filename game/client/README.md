@@ -30,9 +30,11 @@ und der Client beendet; `--walk` läuft vorher n Sekunden, `--camera front` zeig
 
 | Taste | Aktion |
 |---|---|
-| W/A/S/D | laufen |
+| W/S | vor/zurück |
+| A/D | drehen |
+| Q/E | seitlich gehen |
 | Shift | rennen |
-| Q/E oder rechte Maustaste + Maus | drehen |
+| rechte Maustaste + Maus | drehen |
 | Linksklick auf Tür | Tür/Ausgang benutzen (bis 4 m) |
 | Leertaste | springen (nur im Client, siehe unten) |
 | E | NPC in der Nähe anschauen |

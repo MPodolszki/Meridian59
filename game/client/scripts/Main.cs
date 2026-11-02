@@ -617,10 +617,11 @@ public partial class Main : Node3D
         }
         if (Input.IsPhysicalKeyPressed(Key.W)) input.Y -= 1;
         if (Input.IsPhysicalKeyPressed(Key.S)) input.Y += 1;
-        if (Input.IsPhysicalKeyPressed(Key.A)) input.X -= 1;
-        if (Input.IsPhysicalKeyPressed(Key.D)) input.X += 1;
-        if (Input.IsPhysicalKeyPressed(Key.Q)) _yaw += 2f * delta;
-        if (Input.IsPhysicalKeyPressed(Key.E)) _yaw -= 2f * delta;
+        // A/D drehen, Q/E seitlich gehen.
+        if (Input.IsPhysicalKeyPressed(Key.A)) _yaw += 2f * delta;
+        if (Input.IsPhysicalKeyPressed(Key.D)) _yaw -= 2f * delta;
+        if (Input.IsPhysicalKeyPressed(Key.Q)) input.X -= 1;
+        if (Input.IsPhysicalKeyPressed(Key.E)) input.X += 1;
 
         self.Rotation = new Vector3(0, _yaw, 0);
 
