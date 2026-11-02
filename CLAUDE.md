@@ -62,4 +62,5 @@ Teleport-Erkennung für Spielerbewegungen wie im Original (combat.md).
 Häuser mit Fachwerkfassaden und Innenräume mit Decke/Lampen im Client (client/README.md).
 Original-Client (Steam, Wine) getestet: Login, Welt, Chat, Anschauen, Kaufen, Anbieten, Bank, Türen, Kampf, Beute gehen (original-client-test.md).
 Magie erster Umfang: Charakterwerte, Mana, Zaubern, 4 Sprüche, Lernen (docs/magic.md).
-Offen: Charaktererstellung (Aussehen und Werte wählen, BP_CHARINFO), weitere Sprüche, Fertigkeiten, weitere Gebiete außer Tos.
+Charaktererstellung wie im Original, im Original-Client getestet (docs/character.md).
+Offen: Charaktererstellung im Godot-Client, weitere Sprüche, Fertigkeiten, weitere Gebiete außer Tos.

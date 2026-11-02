@@ -46,6 +46,7 @@ Geprüft 2026-11-02 (Steam-Client, Wine, Software-Renderer):
 | Kampf auf dem Friedhof nachts (Taste E, Treffer/Schaden) | geht |
 | Verkaufen/Anbieten (`offer`), Beute aufheben (`get`), Essen | geht |
 | Sprüche, Mana, Charakterwerte, Zaubern (`cast …` bzw. Menü Zaubersprüche) | geht |
+| Charaktererstellung (Assistent: Name, Aussehen, Werte, Sprüche) → `BP_CHARINFO_OK`, Start in Tos | geht |
 | Andere Spieler als vollständige Figur (Körper `bta` + Arme, Beine, Kopf, Gesicht, Haare; Waffe in der Hand) | geht |
 
 Hinweis: Der Steam-Client hat eine neue Tastenbelegung (`config.ini`): Angriff E, Sagen F, Gehen/Öffnen Leertaste.

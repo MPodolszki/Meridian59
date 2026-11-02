@@ -5,7 +5,8 @@ Eng am Original (`kod/object/passive/spell.kod`, `player.kod`, einzelne Sprüche
 
 ## Charakterwerte
 Stärke, Intellekt, Ausdauer, Geschick, Mystik, Zielen (je 1..50, 200 Punkte) und Karma (−100..100).
-Ohne Charaktererstellung bekommen alle **35/30/35/30/40/30**, Karma 0 (Abweichung: im Original frei verteilt).
+Neue Charaktere verteilen sie im Erstellungsassistenten des Original-Clients (docs/character.md); wer ohne
+Erstellung einsteigt (Godot-Client, alte Charaktere), bekommt **35/30/35/30/40/30**, Karma 0.
 Im Protokoll Stat-Gruppe 2 (`BP_STAT_GROUP`).
 
 ## Mana
