@@ -60,4 +60,4 @@ Tag-Nacht-Wechsel mit Originaluhr und Raumlicht (daynight.md).
 Monster-Wegfindung per A* auf den Raum-Höhenrastern (combat.md).
 Teleport-Erkennung für Spielerbewegungen wie im Original (combat.md).
 Häuser mit Fachwerkfassaden und Innenräume mit Decke/Lampen im Client (client/README.md).
-Offen: Original-Client-Test (Original-Client fehlt auf dem Rechner, Download nötig).
+Offen: Original-Client-Test (Anleitung docs/original-client-test.md; Client muss noch besorgt werden).
