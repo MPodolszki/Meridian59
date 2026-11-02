@@ -16,8 +16,8 @@ public partial class Main : Node3D
 {
     /// <summary>Meter pro Grid-Feld (64 KOD-Feineinheiten).</summary>
     private const float CellSize = 2.5f;
-    private const float WalkSpeed = 2.5f;   // m/s (Shift)
-    private const float RunSpeed = 6.5f;    // Standard, wie WoW-Rennen
+    private const float WalkSpeed = 2.3f;   // m/s (Shift) – WoW 2,5 yd/s
+    private const float RunSpeed = 6.4f;    // Standard – WoW 7 yd/s
     private static readonly TimeSpan SendInterval = TimeSpan.FromSeconds(1);   // wie Original-Client
 
     private ClientSession? _session;
@@ -638,7 +638,10 @@ public partial class Main : Node3D
         self.Rotation = new Vector3(0, _yaw, 0);
 
         var desired = input == Vector2.Zero ? Vector3.Zero : new Vector3(input.X, 0, input.Y).Normalized().Rotated(Vector3.Up, _yaw) * speed;
-        _velocity = _velocity.MoveToward(desired, (desired == Vector3.Zero ? Deceleration : Acceleration) * delta);
+        // Im Sprung behält man den Schwung vom Absprung (wie WoW); lenken geht erst nach der Landung.
+        if (!_airborne)
+            _velocity = _velocity.MoveToward(desired, (desired == Vector3.Zero ? Deceleration : Acceleration) * delta);
+        UpdateBodyFacing(self, input, delta);
         if (_velocity.LengthSquared() < 1e-4f)
         {
             _velocity = Vector3.Zero;
@@ -671,7 +674,7 @@ public partial class Main : Node3D
         var moved = new Vector2(pos.X - self.Position.X, pos.Z - self.Position.Z).Length();
         self.Position = pos;
         if (!_airborne)
-            CharacterModel.Animate(self, moved / Mathf.Max(delta, 1e-4f));
+            CharacterModel.Animate(self, moved / Mathf.Max(delta, 1e-4f), backwards: input.Y > 0);
     }
 
     private string? _exitHint;

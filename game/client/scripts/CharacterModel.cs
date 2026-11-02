@@ -48,7 +48,7 @@ public static class CharacterModel
 
     /// <summary>Spielt „Idle“, „Walk“, „Run“ (Joggen) oder „Sprint“ passend zur Geschwindigkeit (m/s), außer während
     /// einmaliger Animationen. Mit Überblendung und Hysterese, damit die Clips nicht hin- und herspringen.</summary>
-    public static void Animate(Node3D figure, float speed)
+    public static void Animate(Node3D figure, float speed, bool backwards = false)
     {
         if (Player(figure) is not { } player || IsLocked(figure))
             return;
@@ -68,6 +68,8 @@ public static class CharacterModel
             "Sprint" => Mathf.Clamp(speed / SprintClipSpeed, 0.8f, 1.3f),
             _ => 1f,
         };
+        if (backwards)
+            player.SpeedScale = -player.SpeedScale;   // rückwärts laufen: Clip rückwärts (WoW)
     }
 
     /// <summary>Einmalige Animation; „Die“ bleibt in der letzten Pose liegen. <paramref name="lockSeconds"/> gibt die

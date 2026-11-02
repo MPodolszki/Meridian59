@@ -183,11 +183,35 @@ public sealed class RoomLayout
                 c = end;
             }
         }
+        if (!outdoors)
+            AddEnclosure(root, materials, cellSize, wallHeight);
         root.AddChild(RoomDecor.Build(this, cellSize, outdoors, wallHeight));
         foreach (var t in Trees)
             root.AddChild(Tree(t.Shrub, new Vector3((t.Col + 1 + t.FineCol / 64f) * cellSize,
                 HeightMeters(Math.Max(FloorAt(t.Row, t.Col), 0), cellSize), (t.Row + 1 + t.FineRow / 64f) * cellSize)));
         return root;
+    }
+
+    /// <summary>Innenräume: Wände ringsum außerhalb des Rasters bis zur Decke, damit man nicht in den Himmel schaut
+    /// (die .roo-Ränder haben oft keine Wandfelder).</summary>
+    private void AddEnclosure(Node3D root, Dictionary<string, StandardMaterial3D> materials, float cellSize, float wallHeight)
+    {
+        float width = Cols * cellSize, depth = Rows * cellSize, bottom = -2f, top = wallHeight + 0.5f;
+        float x0 = cellSize, z0 = cellSize, t = cellSize;
+        var walls = new (Vector3 Size, Vector3 Center)[]
+        {
+            (new(width + 2 * t, top - bottom, t), new(x0 + width / 2, (top + bottom) / 2, z0 - t / 2)),
+            (new(width + 2 * t, top - bottom, t), new(x0 + width / 2, (top + bottom) / 2, z0 + depth + t / 2)),
+            (new(t, top - bottom, depth), new(x0 - t / 2, (top + bottom) / 2, z0 + depth / 2)),
+            (new(t, top - bottom, depth), new(x0 + width + t / 2, (top + bottom) / 2, z0 + depth / 2)),
+        };
+        foreach (var (size, center) in walls)
+            root.AddChild(new MeshInstance3D
+            {
+                Mesh = new BoxMesh { Size = size },
+                Position = center,
+                MaterialOverride = Material(materials, "plaster"),
+            });
     }
 
     /// <summary>Deckenhöhe in Metern (Innenräume), wie in <see cref="Build"/>.</summary>

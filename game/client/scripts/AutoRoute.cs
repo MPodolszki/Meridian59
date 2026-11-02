@@ -18,6 +18,7 @@ public partial class Main
     private double _routeWait, _stuckTime, _routeTotal, _routeShot;
     private Vector3 _lastRoutePos;
     private string? _routeRoom;
+    private double _routeShotPending;
 
     /// <summary>Lenkt die Figur; liefert die Eingabe (seitlich, vor) für <see cref="ReadMovement"/>.</summary>
     private void UpdateAutoRoute(double delta)
@@ -27,6 +28,8 @@ public partial class Main
             || !_avatars.TryGetValue(_session.PlayerId, out var self))
             return;
         _routeTotal += delta;
+        if (_routeShotPending > 0 && (_routeShotPending -= delta) <= 0 && _screenshotPath is not null)
+            GetViewport().GetTexture().GetImage().SavePng(_screenshotPath.Replace(".png", $"-{_routeStep}.png"));
         if (_routeTotal > 180)
         {
             FinishRoute($"ROUTE ABGEBROCHEN nach 180 s in {_routeRoom} auf Feld {Cell(self)}");
@@ -144,6 +147,7 @@ public partial class Main
         if (_route is null)
             return;
         GD.Print($"Raum: {room}");
+        _routeShotPending = 3;   // Bild 3 s nach Betreten, zur Kontrolle von Kamera und Darstellung
         if (_routeStep < _route.Count && room == _route[_routeStep])
             _routeStep++;
         _waypoints = null;

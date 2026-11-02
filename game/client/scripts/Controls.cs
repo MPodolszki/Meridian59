@@ -3,23 +3,28 @@ using Godot;
 namespace Meridian.Client;
 
 /// <summary>
-/// Steuerung und Kamera nach WoW-Vorbild:
-/// W/S vor/zurück (rückwärts langsamer), A/D drehen (mit rechter Maustaste seitlich), Q/E seitlich,
-/// Shift gehen statt rennen, NumLock Dauerlauf, Leertaste springen.
-/// Rechte Maustaste ziehen: Figur und Kamera drehen; linke Maustaste ziehen: nur die Kamera kreist;
-/// beide Tasten: vorwärts laufen; Mausrad: Zoom. Ein Linksklick ohne Ziehen benutzt Türen/Hebel bzw. schaut
-/// eine Figur an.
+/// Steuerung und Kamera nach WoW-/EverQuest-Vorbild (Third Person):
+/// W/S vor/zurück, A/D drehen (mit rechter Maustaste seitlich), Q/E seitlich, Shift gehen, NumLock Dauerlauf,
+/// Leertaste springen. Rechte Maustaste: Figur dreht sich sofort in Blickrichtung der Kamera und folgt der Maus;
+/// linke Maustaste: Kamera kreist frei um die Figur und schwenkt beim Vorwärtslaufen zurück; beide Tasten laufen
+/// vorwärts. Mausrad zoomt weich, ganz eingezoomt Ego-Ansicht. Die Kamera hängt fest am Kopf; Hindernisse holen
+/// sie schnell heran, danach fährt sie langsam wieder hinaus. Ein Linksklick ohne Ziehen benutzt Türen/Hebel bzw.
+/// schaut eine Figur an.
+/// Tempo wie WoW: Rennen 7 yd/s, rückwärts 4,5 yd/s, Gehen 2,5 yd/s, Drehen mit Tasten 180°/s.
 /// </summary>
 public partial class Main
 {
     private const float TurnSpeed = Mathf.Pi;           // A/D: 180°/s
     private const float MouseSensitivity = 0.005f;
-    private const float BackpedalFactor = 0.6f;
-    private const float MinZoom = 1.5f, MaxZoom = 18f;
+    private const float BackpedalFactor = 4.5f / 7f;
+    private const float MinZoom = 0.6f, MaxZoom = 18f, FirstPersonZoom = 1.0f;
+    private const float CameraReturnSpeed = 4f;         // m/s, wenn ein Hindernis den Weg wieder freigibt
 
     private float _camYawOffset;                         // nur Kamera (linke Maustaste)
-    private float _camPitch = 0.35f;                     // Blick leicht von oben
-    private float _camDistance = 5f;
+    private float _camPitch = 0.3f;                      // Blick leicht von oben
+    private float _camZoom = 5f;                         // gewünschter Abstand (Mausrad)
+    private float _camDistance = 5f;                     // weich nachgeführter Abstand
+    private float _camCollision = 5f;                    // durch Hindernisse verkürzter Abstand
     private bool _autoRun;
     private Vector2 _pressPosition;
     private bool _dragged;
@@ -30,14 +35,20 @@ public partial class Main
         switch (e)
         {
             case InputEventMouseButton { ButtonIndex: MouseButton.WheelUp, Pressed: true }:
-                _camDistance = Mathf.Max(MinZoom, _camDistance * 0.9f);
+                _camZoom = Mathf.Max(MinZoom, _camZoom * 0.85f);
                 return true;
             case InputEventMouseButton { ButtonIndex: MouseButton.WheelDown, Pressed: true }:
-                _camDistance = Mathf.Min(MaxZoom, _camDistance * 1.1f);
+                _camZoom = Mathf.Min(MaxZoom, Mathf.Max(_camZoom, 1.2f) * 1.15f);
                 return true;
             case InputEventMouseButton { ButtonIndex: MouseButton.Left or MouseButton.Right } button:
                 if (button.Pressed)
                 {
+                    if (button.ButtonIndex == MouseButton.Right)
+                    {
+                        // Rechte Maustaste: Figur dreht sich sofort in die Blickrichtung der Kamera.
+                        _yaw += _camYawOffset;
+                        _camYawOffset = 0;
+                    }
                     _pressPosition = button.Position;
                     _dragged = false;
                     return true;
@@ -61,14 +72,10 @@ public partial class Main
                 _dragged = true;
                 Input.MouseMode = Input.MouseModeEnum.Captured;
                 if (Input.IsMouseButtonPressed(MouseButton.Right))
-                {
-                    // Figur dreht sich mit, die Kamera steht wieder hinter ihr.
-                    _yaw -= motion.Relative.X * MouseSensitivity;
-                    _camYawOffset = 0;
-                }
+                    _yaw -= motion.Relative.X * MouseSensitivity;            // Figur folgt der Maus
                 else
-                    _camYawOffset -= motion.Relative.X * MouseSensitivity;
-                _camPitch = Mathf.Clamp(_camPitch + motion.Relative.Y * MouseSensitivity, -0.4f, 1.3f);
+                    _camYawOffset -= motion.Relative.X * MouseSensitivity;   // nur die Kamera kreist
+                _camPitch = Mathf.Clamp(_camPitch + motion.Relative.Y * MouseSensitivity, -1.2f, 1.4f);
                 return true;
             case InputEventKey { Pressed: true, Echo: false, Keycode: Key.Numlock }:
                 _autoRun = !_autoRun;
@@ -85,8 +92,8 @@ public partial class Main
         bool both = rmb && Input.IsMouseButtonPressed(MouseButton.Left);
         bool forward = Input.IsPhysicalKeyPressed(Key.W) || both;
         bool back = Input.IsPhysicalKeyPressed(Key.S);
-        if (forward || back)
-            _autoRun = _autoRun && !back && !Input.IsPhysicalKeyPressed(Key.W);
+        if (back || Input.IsPhysicalKeyPressed(Key.W))
+            _autoRun = false;
         if (forward || _autoRun) input.Y -= 1;
         if (back) input.Y += 1;
         // A/D: ohne rechte Maustaste drehen, mit ihr seitlich gehen (wie WoW); Q/E immer seitlich.
@@ -95,43 +102,67 @@ public partial class Main
         if (Input.IsPhysicalKeyPressed(Key.Q)) input.X -= 1;
         if (Input.IsPhysicalKeyPressed(Key.E)) input.X += 1;
         input += _routeInput;   // Test-Automatik (AutoRoute.cs)
-        // Rennen ist Standard, Shift geht; rückwärts langsamer.
+        // Rennen ist Standard, Shift geht; rückwärts (auch schräg rückwärts) mit Rückwärtstempo.
         float speed = Input.IsPhysicalKeyPressed(Key.Shift) ? WalkSpeed : RunSpeed;
         if (input.Y > 0)
             speed *= BackpedalFactor;
-        // Läuft man los, schwenkt eine mit der linken Maustaste gedrehte Kamera wieder hinter die Figur.
-        if (input != Vector2.Zero && !Input.IsMouseButtonPressed(MouseButton.Left))
-            _camYawOffset = Mathf.LerpAngle(_camYawOffset, 0, 1f - Mathf.Exp(-3f * delta));
+        // „Smart“-Kamera: Läuft man vorwärts, schwenkt eine frei gedrehte Kamera wieder hinter die Figur.
+        if (input.Y < 0 && !Input.IsMouseButtonPressed(MouseButton.Left))
+            _camYawOffset = Mathf.LerpAngle(_camYawOffset, 0, 1f - Mathf.Exp(-2.5f * delta));
         return (input, speed);
+    }
+
+    /// <summary>Körper in Laufrichtung drehen: schräg vorwärts 45°, seitlich 90°, schräg rückwärts gespiegelt
+    /// (die Figur schaut nach vorn und läuft rückwärts), wie die Strafe-Darstellung in WoW.</summary>
+    private void UpdateBodyFacing(Node3D self, Vector2 input, float delta)
+    {
+        if (self.GetNodeOrNull<Node3D>("Character") is not { } body)
+            return;
+        float target = input == Vector2.Zero ? 0
+            : input.Y <= 0 ? Mathf.Atan2(-input.X, -input.Y)
+            : Mathf.Atan2(input.X, input.Y);
+        body.Rotation = new Vector3(0, Mathf.LerpAngle(body.Rotation.Y, target, 1f - Mathf.Exp(-12f * delta)), 0);
     }
 
     private void UpdateCamera(Node3D self)
     {
+        float dt = (float)GetProcessDeltaTime();
         // Beim Springen auf Fußhöhe bleiben, damit der Sprung sichtbar ist und die Kamera nicht hüpft.
         var feet = self.Position with { Y = self.Position.Y - _jumpOffset };
-        var head = feet + new Vector3(0, 1.1f, 0);
-        var offset = _cameraMode == "front"
-            ? new Vector3(0, 0.5f, -3.2f).Rotated(Vector3.Up, _yaw)
-            : new Vector3(0, Mathf.Sin(_camPitch), Mathf.Cos(_camPitch)).Rotated(Vector3.Up, _yaw + _camYawOffset) * _camDistance;
-        // Kamera-Kollision: entlang des Strahls vom Kopf bis zum ersten höheren Block oder zur Wand.
-        float allowed = 1f;
-        for (float t = 0.05f; t <= 1f; t += 0.05f)
+        var head = feet + new Vector3(0, 1.15f, 0);
+        if (_cameraMode == "front")
         {
-            var probe = head + offset * t;
-            if (_layout is not null && probe.Y < BlockTopAt(probe))
+            _camera.Position = head + new Vector3(0, 0.5f, -3.2f).Rotated(Vector3.Up, _yaw);
+            _camera.LookAt(head);
+            return;
+        }
+        // Zoom weich; ganz eingezoomt Ego-Ansicht (eigene Figur ausgeblendet).
+        _camDistance = Mathf.Lerp(_camDistance, _camZoom, 1f - Mathf.Exp(-10f * dt));
+        bool firstPerson = _camZoom <= FirstPersonZoom;
+        if (self.GetNodeOrNull<Node3D>("Character") is { } body)
+            body.Visible = !firstPerson;
+        var direction = new Vector3(0, Mathf.Sin(_camPitch), Mathf.Cos(_camPitch)).Rotated(Vector3.Up, _yaw + _camYawOffset);
+        if (firstPerson)
+        {
+            _camera.Position = head + new Vector3(0, 0.1f, 0);
+            _camera.LookAt(_camera.Position - direction);
+            return;
+        }
+        // Kollision: freier Abstand entlang des Strahls vom Kopf; heran sofort, hinaus langsam.
+        float free = _camDistance;
+        for (float d = 0.3f; d <= _camDistance; d += 0.15f)
+        {
+            var probe = head + direction * d;
+            if (_layout is not null && (probe.Y < BlockTopAt(probe) + 0.15f
+                || !_outdoors && probe.Y > _layout.CeilingMeters(CellSize) - 0.25f))
             {
-                allowed = Mathf.Max(0.12f, t - 0.08f);
+                free = Mathf.Max(0.4f, d - 0.25f);
                 break;
             }
         }
-        var wantedCamera = head + offset * allowed;
-        // Innenräume haben eine Decke: Kamera darunter halten.
-        if (_layout is not null && !_outdoors)
-            wantedCamera = wantedCamera with { Y = Mathf.Min(wantedCamera.Y, _layout.CeilingMeters(CellSize) - 0.3f) };
-        // Weich nachführen; nur bei großen Sprüngen (Raumwechsel, Teleport) sofort setzen.
-        _camera.Position = _camera.Position.DistanceTo(wantedCamera) > 8f
-            ? wantedCamera
-            : _camera.Position.Lerp(wantedCamera, 1f - Mathf.Exp(-18f * (float)GetProcessDeltaTime()));
+        _camCollision = free < _camCollision ? free : Mathf.Min(free, _camCollision + CameraReturnSpeed * dt);
+        // Fest am Kopf (kein Nachschwimmen).
+        _camera.Position = head + direction * _camCollision;
         _camera.LookAt(head);
     }
 

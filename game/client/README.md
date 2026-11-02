@@ -36,15 +36,21 @@ und der Client beendet; `--walk` läuft vorher n Sekunden, `--camera front` zeig
 | Shift | gehen statt rennen |
 | NumLock | Dauerlauf an/aus |
 | Leertaste | springen |
-| rechte Maustaste ziehen | Figur und Kamera drehen |
-| linke Maustaste ziehen | Kamera um die Figur kreisen lassen |
+| rechte Maustaste | Figur dreht sich in Kamerarichtung; ziehen dreht Figur und Kamera |
+| linke Maustaste ziehen | Kamera kreist frei; beim Vorwärtslaufen schwenkt sie zurück |
 | beide Maustasten | vorwärts laufen |
-| Mausrad | Kamera näher/weiter |
+| Mausrad | Zoom (weich); ganz nah Ego-Ansicht |
 | Linksklick | Tür/Hebel benutzen, Figur anschauen |
 | T | nächste Figur anschauen |
 | F | nächstes Monster angreifen |
 | I / B / G / Z | Inventar / Laden / aufheben / Sprüche |
 | Enter | Chat |
+
+Tempo wie WoW: Rennen 7 yd/s (6,4 m/s), rückwärts 4,5 yd/s, Gehen 2,5 yd/s, Drehen 180°/s. Seitlich und schräg
+dreht sich der Körper in Laufrichtung, rückwärts läuft die Animation rückwärts; im Sprung bleibt der Schwung.
+Die Kamera hängt fest am Kopf, Hindernisse holen sie heran, danach fährt sie langsam zurück.
+
+Test-Automatik: `--route "Raza,Mausoleum"` läuft mit echter Bewegung und Türklick durch die Räume.
 
 ## Koordinaten
 
