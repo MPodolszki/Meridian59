@@ -12,5 +12,8 @@ if [ ! -d "$dst" ]; then
     cp -r "$src" "$dst"
 fi
 cd "$dst"
+export WINEPREFIX="$HOME/.cache/meridian/wineprefix" WINEDEBUG=-all
+# Virtueller Wine-Desktop: ohne ihn bleiben unter Wayland/XWayland Textfenster, Werte und Inventar schwarz.
 # /Q: Schnellstart ohne Startbildschirm (clientd3d/config.c ConfigOverride)
-WINEPREFIX="$HOME/.cache/meridian/wineprefix" WINEDEBUG=-all exec wine Meridian.exe /Q "/H:$host" "/P:$port" "/U:$user" "/W:$pass"
+exec wine explorer "/desktop=Meridian,${M59_SIZE:-1600x900}" "$(winepath -w "$dst/Meridian.exe")" \
+    /Q "/H:$host" "/P:$port" "/U:$user" "/W:$pass"

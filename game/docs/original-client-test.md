@@ -16,6 +16,9 @@ Der Client meldet sich als Version 7.37 und fragt danach `BP_SEND_STAT_GROUPS`, 
 `BP_SEND_SPELLS`, `BP_SEND_SKILLS`, `BP_SEND_ENCHANTMENTS` sowie `UC_STAND`/`UC_SAFETY` ab – der Server antwortet
 jetzt wie user.kod (Gruppen Zustand/Werte/Sprüche/Fertigkeiten, Gruppe 1 mit Lebenspunkten/Mana/Ausdauer,
 leere Spruch-/Fertigkeitslisten). Ohne `/Q` bleibt der Client auf dem Startbildschirm.
+Unter GNOME/Wayland bleiben Textfenster, Werte und Inventar schwarz, solange der Client direkt läuft; in einem
+virtuellen Wine-Desktop (`wine explorer /desktop=Meridian,1600x900 …`, so im Startskript) erscheint die ganze
+Oberfläche. Paddock wird mit seiner Original-Grafik im Gasthaus angezeigt.
 Bildschirmfotos vom GNOME-Wayland-Desktop sind per Skript nicht möglich; die Darstellung muss man selbst ansehen.
 
 Darstellung: Tos ist im Original-Client zu sehen. Damit Figuren nicht unsichtbar bleiben, schickt der Server jetzt
