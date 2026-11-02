@@ -59,4 +59,5 @@ Handel zwischen Spielern (trade.md).
 Tag-Nacht-Wechsel mit Originaluhr und Raumlicht (daynight.md).
 Monster-Wegfindung per A* auf den Raum-Höhenrastern (combat.md).
 Teleport-Erkennung für Spielerbewegungen wie im Original (combat.md).
-Offen: schönere Häuser/Innenräume, Original-Client-Test.
+Häuser mit Fachwerkfassaden und Innenräume mit Decke/Lampen im Client (client/README.md).
+Offen: Original-Client-Test (Original-Client fehlt auf dem Rechner, Download nötig).

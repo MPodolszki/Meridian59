@@ -62,3 +62,10 @@ python -I game/tools/roo2layout.py game/server/data/world/tos.json resource/room
 ```
 
 Noch nicht gegen den Original-Server getestet.
+
+## Häuser und Innenräume (`scripts/RoomDecor.cs`)
+
+Prozedural über dem Höhenraster, ohne fremde Assets: Fassaden an der Straße mit Putzfeldern in wechselnden
+Farben, Fachwerk, Steinsockel, Fenstern (nachts warm leuchtend), Türen und Dachüberständen. Innenräume mit
+Holzdecke und Balken, Vertäfelung an Wänden und Einbauten und Lampen alle vier Felder. Die Kamera bleibt innen
+unter der Decke. Das Licht (Sonne, Himmel, Umgebung) folgt dem Raumlicht des Servers (`docs/daynight.md`).

@@ -35,6 +35,7 @@ public partial class Main : Node3D
     private MeshInstance3D _grass = null!;
     private Node3D? _roomGeometry;
     private RoomLayout? _layout;
+    private bool _outdoors;
     private Control _loginPanel = null!;
     private LineEdit _host = null!, _port = null!, _user = null!, _password = null!;
     private Label _status = null!;
@@ -335,13 +336,18 @@ public partial class Main : Node3D
 
     /// <summary>Umgebungslicht des Servers (0..255, abhängig von Tageszeit und Raum) auf Sonne und Himmel anwenden.
     /// Unter ca. 100 wird es Nacht: Sonne flach und schwach, Himmel dunkelblau.</summary>
+    private byte _lastLight = 200;
+
     private void ApplyAmbientLight(byte light)
     {
+        _lastLight = light;
         // Straßen von Tos: nachts ca. 120, mittags 255 → Bereich 0,45..0,95 auf Nacht..Tag abbilden.
         float t = Mathf.SmoothStep(0.45f, 0.95f, Mathf.Clamp(light / 255f, 0f, 1f));
         _sun.LightEnergy = Mathf.Lerp(0.04f, 1.2f, t);
         _sun.RotationDegrees = new Vector3(Mathf.Lerp(-8f, -55f, t), 30, 0);
-        _environment.AmbientLightEnergy = Mathf.Lerp(0.3f, 1f, t);
+        // Innenräume liegen unter einer Decke; dort tragen Lampen und mehr Umgebungslicht.
+        _environment.AmbientLightEnergy = _outdoors ? Mathf.Lerp(0.3f, 1f, t) : Mathf.Lerp(0.7f, 1.1f, t);
+        RoomDecor.SetDaylight(t);
         if (_environment.Sky?.SkyMaterial is ProceduralSkyMaterial sky)
         {
             sky.SkyTopColor = new Color(0.02f, 0.03f, 0.08f).Lerp(new Color(0.38f, 0.45f, 0.55f), t);
@@ -370,9 +376,10 @@ public partial class Main : Node3D
         var (row, col) = CellAt(playerPosition);
         _layout.SetGroundAt(row, col);
         // Außenbereiche haben Fels/Pflaster, Innenräume Putz/Holz; Außen erkennbar an der Größe.
-        bool outdoors = _layout.Rows * _layout.Cols > 420;
+        bool outdoors = _outdoors = _layout.Rows * _layout.Cols > 420;
         _roomGeometry = _layout.Build(CellSize, outdoors);
         AddChild(_roomGeometry);
+        ApplyAmbientLight(_lastLight);   // Innen/außen ist erst jetzt bekannt
     }
 
     /// <summary>Feld (0-basiert) unter einer Weltposition.</summary>
@@ -647,6 +654,9 @@ public partial class Main : Node3D
         // Bei Hindernissen nur den Abstand verkürzen, nicht die Höhe – sonst schaut die Kamera von unten.
         var shortened = new Vector3(offset.X * allowed, Mathf.Max(offset.Y * allowed, Mathf.Min(offset.Y, 2.2f)), offset.Z * allowed);
         _camera.Position = self.Position + shortened;
+        // Innenräume haben eine Decke: Kamera darunter halten.
+        if (_layout is not null && !_outdoors)
+            _camera.Position = _camera.Position with { Y = Mathf.Min(_camera.Position.Y, _layout.CeilingMeters(CellSize) - 0.3f) };
         _camera.LookAt(head);
     }
 

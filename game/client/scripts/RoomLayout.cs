@@ -104,8 +104,12 @@ public sealed class RoomLayout
                 c = end;
             }
         }
+        root.AddChild(RoomDecor.Build(this, cellSize, outdoors, wallHeight));
         return root;
     }
+
+    /// <summary>Deckenhöhe in Metern (Innenräume), wie in <see cref="Build"/>.</summary>
+    public float CeilingMeters(float cellSize) => Math.Clamp(HeightMeters(Ceiling, cellSize), 3f, 8f);
 
     private (string Kind, float Height) Classify(int r, int c, float cellSize, float wallHeight)
     {
