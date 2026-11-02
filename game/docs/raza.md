@@ -57,7 +57,8 @@ Mausoleum LIGHT_DARK 124 / 0) und Musik wie im Original. Ausgang ins Mausoleum m
 - Neue Charaktere beginnen im Gasthaus von Raza; bestehende Spielstände bleiben, wo sie ausgeloggt haben.
 
 ## Abweichungen
-- Das Portal führt ins Gasthaus von Tos (52). Im Original würfelt es Marion, Jasper oder Cor; diese Städte fehlen noch.
+- Das Portal würfelt wie im Original Marion/Cor/Jasper, aber nur über vorhandene Städte – derzeit also immer Marion;
+  ohne Heimatstadt wäre es Tos (52).
 - Zwei Kühe stehen im KOD außerhalb der 30-zeiligen Karte (Zeile 31 und 35) – sie stehen auf den nächsten Feldern am Südrand.
 - Kühe laufen nicht umher und machen keinen Dung (Bonked).
 - Es fehlen noch: die Zierobjekte des Museums (Nachbildungen, ModelNode), der Schädel im Mausoleum, die Neulingspost,

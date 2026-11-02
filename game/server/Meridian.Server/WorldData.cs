@@ -91,12 +91,17 @@ public sealed record RoomDefinition(int Id, string Name, string Roo)
     public PortalDefinition? Portal { get; init; }
 }
 
+public sealed record PortalDestination(int Room, int Weight);
+
 public sealed record FixedMonsterDefinition(string Kind, int Row, int Col);
 
 public sealed record MonsterTableEntry(string Kind, int Weight);
 
 public sealed record PortalDefinition(int Row, int Col, int ToRoom)
 {
+    /// <summary>SetRandomHomeroom: Ziele mit Gewicht (Marion 3, Cor 4, Jasper 3 von 10); nur vorhandene Räume zählen,
+    /// sonst <see cref="ToRoom"/>.</summary>
+    public IReadOnlyList<PortalDestination> Destinations { get; init; } = [];
     public string? Warning { get; init; }
     public string? Text { get; init; }
 }

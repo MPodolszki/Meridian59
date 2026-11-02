@@ -3,53 +3,9 @@
 
 Aufruf (im Ordner game): python3 tools/make_raza.py
 Räume, Ausgänge, Türen, Licht und Bewohner stehen unten als Daten (Werte aus KOD, siehe docs/raza.md);
-die Zierobjekte (Bäume, Heu, Lampen …) des Dorfs werden aus guest2.kod gelesen. Größe (rows/cols) kommt aus
-den Raumlayouts client/rooms/guestN.json (tools/roo2layout.py).
+die Zierobjekte (Bäume, Heu, Lampen …) des Dorfs werden aus guest2.kod gelesen. Bausteine in tools/kodarea.py.
 """
-import json
-import re
-from pathlib import Path
-
-root = Path(__file__).resolve().parent.parent
-kod = root.parent / "kod/object/active/holder/room"
-
-ANGLE = {"ANGLE_EAST": 0, "ANGLE_SOUTH_EAST": 512, "ANGLE_SOUTH": 1024, "ANGLE_SOUTH_WEST": 1536,
-         "ANGLE_WEST": 2048, "ANGLE_NORTH_WEST": 2560, "ANGLE_NORTH": 3072, "ANGLE_NORTH_EAST": 3584}
-
-
-def ornaments(path):
-    """Create(&OrnamentalObject,#type=X) bzw. Create(&Lamp) mit #new_row/#new_col/#fine_*/#new_angle."""
-    text = path.read_text(encoding="latin-1")
-    out = []
-    pattern = re.compile(r"Create\(&(OrnamentalObject,#type=(\w+)|Lamp)\)\s*,\s*(#[^)]*?)\)", re.S)
-    for m in pattern.finditer(text):
-        kind = m.group(2) or "Lamp"
-        args = dict(re.findall(r"#(\w+)\s*=\s*(\w+)", m.group(3)))
-        out.append({"type": kind, "row": int(args["new_row"]), "col": int(args["new_col"]),
-                    "fineRow": int(args.get("fine_row", 32)), "fineCol": int(args.get("fine_col", 32)),
-                    "angle": ANGLE.get(args.get("new_angle", ""), 0)})
-    return out
-
-
-def exits(*entries):
-    """[zeile, spalte, ziel, zielzeile, zielspalte, winkel?]"""
-    return [{"row": r, "col": c, "to": to, "toRow": tr, "toCol": tc, "rotate": rot}
-            for r, c, to, tr, tc, rot in entries]
-
-
-def locked(text, *cells):
-    return [{"row": r, "col": c, "message": text} for r, c in cells]
-
-
-def sign(name, text, row, col, fine_row=32, fine_col=32):
-    """Schild (sign.kod, #newbie=TRUE → razsign1.bgf): Name und Text beim Anschauen."""
-    return {"kodClass": "Sign", "name": name, "icon": "razsign1.bgf", "role": "Schild", "description": text,
-            "row": row, "col": col, "fineRow": fine_row, "fineCol": fine_col}
-
-
-def npc(kod_class, name, icon, role, row, col, angle=0, fine_row=32, fine_col=32):
-    return {"kodClass": kod_class, "name": name, "icon": icon, "role": role, "row": row, "col": col,
-            "fineRow": fine_row, "fineCol": fine_col, "angle": angle}
+from kodarea import exits, kod, locked, npc, ornaments, sign, write_area
 
 
 SIGNS = {
@@ -213,7 +169,9 @@ rooms = [
      "roo": "guest8.roo", "music": "login.mid", "baseLight": NICE, "outsideFactor": SOME, "teleport": {"row": 9, "col": 11},
      "noCombat": True, "respawnRoom": 1011, "improveCap": 25,
      "exits": exits([13, 10, BASE + 2, 9, 54, "NONE"], [13, 11, BASE + 2, 9, 54, "NONE"], [13, 12, BASE + 2, 9, 54, "NONE"]),
+     # SetRandomHomeroom: Wurf 1–3 Marion-Gasthaus (202), 4–7 Cor (153), 8–10 Jasper (370); fehlen alle, Tos (52).
      "portal": {"row": 2, "col": 11, "toRoom": 52,
+                "destinations": [{"room": 202, "weight": 3}, {"room": 153, "weight": 4}, {"room": 370, "weight": 3}],
                 "warning": "Achtung: Wenn du dieses Portal betrittst, kannst du nicht nach Raza zurückkehren. Betritt es "
                            "nur, wenn du deinen Fähigkeiten vertraust. Mehr steht auf dem Schild rechts neben dem Portal.",
                 "text": "Du betrittst das Portal und beginnst dein Abenteuer in Meridian 59!"},
@@ -228,14 +186,5 @@ rooms = [
                  ("Wandbilder aus Ko'catan", "murals", 14, 20, 16, 0)]]},
 ]
 
-for room in rooms:
-    layout = root / "client/rooms" / (Path(room["roo"]).stem + ".json")
-    if layout.exists():
-        data = json.loads(layout.read_text())
-        room["rows"], room["cols"] = data["rows"], data["cols"]
-
-world = {"source": "kod/object/active/holder/room/guest*/newb* (Meridian 59), erzeugt mit tools/make_raza.py",
-         "startRoom": 1011, "start": True, "rooms": rooms}
-out = root / "server/data/world/raza.json"
-out.write_text(json.dumps(world, ensure_ascii=False, indent=2) + "\n")
-print(f"{out}: {len(rooms)} Räume, {sum(len(r.get('objects', [])) for r in rooms)} Zierobjekte")
+write_area("raza", rooms, start=True, start_room=1011,
+           source="kod/object/active/holder/room/guest*/newb* (Meridian 59), erzeugt mit tools/make_raza.py")

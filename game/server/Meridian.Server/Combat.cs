@@ -164,6 +164,30 @@ public sealed record MonsterKind(
             + "die Bauern von Raza halten sie trotzdem, denn ihre Milch ist süß.",
     };
 
+    // Marion (Gruft). Tempo: SPEED_SLOW 8 → 105, SPEED_FAST 16 → 180 Feineinheiten/s (zwischen Zombie 70 und Skelett 140).
+    // Gespenstermumie (specmum.kod): Stufe 40, Schwierigkeit 5, durchscheinend 50 %, TID_MUMMY.
+    public static readonly MonsterKind SpectralMummy = new("Gespenstermumie", "mummy.bgf", 48, 0, 0, 0, TimeSpan.Zero, 105, 5 * 64)
+    {
+        Level = 40, Difficulty = 5, KodSpeed = 8, Treasure = "mummy", Gender = "f", DrawFlags = 0x00200000,
+        Resistances = new Dictionary<string, int> { ["unholy"] = 20, ["holy"] = -10, ["fire"] = -10, ["shock"] = -15, ["bludgeon"] = -15 },
+        Description = "Eine Gespenstermumie. Halb durchsichtig schwebt sie zwischen den Gräbern.",
+    };
+    // Verwittertes Skelett (batrskel.kod): Stufe 60, Schwierigkeit 4, TID_SKELETON2, sonst wie das Skelett.
+    public static readonly MonsterKind BatteredSkeleton = Skeleton with
+    {
+        Name = "verwittertes Skelett", MaxHp = 72, Level = 60, Difficulty = 4, Treasure = "skeleton2",
+    };
+    // Drescher (thrasher.kod): Stufe 150, Schwierigkeit 7, SPEED_FAST, hyperaggressiv, TID_THRASHER.
+    public static readonly MonsterKind Thrasher = new("Drescher", "res0001a.bgf", 180, 0, 0, 0, TimeSpan.Zero, 180, 8 * 64)
+    {
+        Level = 150, Difficulty = 7, KodSpeed = 16, Treasure = "thrasher",
+        Resistances = new Dictionary<string, int>
+        {
+            ["thrust"] = 50, ["slash"] = 50, ["bludgeon"] = 50, ["unholy"] = 50, ["shock"] = 90, ["fire"] = -20, ["holy"] = -15,
+        },
+        Description = "Ein Drescher. Ein massiges Ungetüm mit peitschenden Gliedern.",
+    };
+
     /// <summary>Monsterarten für die Gebietsdateien ("zombie", "skeleton", "mummy", "mummynotreasure", "cow").</summary>
     public static MonsterKind ByKey(string key) => key.ToLowerInvariant() switch
     {
@@ -172,6 +196,9 @@ public sealed record MonsterKind(
         "mummy" => Mummy,
         "mummynotreasure" => MummyNoTreasure,
         "blackmummy" => BlackMummy,
+        "spectralmummy" => SpectralMummy,
+        "batteredskeleton" => BatteredSkeleton,
+        "thrasher" => Thrasher,
         "cow" => Cow,
         _ => throw new InvalidDataException($"Unbekannte Monsterart {key}"),
     };

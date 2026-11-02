@@ -74,4 +74,6 @@ Raza (Neulingsinsel, 8 Räume, Start neuer Charaktere, Portal nach Tos) eng am O
 
 Raza vollständig: Mausoleum-Rätsel mit Hebeln/Tür/Endkampf, Museum, Kleidung (docs/raza.md).
 
-Offen: weitere Gebiete (Marion, Jasper, Cor, Tempel), Raza im Original-Client testen.
+Marion mit Gasthaus, Läden, Gruft (3 Ebenen) eng am Original; Raza-Portal führt dorthin (docs/marion.md).
+
+Offen: weitere Gebiete (Cor, Jasper, Wälder um Marion, Tempel), Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.

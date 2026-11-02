@@ -1,0 +1,129 @@
+{
+  "_hinweis": "Bewohner von Marion (towns/marntwn), Texte sinngemäß nach dem Original.",
+  "npcs": {
+    "MarionBartender": {
+      "title": "Schankwirt",
+      "description": "Tova ist ein polternder, lauthals lachender Mann, der Wirt des Limping Toad – bekannt für sein kräftiges Starkbier.",
+      "greeting": "Willkommen im Limping Toad! Ein Starkbier gefällig?",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "bier",
+            "starkbier",
+            "essen",
+            "buy"
+          ],
+          "reply": "Starkbier, Brot und Fleischpasteten – schau dir an, was ich habe (B). Billig ist es nicht, aber gut!"
+        },
+        {
+          "keywords": [
+            "paddock",
+            "tos"
+          ],
+          "reply": "Pah, Tos! Dort trinken sie Spülwasser und nennen es Bier."
+        }
+      ]
+    },
+    "MarionElder": {
+      "title": "Ältester",
+      "description": "Ran er'Hoth ist uralt und eine Legende in Marion. Ob er der Weise oder der Dorftrottel ist, darüber streiten die Leute noch.",
+      "greeting": "Wieder ein Reisender in Marion. Vielleicht erzählst du mir von deinen Abenteuern.",
+      "topics": [
+        {
+          "keywords": [
+            "quest",
+            "aufgabe",
+            "auftrag",
+            "gefallen"
+          ],
+          "reply": "Aufgaben? Ich bin zu alt für Botengänge, und du solltest es auch sein!"
+        },
+        {
+          "keywords": [
+            "gruft",
+            "crypt"
+          ],
+          "reply": "Unter dem Tor im Süden liegt die Gruft unserer Ahnen. Dort spuken die Toten – geh nicht unvorbereitet."
+        },
+        {
+          "keywords": [
+            "verrückt",
+            "wahnsinnig",
+            "crazy",
+            "mad"
+          ],
+          "reply": "Verrückt? Ich? Ich habe mehr Verstand im kleinen Finger als du im ganzen Kopf!"
+        }
+      ]
+    },
+    "MarionHealer": {
+      "title": "Heilerin",
+      "description": "Lady Aftyn stammt sichtlich aus edlem Hause und nicht aus dieser Gegend. Sie strahlt friedliche Entschlossenheit aus.",
+      "greeting": "Verzeih, aber du siehst aus, als bräuchtest du Ruhe. Zimmer habe ich keine, aber hier darfst du rasten.",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "heilen",
+            "trank",
+            "buy"
+          ],
+          "reply": "Meine Heiltränke sind gerade aus, aber Flaschen kann ich dir geben (B)."
+        }
+      ]
+    },
+    "MarionInnkeeper": {
+      "title": "Wirt",
+      "description": "Morrigan ist ein komisches kleines Männchen, das mit Reagenzien und allerlei Kram handelt.",
+      "greeting": "Verzeih, aber du siehst aus, als bräuchtest du Ruhe.",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "verkaufen",
+            "buy",
+            "sell"
+          ],
+          "reply": "Kräuter, Holunderbeeren, Fackeln und feine Hosen (B). Reagenzien und Kleidung kaufe ich dir auch ab."
+        },
+        {
+          "keywords": [
+            "zimmer",
+            "mieten",
+            "schlafen"
+          ],
+          "reply": "Die Zimmer sind alle vermietet, tut mir leid."
+        },
+        {
+          "keywords": [
+            "tova"
+          ],
+          "reply": "Hihi, Tova! Hast du ihn schon singen hören?"
+        }
+      ]
+    },
+    "MarionBlacksmith": {
+      "title": "Schmied",
+      "description": "Colhorr ist ein Dorfschmied, der vor allem Ackergeräte herstellt.",
+      "greeting": "Hä? Wer ist da?",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "waffe",
+            "buy"
+          ],
+          "reply": "Streitkolben, Kurzschwert, Schild, Lederrüstung, Axt – schau's dir an (B). Waffen und Schilde aus der Gruft kaufe ich auch."
+        },
+        {
+          "keywords": [
+            "ran",
+            "ältester"
+          ],
+          "reply": "Der alte Ran? Erzähl mir nichts von dem."
+        }
+      ]
+    }
+  }
+}

@@ -14,7 +14,8 @@ public static class PropModels
         "cow" => Cow(),
         "portal" => Portal(),
         "razsign1" or "sign" => Sign(),
-        "bonepile" => Bones(),
+        "bonepile" or "mummyx" => Bones(),   // mummyX.bgf: mumifizierte Leiche (Gruft von Marion)
+        "treebot" => Tree(),                 // Mimosenbaum in Marion
         "lever" => Lever(),
         _ => null,
     };
@@ -86,6 +87,16 @@ public static class PropModels
     {
         if (figure.FindChild("Pivot", recursive: true, owned: false) is Node3D pivot)
             pivot.RotationDegrees = new Vector3(down ? 35 : -35, 0, 0);
+    }
+
+    /// <summary>Laubbaum aus Stamm und Kronenkugeln.</summary>
+    private static Node3D Tree()
+    {
+        var root = new Node3D { Name = "Tree" };
+        Add(root, new CylinderMesh { TopRadius = 0.15f, BottomRadius = 0.22f, Height = 2.4f }, new Color(0.33f, 0.23f, 0.14f), new Vector3(0, 1.2f, 0));
+        foreach (var (x, y, z, r) in new[] { (0f, 3.0f, 0f, 1.3f), (0.6f, 2.6f, 0.3f, 0.9f), (-0.5f, 2.7f, -0.4f, 0.9f) })
+            Add(root, new SphereMesh { Radius = r, Height = r * 1.8f }, new Color(0.24f, 0.42f, 0.16f), new Vector3(x, y, z));
+        return root;
     }
 
     /// <summary>Kleiner Haufen bleicher Knochen.</summary>

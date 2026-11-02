@@ -19,8 +19,8 @@ public static class CharacterModel
         if (PropModels.Create(kind) is { } prop)
             return prop;
         // Grafiknamen des Originals (KOD vrIcon) auf eigene Modelle abbilden; Spieler/NPCs sind Zwerge.
-        // Mumien nutzen vorerst das Zombie-Modell.
-        kind = kind switch { "skelbody" => "skeleton", "mummy" => "zombie", _ => kind };
+        // Mumien und Drescher (res0001a.bgf) nutzen vorerst das Zombie-Modell.
+        kind = kind switch { "skelbody" => "skeleton", "mummy" or "res0001a" => "zombie", _ => kind };
         string path = $"res://models/{kind}.glb";
         if (!ResourceLoader.Exists(path))
             path = "res://models/dwarf.glb";

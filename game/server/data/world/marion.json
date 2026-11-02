@@ -1,0 +1,984 @@
+{
+  "source": "kod/object/active/holder/room/marnrm, monsroom/objroom/mar*, monsroom/marcry* (Meridian 59), erzeugt mit tools/make_marion.py",
+  "startRoom": 200,
+  "rooms": [
+    {
+      "id": 200,
+      "constant": "RID_MARION",
+      "kodClass": "Marion",
+      "name": "Marion",
+      "roo": "marion.roo",
+      "music": "city02.mid",
+      "baseLight": 164,
+      "outsideFactor": 10,
+      "outdoors": true,
+      "terrain": "village",
+      "teleport": {
+        "row": 56,
+        "col": 39
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 32,
+          "col": 16,
+          "to": 205,
+          "toRow": 4,
+          "toCol": 10,
+          "rotate": "NONE"
+        },
+        {
+          "row": 56,
+          "col": 54,
+          "to": 202,
+          "toRow": 4,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 62,
+          "col": 58,
+          "to": 202,
+          "toRow": 12,
+          "toCol": 5,
+          "rotate": "NONE"
+        },
+        {
+          "row": 50,
+          "col": 21,
+          "to": 204,
+          "toRow": 6,
+          "toCol": 20,
+          "rotate": "NONE"
+        },
+        {
+          "row": 31,
+          "col": 43,
+          "to": 201,
+          "toRow": 11,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 80,
+          "col": 15,
+          "to": 2600,
+          "toRow": 11,
+          "toCol": 17,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 70,
+          "col": 13,
+          "message": "Dieses Tor wurde errichtet, um die Bürger vor den Gefahren der Gruft zu schützen."
+        },
+        {
+          "row": 70,
+          "col": 14,
+          "message": "Dieses Tor wurde errichtet, um die Bürger vor den Gefahren der Gruft zu schützen."
+        },
+        {
+          "row": 71,
+          "col": 13,
+          "message": "Dieses Tor wurde errichtet, um die Bürger vor den Gefahren der Gruft zu schützen."
+        },
+        {
+          "row": 71,
+          "col": 14,
+          "message": "Dieses Tor wurde errichtet, um die Bürger vor den Gefahren der Gruft zu schützen."
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "MarionElder",
+          "name": "Ran er'Hoth",
+          "icon": "mrelder.bgf",
+          "role": "Ältester",
+          "row": 80,
+          "col": 37,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 3072
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Der Mimosenbaum",
+          "icon": "treebot.bgf",
+          "role": "Schild",
+          "description": "Dieser Baum erinnert an einen gefallenen Freund. Am Boden ist eine kleine Metallplakette angebracht, daneben liegen ein paar getrocknete Rosenblätter.\n\n„Die jungen Mädchen schnitten sich das Haar, als du gingst. An jenem Tag wurde kein Brot gebacken, und der Wein schmeckte sauer. Wir schleppten uns im strömenden Regen den Hügel hinauf, um dich auf den Weg zu schicken – ein Stück weiter in die Ewigkeit als deine regennassen Gefährten. Diana behielt dein Schwert, Aspasia deinen schlammigen Umhang aus feiner roter Wolle. Ich behielt die Erinnerung an dich – und die dunkle Tunika, mit der wir dir das Gesicht abwischten. Mehr hätte ich nicht getan.“",
+          "row": 45,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32
+        }
+      ],
+      "objects": [
+        {
+          "type": "TREE",
+          "row": 5,
+          "col": 17,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 5,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 2,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ],
+      "rows": 88,
+      "cols": 93
+    },
+    {
+      "id": 201,
+      "constant": "RID_MAR_SMITHY",
+      "kodClass": "MarionSmithy",
+      "name": "Ye Olde Slasher Salesman",
+      "roo": "marsmith.roo",
+      "music": "smithy.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "teleport": {
+        "row": 10,
+        "col": 4
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 11,
+          "col": 4,
+          "to": 200,
+          "toRow": 32,
+          "toCol": 43,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 4,
+          "to": 200,
+          "toRow": 32,
+          "toCol": 43,
+          "rotate": "NONE"
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "MarionBlacksmith",
+          "name": "Colhorr",
+          "icon": "mrsmith.bgf",
+          "role": "Schmied",
+          "row": 7,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        }
+      ],
+      "rows": 12,
+      "cols": 6
+    },
+    {
+      "id": 202,
+      "constant": "RID_MAR_INN",
+      "kodClass": "MarionInn",
+      "name": "The Limping Toad Inn and Tavern",
+      "roo": "marinn.roo",
+      "music": "bar.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "teleport": {
+        "row": 11,
+        "col": 6
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 4,
+          "col": 1,
+          "to": 200,
+          "toRow": 56,
+          "toCol": 53,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 5,
+          "to": 200,
+          "toRow": 62,
+          "toCol": 57,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 4,
+          "to": 200,
+          "toRow": 62,
+          "toCol": 57,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 5,
+          "col": 9,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch …"
+        },
+        {
+          "row": 5,
+          "col": 12,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch …"
+        },
+        {
+          "row": 5,
+          "col": 15,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch …"
+        },
+        {
+          "row": 5,
+          "col": 16,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch …"
+        },
+        {
+          "row": 7,
+          "col": 11,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch …"
+        },
+        {
+          "row": 7,
+          "col": 12,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch …"
+        },
+        {
+          "row": 7,
+          "col": 15,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch …"
+        },
+        {
+          "row": 7,
+          "col": 16,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch …"
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "MarionInnkeeper",
+          "name": "Morrigan",
+          "icon": "mrinnk.bgf",
+          "role": "Wirt",
+          "row": 2,
+          "col": 4,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "kodClass": "MarionBartender",
+          "name": "Tova",
+          "icon": "mrbart.bgf",
+          "role": "Schankwirt",
+          "row": 14,
+          "col": 9,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 3072
+        }
+      ],
+      "rows": 16,
+      "cols": 16
+    },
+    {
+      "id": 203,
+      "constant": "RID_MAR_ELDER_HUT",
+      "kodClass": "MarionElderHut",
+      "name": "The home of the elder",
+      "roo": "marelder.roo",
+      "music": "innmusic.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "teleport": {
+        "row": 8,
+        "col": 3
+      },
+      "exits": [
+        {
+          "row": 11,
+          "col": 4,
+          "to": 200,
+          "toRow": 55,
+          "toCol": 28,
+          "rotate": "45"
+        }
+      ],
+      "rows": 11,
+      "cols": 6
+    },
+    {
+      "id": 204,
+      "constant": "RID_MAR_HALL",
+      "kodClass": "MarHall",
+      "name": "The Adventurer's Hall of Marion",
+      "roo": "marhall.roo",
+      "music": "main.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 5,
+        "col": 8
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 6,
+          "col": 21,
+          "to": 200,
+          "toRow": 50,
+          "toCol": 22,
+          "rotate": "NONE"
+        },
+        {
+          "row": 7,
+          "col": 21,
+          "to": 200,
+          "toRow": 50,
+          "toCol": 22,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 15,
+      "cols": 22
+    },
+    {
+      "id": 205,
+      "constant": "RID_MAR_HEALER_SHOP",
+      "kodClass": "MarionHealerShop",
+      "name": "Lady Aftyn's Sanctuary",
+      "roo": "marheal.roo",
+      "music": "main.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 4,
+        "col": 7
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 4,
+          "col": 10,
+          "to": 200,
+          "toRow": 32,
+          "toCol": 17,
+          "rotate": "NONE"
+        },
+        {
+          "row": 5,
+          "col": 10,
+          "to": 200,
+          "toRow": 32,
+          "toCol": 17,
+          "rotate": "NONE"
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "MarionHealer",
+          "name": "Lady Aftyn",
+          "icon": "mrhealer.bgf",
+          "role": "Heilerin",
+          "row": 5,
+          "col": 3,
+          "fineRow": 14,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 8,
+      "cols": 10
+    },
+    {
+      "id": 2600,
+      "constant": "RID_MAR_CRYPT1",
+      "kodClass": "MarionCrypt1",
+      "name": "The crypt in Marion",
+      "roo": "MarDun01.roo",
+      "music": "nec01.mid",
+      "baseLight": 124,
+      "outsideFactor": 0,
+      "teleport": {
+        "row": 11,
+        "col": 23
+      },
+      "exits": [
+        {
+          "row": 11,
+          "col": 17,
+          "to": 200,
+          "toRow": 80,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 38,
+          "col": 6,
+          "to": 2601,
+          "toRow": 3,
+          "toCol": 26,
+          "rotate": "NONE"
+        },
+        {
+          "row": 38,
+          "col": 7,
+          "to": 2601,
+          "toRow": 3,
+          "toCol": 27,
+          "rotate": "NONE"
+        }
+      ],
+      "generators": [
+        {
+          "row": 5,
+          "col": 21
+        },
+        {
+          "row": 5,
+          "col": 36
+        },
+        {
+          "row": 9,
+          "col": 28
+        },
+        {
+          "row": 17,
+          "col": 35
+        },
+        {
+          "row": 21,
+          "col": 23
+        },
+        {
+          "row": 25,
+          "col": 11
+        },
+        {
+          "row": 29,
+          "col": 18
+        },
+        {
+          "row": 37,
+          "col": 35
+        },
+        {
+          "row": 38,
+          "col": 19
+        }
+      ],
+      "monsters": [
+        {
+          "kind": "spectralmummy",
+          "weight": 100
+        }
+      ],
+      "maxMonsters": 10,
+      "npcs": [
+        {
+          "kodClass": "Sign",
+          "name": "Mumifizierte Leiche",
+          "icon": "mummyX.bgf",
+          "role": "Schild",
+          "description": "Die Gespenstermumien, die diese Gruft heimsuchen, waren einst einfache mumifizierte Leichen wie diese.",
+          "row": 19,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Mumifizierte Leiche",
+          "icon": "mummyX.bgf",
+          "role": "Schild",
+          "description": "Die Gespenstermumien, die diese Gruft heimsuchen, waren einst einfache mumifizierte Leichen wie diese.",
+          "row": 23,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Mumifizierte Leiche",
+          "icon": "mummyX.bgf",
+          "role": "Schild",
+          "description": "Die Gespenstermumien, die diese Gruft heimsuchen, waren einst einfache mumifizierte Leichen wie diese.",
+          "row": 25,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Mumifizierte Leiche",
+          "icon": "mummyX.bgf",
+          "role": "Schild",
+          "description": "Die Gespenstermumien, die diese Gruft heimsuchen, waren einst einfache mumifizierte Leichen wie diese.",
+          "row": 32,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Mumifizierte Leiche",
+          "icon": "mummyX.bgf",
+          "role": "Schild",
+          "description": "Die Gespenstermumien, die diese Gruft heimsuchen, waren einst einfache mumifizierte Leichen wie diese.",
+          "row": 30,
+          "col": 40,
+          "fineRow": 32,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Mumifizierte Leiche",
+          "icon": "mummyX.bgf",
+          "role": "Schild",
+          "description": "Die Gespenstermumien, die diese Gruft heimsuchen, waren einst einfache mumifizierte Leichen wie diese.",
+          "row": 27,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Mumifizierte Leiche",
+          "icon": "mummyX.bgf",
+          "role": "Schild",
+          "description": "Die Gespenstermumien, die diese Gruft heimsuchen, waren einst einfache mumifizierte Leichen wie diese.",
+          "row": 19,
+          "col": 32,
+          "fineRow": 32,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Mumifizierte Leiche",
+          "icon": "mummyX.bgf",
+          "role": "Schild",
+          "description": "Die Gespenstermumien, die diese Gruft heimsuchen, waren einst einfache mumifizierte Leichen wie diese.",
+          "row": 17,
+          "col": 40,
+          "fineRow": 32,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Mumifizierte Leiche",
+          "icon": "mummyX.bgf",
+          "role": "Schild",
+          "description": "Die Gespenstermumien, die diese Gruft heimsuchen, waren einst einfache mumifizierte Leichen wie diese.",
+          "row": 13,
+          "col": 40,
+          "fineRow": 32,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Mumifizierte Leiche",
+          "icon": "mummyX.bgf",
+          "role": "Schild",
+          "description": "Die Gespenstermumien, die diese Gruft heimsuchen, waren einst einfache mumifizierte Leichen wie diese.",
+          "row": 9,
+          "col": 34,
+          "fineRow": 32,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Mumifizierte Leiche",
+          "icon": "mummyX.bgf",
+          "role": "Schild",
+          "description": "Die Gespenstermumien, die diese Gruft heimsuchen, waren einst einfache mumifizierte Leichen wie diese.",
+          "row": 4,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Mumifizierte Leiche",
+          "icon": "mummyX.bgf",
+          "role": "Schild",
+          "description": "Die Gespenstermumien, die diese Gruft heimsuchen, waren einst einfache mumifizierte Leichen wie diese.",
+          "row": 2,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Mumifizierte Leiche",
+          "icon": "mummyX.bgf",
+          "role": "Schild",
+          "description": "Die Gespenstermumien, die diese Gruft heimsuchen, waren einst einfache mumifizierte Leichen wie diese.",
+          "row": 2,
+          "col": 40,
+          "fineRow": 32,
+          "fineCol": 32
+        }
+      ],
+      "rows": 39,
+      "cols": 40
+    },
+    {
+      "id": 2601,
+      "constant": "RID_MAR_CRYPT2",
+      "kodClass": "MarionCrypt2",
+      "name": "Resting place of Marion's ancestors",
+      "roo": "MarDun02.roo",
+      "music": "Song.mid",
+      "baseLight": 124,
+      "outsideFactor": 0,
+      "teleport": {
+        "row": 17,
+        "col": 18
+      },
+      "exits": [
+        {
+          "row": 2,
+          "col": 26,
+          "to": 2600,
+          "toRow": 37,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 27,
+          "to": 2600,
+          "toRow": 37,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 38,
+          "col": 26,
+          "to": 2602,
+          "toRow": 31,
+          "toCol": 17,
+          "rotate": "NONE"
+        },
+        {
+          "row": 38,
+          "col": 27,
+          "to": 2602,
+          "toRow": 31,
+          "toCol": 17,
+          "rotate": "NONE"
+        }
+      ],
+      "generators": [
+        {
+          "row": 7,
+          "col": 16
+        },
+        {
+          "row": 11,
+          "col": 8
+        },
+        {
+          "row": 14,
+          "col": 6
+        },
+        {
+          "row": 17,
+          "col": 2
+        },
+        {
+          "row": 18,
+          "col": 3
+        },
+        {
+          "row": 24,
+          "col": 7
+        },
+        {
+          "row": 23,
+          "col": 9
+        },
+        {
+          "row": 26,
+          "col": 8
+        },
+        {
+          "row": 27,
+          "col": 5
+        },
+        {
+          "row": 31,
+          "col": 7
+        },
+        {
+          "row": 32,
+          "col": 3
+        },
+        {
+          "row": 28,
+          "col": 11
+        },
+        {
+          "row": 29,
+          "col": 15
+        },
+        {
+          "row": 36,
+          "col": 14
+        },
+        {
+          "row": 37,
+          "col": 20
+        },
+        {
+          "row": 31,
+          "col": 25
+        },
+        {
+          "row": 32,
+          "col": 27
+        },
+        {
+          "row": 33,
+          "col": 31
+        },
+        {
+          "row": 34,
+          "col": 35
+        },
+        {
+          "row": 31,
+          "col": 37
+        },
+        {
+          "row": 31,
+          "col": 43
+        },
+        {
+          "row": 27,
+          "col": 45
+        },
+        {
+          "row": 24,
+          "col": 46
+        },
+        {
+          "row": 22,
+          "col": 45
+        },
+        {
+          "row": 21,
+          "col": 48
+        },
+        {
+          "row": 19,
+          "col": 42
+        },
+        {
+          "row": 23,
+          "col": 41
+        },
+        {
+          "row": 12,
+          "col": 50
+        },
+        {
+          "row": 13,
+          "col": 45
+        },
+        {
+          "row": 16,
+          "col": 45
+        },
+        {
+          "row": 11,
+          "col": 42
+        },
+        {
+          "row": 8,
+          "col": 39
+        },
+        {
+          "row": 3,
+          "col": 41
+        },
+        {
+          "row": 2,
+          "col": 38
+        },
+        {
+          "row": 5,
+          "col": 37
+        }
+      ],
+      "monsters": [
+        {
+          "kind": "skeleton",
+          "weight": 80
+        },
+        {
+          "kind": "batteredskeleton",
+          "weight": 20
+        }
+      ],
+      "maxMonsters": 25,
+      "npcs": [
+        {
+          "kodClass": "Sign",
+          "name": "Warnung!",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Auf Befehl König Far'Nohls darf niemand diesen Punkt überschreiten. Dieser Ort ist der Zivilisation verloren, und wer ihn betritt, wird wahrscheinlich sterben. Wer diesen Befehl missachtet, findet kein Erbarmen.",
+          "row": 38,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 32
+        }
+      ],
+      "rows": 38,
+      "cols": 52
+    },
+    {
+      "id": 2602,
+      "constant": "RID_MAR_CRYPT3A",
+      "kodClass": "MarionCrypt3a",
+      "name": "Affirmation of the Forsaken",
+      "roo": "res00001.roo",
+      "music": "song10.mid",
+      "baseLight": 84,
+      "outsideFactor": 0,
+      "teleport": {
+        "row": 18,
+        "col": 21
+      },
+      "exits": [
+        {
+          "row": 30,
+          "col": 17,
+          "to": 2601,
+          "toRow": 37,
+          "toCol": 27,
+          "rotate": "NONE"
+        },
+        {
+          "row": 30,
+          "col": 18,
+          "to": 2601,
+          "toRow": 37,
+          "toCol": 27,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 22,
+          "col": 26,
+          "message": "Deine Mühe ist vergebens, es hält stand."
+        },
+        {
+          "row": 23,
+          "col": 26,
+          "message": "Deine Mühe ist vergebens, es hält stand."
+        },
+        {
+          "row": 14,
+          "col": 8,
+          "message": "Deine Mühe ist vergebens, es hält stand."
+        },
+        {
+          "row": 14,
+          "col": 9,
+          "message": "Deine Mühe ist vergebens, es hält stand."
+        },
+        {
+          "row": 15,
+          "col": 8,
+          "message": "Deine Mühe ist vergebens, es hält stand."
+        },
+        {
+          "row": 15,
+          "col": 9,
+          "message": "Deine Mühe ist vergebens, es hält stand."
+        },
+        {
+          "row": 31,
+          "col": 27,
+          "message": "Deine Mühe ist vergebens, es hält stand."
+        },
+        {
+          "row": 31,
+          "col": 28,
+          "message": "Deine Mühe ist vergebens, es hält stand."
+        },
+        {
+          "row": 32,
+          "col": 27,
+          "message": "Deine Mühe ist vergebens, es hält stand."
+        },
+        {
+          "row": 32,
+          "col": 28,
+          "message": "Deine Mühe ist vergebens, es hält stand."
+        }
+      ],
+      "generators": [
+        {
+          "row": 17,
+          "col": 5
+        },
+        {
+          "row": 17,
+          "col": 19
+        },
+        {
+          "row": 21,
+          "col": 16
+        },
+        {
+          "row": 24,
+          "col": 9
+        },
+        {
+          "row": 13,
+          "col": 17
+        },
+        {
+          "row": 24,
+          "col": 28
+        },
+        {
+          "row": 27,
+          "col": 31
+        }
+      ],
+      "monsters": [
+        {
+          "kind": "thrasher",
+          "weight": 100
+        }
+      ],
+      "maxMonsters": 15,
+      "rows": 37,
+      "cols": 34
+    }
+  ]
+}

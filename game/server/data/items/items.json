@@ -692,6 +692,38 @@
       "color": 4,
       "legsMale": "bfc.bgf",
       "legsFemale": "bfd.bgf"
+    },
+    {
+      "key": "pantsred",
+      "kodClass": "PantsC",
+      "name": "Hose (hellrot)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 33,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantsorange",
+      "kodClass": "PantsC",
+      "name": "Hose (dunkelorange)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 34,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
     }
   ],
   "treasure": {
@@ -827,6 +859,124 @@
       {
         "item": "herbs",
         "weight": 3
+      }
+    ],
+    "mummy": [
+      {
+        "item": "money",
+        "weight": 17
+      },
+      {
+        "item": "redmushroom",
+        "weight": 10
+      },
+      {
+        "item": "bluemushroom",
+        "weight": 10
+      },
+      {
+        "item": "mushroom",
+        "weight": 10
+      },
+      {
+        "item": "herbs",
+        "weight": 10
+      },
+      {
+        "item": "elderberry",
+        "weight": 10
+      },
+      {
+        "item": "torch",
+        "weight": 8
+      },
+      {
+        "item": "entrootberry",
+        "weight": 5
+      },
+      {
+        "item": "mace",
+        "weight": 5
+      },
+      {
+        "item": "shortsword",
+        "weight": 5
+      },
+      {
+        "item": "longsword",
+        "weight": 4
+      },
+      {
+        "item": "orctooth",
+        "weight": 3
+      },
+      {
+        "item": "metalshield",
+        "weight": 3
+      }
+    ],
+    "skeleton2": [
+      {
+        "item": "mushroom",
+        "weight": 25
+      },
+      {
+        "item": "redmushroom",
+        "weight": 20
+      },
+      {
+        "item": "snack",
+        "weight": 15
+      },
+      {
+        "item": "money",
+        "weight": 15
+      },
+      {
+        "item": "emerald",
+        "weight": 5
+      },
+      {
+        "item": "sapphire",
+        "weight": 4
+      },
+      {
+        "item": "inkycap",
+        "weight": 4
+      },
+      {
+        "item": "knightshield",
+        "weight": 5
+      }
+    ],
+    "thrasher": [
+      {
+        "item": "bluedragonscale",
+        "weight": 18
+      },
+      {
+        "item": "purplemushroom",
+        "weight": 16
+      },
+      {
+        "item": "inkycap",
+        "weight": 11
+      },
+      {
+        "item": "longsword",
+        "weight": 6
+      },
+      {
+        "item": "torch",
+        "weight": 5
+      },
+      {
+        "item": "money",
+        "weight": 4
+      },
+      {
+        "item": "mysticsword",
+        "weight": 4
       }
     ]
   }

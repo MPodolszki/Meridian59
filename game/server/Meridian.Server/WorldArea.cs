@@ -23,7 +23,7 @@ public sealed partial class World
             Tell(a, portal.Warning ?? "Achtung: Durch dieses Portal gibt es keinen Weg zurück.");
             return null;
         }
-        if (!_rooms.TryGetValue(portal.ToRoom, out var target))
+        if (PortalTarget(portal) is not { } target)
             return new MoveResult.Blocked("Das Portal flimmert, aber nichts geschieht.");
         a.PortalWarned = a.OnPortal = false;
         Remove(a);
@@ -33,6 +33,16 @@ public sealed partial class World
         GiveRealWorldObjects(a);
         Tell(a, portal.Text ?? "Du betrittst das Portal und beginnst dein Abenteuer.");
         return new MoveResult.ChangedRoom(target);
+    }
+
+    /// <summary>user.kod SetRandomHomeroom: gewichteter Wurf über die vorhandenen Heimatstädte, sonst das feste Ziel.</summary>
+    private Room? PortalTarget(PortalDefinition portal)
+    {
+        var known = portal.Destinations.Where(d => _rooms.ContainsKey(d.Room)).ToList();
+        if (known.Count == 0)
+            return _rooms.GetValueOrDefault(portal.ToRoom);
+        int roll = _random.Next(known.Sum(d => d.Weight));
+        return _rooms[known.First(d => (roll -= d.Weight) < 0).Room];
     }
 
     /// <summary>player.kod AddRealWorldObjects: 1000 Schillinge und Reagenzien für je 5 Zauber der bekannten

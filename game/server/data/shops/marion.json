@@ -1,0 +1,109 @@
+{
+  "_hinweis": "Händler von Marion (kod/object/active/holder/nomoveon/battler/monster/towns/marntwn). Tränke der Heilerin, Zimmermiete und die Sprüche Ausbessern/Destillieren/Waffenstillstand fehlen noch.",
+  "shops": {
+    "MarionBartender": {
+      "markup": 5,
+      "forSale": [
+        {
+          "item": "mug",
+          "number": 4
+        },
+        {
+          "item": "bread"
+        },
+        {
+          "item": "meatpie"
+        }
+      ],
+      "conditional": [
+        {
+          "item": "entrootberry",
+          "number": 4,
+          "price": 200,
+          "triggers": [
+            "entroot",
+            "entwurzel"
+          ],
+          "reply": "Hmmm. Ja, ich glaube, ich habe tatsächlich etwas Entwurzel … da es aus meinem eigenen Vorrat stammt, muss ich allerdings mehr verlangen …"
+        }
+      ]
+    },
+    "MarionElder": {
+      "conditional": [
+        {
+          "item": "orctooth",
+          "number": 4,
+          "price": 350,
+          "triggers": [
+            "orkzahn",
+            "orkzähne",
+            "orc tooth",
+            "orc teeth"
+          ],
+          "reply": "Ich habe ein paar aus ihren verrottenden Schädeln oben in den Bergen gezogen … ich bin ein kleiner Sammler."
+        }
+      ]
+    },
+    "MarionHealer": {
+      "markup": 2,
+      "forSale": [
+        {
+          "item": "flask"
+        }
+      ]
+    },
+    "MarionInnkeeper": {
+      "markup": 5,
+      "buyer": true,
+      "buysTypes": [
+        "reagent",
+        "armor",
+        "light"
+      ],
+      "forSale": [
+        {
+          "item": "pantsred"
+        },
+        {
+          "item": "pantsorange"
+        },
+        {
+          "item": "herbs",
+          "number": 5
+        },
+        {
+          "item": "elderberry",
+          "number": 4
+        },
+        {
+          "item": "torch"
+        }
+      ]
+    },
+    "MarionBlacksmith": {
+      "markup": 3,
+      "buyer": true,
+      "buysTypes": [
+        "weapon",
+        "shield"
+      ],
+      "forSale": [
+        {
+          "item": "mace"
+        },
+        {
+          "item": "shortsword"
+        },
+        {
+          "item": "metalshield"
+        },
+        {
+          "item": "leatherarmor"
+        },
+        {
+          "item": "axe"
+        }
+      ]
+    }
+  }
+}

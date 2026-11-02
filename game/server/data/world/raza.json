@@ -1524,6 +1524,20 @@
         "row": 2,
         "col": 11,
         "toRoom": 52,
+        "destinations": [
+          {
+            "room": 202,
+            "weight": 3
+          },
+          {
+            "room": 153,
+            "weight": 4
+          },
+          {
+            "room": 370,
+            "weight": 3
+          }
+        ],
         "warning": "Achtung: Wenn du dieses Portal betrittst, kannst du nicht nach Raza zurückkehren. Betritt es nur, wenn du deinen Fähigkeiten vertraust. Mehr steht auf dem Schild rechts neben dem Portal.",
         "text": "Du betrittst das Portal und beginnst dein Abenteuer in Meridian 59!"
       },

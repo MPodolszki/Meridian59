@@ -114,7 +114,7 @@ def main(world_json, roo_dir, out_dir):
             print(f'fehlt: {src}')
             continue
         data = layout(src)
-        target = out / (Path(roo).stem + '.json')
+        target = out / (Path(roo).stem.lower() + '.json')   # Client und Server suchen in Kleinschreibung
         # Eine Zeile pro Rasterzeile hält die Datei lesbar und diff-freundlich.
         body = ',\n    '.join(json.dumps(line, separators=(',', ':')) for line in data.pop('floor'))
         head = json.dumps(data, ensure_ascii=False)[:-1]

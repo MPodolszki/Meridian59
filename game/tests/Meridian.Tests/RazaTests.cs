@@ -28,6 +28,7 @@ public sealed class RazaTests : IAsyncDisposable
             Assert.Equal(1011, room.RespawnRoom);
         }
         Assert.Equal(52, world.Rooms.Single(r => r.Id == 1018).Portal!.ToRoom);
+        Assert.Contains(world.Rooms.Single(r => r.Id == 1018).Portal!.Destinations, d => d.Room == 202);
         Assert.Equal(3, world.Rooms.Single(r => r.Id == 1012).FixedMonsters.Count);
     }
 
@@ -43,7 +44,7 @@ public sealed class RazaTests : IAsyncDisposable
     }
 
     [Fact]
-    public async Task Portal_WarnsFirst_ThenLeadsToTheInnOfTos_WithStartingGear()
+    public async Task Portal_WarnsFirst_ThenLeadsToTheInnOfMarion_WithStartingGear()
     {
         var (c, events) = await EnterAsync(1018);
         Assert.Equal("The Grand Museum of Raza", events.OfType<ClientEvent.EnteredRoom>().Last().RoomName);
@@ -51,7 +52,8 @@ public sealed class RazaTests : IAsyncDisposable
         await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.StartsWith("Achtung"));
         await c.MoveAsync(Room.Fine(4), Room.Fine(11), false);   // wieder herunter
         await c.MoveAsync(Room.Fine(2), Room.Fine(11), false);   // und erneut hinein
-        await WaitForAsync(c, events, e => e is ClientEvent.EnteredRoom { RoomName: "Familiars" });
+        // Einzige vorhandene Heimatstadt ist Marion: ins Gasthaus „Limping Toad“ (SetRandomHomeroom).
+        await WaitForAsync(c, events, e => e is ClientEvent.EnteredRoom { RoomName: "The Limping Toad Inn and Tavern" });
         // AddRealWorldObjects: 1000 Schillinge dazu (Start 2500), ein zweiter Streitkolben, 5 Äpfel.
         await WaitForAsync(c, events, _ => c.Inventory.Count(o => c.Resolve(o.NameRsc) == "Streitkolben") == 2
             && c.Inventory.Any(o => c.Resolve(o.NameRsc) is "Apfel" or "Äpfel" && o.Amount == 5)
@@ -86,6 +88,29 @@ public sealed class RazaTests : IAsyncDisposable
         await c.MoveAsync(Room.Fine(27), Room.Fine(8), false);
         await c.ActivateAsync(levers[1].Id);
         await WaitForAsync(c, events, e => e is ClientEvent.SectorMoved { Sector: 3, Height: 172 });
+    }
+
+    [Fact]
+    public void Marion_ExitsLeadIntoExistingRooms_AndCryptsHaveMonsters()
+    {
+        var world = WorldDefinition.LoadAll(Data("world"));
+        var ids = world.Rooms.Select(r => r.Id).ToHashSet();
+        foreach (var room in world.Rooms.Where(r => r.Id is >= 200 and <= 205 or >= 2600 and <= 2602))
+            Assert.All(room.Exits, e => Assert.Contains(e.To, ids));
+        Assert.Equal("spectralmummy", world.Rooms.Single(r => r.Id == 2600).Monsters.Single().Kind);
+        Assert.Equal(35, world.Rooms.Single(r => r.Id == 2601).Generators.Count);
+        Assert.Equal(MonsterKind.Thrasher, MonsterKind.ByKey(world.Rooms.Single(r => r.Id == 2602).Monsters.Single().Kind));
+    }
+
+    [Fact]
+    public async Task Marion_ElderSellsOrcTeeth_WhenAsked()
+    {
+        var (c, events) = await EnterAsync(200);
+        Assert.Equal("Marion", events.OfType<ClientEvent.EnteredRoom>().Last().RoomName);
+        var elder = events.OfType<ClientEvent.ObjectAdded>().First(e => c.Resolve(e.Object.NameRsc).StartsWith("Ran er'Hoth")).Object;
+        await c.MoveAsync(Room.Fine(79), Room.Fine(37), false);
+        await c.SayAsync("Hast du Orkzähne?");
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.Contains("Sammler"));
     }
 
     [Fact]
@@ -128,8 +153,8 @@ public sealed class RazaTests : IAsyncDisposable
             Items = ItemCatalog.Load(Data("items", "items.json")),
             Spells = SpellBook.Load(Data("spells", "spells.json")),
             Skills = SkillBook.Load(Data("skills", "skills.json")),
-            Shops = ShopFile.Load(Data("shops", "raza.json")),
-            Dialogs = DialogFile.Load(Data("dialog", "raza.json")),
+            Shops = ShopFile.Merge([ShopFile.Load(Data("shops", "raza.json")), ShopFile.Load(Data("shops", "marion.json"))]),
+            Dialogs = DialogFile.Merge([DialogFile.Load(Data("dialog", "raza.json")), DialogFile.Load(Data("dialog", "marion.json"))]),
             Database = _db,
         }, accounts);
         _server.Start();
