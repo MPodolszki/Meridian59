@@ -23,8 +23,8 @@ dotnet run --project server/Meridian.Server -- add-account Tester geheim
 dotnet run --project server/Meridian.Server -- --port 5959
 ```
 
-Accounts liegen vorerst in `accounts.json` im Arbeitsverzeichnis (MD5-Digest wie im Original,
-nur für Entwicklung; nicht eingecheckt).
+Accounts und Spielstand liegen in der SQLite-Datei `meridian.db` im Arbeitsverzeichnis (Passwort als
+MD5-Digest wie im Original; nicht eingecheckt).
 
 ## Raspberry Pi / Linux-Server
 
