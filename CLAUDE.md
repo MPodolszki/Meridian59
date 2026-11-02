@@ -61,4 +61,5 @@ Monster-Wegfindung per A* auf den Raum-Höhenrastern (combat.md).
 Teleport-Erkennung für Spielerbewegungen wie im Original (combat.md).
 Häuser mit Fachwerkfassaden und Innenräume mit Decke/Lampen im Client (client/README.md).
 Original-Client (Steam, Wine) getestet: Login, Welt, Chat, Anschauen, Kaufen, Anbieten, Bank, Türen, Kampf, Beute gehen (original-client-test.md).
-Offen: Charaktererstellung (Aussehen wählen, BP_CHARINFO), Magie/Fertigkeiten, weitere Gebiete außer Tos.
+Magie erster Umfang: Charakterwerte, Mana, Zaubern, 4 Sprüche, Lernen (docs/magic.md).
+Offen: Charaktererstellung (Aussehen und Werte wählen, BP_CHARINFO), weitere Sprüche, Fertigkeiten, weitere Gebiete außer Tos.

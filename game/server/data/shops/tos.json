@@ -1,5 +1,5 @@
 {
-  "_hinweis": "Händler der Tos-NPCs aus kod/.../towns/tostwn (TsInnK, TsApoth, TsBanker): plFor_sale, InitCondSale, viMerchant_markup (0 flat … 3 normal … 5 ripoff), viAttributes. Bedingte Waren erscheinen, wenn ein Auslösewort fällt; {0} = Ware.",
+  "_hinweis": "Händler der Tos-NPCs aus kod/.../towns/tostwn (TsInnK, TsApoth, TsBanker): plFor_sale, InitCondSale, viMerchant_markup (0 flat … 3 normal … 5 ripoff), viAttributes. Bedingte Waren erscheinen, wenn ein Auslösewort fällt; {0} = Ware. spells = lehrbare Sprüche (plFor_sale Liste 3), Preis 250 × 2^Stufe (spell.kod GetValue).",
   "shops": {
     "TosInnKeeper": {
       "markup": 2,
@@ -83,6 +83,9 @@
           ],
           "reply": "Tatsächlich habe ich {0}, von denen ich mich trennen würde. Aber billig ist das nicht."
         }
+      ],
+      "spells": [
+        "hospice"
       ]
     },
     "TosBanker": {

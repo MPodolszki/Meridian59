@@ -171,8 +171,30 @@ public static class GameReplies
         return w.ToArray();
     }
 
-    /// <summary>Leere BP_SPELLS- bzw. BP_SKILLS-Liste (noch keine Magie/Fertigkeiten).</summary>
+    /// <summary>Leere BP_SPELLS- bzw. BP_SKILLS-Liste.</summary>
     public static byte[] EmptySpells() => new PacketWriter((byte)GameMessage.Spells).U16(0).ToArray();
+
+    /// <summary>BP_SPELLS: je Spruch object_desc, u8 Anzahl Ziele, u8 Schule (user.kod ToCliSpells).</summary>
+    public static byte[] Spells(IReadOnlyCollection<(RoomObject Spell, byte Targets, byte School)> spells)
+    {
+        var w = new PacketWriter((byte)GameMessage.Spells).U16((ushort)spells.Count);
+        foreach (var (spell, targets, school) in spells)
+            WriteObjectDesc(w, spell).U8(targets).U8(school);
+        return w.ToArray();
+    }
+
+    /// <summary>BP_SPELL_ADD: neu gelernter Spruch.</summary>
+    public static byte[] SpellAdd(RoomObject spell, byte targets, byte school) =>
+        WriteObjectDesc(new PacketWriter((byte)GameMessage.SpellAdd), spell).U8(targets).U8(school).ToArray();
+
+    /// <summary>BP_STAT_GROUP mit Listeneinträgen (STATS_LIST): Nr., Name, Objekt, Wert (%), Icon – Sprüche (Gruppe 3).</summary>
+    public static byte[] StatGroupList(byte group, IReadOnlyList<(byte Num, uint NameRsc, uint ObjectId, int Value, uint IconRsc)> entries)
+    {
+        var w = new PacketWriter((byte)GameMessage.StatGroup).U8(group).U8((byte)entries.Count);
+        foreach (var e in entries)
+            w.U8(e.Num).U32(e.NameRsc).U8(2 /* STATS_LIST */).U32(e.ObjectId).U32((uint)e.Value).U32(e.IconRsc);
+        return w.ToArray();
+    }
 
     public static byte[] EmptySkills() => new PacketWriter((byte)GameMessage.Skills).U16(0).ToArray();
 

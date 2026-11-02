@@ -51,6 +51,10 @@ public abstract record ClientEvent
     public sealed record HealthChanged(int Hp, int MaxHp) : ClientEvent;
     /// <summary>Umgebungslicht des Raums 0..255 (BP_PLAYER, BP_LIGHT_AMBIENT; Tageszeit).</summary>
     public sealed record AmbientLight(byte Light) : ClientEvent;
+    /// <summary>Mana (BP_STAT Gruppe 1, Nr. 2).</summary>
+    public sealed record ManaChanged(int Mana, int MaxMana) : ClientEvent;
+    /// <summary>Bekannte Sprüche (BP_SPELLS, BP_SPELL_ADD, Fähigkeit aus Stat-Gruppe 3).</summary>
+    public sealed record SpellsChanged(IReadOnlyList<ClientSpell> Spells) : ClientEvent;
     /// <summary>Ausdauer (BP_STAT Gruppe 1, Nr. 3).</summary>
     public sealed record VigorChanged(int Vigor, int MaxVigor) : ClientEvent;
     /// <summary>Einmalige Animation eines Objekts (BP_CHANGE): Angriff oder Sterben.</summary>
@@ -71,6 +75,9 @@ public abstract record ClientEvent
     public sealed record CounterOffered(IReadOnlyList<ClientObject> Items) : ClientEvent;
 }
 
+/// <summary>Spruch aus Sicht des Clients: Objekt (Name/Icon), Anzahl Ziele, Schule, Fähigkeit in %.</summary>
+public sealed record ClientSpell(ClientObject Spell, int Targets, int School, int Ability);
+
 /// <summary>Ware einer Ladenliste mit Preis pro Stück.</summary>
 public sealed record BuyOption(ClientObject Item, uint Price);
 
@@ -88,6 +95,13 @@ public sealed class ClientSession : IDisposable
     private readonly Dictionary<uint, string> _resources = new();
     private readonly Dictionary<uint, ClientObject> _objects = new();
     private readonly List<ClientObject> _inventory = new();
+    private readonly List<ClientSpell> _spells = new();
+
+    /// <summary>Bekannte Sprüche.</summary>
+    public IReadOnlyList<ClientSpell> KnownSpells
+    {
+        get { lock (_spells) return _spells.ToList(); }
+    }
     private readonly CancellationTokenSource _cts = new();
     private TcpClient? _tcp;
     private ClientConnection? _conn;
@@ -157,6 +171,14 @@ public sealed class ClientSession : IDisposable
         SendGameAsync(new PacketWriter((byte)GameMessage.ReqAttack).U8(1).U32(id).ToArray());
 
     public Task QuitAsync() => SendGameAsync([(byte)GameMessage.ReqQuit]);
+
+    /// <summary>Spruchliste anfordern (BP_SEND_SPELLS); Antwort BP_SPELLS und Stat-Gruppe 3.</summary>
+    public Task RequestSpellsAsync() => SendGameAsync([(byte)GameMessage.SendSpells]);
+
+    /// <summary>Zaubern (BP_REQ_CAST): Spruch und Ziele (Spruch mit einem Ziel braucht genau eins).</summary>
+    public Task CastAsync(uint spellId, IReadOnlyCollection<uint> targets) =>
+        SendGameAsync(ObjectRef.WriteList(new PacketWriter((byte)GameMessage.ReqCast).U32(spellId),
+            targets.Select(t => new ObjectRef(t, null)).ToList()).ToArray());
 
     /// <summary>Gegenstand benutzen (BP_REQ_USE): Essen essen, Waffe/Schild/Rüstung/Fackel anlegen.</summary>
     public Task UseAsync(uint id) => SendGameAsync(new PacketWriter((byte)GameMessage.ReqUse).U32(id).ToArray());
@@ -372,12 +394,17 @@ public sealed class ClientSession : IDisposable
             {
                 byte group = r.U8(), num = r.U8();
                 r.U32();                                // Name
-                if (r.U8() == 1 && r.U8() == 1 && group == 1 && num is 1 or 3)
+                if (r.U8() == 1 && r.U8() == 1 && group == 1 && num is 1 or 2 or 3)
                 {
                     int value = (int)r.U32();
                     r.U32(); r.U32();                   // min, max (Balken)
                     int max = (int)r.U32();
-                    Enqueue(num == 1 ? new ClientEvent.HealthChanged(value, max) : new ClientEvent.VigorChanged(value, max));
+                    Enqueue(num switch
+                    {
+                        1 => new ClientEvent.HealthChanged(value, max),
+                        2 => new ClientEvent.ManaChanged(value, max),
+                        _ => new ClientEvent.VigorChanged(value, max),
+                    });
                 }
                 break;
             }
@@ -400,6 +427,49 @@ public sealed class ClientSession : IDisposable
             {
                 var o = ReadObjectDesc(ref r);
                 UpdateInventory(list => { list.RemoveAll(x => x.Id == o.Id); list.Add(o); });
+                break;
+            }
+            case GameMessage.Spells:
+            {
+                int n = r.U16();
+                var list = new List<ClientSpell>(n);
+                for (int i = 0; i < n; i++)
+                {
+                    var o = ReadObjectDesc(ref r);
+                    list.Add(new ClientSpell(o, r.U8(), r.U8(), 0));
+                }
+                UpdateSpells(s => { s.Clear(); s.AddRange(list); });
+                break;
+            }
+            case GameMessage.SpellAdd:
+            {
+                var o = ReadObjectDesc(ref r);
+                var spell = new ClientSpell(o, r.U8(), r.U8(), 0);
+                UpdateSpells(s => { s.RemoveAll(x => x.Spell.Id == o.Id); s.Add(spell); });
+                break;
+            }
+            case GameMessage.StatGroup:
+            {
+                byte group = r.U8();
+                int n = r.U8();
+                if (group != 3)
+                    break;
+                var abilities = new Dictionary<uint, int>();
+                for (int i = 0; i < n; i++)
+                {
+                    r.U8(); r.U32();                    // Nr., Name
+                    if (r.U8() != 2)
+                        break;                          // nur STATS_LIST
+                    uint id = r.U32() & ObjectId.Mask;
+                    abilities[id] = (int)r.U32();
+                    r.U32();                            // Icon
+                }
+                UpdateSpells(s =>
+                {
+                    for (int i = 0; i < s.Count; i++)
+                        if (abilities.TryGetValue(s[i].Spell.Id, out int ability))
+                            s[i] = s[i] with { Ability = ability };
+                });
                 break;
             }
             case GameMessage.LightAmbient:
@@ -517,6 +587,17 @@ public sealed class ClientSession : IDisposable
         for (int i = 0; i < n; i++)
             list.Add(ReadObjectDesc(ref r));
         return list;
+    }
+
+    private void UpdateSpells(Action<List<ClientSpell>> change)
+    {
+        List<ClientSpell> snapshot;
+        lock (_spells)
+        {
+            change(_spells);
+            snapshot = _spells.ToList();
+        }
+        Enqueue(new ClientEvent.SpellsChanged(snapshot));
     }
 
     private void UpdateInventory(Action<List<ClientObject>> change)

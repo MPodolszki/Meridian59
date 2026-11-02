@@ -1,0 +1,103 @@
+{
+  "_hinweis": "Sprüche aus kod/object/passive/spell (heal.kod, hospice.kod, persench/touchatk/zap.kod, creafood.kod): Nummer (SID_*), Schule (1 Shal'ille, 2 Qor, 3 Kraanan, 4 Faren, 5 Riija, 6 Jala), Stufe, Mana, Zauberzeit (ms), Reagenzien. Standardwerte aus spell.kod: exertion 2, chanceToIncrease 20, castTime 0. Texte eigene Übersetzung.",
+  "spells": [
+    {
+      "key": "minorheal",
+      "sid": 2,
+      "name": "Kleine Heilung",
+      "icon": "iheal.bgf",
+      "school": 1,
+      "level": 1,
+      "mana": 3,
+      "castTime": 600,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "herbs",
+          "number": 1
+        }
+      ],
+      "effect": "heal",
+      "description": "Shal'illes Segen schließt kleine Wunden.",
+      "castText": "Erstaunt siehst du, wie sich deine Wunden schließen, wie durch Zauberei.",
+      "unnecessary": "{0} ist kerngesund."
+    },
+    {
+      "key": "hospice",
+      "sid": 41,
+      "name": "Hospiz",
+      "icon": "ihospice.bgf",
+      "school": 1,
+      "level": 3,
+      "mana": 10,
+      "castTime": 600,
+      "chanceToIncrease": 15,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "herbs",
+          "number": 3
+        }
+      ],
+      "effect": "hospice",
+      "description": "Der Geist Shal'illes erfüllt den Körper und heilt tiefere Wunden.",
+      "castText": "Der Geist Shal'illes erfüllt deinen Körper und belebt ihn neu.",
+      "unnecessary": "{0} ist kerngesund."
+    },
+    {
+      "key": "zap",
+      "sid": 23,
+      "name": "Zap",
+      "icon": "izap.bgf",
+      "school": 4,
+      "level": 1,
+      "mana": 6,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "bluemushroom",
+          "number": 1
+        }
+      ],
+      "effect": "touchattack",
+      "minDamage": 3,
+      "maxDamage": 6,
+      "hitFactor": 50,
+      "description": "Funken springen von den Fingerspitzen und versengen, was man berührt.",
+      "castText": "Funken springen und knistern an deinen Fingerspitzen.",
+      "offText": "Die Funken an deinen Fingerspitzen erlöschen.",
+      "hitText": "Der Geruch verbrannten Fleisches steigt dir in die Nase, als deine Berührung {0} versengt!"
+    },
+    {
+      "key": "createfood",
+      "sid": 63,
+      "name": "Nahrung erschaffen",
+      "icon": "icrefood.bgf",
+      "school": 3,
+      "level": 1,
+      "mana": 10,
+      "exertion": 0,
+      "castTime": 500,
+      "chanceToIncrease": 15,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "herbs",
+          "number": 2
+        },
+        {
+          "item": "elderberry",
+          "number": 2
+        }
+      ],
+      "effect": "createfood",
+      "description": "Kraanan schenkt dem Hungrigen etwas zu essen.",
+      "castText": "{0} erscheint."
+    }
+  ],
+  "startingSpells": [
+    "minorheal",
+    "zap",
+    "createfood"
+  ]
+}

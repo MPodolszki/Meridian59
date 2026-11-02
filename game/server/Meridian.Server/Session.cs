@@ -225,8 +225,15 @@ public sealed class Session(int id, TcpClient client, GameServer server)
                 break;
 
             case GameMessage.SendSpells when _avatar is not null:
-                PostGame(GameReplies.EmptySpells());
+                SendSpells();
                 break;
+
+            case GameMessage.ReqCast when _avatar is not null:
+            {
+                uint spell = r.U32() & ObjectId.Mask;
+                server.World.Cast(_avatar, spell, ObjectRef.ReadList(ref r));
+                break;
+            }
 
             case GameMessage.SendSkills when _avatar is not null:
                 PostGame(GameReplies.EmptySkills());
@@ -396,6 +403,7 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         SendRoomContents();
         SendHealth();
         SendVigor();
+        SendMana();
         SendInventory();
         SendEchoPing();
     }
@@ -469,11 +477,27 @@ public sealed class Session(int id, TcpClient client, GameServer server)
     /// <summary>Stat-Gruppen wie user.kod ToCliStatGroups (Condition, Stats, Spells, Skills).</summary>
     private static readonly string[] StatGroupNames = ["Zustand", "Werte", "Sprüche", "Fertigkeiten"];
 
-    /// <summary>BP_STAT_GROUP auf BP_SEND_STATS: Gruppe 1 = Lebenspunkte, Mana, Ausdauer; die übrigen sind noch leer.</summary>
+    /// <summary>BP_STAT_GROUP auf BP_SEND_STATS (user.kod ToCliStats): 1 = Lebenspunkte, Mana, Ausdauer;
+    /// 2 = Charakterwerte; 3 = Sprüche mit Fähigkeit; 4 = Fertigkeiten (noch leer).</summary>
     private void SendStatGroup(byte group)
     {
         if (_avatar is null)
             return;
+        var a = _avatar.State.Attributes;
+        if (group == 2)
+        {
+            string[] names = ["Stärke", "Intellekt", "Ausdauer", "Geschick", "Mystik", "Zielen", "Karma"];
+            int[] values = [a.Might, a.Intellect, a.Stamina, a.Agility, a.Mysticism, a.Aim, _avatar.State.Karma];
+            foreach (string n in names)
+                EnsureResource(n);
+            PostGame(GameReplies.StatGroup(2, names.Select((n, i) => ((byte)(i + 1), server.Resources[n], values[i], i == 6 ? 100 : 50)).ToList()));
+            return;
+        }
+        if (group == 3)
+        {
+            SendSpellStats();
+            return;
+        }
         if (group != 1)
         {
             PostGame(GameReplies.StatGroup(group, []));
@@ -486,7 +510,7 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         PostGame(GameReplies.StatGroup(1,
         [
             (1, res[HealthName], _avatar.Hp, _avatar.MaxHp),
-            (2, res[ManaName], 0, 0),
+            (2, res[ManaName], _avatar.State.Mana, _avatar.State.MaxMana),
             (3, res[VigorName], _avatar.State.Vigor, CombatRules.MaxVigor),
         ]));
     }
@@ -498,6 +522,42 @@ public sealed class Session(int id, TcpClient client, GameServer server)
             return;
         EnsureResource(VigorName);
         PostGame(GameReplies.Stat(1, 3, server.Resources[VigorName], _avatar.State.Vigor, CombatRules.MaxVigor));
+    }
+
+    /// <summary>Mana als BP_STAT (Gruppe 1, Nr. 2 – user_stat_mana).</summary>
+    public void SendMana()
+    {
+        if (_avatar is null)
+            return;
+        EnsureResource(ManaName);
+        PostGame(GameReplies.Stat(1, 2, server.Resources[ManaName], _avatar.State.Mana, _avatar.State.MaxMana));
+    }
+
+    /// <summary>BP_SPELLS (user.kod ToCliSpells) und danach die Spruchwerte (Gruppe 3).</summary>
+    private void SendSpells()
+    {
+        var known = server.World.KnownSpells(_avatar!);
+        PostGame(GameReplies.Spells(known.Select(k => (server.World.ToSpellObject(this, k.Spell), (byte)k.Spell.Targets, (byte)k.Spell.School)).ToList()));
+        SendSpellStats();
+    }
+
+    /// <summary>Gruppe 3: je Spruch Name, Objekt, Fähigkeit in %, Icon (SendStatSpell).</summary>
+    public void SendSpellStats()
+    {
+        if (_avatar is null)
+            return;
+        var known = server.World.KnownSpells(_avatar);
+        PostGame(GameReplies.StatGroupList(3, known.Select((k, i) =>
+        {
+            var o = server.World.ToSpellObject(this, k.Spell);
+            return ((byte)(i + 1), o.NameRsc, o.Id, k.Ability, o.Appearance.IconRsc);
+        }).ToList()));
+    }
+
+    public void SendSpellAdded(SpellDefinition spell)
+    {
+        PostGame(GameReplies.SpellAdd(server.World.ToSpellObject(this, spell), (byte)spell.Targets, (byte)spell.School));
+        SendSpellStats();
     }
 
     /// <summary>BP_INVENTORY und danach BP_USE_LIST wie user.kod.</summary>

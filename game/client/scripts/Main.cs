@@ -222,6 +222,7 @@ public partial class Main : Node3D
         ui.AddChild(_chatInput);
 
         BuildTradeUi(ui);
+        BuildSpellUi(ui);
     }
 
     private static LineEdit AddField(VBoxContainer box, string label, string value)
@@ -251,7 +252,7 @@ public partial class Main : Node3D
 
     private void OnSessionEvent(ClientEvent e)
     {
-        if (HandleTradeEvent(e))
+        if (HandleTradeEvent(e) || HandleSpellEvent(e))
             return;
         switch (e)
         {
@@ -329,6 +330,7 @@ public partial class Main : Node3D
                 _avatars.Clear();
                 _targets.Clear();
                 _floorItems.Clear();
+                _spellsRequested = false;
                 _inventoryPanel.Visible = _shopPanel.Visible = _offerPanel.Visible = _incomingPanel.Visible = false;
                 break;
         }
@@ -499,6 +501,8 @@ public partial class Main : Node3D
             OpenShop();
         if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.G } && !_chatInput.HasFocus())
             PickUpNearest();
+        if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Z } && !_chatInput.HasFocus())
+            _spellPanel.Visible = !_spellPanel.Visible;
     }
 
     public override void _Process(double delta)

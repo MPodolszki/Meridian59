@@ -119,6 +119,15 @@ public sealed class CharacterState
     /// <summary>Kontostand je Bank (KOD Bank-Objekte, Tos = 1).</summary>
     public Dictionary<int, int> Bank { get; } = new();
     public bool Initialized { get; set; }
+    /// <summary>Charakterwerte und Magie (player.kod): Karma −100..100, Mana, bekannte Sprüche (SID → Fähigkeit %),
+    /// Zauber je Schule seit der letzten Verbesserung (piSchoolCast).</summary>
+    public Attributes Attributes { get; set; } = Attributes.Default;
+    public int Karma { get; set; }
+    public int Mana { get; set; }
+    public int MaxMana { get; set; }
+    public Dictionary<int, int> Spells { get; } = new();
+    public Dictionary<int, int> SchoolCasts { get; } = new();
+    public bool MagicInitialized { get; set; }
     /// <summary>Ausdauer (KOD piVigor, 0..200, Start 100) und Rest-Anstrengung in 1/10000 Punkten (piExertion).</summary>
     public int Vigor { get; set; } = CombatRules.StartVigor;
     public int Exertion { get; set; }

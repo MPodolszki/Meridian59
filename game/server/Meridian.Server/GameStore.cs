@@ -12,9 +12,15 @@ public sealed record SavedCharacter
     public int? Hp { get; init; }
     public int? Vigor { get; init; }
     public int Stomach { get; init; }
+    /// <summary>Charakterwerte, Mana und Sprüche (null = noch nie vergeben).</summary>
+    public SavedMagic? Magic { get; init; }
     public List<SavedItem> Inventory { get; init; } = [];
     public Dictionary<int, int> Bank { get; init; } = [];
 }
+
+/// <summary>Magie eines Charakters (als JSON in characters.magic).</summary>
+public sealed record SavedMagic(Attributes Attributes, int Karma, int Mana, int MaxMana,
+    Dictionary<int, int> Spells, Dictionary<int, int> SchoolCasts);
 
 /// <summary>Gegenstand per Schlüssel aus dem Katalog; Objekt-IDs werden beim Laden neu vergeben.</summary>
 public sealed record SavedItem(string Item, int Number = 1, bool Used = false);
@@ -26,7 +32,7 @@ public sealed record SavedItem(string Item, int Number = 1, bool Used = false);
 /// </summary>
 public sealed class GameStore
 {
-    public const int SchemaVersion = 3;
+    public const int SchemaVersion = 4;
 
     private readonly string _connectionString;
     private readonly object _write = new();
@@ -110,6 +116,12 @@ public sealed class GameStore
                 """, tx);
             tx.Commit();
         }
+        if (version < 4)
+        {
+            using var tx = c.BeginTransaction();
+            Execute(c, "ALTER TABLE characters ADD COLUMN magic TEXT; PRAGMA user_version = 4;", tx);
+            tx.Commit();
+        }
     }
 
     // ---------------------------------------------------------------- Accounts
@@ -152,15 +164,16 @@ public sealed class GameStore
             foreach (var (id, ch) in characters)
             {
                 Execute(c, """
-                    INSERT INTO characters (id, room, row, col, angle, hp, vigor, stomach, saved_at)
-                    VALUES ($id, $room, $row, $col, $angle, $hp, $vigor, $stomach, $at)
+                    INSERT INTO characters (id, room, row, col, angle, hp, vigor, stomach, magic, saved_at)
+                    VALUES ($id, $room, $row, $col, $angle, $hp, $vigor, $stomach, $magic, $at)
                     ON CONFLICT(id) DO UPDATE SET room = $room, row = $row, col = $col, angle = $angle, hp = $hp,
-                        vigor = $vigor, stomach = $stomach, saved_at = $at;
+                        vigor = $vigor, stomach = $stomach, magic = $magic, saved_at = $at;
                     DELETE FROM inventory WHERE character_id = $id;
                     DELETE FROM bank_accounts WHERE character_id = $id;
                     """, tx,
                     ("$id", id), ("$room", ch.Room), ("$row", ch.Row), ("$col", ch.Col), ("$angle", ch.Angle),
-                    ("$hp", ch.Hp), ("$vigor", ch.Vigor), ("$stomach", ch.Stomach), ("$at", now.ToString("O")));
+                    ("$hp", ch.Hp), ("$vigor", ch.Vigor), ("$stomach", ch.Stomach),
+                    ("$magic", ch.Magic is null ? null : System.Text.Json.JsonSerializer.Serialize(ch.Magic)), ("$at", now.ToString("O")));
                 for (int slot = 0; slot < ch.Inventory.Count; slot++)
                     Execute(c, "INSERT INTO inventory (character_id, slot, item, number, used) VALUES ($id, $slot, $item, $number, $used)", tx,
                         ("$id", id), ("$slot", slot), ("$item", ch.Inventory[slot].Item), ("$number", ch.Inventory[slot].Number),
@@ -177,7 +190,7 @@ public sealed class GameStore
     {
         using var c = Open();
         var result = new Dictionary<uint, SavedCharacter>();
-        using (var cmd = Command(c, "SELECT id, room, row, col, angle, hp, vigor, stomach FROM characters"))
+        using (var cmd = Command(c, "SELECT id, room, row, col, angle, hp, vigor, stomach, magic FROM characters"))
         using (var r = cmd.ExecuteReader())
         {
             while (r.Read())
@@ -190,6 +203,7 @@ public sealed class GameStore
                     Hp = r.IsDBNull(5) ? null : r.GetInt32(5),
                     Vigor = r.IsDBNull(6) ? null : r.GetInt32(6),
                     Stomach = r.GetInt32(7),
+                    Magic = r.IsDBNull(8) ? null : System.Text.Json.JsonSerializer.Deserialize<SavedMagic>(r.GetString(8)),
                 };
         }
         using (var cmd = Command(c, "SELECT character_id, item, number, used FROM inventory ORDER BY character_id, slot"))

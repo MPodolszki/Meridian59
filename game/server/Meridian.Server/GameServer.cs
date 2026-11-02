@@ -21,6 +21,8 @@ public sealed record ServerOptions
     public string? RoomLayoutDirectory { get; init; } = Path.Combine(AppContext.BaseDirectory, "data", "rooms");
     /// <summary>Feste Spielstunde statt der Uhr (Tests, Entwicklung); null = Originaluhr.</summary>
     public int? FixedHour { get; init; }
+    /// <summary>Sprüche (data/spells/spells.json).</summary>
+    public SpellBook Spells { get; init; } = SpellBook.Empty;
     /// <summary>Gegenstandskatalog und Beutetabellen.</summary>
     public ItemCatalog Items { get; init; } = ItemCatalog.Empty;
     /// <summary>Händler (Läden, Ankauf, Bank) je NPC-Klasse.</summary>
@@ -55,6 +57,7 @@ public sealed class GameServer
         World = new World(world, Resources, options.PlayerIcon, options.Dialogs, options.RandomSeed, options.Items, options.Shops)
         {
             FixedHour = options.FixedHour,
+            Spells = options.Spells,
         };
         if (options.RoomLayoutDirectory is { } layouts)
             World.LoadGrids(layouts);

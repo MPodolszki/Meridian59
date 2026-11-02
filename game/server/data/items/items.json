@@ -438,6 +438,66 @@
       ],
       "article": "eine",
       "description": "Eine versiegelte Schriftrolle."
+    },
+    {
+      "key": "apple",
+      "kodClass": "Apple",
+      "name": "Apfel",
+      "icon": "apple.bgf",
+      "value": 25,
+      "types": [
+        "food"
+      ],
+      "number": true,
+      "plural": "Äpfel",
+      "description": "Ein rotbackiger Apfel.",
+      "nutrition": 10,
+      "filling": 24
+    },
+    {
+      "key": "grapes",
+      "kodClass": "Grapes",
+      "name": "Traube",
+      "icon": "grapes.bgf",
+      "value": 0,
+      "types": [
+        "food"
+      ],
+      "number": true,
+      "plural": "Trauben",
+      "description": "Eine Handvoll süßer Weintrauben.",
+      "nutrition": 7,
+      "filling": 16
+    },
+    {
+      "key": "turkeyleg",
+      "kodClass": "TurkeyLeg",
+      "name": "Truthahnkeule",
+      "icon": "drumstik.bgf",
+      "value": 50,
+      "types": [
+        "food"
+      ],
+      "number": true,
+      "plural": "Truthahnkeulen",
+      "description": "Eine gebratene Keule, noch warm.",
+      "nutrition": 15,
+      "filling": 20
+    },
+    {
+      "key": "meatpie",
+      "kodClass": "MeatPie",
+      "name": "Fleischpastete",
+      "icon": "meatpie.bgf",
+      "value": 80,
+      "types": [
+        "food"
+      ],
+      "number": true,
+      "plural": "Fleischpasteten",
+      "description": "Eine herzhafte Pastete mit Fleischfüllung.",
+      "nutrition": 30,
+      "filling": 50
     }
   ],
   "treasure": {

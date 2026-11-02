@@ -37,6 +37,10 @@ public sealed class Avatar(uint id, string name, Session session)
     public bool OfferInitiator { get; set; }
     public bool OfferOtherAccepted { get; set; }
     public bool Trading => OfferTo is not null || OfferPlayer is not null;
+    /// <summary>Laufende Trance, aktiver Berührungszauber, nächster Manapunkt.</summary>
+    public PendingCast? Casting { get; set; }
+    public TouchAttack? Touch { get; set; }
+    public DateTime NextMana { get; set; }
 }
 
 /// <summary>Laufzeitzustand eines Raums.</summary>
@@ -253,6 +257,7 @@ public sealed partial class World
         lock (_gate)
         {
             avatar.State = StateFor(avatar.Id);
+            InitMagic(avatar);
             // Wie im Original erscheint man dort, wo man ausgeloggt hat.
             if (avatar.State.RoomId is { } roomId && _rooms.TryGetValue(roomId, out var saved))
             {
@@ -291,6 +296,8 @@ public sealed partial class World
                 Place(avatar, target, Room.Fine(edge.ToRow), Room.Fine(edge.ToCol));
                 return new MoveResult.ChangedRoom(target);
             }
+            if (avatar.Row / 16 != row / 16 || avatar.Col / 16 != col / 16)
+                BreakTrance(avatar);
             avatar.Row = row;
             avatar.Col = col;
             DetectTeleport(avatar);
@@ -452,8 +459,11 @@ public sealed partial class World
                 TickOffers(room, now);
                 foreach (var monster in room.Monsters.ToList())
                     TickMonster(monster, now, seconds);
-                foreach (var avatar in room.Avatars.Values)
+                foreach (var avatar in room.Avatars.Values.ToList())
+                {
                     TickRegen(avatar, now);
+                    TickMagic(avatar, now);
+                }
             }
         }
     }
@@ -664,13 +674,25 @@ public sealed partial class World
             BroadcastRoom(avatar.Room, GameReplies.Animate(ToRoomObject(avatar), GameReplies.AttackGroup, 4, 500));
             m.Target ??= avatar;   // angegriffene Monster wehren sich
 
-            if (_random.NextDouble() > CombatRules.PlayerHitChance)
+            var touch = TouchStrike(avatar, now);
+            if (_random.NextDouble() > (touch?.HitChance ?? CombatRules.PlayerHitChance))
             {
                 Tell(avatar, $"Du verfehlst {Article(m.Kind, accusative: true)}.");
                 return;
             }
-            var (min, max) = Weapon(avatar) is { } weapon ? CombatRules.WeaponDamage(weapon.Kind) : (CombatRules.PlayerMinDamage, CombatRules.PlayerMaxDamage);
-            int damage = Math.Max(1, _random.Next(min, max + 1));
+            int damage;
+            if (touch is { } t)
+            {
+                damage = t.Damage;
+                if (t.Spell.HitText is { } hit)
+                    Tell(avatar, string.Format(hit, Article(m.Kind, capital: false, accusative: true)));
+                ImproveAbility(avatar, t.Spell, m.Kind.Level);   // ImproveStroke
+            }
+            else
+            {
+                var (min, max) = Weapon(avatar) is { } weapon ? CombatRules.WeaponDamage(weapon.Kind) : (CombatRules.PlayerMinDamage, CombatRules.PlayerMaxDamage);
+                damage = Math.Max(1, _random.Next(min, max + 1));
+            }
             m.Hp -= damage;
             if (m.Hp > 0)
             {
@@ -691,6 +713,7 @@ public sealed partial class World
         Tell(victim, $"Du wurdest von {Article(killer.Kind, dative: true)} getötet. Du erwachst in Tos.");
         BroadcastRoom(victim.Room, GameReplies.Animate(ToRoomObject(victim), GameReplies.DeathGroup, 9, 1500));
         // Wiederbelebung am Ankunftspunkt des Startraums mit vollen Lebenspunkten.
+        victim.Casting = null;
         Remove(victim);
         var (row, col) = StartRoom.ArrivalPoint;
         Place(victim, StartRoom, row, col);

@@ -28,6 +28,14 @@ public sealed partial class World
         new(item.Id, _resources[item.DisplayName], new ObjectAppearance(_resources[item.Kind.Icon]), row, col, 0,
             flags, item.Kind.Number ? (uint)item.Number : null);
 
+    /// <summary>Spruch als Objekt (Name, Icon) für BP_SPELLS und Ladenlisten.</summary>
+    public RoomObject ToSpellObject(Session session, SpellDefinition spell)
+    {
+        session.EnsureResource(spell.Name);
+        session.EnsureResource(spell.Icon);
+        return new RoomObject(spell.ObjectId, _resources[spell.Name], new ObjectAppearance(_resources[spell.Icon]));
+    }
+
     private RoomObject ToRoomObject(FloorItem f) => ToRoomObject(f.Item, f.Row, f.Col, ObjectFlags.Gettable);
 
     private static void EnsureItemResources(Session session, Item item)
@@ -457,7 +465,10 @@ public sealed partial class World
             if (NpcInRoom(avatar, npcId) is not { Merchant: { Definition.Seller: true } merchant } npc)
                 return;
             var list = ForSale(merchant);
-            if (list.Count == 0)
+            // GetForSale: erlernbare Sprüche stehen vor den Gegenständen (cons-Reihenfolge).
+            var spells = merchant.Definition.Spells.Select(k => _spells[k]).OfType<SpellDefinition>()
+                .Where(sp => CannotLearn(avatar.State, sp) is null).ToList();
+            if (list.Count == 0 && spells.Count == 0)
             {
                 NpcSay(npc, avatar.Room, "Ich habe im Moment leider nichts zu verkaufen.");
                 return;
@@ -466,7 +477,8 @@ public sealed partial class World
             avatar.Session.EnsureResource(NpcIcon(npc));
             foreach (var (item, _) in list)
                 EnsureItemResources(avatar.Session, item);
-            var entries = list.Select(e => new BuyListEntry(ToRoomObject(e.Item), (uint)PriceOf(e, merchant))).ToList();
+            var entries = spells.Select(sp => new BuyListEntry(ToSpellObject(avatar.Session, sp), (uint)sp.Price))
+                .Concat(list.Select(e => new BuyListEntry(ToRoomObject(e.Item), (uint)PriceOf(e, merchant)))).ToList();
             avatar.Session.Post(GameReplies.BuyList(ToRoomObject(npc), entries));
         }
     }
@@ -483,6 +495,11 @@ public sealed partial class World
 
             foreach (var r in refs)
             {
+                if (_spells.ByObjectId(r.Id) is { } spell && merchant.Definition.Spells.Contains(spell.Key, StringComparer.OrdinalIgnoreCase))
+                {
+                    BuySpell(avatar, npc, spell);
+                    continue;
+                }
                 var entry = merchant.Stock.FirstOrDefault(s => s.Item.Id == r.Id);
                 int price = entry.Item is null ? 0 : PriceOf(entry, merchant);
                 int amount = 1;
@@ -1006,6 +1023,9 @@ public sealed partial class World
         Inventory = c.Inventory.Select(i => new SavedItem(i.Kind.Key, i.Number, i.Used)).ToList(),
         Vigor = c.Vigor,
         Stomach = (int)c.Stomach,
+        Magic = c.MagicInitialized
+            ? new SavedMagic(c.Attributes, c.Karma, c.Mana, c.MaxMana, new(c.Spells), new(c.SchoolCasts))
+            : null,
         Bank = new Dictionary<int, int>(c.Bank),
     };
 
@@ -1036,6 +1056,18 @@ public sealed partial class World
                 }
                 foreach (var (bank, amount) in saved.Bank)
                     state.Bank[bank] = amount;
+                if (saved.Magic is { } magic)
+                {
+                    state.MagicInitialized = true;
+                    state.Attributes = magic.Attributes;
+                    state.Karma = magic.Karma;
+                    state.Mana = magic.Mana;
+                    state.MaxMana = magic.MaxMana;
+                    foreach (var (sid, ability) in magic.Spells)
+                        state.Spells[sid] = ability;
+                    foreach (var (school, casts) in magic.SchoolCasts)
+                        state.SchoolCasts[school] = casts;
+                }
                 _characters[id] = state;
             }
         }
