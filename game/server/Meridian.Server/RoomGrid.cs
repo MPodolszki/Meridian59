@@ -69,6 +69,9 @@ public sealed class RoomGrid
         return f >= 0 && f - _ground <= WalkableRange;
     }
 
+    /// <summary>Feld liegt im Raster und hat Boden (keine massive Wand).</summary>
+    public bool HasFloor(int row, int col) => Inside(row, col) && _floor[row - 1, col - 1] >= 0;
+
     /// <summary>Schritt von einem Feld aufs Nachbarfeld: begehbar wie oben, oder höchstens eine Stufe höher als das
     /// Ausgangsfeld (Rampen in mehrstöckigen Räumen wie dem Mausoleum).</summary>
     public bool CanStep(int fromRow, int fromCol, int row, int col)

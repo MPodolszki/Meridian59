@@ -65,7 +65,7 @@ public sealed class PersistenceTests : IAsyncLifetime
             var mace = anna.Inventory.Single(o => anna.Resolve(o.NameRsc) == "Streitkolben");
             await anna.UseAsync(mace.Id);
             await WaitForAsync(anna, events, _ => anna.Inventory.Any(o => o.Used));
-            await anna.MoveAsync(Room.Fine(12), Room.Fine(14), running: false);
+            await anna.MoveAsync(Room.Fine(3), Room.Fine(7), running: false);
             await anna.QuitAsync();
             await WaitForAsync(anna, events, e => e is ClientEvent.Status { Text: "Zurück im Menü" });
         }
@@ -83,7 +83,7 @@ public sealed class PersistenceTests : IAsyncLifetime
             await WaitForAsync(anna, events, _ => anna.Inventory.Any(o => anna.Resolve(o.NameRsc) == "Streitkolben" && o.Used));
 
             var self = events.OfType<ClientEvent.ObjectAdded>().Last(e => e.Object.Id == anna.PlayerId).Object;
-            Assert.Equal((Room.Fine(12), Room.Fine(14)), (self.Row, self.Col));
+            Assert.Equal((Room.Fine(3), Room.Fine(7)), (self.Row, self.Col));
 
             await anna.BalanceAsync();
             await WaitForAsync(anna, events, e => e is ClientEvent.Chat c && c.Text.Contains("1200 Schillinge auf deinem Konto"));

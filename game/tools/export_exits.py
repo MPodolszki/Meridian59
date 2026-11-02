@@ -25,6 +25,12 @@ for room in rooms:
     # Gelände ("village": Wiese statt Pflaster) und Bäume/Sträucher aus den Zierobjekten (OO_*TREE*, OO_*SHRUB*).
     if "terrain" in room:
         layout["terrain"] = room["terrain"]
+    # Ränder, über die man den Raum verlassen darf (plEdge_Exits); sonst endet der Raum am Raster.
+    edges = sorted({e["edge"] for e in room.get("edgeExits", [])})
+    if edges:
+        layout["edges"] = edges
+    else:
+        layout.pop("edges", None)
     trees = [[o["row"], o["col"], o["fineRow"], o["fineCol"], "shrub" if "SHRUB" in o["type"] else "tree"]
              for o in room.get("objects", []) if "TREE" in o["type"] or "SHRUB" in o["type"]]
     if trees:

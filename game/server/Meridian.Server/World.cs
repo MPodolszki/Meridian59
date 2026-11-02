@@ -300,7 +300,11 @@ public sealed partial class World
             {
                 avatar.Angle = avatar.State.Angle;
                 avatar.Hp = Math.Clamp(avatar.State.Hp ?? avatar.MaxHp, 1, avatar.MaxHp);
-                Place(avatar, saved, avatar.State.Row, avatar.State.Col);
+                // Gespeicherte Position außerhalb des Bodens (Wand, außerhalb des Rasters): an den Ankunftspunkt.
+                var (r, c) = saved.Grid is { } grid && !grid.HasFloor(avatar.State.Row / 64, avatar.State.Col / 64)
+                    ? saved.ArrivalPoint
+                    : (avatar.State.Row, avatar.State.Col);
+                Place(avatar, saved, r, c);
                 return;
             }
             var (row, col) = StartRoom.ArrivalPoint;

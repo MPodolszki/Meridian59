@@ -29,6 +29,8 @@ public sealed class RoomLayout
     public List<(int Row, int Col)> Locked { get; } = new();
     /// <summary>Gelände ("village": Wiese statt Pflaster), Wassertiefe je Feld (SF_DEPTH 0–3) und Bäume/Sträucher.</summary>
     public string? Terrain { get; private set; }
+    /// <summary>Ränder mit Randausgang ("NORTH", "SOUTH", "WEST", "EAST"); nur dort darf man das Raster verlassen.</summary>
+    public HashSet<string> Edges { get; } = new();
     private string[]? _depth;
     public List<(int Row, int Col, int FineRow, int FineCol, bool Shrub)> Trees { get; } = new();
     /// <summary>Sektoren mit ID (rooms/*.json "tags"): Felder (0-basiert) und aktuelle Deckenhöhe; der Server bewegt
@@ -73,6 +75,9 @@ public sealed class RoomLayout
         if (root.TryGetProperty("exits", out var exits))
             foreach (var e in exits.EnumerateArray())
                 layout.Exits.Add((e[0].GetInt32() - 1, e[1].GetInt32() - 1, e.GetArrayLength() > 2 ? e[2].GetString() ?? "" : ""));
+        if (root.TryGetProperty("edges", out var edges))
+            foreach (var e in edges.EnumerateArray())
+                layout.Edges.Add(e.GetString() ?? "");
         if (root.TryGetProperty("terrain", out var terrain))
             layout.Terrain = terrain.GetString();
         if (root.TryGetProperty("depth", out var depth))

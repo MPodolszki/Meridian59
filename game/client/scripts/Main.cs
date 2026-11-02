@@ -452,7 +452,14 @@ public partial class Main : Node3D
         bool outside = row < 0 || col < 0 || row >= _layout.Rows || col >= _layout.Cols;
         var (fr, fc) = CellAt(from);
         if (outside)
-            return _layout.IsWalkable(fr, fc);
+        {
+            // Nur über Ränder mit Randausgang (KOD plEdge_Exits), und nur von einem begehbaren Randfeld aus.
+            string edge = row < 0 ? "NORTH" : row >= _layout.Rows ? "SOUTH" : col < 0 ? "WEST" : "EAST";
+            return _layout.Edges.Contains(edge) && _layout.IsWalkable(fr, fc);
+        }
+        // Steht man selbst außerhalb oder in einer Wand (alter Spielstand), darf man auf jedes Bodenfeld.
+        if (_layout.FloorAt(fr, fc) < 0)
+            return _layout.FloorAt(row, col) >= 0 && !_layout.IsClosedDoor(row, col);
         if ((fr, fc) == (row, col))
             return !_layout.IsClosedDoor(row, col);
         // Notausgang: Kommt man von diesem Feld per Stufe nirgendwohin (grobes Raster), darf man auf jedes Bodenfeld.
