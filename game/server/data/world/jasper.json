@@ -1,0 +1,1119 @@
+{
+  "source": "kod/object/active/holder/room/jasperrm (Meridian 59), erzeugt mit tools/make_jasper.py",
+  "startRoom": 350,
+  "rooms": [
+    {
+      "id": 350,
+      "constant": "RID_JASPER",
+      "kodClass": "Jasper",
+      "name": "East Jasper",
+      "roo": "jas-east.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "teleport": {
+        "row": 40,
+        "col": 54
+      },
+      "exits": [
+        {
+          "row": 36,
+          "col": 34,
+          "to": 382,
+          "toRow": 43,
+          "toCol": 37,
+          "rotate": "NONE"
+        },
+        {
+          "row": 37,
+          "col": 34,
+          "to": 382,
+          "toRow": 44,
+          "toCol": 37,
+          "rotate": "NONE"
+        },
+        {
+          "row": 38,
+          "col": 34,
+          "to": 382,
+          "toRow": 45,
+          "toCol": 37,
+          "rotate": "NONE"
+        },
+        {
+          "row": 44,
+          "col": 32,
+          "to": 382,
+          "toRow": 51,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 45,
+          "col": 32,
+          "to": 382,
+          "toRow": 52,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 52,
+          "col": 26,
+          "to": 382,
+          "toRow": 60,
+          "toCol": 32,
+          "rotate": "NONE"
+        },
+        {
+          "row": 52,
+          "col": 27,
+          "to": 382,
+          "toRow": 60,
+          "toCol": 32,
+          "rotate": "NONE"
+        },
+        {
+          "row": 41,
+          "col": 57,
+          "to": 374,
+          "toRow": 6,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 42,
+          "col": 58,
+          "to": 374,
+          "toRow": 6,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 49,
+          "col": 39,
+          "to": 373,
+          "toRow": 19,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 59,
+          "col": 31,
+          "to": 372,
+          "toRow": 13,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 59,
+          "col": 32,
+          "to": 372,
+          "toRow": 13,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 59,
+          "col": 33,
+          "to": 372,
+          "toRow": 13,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 29,
+          "col": 61,
+          "to": 710,
+          "toRow": 19,
+          "toCol": 11,
+          "rotate": "NONE"
+        },
+        {
+          "row": 29,
+          "col": 62,
+          "to": 710,
+          "toRow": 19,
+          "toCol": 11,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 39,
+          "col": 49,
+          "message": "Die Hütte des alten Schürfers ist wohl zu baufällig, um sie zu betreten."
+        },
+        {
+          "row": 48,
+          "col": 34,
+          "message": "Fest verschlossen trotzt das Arsenal der Stadt jedem Eindringling."
+        },
+        {
+          "row": 54,
+          "col": 39,
+          "message": "Zum Kornspeicher hast du keinen Zutritt."
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 568,
+          "toConstant": "RID_F8",
+          "toRow": 14,
+          "toCol": 7,
+          "rotate": "315"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 704,
+          "toConstant": "RID_GUILDH4",
+          "toRow": 50,
+          "toCol": 27,
+          "rotate": "180"
+        }
+      ],
+      "rows": 72,
+      "cols": 74
+    },
+    {
+      "id": 382,
+      "constant": "RID_JAS_WEST",
+      "kodClass": "JasperWest",
+      "name": "West Jasper",
+      "roo": "jas-west.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "teleport": {
+        "row": 37,
+        "col": 25
+      },
+      "exits": [
+        {
+          "row": 43,
+          "col": 39,
+          "to": 350,
+          "toRow": 36,
+          "toCol": 34,
+          "rotate": "NONE"
+        },
+        {
+          "row": 44,
+          "col": 39,
+          "to": 350,
+          "toRow": 37,
+          "toCol": 34,
+          "rotate": "NONE"
+        },
+        {
+          "row": 45,
+          "col": 39,
+          "to": 350,
+          "toRow": 38,
+          "toCol": 34,
+          "rotate": "NONE"
+        },
+        {
+          "row": 51,
+          "col": 37,
+          "to": 350,
+          "toRow": 44,
+          "toCol": 33,
+          "rotate": "NONE"
+        },
+        {
+          "row": 52,
+          "col": 37,
+          "to": 350,
+          "toRow": 44,
+          "toCol": 33,
+          "rotate": "NONE"
+        },
+        {
+          "row": 59,
+          "col": 32,
+          "to": 350,
+          "toRow": 51,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 59,
+          "col": 33,
+          "to": 350,
+          "toRow": 51,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 44,
+          "col": 25,
+          "to": 370,
+          "toRow": 3,
+          "toCol": 8,
+          "rotate": "NONE"
+        },
+        {
+          "row": 44,
+          "col": 26,
+          "to": 370,
+          "toRow": 3,
+          "toCol": 8,
+          "rotate": "NONE"
+        },
+        {
+          "row": 64,
+          "col": 20,
+          "to": 371,
+          "toRow": 3,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 64,
+          "col": 21,
+          "to": 371,
+          "toRow": 3,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 31,
+          "col": 27,
+          "to": 375,
+          "toRow": 10,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 32,
+          "col": 28,
+          "to": 375,
+          "toRow": 10,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 52,
+          "col": 20,
+          "to": 376,
+          "toRow": 7,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 53,
+          "col": 20,
+          "to": 376,
+          "toRow": 7,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 35,
+          "col": 29,
+          "to": 377,
+          "toRow": 29,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 43,
+          "col": 37,
+          "to": 353,
+          "toRow": 16,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 43,
+          "col": 38,
+          "to": 353,
+          "toRow": 16,
+          "toCol": 15,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 49,
+          "col": 36,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 51,
+          "col": 33,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 43,
+          "col": 32,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 30,
+          "col": 22,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 34,
+          "col": 21,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 43,
+          "col": 19,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 42,
+          "col": 15,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 38,
+          "col": 15,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 40,
+          "col": 19,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 63,
+          "col": 18,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 45,
+          "col": 34,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 39,
+          "col": 19,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 42,
+          "col": 19,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 64,
+          "col": 22,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 63,
+          "col": 30,
+          "message": "Diese Tür ist verschlossen."
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 547,
+          "toConstant": "RID_D7",
+          "toRow": 40,
+          "toCol": 48,
+          "rotate": "WEST"
+        },
+        {
+          "edge": "NORTH",
+          "to": 557,
+          "toConstant": "RID_E7",
+          "toRow": 48,
+          "toCol": 32,
+          "rotate": "NORTH"
+        }
+      ],
+      "rows": 76,
+      "cols": 67
+    },
+    {
+      "id": 376,
+      "constant": "RID_JAS_BANK",
+      "kodClass": "JasBank",
+      "name": "The Royal Bank of Jasper",
+      "roo": "jasbank.roo",
+      "music": "bank.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 7,
+        "col": 7
+      },
+      "exits": [
+        {
+          "row": 6,
+          "col": 9,
+          "to": 382,
+          "toRow": 53,
+          "toCol": 21,
+          "rotate": "NONE"
+        },
+        {
+          "row": 7,
+          "col": 9,
+          "to": 382,
+          "toRow": 53,
+          "toCol": 21,
+          "rotate": "NONE"
+        }
+      ],
+      "noCombat": true,
+      "npcs": [
+        {
+          "kodClass": "JasperBanker",
+          "name": "Yevitan",
+          "icon": "jsbanker.bgf",
+          "role": "Bankier",
+          "row": 8,
+          "col": 5,
+          "fineRow": 44,
+          "fineCol": 36,
+          "angle": 512
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Bank",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Mit deposit, withdraw (Betrag) und balance verwaltest du dein Bankkonto.",
+          "row": 5,
+          "col": 8,
+          "fineRow": 24,
+          "fineCol": 16
+        }
+      ],
+      "rows": 11,
+      "cols": 9
+    },
+    {
+      "id": 375,
+      "constant": "RID_JAS_ELDER_HUT",
+      "kodClass": "JasperElderHut",
+      "name": "The Home of the Wise Man",
+      "roo": "jaselder.roo",
+      "music": "bar2.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 9,
+        "col": 7
+      },
+      "exits": [
+        {
+          "row": 11,
+          "col": 5,
+          "to": 382,
+          "toRow": 32,
+          "toCol": 26,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 6,
+          "to": 382,
+          "toRow": 32,
+          "toCol": 26,
+          "rotate": "NONE"
+        }
+      ],
+      "noCombat": true,
+      "npcs": [
+        {
+          "kodClass": "JasperElder",
+          "name": "Afiera D'xor",
+          "icon": "jselder.bgf",
+          "role": "Weiser",
+          "row": 8,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1536
+        }
+      ],
+      "rows": 14,
+      "cols": 17
+    },
+    {
+      "id": 372,
+      "constant": "RID_JAS_HALL",
+      "kodClass": "JasperHall",
+      "name": "Adventurer's Hall of Jasper",
+      "roo": "jashall.roo",
+      "music": "main.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 13,
+        "col": 7
+      },
+      "exits": [
+        {
+          "row": 14,
+          "col": 7,
+          "to": 350,
+          "toRow": 60,
+          "toCol": 32,
+          "rotate": "NONE"
+        }
+      ],
+      "noCombat": true,
+      "rows": 15,
+      "cols": 13
+    },
+    {
+      "id": 370,
+      "constant": "RID_JAS_INN",
+      "kodClass": "JasperInn",
+      "name": "Yonder Inn of Jasper",
+      "roo": "jasinn.roo",
+      "music": "bar2.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 4,
+        "col": 10
+      },
+      "exits": [
+        {
+          "row": 2,
+          "col": 8,
+          "to": 382,
+          "toRow": 42,
+          "toCol": 25,
+          "rotate": "NONE"
+        }
+      ],
+      "noCombat": true,
+      "npcs": [
+        {
+          "kodClass": "JasperInnkeeper",
+          "name": "Widow Qesino",
+          "icon": "jsinnk.bgf",
+          "role": "Wirtin",
+          "row": 6,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 3584
+        }
+      ],
+      "rows": 10,
+      "cols": 14
+    },
+    {
+      "id": 374,
+      "constant": "RID_JAS_SMITHY",
+      "kodClass": "JasperSmithy",
+      "name": "Quintor's Smithy",
+      "roo": "jassmith.roo",
+      "music": "smithy.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 9,
+        "col": 9
+      },
+      "exits": [
+        {
+          "row": 5,
+          "col": 5,
+          "to": 350,
+          "toRow": 40,
+          "toCol": 56,
+          "rotate": "NONE"
+        }
+      ],
+      "noCombat": true,
+      "npcs": [
+        {
+          "kodClass": "JasperBlacksmith",
+          "name": "Quintor",
+          "icon": "jssmith.bgf",
+          "role": "Waffenschmied",
+          "row": 13,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 2560
+        }
+      ],
+      "rows": 18,
+      "cols": 18
+    },
+    {
+      "id": 373,
+      "constant": "RID_JAS_STORE",
+      "kodClass": "JasperStore",
+      "name": "General Store of Jasper",
+      "roo": "jasstore.roo",
+      "music": "bank.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 19,
+        "col": 5
+      },
+      "exits": [
+        {
+          "row": 19,
+          "col": 1,
+          "to": 350,
+          "toRow": 49,
+          "toCol": 38,
+          "rotate": "NONE"
+        },
+        {
+          "row": 19,
+          "col": 2,
+          "to": 350,
+          "toRow": 49,
+          "toCol": 38,
+          "rotate": "NONE"
+        }
+      ],
+      "noCombat": true,
+      "npcs": [
+        {
+          "kodClass": "JasperMerchant",
+          "name": "Zhieu B'hob",
+          "icon": "jsmerch.bgf",
+          "role": "Händler",
+          "row": 18,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 2048
+        }
+      ],
+      "rows": 25,
+      "cols": 18
+    },
+    {
+      "id": 371,
+      "constant": "RID_JAS_TAVERN",
+      "kodClass": "JasperTavern",
+      "name": "Pietro's Wicked Brews",
+      "roo": "jastavrn.roo",
+      "music": "bar.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 8,
+        "col": 6
+      },
+      "exits": [
+        {
+          "row": 2,
+          "col": 6,
+          "to": 382,
+          "toRow": 63,
+          "toCol": 20,
+          "rotate": "NONE"
+        }
+      ],
+      "noCombat": true,
+      "npcs": [
+        {
+          "kodClass": "JasperBartender",
+          "name": "Pietro",
+          "icon": "jsbart.bgf",
+          "role": "Schankwirt",
+          "row": 15,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 3072
+        }
+      ],
+      "rows": 18,
+      "cols": 11
+    },
+    {
+      "id": 351,
+      "constant": "RID_JAS_AB1",
+      "kodClass": "JasperAB1",
+      "name": "Old Granary",
+      "roo": "jasab1.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 11,
+        "col": 13
+      },
+      "exits": [
+        {
+          "row": 12,
+          "col": 13,
+          "to": 382,
+          "toRow": 35,
+          "toCol": 25,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 14,
+      "cols": 17
+    },
+    {
+      "id": 352,
+      "constant": "RID_JAS_AB2",
+      "kodClass": "JasperAB2",
+      "name": "Icehouse",
+      "roo": "jasab2.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 7,
+        "col": 7
+      },
+      "exits": [
+        {
+          "row": 8,
+          "col": 1,
+          "to": 382,
+          "toRow": 35,
+          "toCol": 25,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 11,
+      "cols": 10
+    },
+    {
+      "id": 353,
+      "constant": "RID_JAS_AB3",
+      "kodClass": "JasperAB3",
+      "name": "Old Schoolhouse",
+      "roo": "jasab3.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 15,
+        "col": 5
+      },
+      "exits": [
+        {
+          "row": 17,
+          "col": 15,
+          "to": 382,
+          "toRow": 44,
+          "toCol": 38,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 7,
+          "col": 2,
+          "message": "Diese Tür ist verschlossen."
+        }
+      ],
+      "rows": 18,
+      "cols": 23
+    },
+    {
+      "id": 354,
+      "constant": "RID_JAS_AB4",
+      "kodClass": "JasperAB4",
+      "name": "Deserted Eating House",
+      "roo": "jasab4.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 8,
+        "col": 4
+      },
+      "exits": [
+        {
+          "row": 9,
+          "col": 13,
+          "to": 382,
+          "toRow": 35,
+          "toCol": 25,
+          "rotate": "NONE"
+        },
+        {
+          "row": 14,
+          "col": 7,
+          "to": 382,
+          "toRow": 35,
+          "toCol": 25,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 20,
+      "cols": 17
+    },
+    {
+      "id": 355,
+      "constant": "RID_JAS_AB5",
+      "kodClass": "JasperAB5",
+      "name": "Abandoned Building",
+      "roo": "jasab5.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 10,
+        "col": 9
+      },
+      "exits": [
+        {
+          "row": 13,
+          "col": 6,
+          "to": 382,
+          "toRow": 35,
+          "toCol": 25,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 14,
+      "cols": 17
+    },
+    {
+      "id": 356,
+      "constant": "RID_JAS_AB6",
+      "kodClass": "JasperAB6",
+      "name": "Abandoned Building",
+      "roo": "jasab6.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 6,
+        "col": 12
+      },
+      "exits": [
+        {
+          "row": 5,
+          "col": 8,
+          "to": 382,
+          "toRow": 35,
+          "toCol": 25,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 21,
+      "cols": 16
+    },
+    {
+      "id": 357,
+      "constant": "RID_JAS_AB7",
+      "kodClass": "JasperAB7",
+      "name": "Abandoned Building",
+      "roo": "jasab7.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 9,
+        "col": 7
+      },
+      "exits": [
+        {
+          "row": 8,
+          "col": 10,
+          "to": 382,
+          "toRow": 35,
+          "toCol": 25,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 21,
+      "cols": 16
+    },
+    {
+      "id": 358,
+      "constant": "RID_JAS_AB8",
+      "kodClass": "JasperAB8",
+      "name": "Abandoned Building",
+      "roo": "jasab8.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 6,
+        "col": 7
+      },
+      "exits": [
+        {
+          "row": 8,
+          "col": 10,
+          "to": 382,
+          "toRow": 35,
+          "toCol": 25,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 11,
+      "cols": 13
+    },
+    {
+      "id": 359,
+      "constant": "RID_JAS_AB9",
+      "kodClass": "JasperAB9",
+      "name": "Abandoned Building",
+      "roo": "jasab9.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 7,
+        "col": 6
+      },
+      "exits": [
+        {
+          "row": 5,
+          "col": 9,
+          "to": 382,
+          "toRow": 35,
+          "toCol": 25,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 13,
+      "cols": 9
+    },
+    {
+      "id": 360,
+      "constant": "RID_JAS_AB10",
+      "kodClass": "JasperAB10",
+      "name": "Disused Shop",
+      "roo": "jasab10.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 8,
+        "col": 5
+      },
+      "exits": [
+        {
+          "row": 6,
+          "col": 2,
+          "to": 382,
+          "toRow": 35,
+          "toCol": 25,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 11,
+      "cols": 11
+    },
+    {
+      "id": 361,
+      "constant": "RID_JAS_AB11",
+      "kodClass": "JasperAB11",
+      "name": "Abandoned Counting Room",
+      "roo": "jasab11.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 5,
+        "col": 4
+      },
+      "exits": [
+        {
+          "row": 6,
+          "col": 2,
+          "to": 382,
+          "toRow": 52,
+          "toCol": 20,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 11,
+      "cols": 11
+    },
+    {
+      "id": 362,
+      "constant": "RID_JAS_AB12",
+      "kodClass": "JasperAB12",
+      "name": "Old Barracks",
+      "roo": "jasab12.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 3,
+        "col": 5
+      },
+      "exits": [
+        {
+          "row": 1,
+          "col": 5,
+          "to": 382,
+          "toRow": 35,
+          "toCol": 25,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 10,
+      "cols": 9
+    },
+    {
+      "id": 363,
+      "constant": "RID_JAS_AB13",
+      "kodClass": "JasperAB13",
+      "name": "Dusty Chamber",
+      "roo": "jasab13.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 12,
+        "col": 10
+      },
+      "exits": [
+        {
+          "row": 5,
+          "col": 8,
+          "to": 382,
+          "toRow": 35,
+          "toCol": 25,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 21,
+      "cols": 16
+    },
+    {
+      "id": 364,
+      "constant": "RID_JAS_AB14",
+      "kodClass": "JasperAB14",
+      "name": "Warm Haven",
+      "roo": "jasab14.roo",
+      "music": "city03.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 9,
+        "col": 13
+      },
+      "exits": [
+        {
+          "row": 8,
+          "col": 20,
+          "to": 382,
+          "toRow": 35,
+          "toCol": 25,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 15,
+      "cols": 21
+    }
+  ]
+}

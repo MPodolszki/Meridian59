@@ -1,0 +1,162 @@
+{
+  "_hinweis": "Bewohner von Jasper (towns/jasprtwn), Texte sinngemäß nach dem Original.",
+  "npcs": {
+    "JasperBanker": {
+      "title": "Bankier",
+      "description": "Yevitan mustert dich mit nachdenklichen, klugen Augen. Für sein Alter ist er erstaunlich rüstig.",
+      "greeting": "Hallo, und willkommen.",
+      "topics": [
+        {
+          "keywords": [
+            "konto",
+            "bank",
+            "einzahlen",
+            "abheben",
+            "deposit",
+            "withdraw",
+            "balance"
+          ],
+          "reply": "Mit deposit, withdraw (Betrag) und balance verwaltest du dein Konto – es ist dasselbe wie bei der Bank in Tos."
+        },
+        {
+          "keywords": [
+            "blenden",
+            "zauber",
+            "lernen"
+          ],
+          "reply": "Vielleicht, wenn du meine Bank öfter nutzen würdest … dann würde ich dir einen besonderen Gefallen tun."
+        },
+        {
+          "keywords": [
+            "whiskey",
+            "whisky"
+          ],
+          "reply": "Kein Wort davon in meiner Bank!"
+        }
+      ]
+    },
+    "JasperInnkeeper": {
+      "title": "Wirtin",
+      "description": "Witwe Qesino führt das Yonder Inn seit dem Verschwinden ihres Mannes. Eine geradlinige, eher schlichte Frau.",
+      "greeting": "",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "essen",
+            "eintopf",
+            "buy"
+          ],
+          "reply": "Mein Faroni-Eintopf, frisch aus dem Topf (B)."
+        },
+        {
+          "keywords": [
+            "quintor"
+          ],
+          "reply": "Quintor … sprich mir nicht von ihm."
+        },
+        {
+          "keywords": [
+            "mord",
+            "töten",
+            "kill",
+            "murder",
+            "assassin"
+          ],
+          "reply": "Solche Worte will ich in meinem Haus nicht hören!"
+        }
+      ]
+    },
+    "JasperElder": {
+      "title": "Weiser",
+      "description": "Afiera D'xor ist ein Einsiedler aus den Bergen, der Stein in Mustern von mathematischer Vollkommenheit behaut und seine Weisheit gern teilt.",
+      "greeting": "Sei gegrüßt. Mögest du so alt werden wie ich.",
+      "topics": [
+        {
+          "keywords": [
+            "lernen",
+            "zauber",
+            "blitz"
+          ],
+          "reply": "Ich lehre den Blitz und die Kunst, den Geist zu verwirren – doch noch nicht dich."
+        },
+        {
+          "keywords": [
+            "farnwedel",
+            "webmoos",
+            "orkzahn"
+          ],
+          "reply": "Bring mir solche Dinge, und ich werde es dir danken."
+        }
+      ]
+    },
+    "JasperBlacksmith": {
+      "title": "Waffenschmied",
+      "description": "Quintor gilt weithin als bester Waffenschmied des Landes, ein stiller, grüblerischer Mann.",
+      "greeting": "Hallo, und willkommen.",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "waffe",
+            "buy"
+          ],
+          "reply": "Streitkolben, Kurzschwert, Goldschild, Hammer, Lederrüstung (B). Waffen und Rüstungen kaufe ich, aber keinen Nerudit-Schrott."
+        },
+        {
+          "keywords": [
+            "krummsäbel",
+            "scimitar"
+          ],
+          "reply": "Den Krummsäbel lehre ich nur dem, der sich bewiesen hat."
+        },
+        {
+          "keywords": [
+            "witwe",
+            "widow",
+            "qesino"
+          ],
+          "reply": "…"
+        }
+      ]
+    },
+    "JasperMerchant": {
+      "title": "Händler",
+      "description": "Zhieu B'hob arbeitet hart, damit sein Geschäft in dieser darbenden Stadt bestehen kann.",
+      "greeting": "Darf ich dich für feine Waren begeistern?",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "buy",
+            "waren"
+          ],
+          "reply": "Hosen, Hemden, Fackeln, Wasserschläuche, Edelsteine und Reagenzien (B). Reagenzien kaufe ich auch."
+        }
+      ]
+    },
+    "JasperBartender": {
+      "title": "Schankwirt",
+      "description": "Ein mürrischer, verdrießlicher Mann steht hinter der Theke: Pietro, der hitzköpfige Säufer.",
+      "greeting": "Mach die Tür zu, ja?!",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "bier",
+            "gebräu",
+            "buy"
+          ],
+          "reply": "Brot, Gebräu, Pasteten. Nimm was oder lass es (B)."
+        },
+        {
+          "keywords": [
+            "betrunken",
+            "drunk"
+          ],
+          "reply": "Wer ist hier betrunken?! Raus mit dir!"
+        }
+      ]
+    }
+  }
+}

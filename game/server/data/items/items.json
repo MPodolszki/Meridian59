@@ -1118,6 +1118,161 @@
       "description": "Dieses Hemd bedeckt das Nötigste, schützt aber kaum.",
       "slot": "shirt",
       "color": 9
+    },
+    {
+      "key": "stew",
+      "kodClass": "Stew",
+      "name": "Schüssel Eintopf",
+      "icon": "soupbowl.bgf",
+      "value": 40,
+      "types": [
+        "food"
+      ],
+      "number": true,
+      "plural": "Schüsseln Eintopf",
+      "description": "Witwe Qesinos Faroni-Eintopf gilt manchen als vegetarischer Klassiker – voller Stückchen verblichener Pilzbestien und lebender Baumrinde. Wohl Geschmackssache.",
+      "nutrition": 15,
+      "filling": 25
+    },
+    {
+      "key": "stoutgoblet",
+      "kodClass": "StoutGoblet",
+      "name": "Krug Gebräu",
+      "icon": "mug.bgf",
+      "value": 25,
+      "types": [
+        "food"
+      ],
+      "number": true,
+      "plural": "Krüge Gebräu",
+      "description": "Der Krug aus Zinn und Holz ist grob gearbeitet. Auf dem Silberrand steht „Pietro's Wicked Brew“.",
+      "nutrition": 3,
+      "filling": 10,
+      "beverage": true
+    },
+    {
+      "key": "pantslorange",
+      "kodClass": "PantsC",
+      "name": "Hose (hellorange)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 19,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantslgreen",
+      "kodClass": "PantsC",
+      "name": "Hose (hellgrün, blass)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 20,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantslbgreen",
+      "kodClass": "PantsC",
+      "name": "Hose (blaugrün)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 21,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantslsky",
+      "kodClass": "PantsC",
+      "name": "Hose (hellblau)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 22,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantslblue",
+      "kodClass": "PantsC",
+      "name": "Hose (blau, blass)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 23,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantslpurple",
+      "kodClass": "PantsC",
+      "name": "Hose (flieder)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 24,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "shirtsky",
+      "kodClass": "Shirt",
+      "name": "Hemd (himmelblau)",
+      "icon": "defshirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "ein",
+      "description": "Dieses Hemd bedeckt das Nötigste, schützt aber kaum.",
+      "slot": "shirt",
+      "color": 10
+    },
+    {
+      "key": "shirtpurple",
+      "kodClass": "Shirt",
+      "name": "Hemd (lila)",
+      "icon": "defshirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "ein",
+      "description": "Dieses Hemd bedeckt das Nötigste, schützt aber kaum.",
+      "slot": "shirt",
+      "color": 7
     }
   ],
   "treasure": {

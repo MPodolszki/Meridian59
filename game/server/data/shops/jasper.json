@@ -1,0 +1,156 @@
+{
+  "_hinweis": "Händler von Jasper (towns/jasprtwn). Schuppenpanzer (Quintor), Schach (Pietro) und die Sprüche Blenden, Fegen, Wiederherstellen, Blitz, Wahnsinn sowie Krummsäbelkampf (Aufgabe) fehlen noch.",
+  "shops": {
+    "JasperBanker": {
+      "markup": 1,
+      "receive": true,
+      "bank": 1,
+      "wanted": [
+        "money"
+      ],
+      "unwantedGive": "{0} sagt dir: „Bring mir lieber Schillinge für dein Konto.“"
+    },
+    "JasperInnkeeper": {
+      "forSale": [
+        {
+          "item": "stew",
+          "number": 4
+        }
+      ]
+    },
+    "JasperBlacksmith": {
+      "markup": 1,
+      "buyer": true,
+      "buysTypes": [
+        "weapon",
+        "armor",
+        "shield"
+      ],
+      "forSale": [
+        {
+          "item": "mace"
+        },
+        {
+          "item": "shortsword"
+        },
+        {
+          "item": "goldshield"
+        },
+        {
+          "item": "hammer"
+        },
+        {
+          "item": "leatherarmor"
+        }
+      ]
+    },
+    "JasperMerchant": {
+      "markup": 5,
+      "buyer": true,
+      "buysTypes": [
+        "reagent"
+      ],
+      "forSale": [
+        {
+          "item": "pantsplain"
+        },
+        {
+          "item": "pantslorange"
+        },
+        {
+          "item": "pantslgreen"
+        },
+        {
+          "item": "pantslbgreen"
+        },
+        {
+          "item": "pantslsky"
+        },
+        {
+          "item": "pantslblue"
+        },
+        {
+          "item": "pantslpurple"
+        },
+        {
+          "item": "shirtred"
+        },
+        {
+          "item": "shirtorange"
+        },
+        {
+          "item": "shirtgreen"
+        },
+        {
+          "item": "shirtsky"
+        },
+        {
+          "item": "shirtpurple"
+        },
+        {
+          "item": "torch"
+        },
+        {
+          "item": "waterskin",
+          "number": 4
+        },
+        {
+          "item": "sapphire",
+          "number": 1
+        },
+        {
+          "item": "emerald",
+          "number": 2
+        },
+        {
+          "item": "purplemushroom",
+          "number": 2
+        },
+        {
+          "item": "bluemushroom",
+          "number": 4
+        },
+        {
+          "item": "elderberry",
+          "number": 4
+        },
+        {
+          "item": "mushroom",
+          "number": 4
+        },
+        {
+          "item": "herbs",
+          "number": 4
+        }
+      ],
+      "conditional": [
+        {
+          "item": "ruby",
+          "number": 4,
+          "price": 250,
+          "triggers": [
+            "rubin",
+            "ruby"
+          ],
+          "reply": "Ja, ich habe {0}. Sie sind der Stolz meines kleinen Ladens."
+        }
+      ]
+    },
+    "JasperBartender": {
+      "markup": 3,
+      "forSale": [
+        {
+          "item": "bread",
+          "number": 4
+        },
+        {
+          "item": "stoutgoblet"
+        },
+        {
+          "item": "meatpie",
+          "number": 4
+        }
+      ]
+    }
+  }
+}

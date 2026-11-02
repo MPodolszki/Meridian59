@@ -78,4 +78,6 @@ Marion mit Gasthaus, Läden, Gruft (3 Ebenen) eng am Original; Raza-Portal führ
 
 Cor Noth mit Läden, Schneiderin, Waffenmeister (Fertigkeiten lernen wie Sprüche) (docs/cor.md).
 
-Offen: Jasper, Barloque, Wildnis/Wälder, Tempel, Heimatstadt je Spieler, Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.
+Jasper (Ost/West, Bank mit Tos-Konto, Läden, 14 verlassene Häuser) (docs/jasper.md). Raza-Portal würfelt Marion/Cor/Jasper.
+
+Offen: Barloque, Wildnis/Wälder, Tempel, Kanalisation Jasper, Heimatstadt je Spieler, Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.

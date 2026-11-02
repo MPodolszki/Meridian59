@@ -53,7 +53,7 @@ public sealed class RazaTests : IAsyncDisposable
         await c.MoveAsync(Room.Fine(4), Room.Fine(11), false);   // wieder herunter
         await c.MoveAsync(Room.Fine(2), Room.Fine(11), false);   // und erneut hinein
         // SetRandomHomeroom über die vorhandenen Heimatstädte: Gasthaus von Marion oder Cor Noth.
-        await WaitForAsync(c, events, e => e is ClientEvent.EnteredRoom { RoomName: "The Limping Toad Inn and Tavern" or "Cibilo Creek Inn" });
+        await WaitForAsync(c, events, e => e is ClientEvent.EnteredRoom { RoomName: "The Limping Toad Inn and Tavern" or "Cibilo Creek Inn" or "Yonder Inn of Jasper" });
         // AddRealWorldObjects: 1000 Schillinge dazu (Start 2500), ein zweiter Streitkolben, 5 Äpfel.
         await WaitForAsync(c, events, _ => c.Inventory.Count(o => c.Resolve(o.NameRsc) == "Streitkolben") == 2
             && c.Inventory.Any(o => c.Resolve(o.NameRsc) is "Apfel" or "Äpfel" && o.Amount == 5)
@@ -131,6 +131,26 @@ public sealed class RazaTests : IAsyncDisposable
     }
 
     [Fact]
+    public void Jasper_TownExitsLeadIntoJasper_ExceptSewerAndGuildHalls()
+    {
+        var world = WorldDefinition.LoadAll(Data("world"));
+        var ids = world.Rooms.Select(r => r.Id).ToHashSet();
+        Assert.Equal(23, world.Rooms.Count(r => r.Id is 350 or 382 or >= 351 and <= 376));
+        int[] notYet = [377, 704, 710];   // Kanalisation, Gildenhallen
+        foreach (var room in world.Rooms.Where(r => r.Id is 350 or 382 or >= 351 and <= 376))
+            Assert.All(room.Exits.Where(e => !notYet.Contains(e.To)), e => Assert.Contains(e.To, ids));
+    }
+
+    [Fact]
+    public async Task Jasper_BankerKeepsTheTosAccount()
+    {
+        var (c, events) = await EnterAsync(376);
+        await c.MoveAsync(Room.Fine(7), Room.Fine(5), false);
+        await c.DepositAsync(100);
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.Contains("100 Schillinge"));
+    }
+
+    [Fact]
     public void Clothing_ColorsLikeEncodeTwoColorXlat()
     {
         var items = ItemCatalog.Load(Data("items", "items.json"));
@@ -170,8 +190,8 @@ public sealed class RazaTests : IAsyncDisposable
             Items = ItemCatalog.Load(Data("items", "items.json")),
             Spells = SpellBook.Load(Data("spells", "spells.json")),
             Skills = SkillBook.Load(Data("skills", "skills.json")),
-            Shops = ShopFile.Merge(new[] { "raza", "marion", "cor" }.Select(a => ShopFile.Load(Data("shops", a + ".json")))),
-            Dialogs = DialogFile.Merge(new[] { "raza", "marion", "cor" }.Select(a => DialogFile.Load(Data("dialog", a + ".json")))),
+            Shops = ShopFile.Merge(new[] { "raza", "marion", "cor", "jasper" }.Select(a => ShopFile.Load(Data("shops", a + ".json")))),
+            Dialogs = DialogFile.Merge(new[] { "raza", "marion", "cor", "jasper" }.Select(a => DialogFile.Load(Data("dialog", a + ".json")))),
             Database = _db,
         }, accounts);
         _server.Start();
