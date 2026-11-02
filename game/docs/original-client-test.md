@@ -40,7 +40,12 @@ Geprüft 2026-11-02 (Steam-Client, Wine, Software-Renderer):
 | Anschauen (`BP_LOOK`, Beschreibungsfenster) | geht |
 | Inventar mit Schillingen, Streitkolben ausrüsten, Waffe in der Ego-Ansicht | geht |
 | Kaufen (`buy` → Ladenliste → Kauf) | geht |
-| Verkaufen/Anbieten, Bank, Kampf, Beute, Tür/Raumwechsel | noch nicht geprüft |
+| Türen (Leertaste) und Rand-Ausgang zum Friedhof | geht |
+| Bank (`deposit`/`balance`/`withdraw` bei Skivlat) | geht |
+| Kampf auf dem Friedhof nachts (Taste E, Treffer/Schaden) | geht |
+| Verkaufen/Anbieten (`offer`), Beute aufheben (`get`) | noch nicht geprüft |
+
+Hinweis: Der Steam-Client hat eine neue Tastenbelegung (`config.ini`): Angriff E, Sagen F, Gehen/Öffnen Leertaste.
 
 Start: `game/tools/run-original-client.sh NAME PASSWORT [HOST] [PORT]`.
 
