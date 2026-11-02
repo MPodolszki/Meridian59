@@ -72,4 +72,6 @@ Persönliche Verzauberungen: Segen, Superstärke, Eile, Widerstände (docs/magic
 
 Raza (Neulingsinsel, 8 Räume, Start neuer Charaktere, Portal nach Tos) eng am Original (docs/raza.md).
 
-Offen: Raza-Reste (Mausoleum-Rätsel, Museum), weitere Gebiete (Marion, Jasper, Cor, Tempel), Kleidung.
+Raza vollständig: Mausoleum-Rätsel mit Hebeln/Tür/Endkampf, Museum, Kleidung (docs/raza.md).
+
+Offen: weitere Gebiete (Marion, Jasper, Cor, Tempel), Raza im Original-Client testen.

@@ -1,4 +1,4 @@
-{"source": "guest3.roo", "rows": 10, "cols": 10, "ceiling": 80, "exits": [[7, 8, "Raza"], [7, 9, "Raza"]], "locked": [], "floor": [
+{"source": "guest3.roo", "rows": 10, "cols": 10, "ceiling": 80, "tags": [{"id": 1, "floor": 30, "ceiling": 80, "cells": [[2, 5], [2, 6], [3, 4], [3, 6], [4, 3], [5, 2]]}], "exits": [[7, 8, "Raza"], [7, 9, "Raza"]], "locked": [], "floor": [
     [-1,0,0,0,0,0,0,0,0,0],
     [-1,0,0,0,30,25,0,0,0,0],
     [-1,0,0,30,0,25,0,0,0,0],

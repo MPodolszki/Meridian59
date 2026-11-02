@@ -16,6 +16,8 @@ public sealed class RoomGrid
 
     private readonly int[,] _floor;
     private readonly int _ground;
+    /// <summary>Gesperrte Felder, z. B. eine geschlossene Sektortür (BP_SECTOR_MOVE).</summary>
+    private readonly HashSet<GridPos> _blocked = new();
 
     public RoomGrid(int[,] floor, GridPos? reference = null)
     {
@@ -32,6 +34,8 @@ public sealed class RoomGrid
 
     public int Rows { get; }
     public int Cols { get; }
+    /// <summary>Felder je Sektor-ID (rooms/*.json "tags"), für bewegliche Sektoren wie Türen.</summary>
+    public Dictionary<int, List<GridPos>> Tags { get; } = new();
 
     public static RoomGrid Load(string path, GridPos? reference)
     {
@@ -47,17 +51,48 @@ public sealed class RoomGrid
                 floor[r, c++] = v.GetInt32();
             r++;
         }
-        return new RoomGrid(floor, reference);
+        var grid = new RoomGrid(floor, reference);
+        if (root.TryGetProperty("tags", out var tags))
+            foreach (var t in tags.EnumerateArray())
+                grid.Tags[t.GetProperty("id").GetInt32()] = t.GetProperty("cells").EnumerateArray()
+                    .Select(c => new GridPos(c[0].GetInt32(), c[1].GetInt32())).ToList();
+        return grid;
     }
 
     private bool Inside(int row, int col) => row >= 1 && col >= 1 && row <= Rows && col <= Cols;
 
     public bool IsWalkable(int row, int col)
     {
-        if (!Inside(row, col))
+        if (!Inside(row, col) || _blocked.Contains(new GridPos(row, col)))
             return false;
         int f = _floor[row - 1, col - 1];
         return f >= 0 && f - _ground <= WalkableRange;
+    }
+
+    /// <summary>Schritt von einem Feld aufs Nachbarfeld: begehbar wie oben, oder höchstens eine Stufe höher als das
+    /// Ausgangsfeld (Rampen in mehrstöckigen Räumen wie dem Mausoleum).</summary>
+    public bool CanStep(int fromRow, int fromCol, int row, int col)
+    {
+        if (IsWalkable(row, col))
+            return true;
+        if (!Inside(row, col) || !Inside(fromRow, fromCol) || _blocked.Contains(new GridPos(row, col)))
+            return false;
+        int f = _floor[row - 1, col - 1], from = _floor[fromRow - 1, fromCol - 1];
+        return f >= 0 && from >= 0 && f - from <= WalkableRange;
+    }
+
+    /// <summary>Felder sperren oder freigeben (Tür zu/auf).</summary>
+    public void SetBlocked(IEnumerable<GridPos> cells, bool blocked)
+    {
+        foreach (var c in cells)
+            if (blocked) _blocked.Add(c); else _blocked.Remove(c);
+    }
+
+    /// <summary>Bodenhöhe von Feldern ändern (Sektor mit ANIMATE_FLOOR_LIFT).</summary>
+    public void SetFloor(IEnumerable<GridPos> cells, int height)
+    {
+        foreach (var c in cells.Where(c => Inside(c.Row, c.Col)))
+            _floor[c.Row - 1, c.Col - 1] = height;
     }
 
     private static readonly (int Dr, int Dc, int Cost)[] Steps =
@@ -75,7 +110,7 @@ public sealed class RoomGrid
     {
         if (from == to)
             return [];
-        bool Passable(int r, int c) => IsWalkable(r, c) || (r == to.Row && c == to.Col && Inside(r, c));
+        bool Passable(GridPos from, int r, int c) => CanStep(from.Row, from.Col, r, c) || (r == to.Row && c == to.Col && Inside(r, c));
 
         var open = new PriorityQueue<GridPos, int>();
         var cost = new Dictionary<GridPos, int> { [from] = 0 };
@@ -97,9 +132,9 @@ public sealed class RoomGrid
             foreach (var (dr, dc, step) in Steps)
             {
                 int r = cur.Row + dr, c = cur.Col + dc;
-                if (!Passable(r, c))
+                if (!Passable(cur, r, c))
                     continue;
-                if (dr != 0 && dc != 0 && (!Passable(cur.Row + dr, cur.Col) || !Passable(cur.Row, cur.Col + dc)))
+                if (dr != 0 && dc != 0 && (!Passable(cur, cur.Row + dr, cur.Col) || !Passable(cur, cur.Row, cur.Col + dc)))
                     continue;
                 var next = new GridPos(r, c);
                 int g = cost[cur] + step;

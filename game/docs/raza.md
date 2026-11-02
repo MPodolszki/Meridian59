@@ -37,6 +37,21 @@ Mausoleum LIGHT_DARK 124 / 0) und Musik wie im Original. Ausgang ins Mausoleum m
   und kauft Waffen/Rüstungen/Schilde; Ravi verkauft Pilze, Kräuter, Holunderbeeren, Smaragd, Flasche, Fackel und kauft
   Reagenzien und Edelsteine; Eric verkauft Brot, Äpfel, Fleischpasteten, Starkbier und gibt für **mindestens 10
   Entwurzelbeeren einen Ritterschild** (hzbart.kod).
+- **Mausoleum-Rätsel** (monsroom/guest6.kod, newb6.kod): Zwei Hebel (27/4, 27/9, `BP_REQ_ACTIVATE`, Reichweite 1 Feld,
+  Bildgruppe 1 oben / 2 unten). Ein Hebel hebt die Tür (Sektor 3, `BP_SECTOR_MOVE` Decke 84 → 128), nach 2 s schlägt sie
+  zu (84, Tempo 128) und die Hebel springen zurück. Beide Hebel öffnen sie ganz (172); dann prüft alle 10 s ein
+  Zeitgeber, ob noch ein Spieler im Endbereich ist (Zeilen 28–40 × Spalten 1–9, Gang 16–28 × 1–2, Spalte < 3 ab Zeile
+  16) – sonst Rücksetzen. Betritt der erste Spieler den Raum, kommt eine Mumie ohne Beute in die Grube (11/4, höchstens
+  zwei, andere Mumien nie dort) und der Endbereich wird mit vier Mumien und einer **Schattenmumie** (Schwierigkeit 4,
+  schwarz) besetzt. Sind sie besiegt und ist ein Spieler im Endbereich, senkt sich die Säule (Sektoren 4/5 Boden
+  500/519 → 105/124), die Tür schließt, und es liegen 5–10 Holunderbeeren, 10–15 Kräuter, 10–15 Pilze und
+  450–550 Schillinge bereit. Neu Eintretende bekommen den aktuellen Sektorzustand. Der Server sperrt die Türfelder im
+  Raster, solange die Tür zu ist (Mumien kommen nicht heraus).
+- **Museum:** sieben Ausstellungsschilder (Willkommen, Arena von Tos, Tos, Tal der Trauer, Pyramide von Ko'catan,
+  Handelsposten, Wandbilder) an den Originalplätzen.
+- **Kleidung bei Eric:** Rock (orange), Hose (dunkelgrau, PantsC), Hose (schwarz, PantsA), Hemd (orange), Hemd (grün).
+  Ein Hemd färbt Körper und Arme (`ANIMATE_TRANSLATION` 0x87 + 11 × Farbe + Hautton, util.kod EncodeTwoColorXLAT),
+  Hose/Rock ersetzen die Beine (bfa/bfb, bfe/bff, bfc/bfd) mit Farbe; die dunkelgraue Hose nutzt PT_GRAY_TO_KGRAY (0x2B).
 - **Portal** im Museum (2/11): beim ersten Betreten die Warnung, nach Verlassen und erneutem Betreten aufs Festland mit
   voller Ausdauer und `AddRealWorldObjects` (1000 Schillinge, Streitkolben, 5 Äpfel, Reagenzien für je 5 Zauber).
 - Neue Charaktere beginnen im Gasthaus von Raza; bestehende Spielstände bleiben, wo sie ausgeloggt haben.
@@ -45,8 +60,12 @@ Mausoleum LIGHT_DARK 124 / 0) und Musik wie im Original. Ausgang ins Mausoleum m
 - Das Portal führt ins Gasthaus von Tos (52). Im Original würfelt es Marion, Jasper oder Cor; diese Städte fehlen noch.
 - Zwei Kühe stehen im KOD außerhalb der 30-zeiligen Karte (Zeile 31 und 35) – sie stehen auf den nächsten Feldern am Südrand.
 - Kühe laufen nicht umher und machen keinen Dung (Bonked).
-- Hebelrätsel und Endkampf im Mausoleum (4 Mumien + Schattenmumie, Belohnung) fehlen noch, ebenso die Museumsausstellung,
-  die Erklärschilder im Mausoleum (außer „Umschauen“ und Knochenhaufen), Erics Kleidung (Katalog), die Neulingspost.
+- Es fehlen noch: die Zierobjekte des Museums (Nachbildungen, ModelNode), der Schädel im Mausoleum, die Neulingspost,
+  Geräusche (down2.wav beim Hebel). Die Kleidungsfarbe nutzt den Hautton des Trägers (im Original der des Gegenstands,
+  SKIN1). Der Endkampf mit Belohnung ist im Server umgesetzt, aber nicht automatisch getestet.
 - Die Schilder sind Objekte zum Anschauen (wie Rechtsklick im Original); ihre Texte nennen die Tasten des Original-Clients.
+- Godot-Client: Sektorbewegungen wirken sofort (ohne Animation), die Raumgeometrie wird neu gebaut; geschlossene Türen
+  sind Wände. Begehbar ist ein Nachbarfeld höchstens eine Stufe (30) höher als das eigene – so kommt man Rampen hinauf
+  (auch Server-Wegfindung). Hebel per Linksklick. Kleidung ist im Godot-Client nicht sichtbar (Zwergenmodell).
 - Godot-Client: Wiese/Wasser aus den Sektor-Tiefen der .roo (SF_DEPTH), Bäume aus den Zierobjekten, Kuh/Portal/Schild
   als einfache Formen, Mumien mit dem Zombie-Modell. Kleine Innenräume (Gasthaus) sind teils zum Himmel offen.

@@ -1175,6 +1175,7 @@
         }
       ],
       "maxMonsters": 20,
+      "puzzle": "mausoleum",
       "npcs": [
         {
           "kodClass": "Sign",
@@ -1186,6 +1187,63 @@
           "col": 2,
           "fineRow": 32,
           "fineCol": 48
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Kämpfen",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Kampf ist in Meridian 59 wichtig, aber einfach. Mit der Taste E schlägst du mit deiner Waffe nach dem nächsten Monster. Hast du keine Waffe in der Hand, nimm jetzt eine – mit Fäusten richtest du wenig aus.\n\nBehalte im Kampf deine Lebenspunkte im Auge. Werden sie knapp, lauf weg! Danach rasten oder essen. Beim Rasten kannst du weder kämpfen noch rennen, such dir also einen sicheren Ort.\n\nBesiegte Monster lassen oft Schätze fallen, die du verkaufen kannst. Heb sie mit GET auf oder zieh sie vom Boden ins Inventar.",
+          "row": 11,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 48
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Zielen",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Jetzt, da du Kampf und Zauberei kennst, probier die Zielauswahl: Mit [ oder ] wählst du ein Monster oder einen Spieler vor dir als Ziel; es wird farbig umrandet. Solange ein Ziel markiert ist, gehen alle Angriffe und Zauber dorthin – auch wenn du es nicht treffen oder sehen kannst.\n\n[ und ] wechseln zwischen den Zielen, Esc hebt die Auswahl auf. Mit etwas Übung ist das sehr nützlich, besonders mit einem Zauber auf einer Schnelltaste.",
+          "row": 11,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Springen",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Springen ist in Meridian 59 knifflig, denn es gibt keine Sprungtaste – es ist eher ein Fallen im Bogen. Manche Stellen erreichst du nur, indem du von einem Vorsprung zum nächsten springst: Nimm mit gedrückter Shift-Taste Anlauf, ziel auf die Landestelle und lauf über die Kante. Klappt es nicht beim ersten Mal, geh außen herum und versuch es noch einmal.",
+          "row": 29,
+          "col": 30,
+          "fineRow": 0,
+          "fineCol": 32
+        },
+        {
+          "kodClass": "GuestLever",
+          "name": "Hebel",
+          "icon": "lever.bgf",
+          "role": "Hebel",
+          "row": 27,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0,
+          "description": "Dieser Hebel sieht alt und abgenutzt aus, muss aber noch etwas bewegen."
+        },
+        {
+          "kodClass": "GuestLever",
+          "name": "Hebel",
+          "icon": "lever.bgf",
+          "role": "Hebel",
+          "row": 27,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0,
+          "description": "Dieser Hebel sieht alt und abgenutzt aus, muss aber noch etwas bewegen."
         },
         {
           "kodClass": "Sign",
@@ -1252,6 +1310,116 @@
           "col": 14,
           "fineRow": 0,
           "fineCol": 40
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 32,
+          "col": 14,
+          "fineRow": 0,
+          "fineCol": 40
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 30,
+          "col": 40,
+          "fineRow": 0,
+          "fineCol": 24
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 27,
+          "col": 33,
+          "fineRow": 40,
+          "fineCol": 0
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 19,
+          "col": 32,
+          "fineRow": 40,
+          "fineCol": 0
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 17,
+          "col": 40,
+          "fineRow": 0,
+          "fineCol": 24
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 13,
+          "col": 40,
+          "fineRow": 0,
+          "fineCol": 24
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 9,
+          "col": 34,
+          "fineRow": 0,
+          "fineCol": 24
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 4,
+          "col": 28,
+          "fineRow": 40,
+          "fineCol": 0
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 2,
+          "col": 26,
+          "fineRow": 0,
+          "fineCol": 40
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 2,
+          "col": 40,
+          "fineRow": 0,
+          "fineCol": 24
         }
       ],
       "rows": 39,
@@ -1381,6 +1549,90 @@
           "col": 12,
           "fineRow": 16,
           "fineCol": 16
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Willkommen",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Das Große Museum zeigt allerlei über das eigentliche Meridian: kleine Nachbildungen von Gegenständen und Monstern sowie Wandteppiche mit Orten aus der Welt.",
+          "row": 8,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Die Arena von Tos",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Ein Prüfstein, auf dem mächtige Krieger unter Kraanans wachsamen Augen aufeinandertreffen. Man kämpft hier allein um die Ehre, denn Kraanan bewahrt jeden wahren Krieger im letzten Augenblick vor dem Tod.",
+          "row": 8,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 48,
+          "angle": 1024
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Tos",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Wohl die lebendigste Stadt Meridians (die Leute aus Barloque sähen das sicher anders). In Tos liegen die Arena und eine der freundlichsten Schenken des Landes, das Familiars.",
+          "row": 14,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 48,
+          "angle": 1024
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Das Tal der Trauer",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Der Sage nach leben in diesem abgelegenen Tal in den Wäldern Meridians die Fey Elhai und die Fey Dirhai, zwei Feenvölker, die ewig um das Tal ringen. Einige mutige Abenteurer erzählen, sie hätten den Kampf eine Zeit lang zugunsten ihrer Seite wenden können.",
+          "row": 8,
+          "col": 6,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 1024
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Die Große Pyramide von Ko'catan",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Das erste Bauwerk der Inselsiedlung Ko'catan soll die Grabstätte des großen Helden Konima sein, dessen Opfer Meridian in den Orkkriegen vor den Horden rettete. Heute beherbergt sie die Halle der Helden, deren magische Statuen die Gestalt der größten lebenden Helden annehmen.",
+          "row": 11,
+          "col": 17,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 1024
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Der Handelsposten auf Konimas Insel",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Ein Vorposten der Zivilisation in der Wildnis von Konimas Insel und ein Knotenpunkt des Handels mit dem Festland. Niemand weiß, woher der Händler Wulfgang zax'Ak seine seltenen Waren bezieht oder warum er so fern der sicheren Mauern Ko'catans lebt – vielleicht wegen der strengen Handelsgesetze, die jeden Handel mit den Avar, einem Vogelvolk der Insel, verbieten. Im Vordergrund ist ein Avar zu sehen, obwohl noch nie jemand einen dem Handelsposten nahekommen sah.",
+          "row": 8,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 1024
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Wandbilder aus Ko'catan",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Die Ko'catani gelten als kriegerisch, haben aber eine reiche Kunst. Diese Wandbilder zeigen stets dieselben Szenen aus Geschichte und Mythos; jede Generation malt sie neu über die alten, feiner und lebendiger. Historiker schätzen, dass die abgebildeten Wandbilder über zwei Fuß dick sind.",
+          "row": 14,
+          "col": 20,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 1024
         }
       ],
       "rows": 15,

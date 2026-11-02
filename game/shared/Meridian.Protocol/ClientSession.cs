@@ -15,6 +15,8 @@ public sealed class ClientObject(uint id)
     public uint Flags { get; set; }
     /// <summary>Menge bei Mengen-Gegenständen (Tag 1 in der ID), sonst null.</summary>
     public uint? Amount { get; set; }
+    /// <summary>Bildgruppe (ANIMATE_NONE), z. B. Hebel 1 = oben, 2 = unten.</summary>
+    public ushort Group { get; set; } = 1;
     /// <summary>Im Inventar: benutzt/ausgerüstet (BP_USE, BP_USE_LIST).</summary>
     public bool Used { get; set; }
 
@@ -23,6 +25,9 @@ public sealed class ClientObject(uint id)
 
     /// <summary>OF_GETTABLE: Gegenstand auf dem Boden.</summary>
     public bool IsGettable => (Flags & ObjectFlags.Gettable) != 0;
+
+    /// <summary>OF_ACTIVATABLE: lässt sich betätigen (Hebel).</summary>
+    public bool IsActivatable => (Flags & ObjectFlags.Activatable) != 0;
 
     /// <summary>OF_BUYABLE: Händler, bei dem man kaufen kann.</summary>
     public bool IsSeller => (Flags & ObjectFlags.Buyable) != 0;
@@ -55,6 +60,10 @@ public abstract record ClientEvent
     public sealed record ManaChanged(int Mana, int MaxMana) : ClientEvent;
     /// <summary>Bekannte Sprüche (BP_SPELLS, BP_SPELL_ADD, Fähigkeit aus Stat-Gruppe 3).</summary>
     public sealed record SpellsChanged(IReadOnlyList<ClientSpell> Spells) : ClientEvent;
+    /// <summary>Raumobjekt hat sein Aussehen geändert (BP_CHANGE), z. B. ein Hebel.</summary>
+    public sealed record ObjectChanged(ClientObject Object) : ClientEvent;
+    /// <summary>Sektor bewegt sich (BP_SECTOR_MOVE): Boden (Animation 4) oder Decke (5) auf neue Höhe.</summary>
+    public sealed record SectorMoved(int Sector, int Animation, int Height, int Speed) : ClientEvent;
     /// <summary>Aktive Verzauberungen des eigenen Charakters (BP_ADD/REMOVE_ENCHANTMENT, Typ 1).</summary>
     public sealed record EnchantmentsChanged(IReadOnlyList<ClientObject> Enchantments) : ClientEvent;
     /// <summary>Ausdauer (BP_STAT Gruppe 1, Nr. 3).</summary>
@@ -185,6 +194,9 @@ public sealed class ClientSession : IDisposable
 
     /// <summary>„Gehen/Öffnen“ (Leertaste im Original): Ausgang oder Tür auf dem aktuellen Feld.</summary>
     public Task GoAsync() => SendGameAsync([(byte)GameMessage.ReqGo]);
+
+    /// <summary>Objekt betätigen (BP_REQ_ACTIVATE), z. B. einen Hebel.</summary>
+    public Task ActivateAsync(uint id) => SendGameAsync(new PacketWriter((byte)GameMessage.ReqActivate).U32(id).ToArray());
 
     /// <summary>Objekt anschauen (BP_REQ_LOOK); die Antwort kommt als Chat-Nachricht.</summary>
     public Task LookAsync(uint id) => SendGameAsync(new PacketWriter((byte)GameMessage.ReqLook).U32(id).ToArray());
@@ -523,6 +535,13 @@ public sealed class ClientSession : IDisposable
                 var o = ReadObjectDesc(ref r);
                 if (PeekOnceAnimation(ref r) is { } low)
                     Enqueue(new ClientEvent.ObjectAnimated(o.Id, low >= 9));
+                else if (_objects.TryGetValue(o.Id, out var known))
+                {
+                    // Raumobjekt geändert (z. B. Hebel umgelegt): Position bleibt, Aussehen neu.
+                    o.Row = known.Row; o.Col = known.Col; o.Angle = known.Angle;
+                    _objects[o.Id] = o;
+                    Enqueue(new ClientEvent.ObjectChanged(o));
+                }
                 else
                     UpdateInventory(list => { int i = list.FindIndex(x => x.Id == o.Id); if (i >= 0) { o.Used = list[i].Used; list[i] = o; } });
                 break;
@@ -549,6 +568,13 @@ public sealed class ClientSession : IDisposable
                     list.Add(new ClientSpell(o, r.U8(), r.U8(), 0));
                 }
                 UpdateSpells(s => { s.Clear(); s.AddRange(list); });
+                break;
+            }
+            case GameMessage.SectorMove:
+            {
+                byte animation = r.U8();
+                ushort sector = r.U16(), height = r.U16();
+                Enqueue(new ClientEvent.SectorMoved(sector, animation, height, r.U8()));
                 break;
             }
             case GameMessage.AddEnchantment when r.U8() == 1:
@@ -768,7 +794,7 @@ public sealed class ClientSession : IDisposable
         o.Flags = r.U32();
         r.U32();                                // rarity
         if (r.U16() != 0) { r.U8(); r.U16(); }  // dlight
-        SkipAnimation(ref r);
+        o.Group = SkipAnimation(ref r);
         SkipOverlays(ref r);
         return o;
     }
@@ -799,7 +825,8 @@ public sealed class ClientSession : IDisposable
     }
 
     /// <summary>Optionales Präfix (9 = Palette, 10 = Effekt) plus Animation (protocol.md 4.2).</summary>
-    private static void SkipAnimation(ref PacketReader r)
+    /// <summary>Liest eine Animation; liefert die Bildgruppe (ANIMATE_NONE) bzw. die erste Gruppe.</summary>
+    private static ushort SkipAnimation(ref PacketReader r)
     {
         byte type = r.U8();
         if (type is 9 or 10)
@@ -809,9 +836,9 @@ public sealed class ClientSession : IDisposable
         }
         switch ((AnimationType)type)
         {
-            case AnimationType.None: r.U16(); break;
-            case AnimationType.Cycle: r.U32(); r.U16(); r.U16(); break;
-            case AnimationType.Once: r.U32(); r.U16(); r.U16(); r.U16(); break;
+            case AnimationType.None: return r.U16();
+            case AnimationType.Cycle: r.U32(); { ushort g = r.U16(); r.U16(); return g; }
+            case AnimationType.Once: r.U32(); { ushort g = r.U16(); r.U16(); r.U16(); return g; }
             default: throw new ProtocolException($"Unbekannter Animationstyp {type}");
         }
     }

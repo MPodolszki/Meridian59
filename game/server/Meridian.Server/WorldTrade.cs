@@ -199,12 +199,12 @@ public sealed partial class World
             item.Used = true;
             avatar.Session.Post(GameReplies.Use(item.Id));
             SendWindowOverlay(avatar, item, visible: true);
-            if (item.Kind.Overlay is not null || slot == "shield")
+            if (item.Kind.Overlay is not null || slot is "shield" or "shirt" or "legs")
                 AppearanceChanged(avatar);
             Tell(avatar, slot switch
             {
                 "weapon" => $"Du nimmst {item.Describe()} in die Hand.",
-                "armor" => $"Du ziehst {item.Describe()} an.",
+                "armor" or "shirt" or "legs" => $"Du ziehst {item.Describe()} an.",
                 _ => item.Kind.Light ? $"Du zündest {item.Describe()} an." : $"Du nimmst {item.Describe()} in die Hand.",
             });
         }
@@ -224,10 +224,10 @@ public sealed partial class World
         item.Used = false;
         avatar.Session.Post(GameReplies.Unuse(item.Id));
         SendWindowOverlay(avatar, item, visible: false);
-        if (item.Kind.Overlay is not null || item.Kind.Slot == "shield")
+        if (item.Kind.Overlay is not null || item.Kind.Slot is "shield" or "shirt" or "legs")
             AppearanceChanged(avatar);
         if (!quiet)
-            Tell(avatar, item.Kind.Slot == "armor" ? $"Du ziehst {item.Describe()} aus." : $"Du legst {item.Describe()} weg.");
+            Tell(avatar, item.Kind.Slot is "armor" or "shirt" or "legs" ? $"Du ziehst {item.Describe()} aus." : $"Du legst {item.Describe()} weg.");
     }
 
     /// <summary>Essen und Trinken wie food.kod/player.kod EatSomething: Magen darf nicht über 100,

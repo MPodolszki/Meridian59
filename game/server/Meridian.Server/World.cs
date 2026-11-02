@@ -71,6 +71,8 @@ public sealed class Room(RoomDefinition definition)
     /// <summary>Begehbarkeit (aus rooms/*.json); null = keine Wände bekannt, Monster laufen geradlinig.</summary>
     public RoomGrid? Grid { get; set; }
     public DateTime NextSpawn { get; set; }
+    /// <summary>Raumrätsel (Mausoleum von Raza), sonst null.</summary>
+    public Mausoleum? Puzzle { get; set; }
 
     /// <summary>KOD-Feinkoordinate für die Mitte eines Grid-Felds.</summary>
     public static ushort Fine(int cell, int fine = 32) => (ushort)(cell * 64 + fine);
@@ -165,7 +167,12 @@ public sealed partial class World
     public IReadOnlyCollection<Room> Rooms => _rooms.Values;
 
     public RoomObject ToRoomObject(Avatar a) =>
-        new(a.Id, _resources[a.Name], new ObjectAppearance(_resources[a.State.Appearance.Body], 1, PlayerOverlays(a)), a.Row, a.Col, a.Angle, FlagPlayer);
+        new(a.Id, _resources[a.Name], new ObjectAppearance(_resources[a.State.Appearance.Body], 1, PlayerOverlays(a), ShirtTranslation(a)),
+            a.Row, a.Col, a.Angle, FlagPlayer);
+
+    /// <summary>Getragenes Hemd färbt Körper und Arme (player.kod GetCurrentShirtColor); ohne Hemd keine Übersetzung.</summary>
+    private static byte ShirtTranslation(Avatar a) =>
+        a.State.Inventory.FirstOrDefault(i => i.Used && i.Kind.Slot == "shirt")?.Kind.ClothingTranslation(a.State.Appearance.SkinXlat) ?? 0;
 
     /// <summary>Körperteile des männlichen Standard-Charakters (player.kod SendOverlays, system.kod charinfo_*_ax):
     /// linker/rechter Arm, Beine, Kopf, Mund, Augen, Nase, Haare; dazu die Waffe in der Hand.</summary>
@@ -177,11 +184,15 @@ public sealed partial class World
         var weapon = a.State.Inventory.FirstOrDefault(i => i.Used && i.Kind.Overlay is not null);
         bool leftHandBusy = a.State.Inventory.Any(i => i.Used && i.Kind.Slot == "shield");
         var look = a.State.Appearance;
+        byte shirt = ShirtTranslation(a);
+        // Hose/Rock: eigene Beingrafik je Geschlecht und Farbe (pants.kod).
+        var pants = a.State.Inventory.FirstOrDefault(i => i.Used && i.Kind.Slot == "legs")?.Kind;
+        string legs = (look.Gender == Appearance.Female ? pants?.LegsFemale : pants?.LegsMale) ?? look.Legs;
         var list = new List<Overlay>
         {
-            new(_resources[look.LeftArm], 31 /* HS_LEFT_HAND */, leftHandBusy ? (ushort)7 : (ushort)1),
-            new(_resources[look.RightArm], 21 /* HS_RIGHT_HAND */, weapon is null ? (ushort)1 : (ushort)17),
-            new(_resources[look.Legs], 41 /* HS_LEGS */),
+            new(_resources[look.LeftArm], 31 /* HS_LEFT_HAND */, leftHandBusy ? (ushort)7 : (ushort)1, shirt),
+            new(_resources[look.RightArm], 21 /* HS_RIGHT_HAND */, weapon is null ? (ushort)1 : (ushort)17, shirt),
+            new(_resources[legs], 41 /* HS_LEGS */, 1, pants?.ClothingTranslation(look.SkinXlat) ?? 0),
             new(_resources[look.Head], 1 /* HS_HEAD */, 1, look.SkinXlat),
             new(_resources[look.Mouth], 12 /* HS_MOUTH */, 1, look.SkinXlat),
             new(_resources[look.Eyes], 11 /* HS_EYES */, 1, look.SkinXlat),
@@ -201,20 +212,22 @@ public sealed partial class World
     }
 
     public RoomObject ToRoomObject(Monster m) =>
-        new(m.Id, _resources[m.Kind.Name], new ObjectAppearance(_resources[m.Kind.Icon]), m.Row, m.Col, m.Angle, FlagAttackable);
+        new(m.Id, _resources[m.Kind.Name], new ObjectAppearance(_resources[m.Kind.Icon]), m.Row, m.Col, m.Angle, FlagAttackable | m.Kind.DrawFlags);
 
     /// <summary>OF_ATTACKABLE aus include/proto.h.</summary>
     public const uint FlagAttackable = 0x00000008;
 
     /// <summary>Händler tragen OF_BUYABLE (verkauft) bzw. OF_OFFERABLE (kauft/nimmt an), wie im Original.</summary>
     public RoomObject ToRoomObject(Npc n) =>
-        new(n.Id, _resources[n.DisplayName], new ObjectAppearance(_resources[NpcIcon(n)]), n.Row, n.Col, n.Angle, NpcFlags(n));
+        new(n.Id, _resources[n.DisplayName], new ObjectAppearance(_resources[NpcIcon(n)], n.Group), n.Row, n.Col, n.Angle, NpcFlags(n));
 
     /// <summary>Grafik eines NPCs (KOD vrIcon, z. B. tsinnk.bgf); ohne Angabe die Spielergrafik.</summary>
     public string NpcIcon(Npc n) => n.Definition.Icon ?? PlayerIcon;
 
     private static uint NpcFlags(Npc n)
     {
+        if (n.Definition.KodClass == Mausoleum.LeverClass)
+            return ObjectFlags.Activatable;   // gstlever.kod ACTIVATE_YES
         if (n.Merchant?.Definition is not { } d)
             return 0;
         return (d.Seller ? ObjectFlags.Buyable : 0) | (d.Buyer || d.Receive ? ObjectFlags.Offerable : 0);
@@ -481,6 +494,8 @@ public sealed partial class World
         foreach (var room in _rooms.Values)
         {
             var d = room.Definition;
+            if (d.Puzzle == "mausoleum")
+                room.Puzzle = new Mausoleum();
             foreach (var f in d.FixedMonsters)
                 SpawnMonsterLocked(room, MonsterKind.ByKey(f.Kind), new GridPos(f.Row, f.Col));
             if (d.Monsters.Count == 0)
@@ -502,6 +517,7 @@ public sealed partial class World
             foreach (var room in _rooms.Values)
             {
                 TickSpawns(room, now);
+                TickPuzzle(room, now);
                 TickOffers(room, now);
                 foreach (var monster in room.Monsters.ToList())
                     TickMonster(monster, now, seconds);
@@ -527,7 +543,9 @@ public sealed partial class World
             return;
         int roll = _random.Next(room.MonsterTable.Sum(e => e.Weight));
         var kind = room.MonsterTable.First(e => (roll -= e.Weight) < 0).Kind;
-        SpawnMonsterLocked(room, kind, room.Generators[_random.Next(room.Generators.Count)]);
+        // ReqNewHold des Mausoleums kann den Spawn verweigern (Grube).
+        if (PuzzleSpawnPoint(room, kind, room.Generators[_random.Next(room.Generators.Count)]) is { } at)
+            SpawnMonsterLocked(room, kind, at);
     }
 
     /// <summary>Setzt ein Monster an ein Feld (auch für Tests).</summary>
@@ -660,6 +678,9 @@ public sealed partial class World
             string path = Path.Combine(directory, Path.GetFileNameWithoutExtension(room.Definition.Roo).ToLowerInvariant() + ".json");
             if (File.Exists(path))
                 room.Grid = RoomGrid.Load(path, room.Definition.Teleport);
+            // Die Tür des Mausoleums ist anfangs zu.
+            if (room.Puzzle is not null && room.Grid?.Tags.GetValueOrDefault(Mausoleum.SectorDoor) is { } door)
+                room.Grid.SetBlocked(door, true);
         }
     }
 
@@ -770,6 +791,7 @@ public sealed partial class World
             PracticeDefense(avatar, m);
             avatar.KillTarget = null;
             CreateTreasure(m);
+            MonsterKilled(m.Room);
         }
     }
 
@@ -820,6 +842,8 @@ public sealed partial class World
 
     private void Place(Avatar avatar, Room room, ushort row, ushort col)
     {
+        if (room.Avatars.Count == 0)
+            FirstUserEntered(room);
         avatar.Room = room;
         avatar.Row = row;
         avatar.Col = col;

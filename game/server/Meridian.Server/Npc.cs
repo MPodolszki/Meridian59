@@ -31,6 +31,8 @@ public sealed class Npc(uint id, NpcDefinition definition, NpcDialog? dialog)
     private static readonly string[] Greetings = ["hallo", "hi", "grüß", "gruss", "moin", "servus", "hello", "guten tag"];
 
     public uint Id => id;
+    /// <summary>Bildgruppe (ANIMATE_NONE): Hebel 1 = oben, 2 = unten (gstlever.kod piState).</summary>
+    public ushort Group { get; set; } = 1;
     public NpcDefinition Definition => definition;
     public string Name => definition.Name ?? definition.KodClass;
     public string DisplayName => dialog is null ? Name : $"{Name} ({dialog.Title})";

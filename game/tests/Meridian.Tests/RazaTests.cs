@@ -58,6 +58,63 @@ public sealed class RazaTests : IAsyncDisposable
             && c.Inventory.Any(o => o.Amount == 3500));
     }
 
+    [Fact]
+    public async Task Mausoleum_LeversLiftTheDoor_OneSlamsShut_BothOpenIt()
+    {
+        var (c, events) = await EnterAsync(1016);
+        var added = events.OfType<ClientEvent.ObjectAdded>().Select(e => e.Object).ToList();
+        // FirstUserEntered: Endbereich mit vier Mumien und einer Schattenmumie, eine Mumie in der Grube.
+        Assert.Equal(1, added.Count(o => c.Resolve(o.NameRsc) == "Schattenmumie"));
+        Assert.True(added.Count(o => c.Resolve(o.NameRsc) == "Mumie") >= 5);
+        var levers = added.Where(o => c.Resolve(o.NameRsc) == "Hebel").OrderBy(o => o.Col).ToList();
+        Assert.Equal(2, levers.Count);
+        Assert.All(levers, l => Assert.Equal((ushort)1, l.Group));
+
+        await c.ActivateAsync(levers[0].Id);
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat { Text: "Der Hebel ist nicht nah genug, um ihn umzulegen." });
+
+        await c.MoveAsync(Room.Fine(27), Room.Fine(5), false);
+        await c.ActivateAsync(levers[0].Id);
+        await WaitForAsync(c, events, e => e is ClientEvent.SectorMoved { Sector: 3, Animation: 5, Height: 128 });
+        await WaitForAsync(c, events, e => e is ClientEvent.ObjectChanged { Object.Group: 2 });
+        // Nach 2 s schlägt die Tür zu und der Hebel springt zurück.
+        await WaitForAsync(c, events, e => e is ClientEvent.SectorMoved { Sector: 3, Height: 84 });
+        await WaitForAsync(c, events, _ => events.OfType<ClientEvent.ObjectChanged>().LastOrDefault()?.Object.Group == 1);
+
+        // Beide Hebel schnell hintereinander: Tür ganz offen.
+        await c.ActivateAsync(levers[0].Id);
+        await c.MoveAsync(Room.Fine(27), Room.Fine(8), false);
+        await c.ActivateAsync(levers[1].Id);
+        await WaitForAsync(c, events, e => e is ClientEvent.SectorMoved { Sector: 3, Height: 172 });
+    }
+
+    [Fact]
+    public void Clothing_ColorsLikeEncodeTwoColorXlat()
+    {
+        var items = ItemCatalog.Load(Data("items", "items.json"));
+        Assert.True(items.TryGet("shirtorange", out var orange));
+        Assert.True(items.TryGet("pantsblack", out var black));
+        Assert.True(items.TryGet("pantsgray", out var gray));
+        Assert.Equal(0x87 + 11 * 4 + 1, orange.ClothingTranslation(1));   // XLAT_TO_ORANGE, Haut 1
+        Assert.Equal(124 + 2, black.ClothingTranslation(2));              // XLAT_TO_BLACK: Sonderfall
+        Assert.Equal(0x2B, gray.ClothingTranslation(3));                  // PT_GRAY_TO_KGRAY fest
+        Assert.Equal("bfe.bgf", gray.LegsMale);
+    }
+
+    [Fact]
+    public async Task Pub_SellsClothing_ThatCanBeWorn()
+    {
+        var (c, events) = await EnterAsync(1017);
+        var eric = events.OfType<ClientEvent.ObjectAdded>().First(e => c.Resolve(e.Object.NameRsc).StartsWith("Eric")).Object;
+        await c.RequestBuyAsync(eric.Id);
+        await WaitForAsync(c, events, e => e is ClientEvent.BuyList);
+        var shirt = events.OfType<ClientEvent.BuyList>().Last().Items.First(i => c.Resolve(i.Item.NameRsc) == "Hemd (orange)");
+        await c.BuyItemsAsync(eric.Id, [new ObjectRef(shirt.Item.Id, null)]);
+        await WaitForAsync(c, events, _ => c.Inventory.Any(o => c.Resolve(o.NameRsc) == "Hemd (orange)"));
+        await c.UseAsync(c.Inventory.First(o => c.Resolve(o.NameRsc) == "Hemd (orange)").Id);
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.StartsWith("Du ziehst") && ch.Text.EndsWith("Hemd (orange) an."));
+    }
+
     private async Task<(ClientSession, List<ClientEvent>)> EnterAsync(int startRoom)
     {
         var accounts = AccountStore.Open(_db);

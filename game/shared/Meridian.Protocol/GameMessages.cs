@@ -1,7 +1,7 @@
 namespace Meridian.Protocol;
 
 /// <summary>Grafische Darstellung eines Objekts: Icon-Ressource, Animation und Overlays (protocol.md 4.2/4.5).</summary>
-public sealed record ObjectAppearance(uint IconRsc, ushort Group = 1, IReadOnlyList<Overlay>? Overlays = null);
+public sealed record ObjectAppearance(uint IconRsc, ushort Group = 1, IReadOnlyList<Overlay>? Overlays = null, byte Translation = 0);
 
 /// <summary>Overlay auf einem Objekt (z. B. Kopf, Arme eines Spielers): Grafik, Hotspot (HS_*), Bildgruppe und
 /// optional eine Farbübersetzung (ANIMATE_TRANSLATION, XLAT_*).</summary>
@@ -30,6 +30,7 @@ public static class ObjectFlags
     public const uint Gettable = 0x00000010;
     public const uint Offerable = 0x00000200;
     public const uint Buyable = 0x00000400;
+    public const uint Activatable = 0x00000800;
 }
 
 /// <summary>Tag in den oberen 4 Bit einer Objekt-ID (CLIENT_TAG_NUMBER): Mengen-Gegenstand, es folgt u32 amount.</summary>
@@ -282,6 +283,13 @@ public static class GameReplies
     public static byte[] InventoryRemove(uint id) => new PacketWriter((byte)GameMessage.InventoryRemove).U32(id).ToArray();
 
     /// <summary>BP_CHANGE ohne Animation, z. B. geänderte Menge eines Gegenstands (KOD SomethingChanged).</summary>
+    /// <summary>ANIMATE_FLOOR_LIFT / ANIMATE_CEILING_LIFT für <see cref="SectorMove"/>.</summary>
+    public const byte AnimateFloorLift = 4, AnimateCeilingLift = 5;
+
+    /// <summary>BP_SECTOR_MOVE: u8 Animation, u16 Sektor-ID, u16 Höhe, u8 Tempo (user.kod SectorSendUser).</summary>
+    public static byte[] SectorMove(byte animation, ushort sector, ushort height, byte speed) =>
+        new PacketWriter((byte)GameMessage.SectorMove).U8(animation).U16(sector).U16(height).U8(speed).ToArray();
+
     public static byte[] Change(RoomObject o)
     {
         var w = WriteObjectDesc(new PacketWriter((byte)GameMessage.Change), o);
@@ -333,6 +341,8 @@ public static class GameReplies
         w.U32(o.Appearance.IconRsc).U32(o.NameRsc).U32(o.Flags)
             .U32(0)    // rarity
             .U16(0);   // dlight: keine Lichtquelle
+        if (o.Appearance.Translation != 0)
+            w.U8(9 /* ANIMATE_TRANSLATION */).U8(o.Appearance.Translation);
         WriteAnimation(w, o.Appearance.Group);
         return WriteOverlays(w, o.Appearance.Overlays);
     }

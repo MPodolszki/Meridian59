@@ -616,6 +616,82 @@
       "slot": "shield",
       "damageReduce": 2,
       "defenseBonus": 15
+    },
+    {
+      "key": "shirtorange",
+      "kodClass": "Shirt",
+      "name": "Hemd (orange)",
+      "icon": "defshirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "ein",
+      "description": "Dieses Hemd bedeckt das Nötigste, schützt aber kaum.",
+      "slot": "shirt",
+      "color": 4
+    },
+    {
+      "key": "shirtgreen",
+      "kodClass": "Shirt",
+      "name": "Hemd (grün)",
+      "icon": "defshirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "ein",
+      "description": "Dieses Hemd bedeckt das Nötigste, schützt aber kaum.",
+      "slot": "shirt",
+      "color": 5
+    },
+    {
+      "key": "pantsblack",
+      "kodClass": "PantsA",
+      "name": "Hose (schwarz)",
+      "icon": "pantsA.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "color": 12,
+      "legsMale": "bfa.bgf",
+      "legsFemale": "bfb.bgf"
+    },
+    {
+      "key": "pantsgray",
+      "kodClass": "PantsC",
+      "name": "Hose (dunkelgrau)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 43,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "skirtorange",
+      "kodClass": "Skirt",
+      "name": "Rock (orange)",
+      "icon": "lgSkirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "einen",
+      "description": "Dieser lange Rock bedeckt die Beine hübsch, schützt aber kaum.",
+      "slot": "legs",
+      "color": 4,
+      "legsMale": "bfc.bgf",
+      "legsFemale": "bfd.bgf"
     }
   ],
   "treasure": {

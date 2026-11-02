@@ -11,6 +11,8 @@ Ausgabe je Raum: <roo-name>.json mit
                    (64 = 1 Feld), -1 = kein Boden (massive Wand / außerhalb)
     ceiling      – höchste Deckenhöhe im Raum (für Innenwände)
     depth        – nur wenn vorhanden: je Zeile ein Text mit der Wassertiefe je Feld (0–3, SF_DEPTH1–3)
+    tags         – nur wenn vorhanden: Sektoren mit ID (vom Server per BP_SECTOR_MOVE bewegt, z. B. Türen):
+                   [{"id", "floor", "ceiling", "cells": [[zeile, spalte], ...]}] (Felder 1-basiert)
 Formatbeschreibung des .roo-Formats: clientd3d/bspload.c.
 """
 import json
@@ -50,7 +52,7 @@ def read_roo(path):
     (count,) = struct.unpack_from('<H', d, p); p += 2
     sectors = []
     for _ in range(count):
-        _sid, _ft, _ct, _tx, _ty, floor_h, ceil_h = struct.unpack_from('<7H', d, p); p += 14
+        sid, _ft, _ct, _tx, _ty, floor_h, ceil_h = struct.unpack_from('<7H', d, p); p += 14
         p += 1                                  # Licht
         (flags,) = struct.unpack_from('<I', d, p); p += 4
         if version >= 10:
@@ -58,7 +60,7 @@ def read_roo(path):
         for sloped in (0x400, 0x800):           # SF_SLOPED_FLOOR / SF_SLOPED_CEILING
             if flags & sloped:
                 p += 46
-        sectors.append((floor_h, ceil_h, flags & 3))   # SF_DEPTH0..3: Wassertiefe
+        sectors.append((floor_h, ceil_h, flags & 3, sid))   # SF_DEPTH0..3: Wassertiefe; sid: Sektor-ID
     return width >> 10, height >> 10, leaves, sectors
 
 
@@ -74,7 +76,7 @@ def inside(x, y, poly):
 
 def layout(path):
     cols, rows, leaves, sectors = read_roo(path)
-    floor, depth = [], []
+    floor, depth, tags = [], [], {}
     max_ceiling = 0
     for row in range(rows):
         line, wet = [], ''
@@ -85,8 +87,10 @@ def layout(path):
                 line.append(-1)
                 wet += '0'
             else:
-                f, c, d = sectors[sector]
+                f, c, d, sid = sectors[sector]
                 line.append(f)
+                if sid:
+                    tags.setdefault(sid, {'id': sid, 'floor': f, 'ceiling': c, 'cells': []})['cells'].append([row + 1, col + 1])
                 wet += str(d)
                 max_ceiling = max(max_ceiling, c)
         floor.append(line)
@@ -94,6 +98,8 @@ def layout(path):
     data = {'source': path.name, 'rows': rows, 'cols': cols, 'ceiling': max_ceiling}
     if any(set(w) - {'0'} for w in depth):
         data['depth'] = depth
+    if tags:
+        data['tags'] = [tags[k] for k in sorted(tags)]
     data['floor'] = floor
     return data
 

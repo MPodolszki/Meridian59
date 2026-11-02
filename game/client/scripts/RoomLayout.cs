@@ -31,6 +31,10 @@ public sealed class RoomLayout
     public string? Terrain { get; private set; }
     private string[]? _depth;
     public List<(int Row, int Col, int FineRow, int FineCol, bool Shrub)> Trees { get; } = new();
+    /// <summary>Sektoren mit ID (rooms/*.json "tags"): Felder (0-basiert) und aktuelle Deckenhöhe; der Server bewegt
+    /// sie per BP_SECTOR_MOVE (Tür des Mausoleums).</summary>
+    private readonly Dictionary<int, List<(int Row, int Col)>> _tagCells = new();
+    private readonly Dictionary<int, int> _tagCeilings = new();
 
     private RoomLayout(int rows, int cols, int ceiling, int[,] floor)
     {
@@ -75,6 +79,13 @@ public sealed class RoomLayout
         if (root.TryGetProperty("trees", out var trees))
             foreach (var t in trees.EnumerateArray())
                 layout.Trees.Add((t[0].GetInt32() - 1, t[1].GetInt32() - 1, t[2].GetInt32(), t[3].GetInt32(), t[4].GetString() == "shrub"));
+        if (root.TryGetProperty("tags", out var tagList))
+            foreach (var t in tagList.EnumerateArray())
+            {
+                int id = t.GetProperty("id").GetInt32();
+                layout._tagCells[id] = t.GetProperty("cells").EnumerateArray().Select(c => (c[0].GetInt32() - 1, c[1].GetInt32() - 1)).ToList();
+                layout._tagCeilings[id] = t.GetProperty("ceiling").GetInt32();
+            }
         if (root.TryGetProperty("locked", out var locked))
             foreach (var e in locked.EnumerateArray())
                 layout.Locked.Add((e[0].GetInt32() - 1, e[1].GetInt32() - 1));
@@ -92,6 +103,37 @@ public sealed class RoomLayout
     /// <summary>Bodenhöhe des Felds (0-basierter Index), -1 außerhalb.</summary>
     public int FloorAt(int row, int col) =>
         row >= 0 && row < Rows && col >= 0 && col < Cols ? _floor[row, col] : -1;
+
+    /// <summary>BP_SECTOR_MOVE: Boden (Animation 4) oder Decke (5) eines Sektors auf eine neue Höhe.</summary>
+    public void SetSector(int id, int animation, int height)
+    {
+        if (!_tagCells.TryGetValue(id, out var cells))
+            return;
+        if (animation == 4)
+            foreach (var (r, c) in cells)
+                _floor[r, c] = height;
+        else if (animation == 5)
+            _tagCeilings[id] = height;
+    }
+
+    /// <summary>Geschlossene Sektortür: Decke liegt weniger als ein Feld (64) über dem Boden.</summary>
+    public bool IsClosedDoor(int row, int col)
+    {
+        foreach (var (id, cells) in _tagCells)
+            if (_tagCeilings[id] - FloorAt(row, col) < 64 && cells.Contains((row, col)))
+                return true;
+        return false;
+    }
+
+    /// <summary>Schritt aufs Nachbarfeld: begehbar wie <see cref="IsWalkable"/> oder höchstens eine Stufe höher als das
+    /// Ausgangsfeld (Rampen in mehrstöckigen Räumen); nie durch geschlossene Sektortüren.</summary>
+    public bool CanStep(int fromRow, int fromCol, int row, int col)
+    {
+        int f = FloorAt(row, col), from = FloorAt(fromRow, fromCol);
+        if (f < 0 || IsClosedDoor(row, col))
+            return false;
+        return IsWalkable(row, col) || from >= 0 && f - from <= WalkableRange;
+    }
 
     /// <summary>Wassertiefe des Felds (0 = trocken, 1–3 = flach bis sehr tief).</summary>
     public int DepthAt(int row, int col) =>
@@ -144,7 +186,7 @@ public sealed class RoomLayout
     private (string Kind, float Height) Classify(int r, int c, float cellSize, float wallHeight)
     {
         int f = FloorAt(r, c);
-        if (f < 0)
+        if (f < 0 || IsClosedDoor(r, c))
             return ("wall", wallHeight);
         float h = MathF.Round(HeightMeters(f, cellSize) * 4f) / 4f;   // auf 25 cm runden → größere Blöcke
         if (!IsWalkable(r, c))

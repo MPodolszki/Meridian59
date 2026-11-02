@@ -15,6 +15,7 @@ public static class PropModels
         "portal" => Portal(),
         "razsign1" or "sign" => Sign(),
         "bonepile" => Bones(),
+        "lever" => Lever(),
         _ => null,
     };
 
@@ -66,6 +67,25 @@ public static class PropModels
         Add(root, new BoxMesh { Size = new Vector3(0.1f, 1.2f, 0.1f) }, wood, new Vector3(0, 0.6f, 0));
         Add(root, new BoxMesh { Size = new Vector3(0.7f, 0.45f, 0.06f) }, new Color(0.62f, 0.48f, 0.3f), new Vector3(0, 1.15f, -0.06f));
         return root;
+    }
+
+    /// <summary>Hebel (gstlever.kod) auf einem Steinsockel; der Griff zeigt nach oben bzw. unten (<see cref="SetLever"/>).</summary>
+    private static Node3D Lever()
+    {
+        var root = new Node3D { Name = "Lever" };
+        Add(root, new BoxMesh { Size = new Vector3(0.4f, 0.5f, 0.3f) }, new Color(0.38f, 0.37f, 0.35f), new Vector3(0, 0.25f, 0));
+        var pivot = new Node3D { Name = "Pivot", Position = new Vector3(0, 0.5f, 0), RotationDegrees = new Vector3(-35, 0, 0) };
+        root.AddChild(pivot);
+        Add(pivot, new CylinderMesh { TopRadius = 0.03f, BottomRadius = 0.04f, Height = 0.7f }, new Color(0.3f, 0.22f, 0.14f), new Vector3(0, 0.35f, 0));
+        Add(pivot, new SphereMesh { Radius = 0.07f, Height = 0.14f }, new Color(0.25f, 0.25f, 0.27f), new Vector3(0, 0.72f, 0));
+        return root;
+    }
+
+    /// <summary>Hebel umgelegt (Bildgruppe 2) oder oben (1).</summary>
+    public static void SetLever(Node3D figure, bool down)
+    {
+        if (figure.FindChild("Pivot", recursive: true, owned: false) is Node3D pivot)
+            pivot.RotationDegrees = new Vector3(down ? 35 : -35, 0, 0);
     }
 
     /// <summary>Kleiner Haufen bleicher Knochen.</summary>

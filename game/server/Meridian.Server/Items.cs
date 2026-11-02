@@ -19,7 +19,8 @@ public sealed record ItemKind(string Key, string Name, string Icon, int Value)
     public IReadOnlyList<string> Types { get; init; } = [];
     public string? Description { get; init; }
 
-    /// <summary>Ausrüstungsplatz: "weapon", "shield" (auch Fackel) oder "armor"; null = nicht ausrüstbar.</summary>
+    /// <summary>Ausrüstungsplatz: "weapon", "shield" (auch Fackel), "armor", Kleidung "shirt" (ITEM_USE_SHIRT) bzw.
+    /// "legs" (ITEM_USE_LEGS); null = nicht ausrüstbar.</summary>
     public string? Slot { get; init; }
     /// <summary>Waffen (weapon.kod): "bludgeon", "thrust", "slash"; Qualität "low", "normal", "high".</summary>
     public string? WeaponType { get; init; }
@@ -34,6 +35,21 @@ public sealed record ItemKind(string Key, string Name, string Icon, int Value)
     public string? Overlay { get; init; }
     /// <summary>Waffe in der Ego-Ansicht (KOD vrWeapon_window_overlay, z. B. povmace.bgf).</summary>
     public string? WindowOverlay { get; init; }
+    /// <summary>Kleidung: Farbe XLAT_TO_* (EncodeTwoColorXLAT mit dem Hautton) oder feste Übersetzung PT_* (Hose C).</summary>
+    public int? Color { get; init; }
+    public byte? Translation { get; init; }
+    /// <summary>Beine des Spielers mit dieser Hose/diesem Rock (pants.kod *_male/female_player_rsc).</summary>
+    public string? LegsMale { get; init; }
+    public string? LegsFemale { get; init; }
+
+    /// <summary>Farbübersetzung für einen Hautton (util.kod EncodeTwoColorXLAT: 0x87 + 11 × Farbe + Haut, Schwarz 124 + Haut).</summary>
+    public byte ClothingTranslation(byte skin) => Translation ?? Color switch
+    {
+        null => 0,
+        0x0C => (byte)(124 + skin),
+        { } c => (byte)(0x87 + 11 * c + skin),
+    };
+
     /// <summary>Lichtquelle, wenn benutzt (Fackel).</summary>
     public bool Light { get; init; }
     /// <summary>Essen (food.kod): Nährwert (→ Ausdauer) und Sättigung; Getränk für die Meldungen.</summary>

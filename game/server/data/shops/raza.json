@@ -1,29 +1,112 @@
 {
-  "_hinweis": "Händler von Raza (kod/object/active/holder/nomoveon/battler/monster/towns/hazartwn). Raza nutzt die Hazar-NPCs unverändert. Kleidung bei Eric (Rock, Hosen, Hemden) fehlt noch im Katalog.",
+  "_hinweis": "Händler von Raza (kod/object/active/holder/nomoveon/battler/monster/towns/hazartwn). Raza nutzt die Hazar-NPCs unverändert.",
   "shops": {
     "HazarBlacksmith": {
       "markup": 1,
       "buyer": true,
-      "buysTypes": ["weapon", "armor", "shield"],
-      "forSale": [{"item": "chainarmor"}, {"item": "leatherarmor"}, {"item": "metalshield"}, {"item": "shortsword"}, {"item": "mace"}]
+      "buysTypes": [
+        "weapon",
+        "armor",
+        "shield"
+      ],
+      "forSale": [
+        {
+          "item": "chainarmor"
+        },
+        {
+          "item": "leatherarmor"
+        },
+        {
+          "item": "metalshield"
+        },
+        {
+          "item": "shortsword"
+        },
+        {
+          "item": "mace"
+        }
+      ]
     },
     "HazarApothecary": {
       "markup": 1,
       "buyer": true,
-      "buysTypes": ["reagent", "gem"],
-      "forSale": [{"item": "mushroom"}, {"item": "redmushroom"}, {"item": "bluemushroom"}, {"item": "herbs"},
-                  {"item": "elderberry"}, {"item": "emerald"}, {"item": "flask"}, {"item": "torch"}]
+      "buysTypes": [
+        "reagent",
+        "gem"
+      ],
+      "forSale": [
+        {
+          "item": "mushroom"
+        },
+        {
+          "item": "redmushroom"
+        },
+        {
+          "item": "bluemushroom"
+        },
+        {
+          "item": "herbs"
+        },
+        {
+          "item": "elderberry"
+        },
+        {
+          "item": "emerald"
+        },
+        {
+          "item": "flask"
+        },
+        {
+          "item": "torch"
+        }
+      ]
     },
     "HazarBartender": {
       "markup": 3,
       "receive": true,
-      "wanted": ["entrootberry"],
+      "wanted": [
+        "entrootberry"
+      ],
       "reward": {
-        "item": "entrootberry", "min": 10, "gives": "knightshield",
+        "item": "entrootberry",
+        "min": 10,
+        "gives": "knightshield",
         "thanks": "Entwurzelbeeren? FanTAStisch! Hier, lass mich dich belohnen …",
         "tooFew": "Ich brauche die Beeren, aber mindestens zehn, sonst nützen sie mir nichts. Bring mehr, dann belohne ich dich!"
       },
-      "forSale": [{"item": "bread", "number": 4}, {"item": "apple", "number": 2}, {"item": "meatpie", "number": 4}, {"item": "mug", "number": 1}]
+      "forSale": [
+        {
+          "item": "skirtorange"
+        },
+        {
+          "item": "pantsgray"
+        },
+        {
+          "item": "pantsblack"
+        },
+        {
+          "item": "shirtorange"
+        },
+        {
+          "item": "shirtgreen"
+        },
+        {
+          "item": "bread",
+          "number": 4
+        },
+        {
+          "item": "apple",
+          "number": 2
+        },
+        {
+          "item": "meatpie",
+          "number": 4
+        },
+        {
+          "item": "mug",
+          "number": 1
+        }
+      ]
     }
   }
 }

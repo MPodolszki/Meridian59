@@ -279,7 +279,7 @@ public partial class Main : Node3D
 
     private void OnSessionEvent(ClientEvent e)
     {
-        if (HandleTradeEvent(e) || HandleSpellEvent(e) || HandleCreationEvent(e))
+        if (HandleTradeEvent(e) || HandleSpellEvent(e) || HandleCreationEvent(e) || HandleMechanicsEvent(e))
             return;
         switch (e)
         {
@@ -421,9 +421,17 @@ public partial class Main : Node3D
     {
         if (_layout is null)
             return;
-        _roomGeometry?.QueueFree();
         var (row, col) = CellAt(playerPosition);
         _layout.SetGroundAt(row, col);
+        RebuildRoomGeometry();
+    }
+
+    /// <summary>Geometrie neu bauen, ohne den Bodenbezug zu ändern (nach einer Sektorbewegung).</summary>
+    private void RebuildRoomGeometry()
+    {
+        if (_layout is null)
+            return;
+        _roomGeometry?.QueueFree();
         // Außenbereiche haben Fels/Pflaster, Innenräume Putz/Holz; Außen erkennbar an der Größe.
         bool outdoors = _outdoors = _layout.Rows * _layout.Cols > 420;
         _roomGeometry = _layout.Build(CellSize, outdoors);
@@ -442,12 +450,10 @@ public partial class Main : Node3D
         var (row, col) = CellAt(p);
         // Über den Raumrand hinaus darf man von einem begehbaren Randfeld aus (Rand-Ausgänge, KOD plEdge_Exits).
         bool outside = row < 0 || col < 0 || row >= _layout.Rows || col >= _layout.Cols;
+        var (fr, fc) = CellAt(from);
         if (outside)
-        {
-            var (fr, fc) = CellAt(from);
             return _layout.IsWalkable(fr, fc);
-        }
-        return _layout.IsWalkable(row, col);
+        return (fr, fc) == (row, col) ? !_layout.IsClosedDoor(row, col) : _layout.CanStep(fr, fc, row, col);
     }
 
     /// <summary>Oberkante der Geometrie an einer Position (Dach, Wand oder Boden).</summary>
@@ -502,6 +508,8 @@ public partial class Main : Node3D
         var root = new Node3D { Position = spawn, Rotation = new Vector3(0, ToYaw(o.Angle), 0) };
         // Modell nach Icon (zombie.bgf → models/zombie.glb); Spieler und NPCs sind vorerst Zwerge.
         root.AddChild(CharacterModel.Create(o.Icon));
+        if (o.IsActivatable)
+            PropModels.SetLever(root, o.Group == 2);
         if (o.IsAttackable)
             _monsters.Add(o.Id);
         if (o.IsNpc)
@@ -537,7 +545,8 @@ public partial class Main : Node3D
         if (e is InputEventKey { Pressed: true, Keycode: Key.Enter } && !_chatInput.HasFocus())
             _chatInput.GrabFocus();
         if (e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left } click)
-            TryOpenDoorAt(click.Position);
+            if (!TryActivateAt(click.Position))
+                TryOpenDoorAt(click.Position);
         if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.E } && !_chatInput.HasFocus())
             LookAtNearestNpc();
         if (e is InputEventKey { Pressed: true, Keycode: Key.F } && !_chatInput.HasFocus())

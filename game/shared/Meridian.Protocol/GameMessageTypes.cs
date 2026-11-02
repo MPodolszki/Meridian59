@@ -43,6 +43,7 @@ public enum GameMessage : byte
     ReqGet = 113,
     ReqCast = 105,
     ReqLook = 116,
+    ReqActivate = 109,
     ReqInventory = 117,
     ReqDrop = 118,
     ReqOffer = 120,
@@ -74,6 +75,7 @@ public enum GameMessage : byte
     UserCommand = 155,          // beide
     Admin = 162,
     PlayWave = 170,
+    SectorMove = 223,
     PlayMusic = 171,
     Move = 200,
     Turn = 201,

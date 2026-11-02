@@ -360,6 +360,10 @@ public sealed class Session(int id, TcpClient client, GameServer server)
                 server.World.Attack(_avatar, r.U32() & 0x0FFFFFFF, DateTime.UtcNow);
                 break;
 
+            case GameMessage.ReqActivate when _avatar is not null:
+                server.World.Activate(_avatar, r.U32() & ObjectId.Mask);
+                break;
+
             case GameMessage.ReqLook when _avatar is not null:
                 if (server.World.LookAt(_avatar, r.U32() & 0x0FFFFFFF) is { } look)
                 {
@@ -438,7 +442,8 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         EnsureResource(InterfaceModule);
         PostGame(GameReplies.LoadModule(server.Resources[InterfaceModule]));
         // Grafiken der Spielerfiguren (Körperteile, Waffen in der Hand) für alle Spieler im Raum.
-        foreach (string icon in CharacterCreation.AllIcons.Concat(server.World.Items.Kinds.Select(k => k.Overlay).OfType<string>()))
+        foreach (string icon in CharacterCreation.AllIcons
+                     .Concat(server.World.Items.Kinds.SelectMany(k => new[] { k.Overlay, k.LegsMale, k.LegsFemale }).OfType<string>()))
             EnsureResource(icon);
 
         server.World.Enter(_avatar);
@@ -495,6 +500,8 @@ public sealed class Session(int id, TcpClient client, GameServer server)
             .Concat(server.World.FloorItemsIn(room, this))
             .ToList();
         PostGame(GameReplies.RoomContents(room.ObjectId, objects));
+        foreach (var sector in server.World.SectorPackets(room))   // bewegte Sektoren (Mausoleum-Tür)
+            PostGame(sector);
     }
 
     /// <summary>Nach Raumwechsel durch die Welt (Rand-Ausgang, Tod): neuen Raum melden.</summary>

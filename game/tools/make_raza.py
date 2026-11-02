@@ -94,6 +94,42 @@ SIGNS = {
              "entdecken kannst.\n\nJetzt lohnt es sich, weitere Hilfe zu lesen: Dein Schutzengel hat dir Post mit "
              "Hinweisen geschickt (MAIL).\n\nUnd ein letzter Rat: Such dir Freunde. Meridian 59 ist eine Gemeinschaft, "
              "und wer mächtige Verbündete hat, kommt weiter als ein Einzelgänger.\n\nWir sehen uns im Spiel!",
+    "fighting": "Kampf ist in Meridian 59 wichtig, aber einfach. Mit der Taste E schlägst du mit deiner Waffe nach dem "
+                "nächsten Monster. Hast du keine Waffe in der Hand, nimm jetzt eine – mit Fäusten richtest du wenig aus.\n\n"
+                "Behalte im Kampf deine Lebenspunkte im Auge. Werden sie knapp, lauf weg! Danach rasten oder essen. "
+                "Beim Rasten kannst du weder kämpfen noch rennen, such dir also einen sicheren Ort.\n\n"
+                "Besiegte Monster lassen oft Schätze fallen, die du verkaufen kannst. Heb sie mit GET auf oder zieh sie "
+                "vom Boden ins Inventar.",
+    "targeting": "Jetzt, da du Kampf und Zauberei kennst, probier die Zielauswahl: Mit [ oder ] wählst du ein Monster "
+                 "oder einen Spieler vor dir als Ziel; es wird farbig umrandet. Solange ein Ziel markiert ist, gehen alle "
+                 "Angriffe und Zauber dorthin – auch wenn du es nicht treffen oder sehen kannst.\n\n"
+                 "[ und ] wechseln zwischen den Zielen, Esc hebt die Auswahl auf. Mit etwas Übung ist das sehr nützlich, "
+                 "besonders mit einem Zauber auf einer Schnelltaste.",
+    "jumping": "Springen ist in Meridian 59 knifflig, denn es gibt keine Sprungtaste – es ist eher ein Fallen im Bogen. "
+               "Manche Stellen erreichst du nur, indem du von einem Vorsprung zum nächsten springst: Nimm mit gedrückter "
+               "Shift-Taste Anlauf, ziel auf die Landestelle und lauf über die Kante. Klappt es nicht beim ersten Mal, "
+               "geh außen herum und versuch es noch einmal.",
+    "lever": "Dieser Hebel sieht alt und abgenutzt aus, muss aber noch etwas bewegen.",
+    "museum": "Das Große Museum zeigt allerlei über das eigentliche Meridian: kleine Nachbildungen von Gegenständen und "
+              "Monstern sowie Wandteppiche mit Orten aus der Welt.",
+    "arena": "Ein Prüfstein, auf dem mächtige Krieger unter Kraanans wachsamen Augen aufeinandertreffen. Man kämpft hier "
+             "allein um die Ehre, denn Kraanan bewahrt jeden wahren Krieger im letzten Augenblick vor dem Tod.",
+    "tos": "Wohl die lebendigste Stadt Meridians (die Leute aus Barloque sähen das sicher anders). In Tos liegen die "
+           "Arena und eine der freundlichsten Schenken des Landes, das Familiars.",
+    "vale": "Der Sage nach leben in diesem abgelegenen Tal in den Wäldern Meridians die Fey Elhai und die Fey Dirhai, zwei "
+            "Feenvölker, die ewig um das Tal ringen. Einige mutige Abenteurer erzählen, sie hätten den Kampf eine Zeit "
+            "lang zugunsten ihrer Seite wenden können.",
+    "pyramid": "Das erste Bauwerk der Inselsiedlung Ko'catan soll die Grabstätte des großen Helden Konima sein, dessen "
+               "Opfer Meridian in den Orkkriegen vor den Horden rettete. Heute beherbergt sie die Halle der Helden, deren "
+               "magische Statuen die Gestalt der größten lebenden Helden annehmen.",
+    "tradingpost": "Ein Vorposten der Zivilisation in der Wildnis von Konimas Insel und ein Knotenpunkt des Handels mit "
+                   "dem Festland. Niemand weiß, woher der Händler Wulfgang zax'Ak seine seltenen Waren bezieht oder warum "
+                   "er so fern der sicheren Mauern Ko'catans lebt – vielleicht wegen der strengen Handelsgesetze, die "
+                   "jeden Handel mit den Avar, einem Vogelvolk der Insel, verbieten. Im Vordergrund ist ein Avar zu sehen, "
+                   "obwohl noch nie jemand einen dem Handelsposten nahekommen sah.",
+    "murals": "Die Ko'catani gelten als kriegerisch, haben aber eine reiche Kunst. Diese Wandbilder zeigen stets dieselben "
+              "Szenen aus Geschichte und Mythos; jede Generation malt sie neu über die alten, feiner und lebendiger. "
+              "Historiker schätzen, dass die abgebildeten Wandbilder über zwei Fuß dick sind.",
     "bones": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
 }
 
@@ -156,9 +192,17 @@ rooms = [
                     [(11, 4), (5, 21), (5, 36), (9, 28), (17, 35), (21, 23), (25, 11), (29, 18), (37, 35), (38, 19)]],
      "monsters": [{"kind": "mummy", "weight": 50}, {"kind": "mummynotreasure", "weight": 50}],
      "maxMonsters": 20,
-     "npcs": [sign("Umschauen", SIGNS["lookingaround"], 11, 2, 32, 48)]
+     "puzzle": "mausoleum",
+     "npcs": [sign("Umschauen", SIGNS["lookingaround"], 11, 2, 32, 48),
+              sign("Kämpfen", SIGNS["fighting"], 11, 14, 32, 48),
+              sign("Zielen", SIGNS["targeting"], 11, 3),
+              sign("Springen", SIGNS["jumping"], 29, 30, 0, 32),
+              dict(npc("GuestLever", "Hebel", "lever.bgf", "Hebel", 27, 4), description=SIGNS["lever"]),
+              dict(npc("GuestLever", "Hebel", "lever.bgf", "Hebel", 27, 9), description=SIGNS["lever"])]
              + [dict(sign("Knochenhaufen", SIGNS["bones"], r, c, fr, fc), icon="bonepile.bgf") for r, c, fr, fc in
-                [(3, 18, 0, 8), (5, 14, 32, 40), (19, 18, 0, 40), (22, 11, 24, 56), (23, 8, 40, 16), (25, 14, 0, 40)]]},
+                [(3, 18, 0, 8), (5, 14, 32, 40), (19, 18, 0, 40), (22, 11, 24, 56), (23, 8, 40, 16), (25, 14, 0, 40),
+                 (32, 14, 0, 40), (30, 40, 0, 24), (27, 33, 40, 0), (19, 32, 40, 0), (17, 40, 0, 24), (13, 40, 0, 24),
+                 (9, 34, 0, 24), (4, 28, 40, 0), (2, 26, 0, 40), (2, 40, 0, 24)]]},
     {"id": 1017, "constant": "RID_RAZA_BAR", "kodClass": "Newb7", "name": "Raza Pub", "roo": "guest7.roo",
      "music": "login.mid", "baseLight": NICE, "outsideFactor": SOME, "teleport": {"row": 5, "col": 4},
      "noCombat": True, "respawnRoom": 1011, "improveCap": 25,
@@ -174,7 +218,14 @@ rooms = [
                            "nur, wenn du deinen Fähigkeiten vertraust. Mehr steht auf dem Schild rechts neben dem Portal.",
                 "text": "Du betrittst das Portal und beginnst dein Abenteuer in Meridian 59!"},
      "npcs": [npc("NewbPortal", "Portal", "portal.bgf", "Portal aufs Festland", 2, 11, angle=1024),
-              sign("Hinaus in die Welt", SIGNS["realm"], 2, 12, 16, 16)]},
+              sign("Hinaus in die Welt", SIGNS["realm"], 2, 12, 16, 16)]
+             # Ausstellungsschilder (guest8.kod), alle mit Blick nach Süden
+             + [dict(sign(name, SIGNS[key], r, c, fr, fc), angle=1024) for name, key, r, c, fr, fc in [
+                 ("Willkommen", "museum", 8, 11, 32, 32), ("Die Arena von Tos", "arena", 8, 2, 32, 48),
+                 ("Tos", "tos", 14, 2, 32, 48), ("Das Tal der Trauer", "vale", 8, 6, 16, 16),
+                 ("Die Große Pyramide von Ko'catan", "pyramid", 11, 17, 16, 0),
+                 ("Der Handelsposten auf Konimas Insel", "tradingpost", 8, 20, 32, 0),
+                 ("Wandbilder aus Ko'catan", "murals", 14, 20, 16, 0)]]},
 ]
 
 for room in rooms:

@@ -121,6 +121,8 @@ public sealed record MonsterKind(
     public string Gender { get; init; } = "m";
     /// <summary>Text beim Anschauen (vrDesc); sonst ein allgemeiner.</summary>
     public string? Description { get; init; }
+    /// <summary>Zeichenflags fürs Objekt (OF_BLACK usw.).</summary>
+    public uint DrawFlags { get; init; }
     /// <summary>MOB_NOFIGHT / nicht aggressiv: greift nie an (Kühe).</summary>
     public bool Peaceful { get; init; }
 
@@ -148,6 +150,12 @@ public sealed record MonsterKind(
         Description = "Eine Mumie. In vergilbte Binden gewickelt schlurft sie dir entgegen.",
     };
     public static readonly MonsterKind MummyNoTreasure = Mummy with { Treasure = null };
+    // Schattenmumie (blackmum.kod): Schwierigkeit 4, schwarz gezeichnet (DRAWFX_BLACK → OF_BLACK).
+    public static readonly MonsterKind BlackMummy = Mummy with
+    {
+        Name = "Schattenmumie", Difficulty = 4, DrawFlags = 0x00400000,
+        Description = "Eine Schattenmumie. Schwärzer als die Nacht und zäher als ihre Geschwister.",
+    };
     // Kuh (cow.kod): MOB_NOFIGHT, Stufe 200; steht in Raza (ROOM_NO_COMBAT), ist also nicht angreifbar.
     public static readonly MonsterKind Cow = new("Kuh", "cow.bgf", 240, 0, 0, 0, TimeSpan.Zero, 0, 0)
     {
@@ -163,6 +171,7 @@ public sealed record MonsterKind(
         "skeleton" => Skeleton,
         "mummy" => Mummy,
         "mummynotreasure" => MummyNoTreasure,
+        "blackmummy" => BlackMummy,
         "cow" => Cow,
         _ => throw new InvalidDataException($"Unbekannte Monsterart {key}"),
     };

@@ -85,6 +85,8 @@ public sealed record RoomDefinition(int Id, string Name, string Roo)
     public IReadOnlyList<GridPos> Generators { get; init; } = [];
     public IReadOnlyList<MonsterTableEntry> Monsters { get; init; } = [];
     public int MaxMonsters { get; init; }
+    /// <summary>Raumrätsel: "mausoleum" (guest6.kod Hebel, Tür, Endkampf).</summary>
+    public string? Puzzle { get; init; }
     /// <summary>Portal (newbport.kod): beim ersten Betreten Warnung, beim zweiten hinüber.</summary>
     public PortalDefinition? Portal { get; init; }
 }
