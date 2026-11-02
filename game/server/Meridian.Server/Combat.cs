@@ -74,7 +74,9 @@ public static class CombatRules
     }
 }
 
-/// <summary>Monsterart mit Werten.</summary>
+/// <summary>Monsterart aus data/monsters/monsters.json (erzeugt mit tools/make_monsters.py aus den KOD-Klassen).
+/// Lebenspunkte, Treffer, Schaden, Takt, Sicht und Tempo folgen den Formeln aus monster.kod
+/// (docs/monsters-original.md).</summary>
 public sealed record MonsterKind(
     string Name,
     string Icon,
@@ -86,17 +88,49 @@ public sealed record MonsterKind(
     int SpeedFinePerSecond,
     int AggroRange)
 {
+    /// <summary>Schlüssel in monsters.json (KOD-Klasse in Kleinbuchstaben).</summary>
+    public string Key { get; init; } = "";
     /// <summary>Monsterwerte nach monster.kod, wenn nicht ausdrücklich gesetzt (Stufe/Schwierigkeit > 0).</summary>
     public int Offense => OffenseOverride ?? Math.Clamp(3 * Level + 60 * Difficulty, 1, 1500);
     public int Defense => DefenseOverride ?? Math.Clamp(3 * Level + 60 * Difficulty, 1, 1500);
     public int? OffenseOverride { get; init; }
     public int? DefenseOverride { get; init; }
-    /// <summary>viSpeed (SPEED_VERY_SLOW 4, SPEED_AVERAGE 12) für den Angriffstakt.</summary>
+    /// <summary>viSpeed (SPEED_VERY_SLOW 4, SLOW 8, AVERAGE 12, FAST 16, VERY_FAST 20) für den Angriffstakt.</summary>
     public int KodSpeed { get; init; }
-    /// <summary>Resistenzen in Prozent je Angriffsart ("bludgeon", "thrust", "slash", "holy", "unholy", "fire", "cold", "shock", "acid").</summary>
+    /// <summary>Resistenzen in Prozent je Angriffsart ("bludgeon", "thrust", "slash", "holy", "unholy", "fire", "cold",
+    /// "shock", "acid", "weapon_all", "spell_all" …).</summary>
     public IReadOnlyDictionary<string, int> Resistances { get; init; } = new Dictionary<string, int>();
     /// <summary>Magische Angriffsart ("fire", "cold", "shock", "acid") für Spieler-Widerstände; null = Waffe/Klaue.</summary>
     public string? AttackType { get; init; }
+    /// <summary>viKarma −100..100 (für karma-aggressive Monster und das Karma des Siegers).</summary>
+    public int Karma { get; init; }
+    /// <summary>viWimpy: Fluchtschwelle in Prozent der Lebenspunkte (0 = kämpft bis zum Tod).</summary>
+    public int Wimpy { get; init; }
+    /// <summary>AI_*-Verhalten ohne Präfix, z. B. "fight_aggressive", "fight_karma_aggressive", "nomove".</summary>
+    public IReadOnlySet<string> Behavior { get; init; } = new HashSet<string>();
+    /// <summary>Gift beim Treffer (poison.kod): Chance 1/n, Verlust lossRate/1000 LP alle 10 s, Dauer.</summary>
+    public PoisonAttack? Poison { get; init; }
+
+    public bool Aggressive => Behavior.Contains("fight_aggressive") || Behavior.Contains("fight_hyperaggressive");
+    public bool KarmaAggressive => Behavior.Contains("fight_karma_aggressive");
+    public bool Immobile => Behavior.Contains("nomove") || SpeedFinePerSecond == 0;
+
+    /// <summary>Resistenz gegen eine Angriffsart (battler.kod): größter positiver plus kleinster negativer Wert aller
+    /// passenden Einträge; „weapon_all“/„spell_all“ passen auf jede Waffen- bzw. Zauberart.</summary>
+    public int ResistanceTo(string attackType)
+    {
+        string all = SpellTypes.Contains(attackType) ? "spell_all" : "weapon_all";
+        int max = 0, min = 0;
+        foreach (string k in new[] { attackType, all })
+            if (Resistances.TryGetValue(k, out int r))
+            {
+                max = Math.Max(max, r);
+                min = Math.Min(min, r);
+            }
+        return Math.Clamp(max + min, -100, 100);
+    }
+
+    private static readonly HashSet<string> SpellTypes = ["fire", "cold", "shock", "acid", "holy", "unholy", "quake", "huntersword"];
 
     /// <summary>Schaden eines Treffers: feste Spanne, sonst Fuzzy(Stufe / Random(10,15)).</summary>
     public int RollDamage(Random rnd) =>
@@ -126,83 +160,72 @@ public sealed record MonsterKind(
     /// <summary>MOB_NOFIGHT / nicht aggressiv: greift nie an (Kühe).</summary>
     public bool Peaceful { get; init; }
 
-    // Zombie: SPEED_VERY_SLOW, Stufe 55, karma-aggressiv. Skelett: SPEED_AVERAGE, Stufe 75, aggressiv.
-    // Max. LP = 120 × Stufe / 100 (GetMaxHitPoints); Schaden und Takt aus Stufe/Schwierigkeit/Tempo.
-    public static readonly MonsterKind Zombie = new("Zombie", "zombie.bgf", 66, 0, 0, 0, TimeSpan.Zero, 70, 5 * 64)
+    // ------------------------------------------------------------------ Katalog
+
+    private static Dictionary<string, MonsterKind>? _all;
+
+    /// <summary>Alle Arten; beim ersten Zugriff aus data/monsters/monsters.json neben der Programmdatei geladen.</summary>
+    public static IReadOnlyDictionary<string, MonsterKind> All =>
+        _all ??= Load(Path.Combine(AppContext.BaseDirectory, "data", "monsters", "monsters.json"));
+
+    public static MonsterKind ByKey(string key) =>
+        All.TryGetValue(key.ToLowerInvariant(), out var kind) ? kind : throw new InvalidDataException($"Unbekannte Monsterart {key}");
+
+    public static MonsterKind Zombie => ByKey("zombie");
+    public static MonsterKind Skeleton => ByKey("skeleton");
+    public static MonsterKind Mummy => ByKey("mummy");
+    public static MonsterKind MummyNoTreasure => ByKey("mummynotreasure");
+    public static MonsterKind BlackMummy => ByKey("blackmummy");
+    public static MonsterKind Cow => ByKey("cow");
+    public static MonsterKind SpectralMummy => ByKey("spectralmummy");
+    public static MonsterKind BatteredSkeleton => ByKey("batteredskeleton");
+    public static MonsterKind Thrasher => ByKey("thrasher");
+
+    /// <summary>Lauftempo in Feineinheiten/s je viSpeed (SPEED_VERY_SLOW 4 → 70 … SPEED_VERY_FAST 20 → 215).</summary>
+    public static int FinePerSecond(int kodSpeed) => kodSpeed <= 0 ? 0 : kodSpeed switch
     {
-        Level = 55, Difficulty = 4, KodSpeed = 4, Treasure = "zombie",
-        Resistances = new Dictionary<string, int> { ["unholy"] = 50, ["holy"] = -25 },
-    };
-    public static readonly MonsterKind Skeleton = new("Skelett", "skelbody.bgf", 90, 0, 0, 0, TimeSpan.Zero, 140, 7 * 64)
-    {
-        Level = 75, Difficulty = 5, KodSpeed = 12, Treasure = "tough", AlwaysDrops = "longsword",
-        Resistances = new Dictionary<string, int>
-        {
-            ["thrust"] = 70, ["shock"] = 70, ["cold"] = 70, ["unholy"] = 70, ["fire"] = -10, ["holy"] = -20, ["bludgeon"] = -20,
-        },
-        Gender = "n",
-    };
-    // Mumie (mummy.kod): Stufe 25 → 25 LP (unter Stufe 40 gilt die Stufe), Schwierigkeit 2, SPEED_VERY_SLOW, aggressiv,
-    // Beute TID_NEWBIE_AREA; mummyt.kod ohne Beute.
-    public static readonly MonsterKind Mummy = new("Mumie", "mummy.bgf", 25, 0, 0, 0, TimeSpan.Zero, 70, 5 * 64)
-    {
-        Level = 25, Difficulty = 2, KodSpeed = 4, Treasure = "newbie", Gender = "f",
-        Description = "Eine Mumie. In vergilbte Binden gewickelt schlurft sie dir entgegen.",
-    };
-    public static readonly MonsterKind MummyNoTreasure = Mummy with { Treasure = null };
-    // Schattenmumie (blackmum.kod): Schwierigkeit 4, schwarz gezeichnet (DRAWFX_BLACK → OF_BLACK).
-    public static readonly MonsterKind BlackMummy = Mummy with
-    {
-        Name = "Schattenmumie", Difficulty = 4, DrawFlags = 0x00400000,
-        Description = "Eine Schattenmumie. Schwärzer als die Nacht und zäher als ihre Geschwister.",
-    };
-    // Kuh (cow.kod): MOB_NOFIGHT, Stufe 200; steht in Raza (ROOM_NO_COMBAT), ist also nicht angreifbar.
-    public static readonly MonsterKind Cow = new("Kuh", "cow.bgf", 240, 0, 0, 0, TimeSpan.Zero, 0, 0)
-    {
-        Level = 200, KodSpeed = 8, Gender = "f", Peaceful = true,
-        Description = "Eine Zwergkuh. Eine missglückte Zucht hat diese Rinder auf Hüfthöhe schrumpfen lassen; "
-            + "die Bauern von Raza halten sie trotzdem, denn ihre Milch ist süß.",
+        4 => 70, 8 => 105, 12 => 140, 16 => 180, 20 => 215, _ => 35 + kodSpeed * 9,
     };
 
-    // Marion (Gruft). Tempo: SPEED_SLOW 8 → 105, SPEED_FAST 16 → 180 Feineinheiten/s (zwischen Zombie 70 und Skelett 140).
-    // Gespenstermumie (specmum.kod): Stufe 40, Schwierigkeit 5, durchscheinend 50 %, TID_MUMMY.
-    public static readonly MonsterKind SpectralMummy = new("Gespenstermumie", "mummy.bgf", 48, 0, 0, 0, TimeSpan.Zero, 105, 5 * 64)
+    public static Dictionary<string, MonsterKind> Load(string path)
     {
-        Level = 40, Difficulty = 5, KodSpeed = 8, Treasure = "mummy", Gender = "f", DrawFlags = 0x00200000,
-        Resistances = new Dictionary<string, int> { ["unholy"] = 20, ["holy"] = -10, ["fire"] = -10, ["shock"] = -15, ["bludgeon"] = -15 },
-        Description = "Eine Gespenstermumie. Halb durchsichtig schwebt sie zwischen den Gräbern.",
-    };
-    // Verwittertes Skelett (batrskel.kod): Stufe 60, Schwierigkeit 4, TID_SKELETON2, sonst wie das Skelett.
-    public static readonly MonsterKind BatteredSkeleton = Skeleton with
-    {
-        Name = "verwittertes Skelett", MaxHp = 72, Level = 60, Difficulty = 4, Treasure = "skeleton2",
-    };
-    // Drescher (thrasher.kod): Stufe 150, Schwierigkeit 7, SPEED_FAST, hyperaggressiv, TID_THRASHER.
-    public static readonly MonsterKind Thrasher = new("Drescher", "res0001a.bgf", 180, 0, 0, 0, TimeSpan.Zero, 180, 8 * 64)
-    {
-        Level = 150, Difficulty = 7, KodSpeed = 16, Treasure = "thrasher",
-        Resistances = new Dictionary<string, int>
+        using var doc = System.Text.Json.JsonDocument.Parse(File.ReadAllText(path));
+        var result = new Dictionary<string, MonsterKind>();
+        foreach (var p in doc.RootElement.GetProperty("monsters").EnumerateObject())
         {
-            ["thrust"] = 50, ["slash"] = 50, ["bludgeon"] = 50, ["unholy"] = 50, ["shock"] = 90, ["fire"] = -20, ["holy"] = -15,
-        },
-        Description = "Ein Drescher. Ein massiges Ungetüm mit peitschenden Gliedern.",
-    };
-
-    /// <summary>Monsterarten für die Gebietsdateien ("zombie", "skeleton", "mummy", "mummynotreasure", "cow").</summary>
-    public static MonsterKind ByKey(string key) => key.ToLowerInvariant() switch
-    {
-        "zombie" => Zombie,
-        "skeleton" => Skeleton,
-        "mummy" => Mummy,
-        "mummynotreasure" => MummyNoTreasure,
-        "blackmummy" => BlackMummy,
-        "spectralmummy" => SpectralMummy,
-        "batteredskeleton" => BatteredSkeleton,
-        "thrasher" => Thrasher,
-        "cow" => Cow,
-        _ => throw new InvalidDataException($"Unbekannte Monsterart {key}"),
-    };
+            var e = p.Value;
+            int level = e.GetProperty("level").GetInt32(), difficulty = e.GetProperty("difficulty").GetInt32();
+            int speed = e.GetProperty("speed").GetInt32();
+            string? Str(string name) => e.TryGetProperty(name, out var v) && v.ValueKind == System.Text.Json.JsonValueKind.String ? v.GetString() : null;
+            HashSet<string> Set(string name) => e.TryGetProperty(name, out var v) ? v.EnumerateArray().Select(x => x.GetString()!).ToHashSet() : [];
+            var behavior = Set("behavior");
+            var attributes = Set("attributes");
+            var spellAttack = Set("attackSpell").Where(t => t is "fire" or "cold" or "shock" or "acid").ToList();
+            PoisonAttack? poison = null;
+            if (e.TryGetProperty("special", out var sp) && sp.TryGetProperty("poison", out var po) && po.GetProperty("chance").ValueKind == System.Text.Json.JsonValueKind.Number)
+                poison = new PoisonAttack(po.GetProperty("chance").GetInt32(), po.GetProperty("lossRate").GetInt32(),
+                    TimeSpan.FromMilliseconds(po.GetProperty("durationMs").GetInt32()));
+            // GetMaxHitPoints: Stufe unter 40 = Stufe, sonst Stufe × 120 / 100. Sicht 4 + Schwierigkeit/2 Felder.
+            int maxHp = level < 40 ? level : level * 120 / 100;
+            result[p.Name] = new MonsterKind(Str("name")!, Str("icon")!, maxHp, 0, 0, 0, TimeSpan.Zero,
+                FinePerSecond(speed), (4 + difficulty / 2) * 64)
+            {
+                Key = p.Name, Level = level, Difficulty = difficulty, KodSpeed = speed,
+                Karma = e.GetProperty("karma").GetInt32(), Wimpy = e.GetProperty("wimpy").GetInt32(),
+                Treasure = Str("treasure"), AlwaysDrops = Str("alwaysDrops"), Gender = Str("gender") ?? "m",
+                Description = Str("description"), Behavior = behavior, Poison = poison,
+                DrawFlags = e.TryGetProperty("drawFlags", out var df) ? df.GetUInt32() : 0,
+                Resistances = e.GetProperty("resistances").EnumerateObject().ToDictionary(r => r.Name, r => r.Value.GetInt32()),
+                AttackType = spellAttack.FirstOrDefault(),
+                Peaceful = behavior.Contains("nofight") || attributes.Contains("nofight"),   // MOB_NOFIGHT (Kuh)
+            };
+        }
+        return result;
+    }
 }
+
+/// <summary>Giftbiss eines Monsters (poison.kod MakePoisoned): Chance 1/<paramref name="OneIn"/> je Treffer.</summary>
+public sealed record PoisonAttack(int OneIn, int LossRate, TimeSpan Duration);
 
 /// <summary>Monster in einem Raum.</summary>
 public sealed class Monster(uint id, MonsterKind kind, Room room, GridPos home)

@@ -47,6 +47,12 @@ public sealed class Avatar(uint id, string name, Session session)
     /// <summary>Portal der Neulingsinsel: schon gewarnt, steht gerade darauf.</summary>
     public bool PortalWarned { get; set; }
     public bool OnPortal { get; set; }
+    /// <summary>Vergiftung (player.kod AddPoison): Verlust je 10 s in Tausendstel LP, Ende, nächster Tick, Rest.</summary>
+    public int PoisonLossRate { get; set; }
+    public DateTime PoisonUntil { get; set; }
+    public DateTime NextPoisonTick { get; set; }
+    public int PoisonRemainder { get; set; }
+    public bool Poisoned => PoisonLossRate > 0;
 }
 
 /// <summary>Laufzeitzustand eines Raums.</summary>
@@ -529,6 +535,7 @@ public sealed partial class World
                 {
                     TickRegen(avatar, now);
                     TickMagic(avatar, now);
+                    TickPoison(avatar, now);
                 }
             }
         }
@@ -588,19 +595,26 @@ public sealed partial class World
         if (m.Kind.Peaceful)
             return;   // Kühe stehen nur herum
 
-        // Ziel wählen: nächster Spieler in Aggro-Reichweite; Ziel verlieren, wenn es zu weit weg ist.
+        // Ziel wählen (brain.kod GetHatred, vereinfacht): aggressive Monster greifen den nächsten Spieler in Sichtweite
+        // an, karma-aggressive nur Spieler mit entgegengesetztem Karma; alle wehren sich, wenn man sie angreift.
+        // Ziel verlieren, wenn es zu weit weg ist.
         if (m.Target is { } t && (t.Room != room || t.Hp <= 0 || Distance(m.Row, m.Col, t.Row, t.Col) > m.Kind.AggroRange * 2))
             m.Target = null;
         m.Target ??= room.Avatars.Values
-            .Where(a => a.Hp > 0 && Distance(m.Row, m.Col, a.Row, a.Col) <= m.Kind.AggroRange)
+            .Where(a => a.Hp > 0 && Distance(m.Row, m.Col, a.Row, a.Col) <= m.Kind.AggroRange && Hates(m.Kind, a))
             .OrderBy(a => Distance(m.Row, m.Col, a.Row, a.Col))
             .FirstOrDefault();
 
+        // Flucht (HealthBelowWimpy): unter viWimpy Prozent Lebenspunkten vom Ziel weg statt angreifen.
+        bool fleeing = m.Target is not null && m.Kind.Wimpy > 0 && m.Hp * 100 / Math.Max(1, m.MaxHp) < m.Kind.Wimpy;
         (int row, int col) goal = m.Target is { } target
-            ? (target.Row, target.Col)
+            ? fleeing ? FleePoint(m, target) : (target.Row, target.Col)
             : (Room.Fine(m.Home.Row), Room.Fine(m.Home.Col));
         double dist = Distance(m.Row, m.Col, goal.row, goal.col);
-        bool inRange = m.Target is not null && dist <= CombatRules.MeleeRange * 0.8;
+        bool inRange = m.Target is not null && !fleeing && dist <= CombatRules.MeleeRange * 0.8;
+        // Unbewegliche Monster (AI_NOMOVE, Tempo 0: Bäume, Spinnenkönigin) schlagen nur zu, wenn man nah genug ist.
+        if (m.Kind.Immobile)
+            dist = 0;
 
         if (!inRange && dist > 8)
         {
@@ -641,6 +655,8 @@ public sealed partial class World
             damage = AssessPlayerDamage(victim, damage);
             victim.Hp = Math.Max(0, victim.Hp - damage);
             Tell(victim, $"{Article(m.Kind)} trifft dich für {damage} Schaden.");
+            if (victim.Hp > 0 && m.Kind.Poison is { } poison && _random.Next(poison.OneIn) == 0)
+                Poison(victim, poison, now);
             victim.Session.SendHealth();
             if (victim.Hp == 0)
                 KillPlayer(victim, m);

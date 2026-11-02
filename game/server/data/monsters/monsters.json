@@ -1,0 +1,2371 @@
+{
+  "_hinweis": "Erzeugt mit tools/make_monsters.py aus docs/kod/monsters_catalog.json. Werte der KOD-Klassen (monster.kod: LP, Treffer, Schaden, Takt aus Stufe/Schwierigkeit/Tempo), Texte eigene Übersetzung.",
+  "monsters": {
+    "brambles": {
+      "class": "Brambles",
+      "name": "Dornengestrüpp",
+      "gender": "n",
+      "description": "Das Dornengestrüpp ragt bedrohlich auf und wartet darauf, jedem die Haut aufzureißen, der vorbeigeht.",
+      "icon": "wothorns.bgf",
+      "deadIcon": null,
+      "category": "summoned",
+      "level": 25,
+      "difficulty": 4,
+      "speed": 0,
+      "karma": 0,
+      "wimpy": 0,
+      "treasure": null,
+      "attack": [
+        "slash"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "nofight",
+        "nomove"
+      ],
+      "attributes": [
+        "nofight",
+        "nomove",
+        "noquest"
+      ],
+      "bodyShape": "plant",
+      "size": "medium",
+      "resistances": {}
+    },
+    "ant": {
+      "class": "Ant",
+      "name": "Ameise",
+      "gender": "f",
+      "description": "Blutige Zangen schnappen nach dir. Ameisen sind langsam und fast blind, haben aber einen scharfen Geruchssinn und eine Vorliebe für Menschenfleisch.",
+      "icon": "ant.bgf",
+      "deadIcon": "antX.bgf",
+      "category": "monster",
+      "level": 40,
+      "difficulty": 4,
+      "speed": 8,
+      "karma": -10,
+      "wimpy": 0,
+      "treasure": "wimpy_medium",
+      "attack": [
+        "bite"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_wizard_killer"
+      ],
+      "attributes": [
+        "spasm"
+      ],
+      "bodyShape": "insect",
+      "size": "medium",
+      "resistances": {
+        "weapon_all": -20
+      }
+    },
+    "avar": {
+      "class": "Avar",
+      "name": "Avar-Krieger",
+      "gender": "m",
+      "description": "Grimmige Krieger, diese flugunfähigen Vogelmenschen. Das Gefieder weist ihn als Mitglied des edlen Peet-Seeeep-Stammes aus.",
+      "icon": "avwar.bgf",
+      "deadIcon": "avwarX.bgf",
+      "category": "monster",
+      "level": 120,
+      "difficulty": 7,
+      "speed": 12,
+      "karma": 40,
+      "wimpy": 8,
+      "treasure": "avar",
+      "attack": [
+        "bludgeon"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_monsters",
+        "move_regroup"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {
+        "fire": 20,
+        "cold": -25,
+        "slash": 10,
+        "nerudite": -25
+      }
+    },
+    "avarchieftain": {
+      "class": "AvarChieftain",
+      "name": "Avar-Häuptling",
+      "gender": "m",
+      "description": "Der Peet-Seeeep-Stamm beherrscht die Südostküste der Insel. Dieser Anführer ist für seine Treffsicherheit mit dem Bogen und seine tödliche Klinge gefürchtet.",
+      "icon": "avchief.bgf",
+      "deadIcon": "avchiefX.bgf",
+      "category": "monster",
+      "level": 135,
+      "difficulty": 9,
+      "speed": 16,
+      "karma": 80,
+      "wimpy": 0,
+      "treasure": "avar_chief",
+      "attack": [
+        "pierce"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_monsters",
+        "fight_wizard_killer",
+        "move_optimal_range"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "large",
+      "resistances": {
+        "fire": 40,
+        "shock": 20,
+        "acid": -15,
+        "cold": -20,
+        "slash": 10,
+        "nerudite": -15
+      },
+      "special": {
+        "ranged": "MonsterCastSpell: Chance 1/6 (AdjustedChanceBase), Distanz² < 666, Sichtlinie -> DoMissileAttack (Pfeil, normaler TryAttack). Optimale Distanz random(8,15)."
+      }
+    },
+    "avarshaman": {
+      "class": "AvarShaman",
+      "name": "Avar-Schamane",
+      "gender": "m",
+      "description": "Ein Schamane der Peet-Seeeep. Man sagt, die Schamanen blenden sich selbst, damit ihr drittes, magisches Auge wächst. Nur ein Narr legt sich mit diesen Hexern an.",
+      "icon": "avsham.bgf",
+      "deadIcon": "avshamX.bgf",
+      "category": "monster",
+      "level": 100,
+      "difficulty": 8,
+      "speed": 8,
+      "karma": 80,
+      "wimpy": 0,
+      "treasure": "avar_shaman",
+      "attack": [
+        "pierce"
+      ],
+      "attackSpell": [
+        "quake"
+      ],
+      "behavior": [
+        "fight_aggressive",
+        "fight_monsters",
+        "move_optimal_range"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {
+        "cold": -20,
+        "shock": 10,
+        "acid": -15,
+        "nerudite": -20,
+        "slash": 10,
+        "nonmagic": 40,
+        "magic": -10
+      },
+      "special": {
+        "spellcasting": {
+          "chance": "1/12 pro Verfolgungs-Tick",
+          "spellPower": 75,
+          "manaStart": 10,
+          "manaRegen": "+1 je 1000 ms bis 10",
+          "spells": [
+            {
+              "sid": "SID_HOLD",
+              "roll": "<40",
+              "mana": 5,
+              "sidValue": 47
+            },
+            {
+              "sid": "SID_MANA_BOMB",
+              "roll": "40-69",
+              "mana": 6,
+              "sidValue": 68
+            },
+            {
+              "sid": "SID_SANDSTORM",
+              "roll": "70-84",
+              "mana": 4,
+              "sidValue": 75
+            },
+            {
+              "sid": "SID_SHATTER",
+              "roll": "85-89",
+              "mana": 10,
+              "sidValue": 57
+            },
+            {
+              "sid": "SID_EARTHQUAKE",
+              "roll": "90-100",
+              "mana": 10,
+              "sidValue": 14
+            }
+          ]
+        }
+      }
+    },
+    "centipede": {
+      "class": "Centipede",
+      "name": "Hundertfüßer",
+      "gender": "m",
+      "description": "Leuchtend rote Platten bilden den Panzer dieses riesigen Hundertfüßers. Instinkt, nicht Verstand, treibt ihn auf der Suche nach Nahrung.",
+      "icon": "centip.bgf",
+      "deadIcon": "centipX.bgf",
+      "category": "monster",
+      "level": 30,
+      "difficulty": 5,
+      "speed": 16,
+      "karma": 15,
+      "wimpy": 0,
+      "treasure": "wimpy_medium",
+      "attack": [
+        "bite"
+      ],
+      "attackSpell": [],
+      "behavior": [],
+      "attributes": [],
+      "bodyShape": "insect",
+      "size": "medium",
+      "resistances": {
+        "fire": 40,
+        "slash": 20,
+        "magic": -20,
+        "shock": -20
+      }
+    },
+    "cow": {
+      "class": "Cow",
+      "name": "Kuh",
+      "gender": "f",
+      "description": "Eine Zwergkuh. Eine missglückte Zucht hat diese Rinder auf Hüfthöhe schrumpfen lassen; die Bauern von Raza halten sie trotzdem, denn ihre Milch ist süß.",
+      "icon": "cow.bgf",
+      "deadIcon": null,
+      "category": "summoned",
+      "level": 200,
+      "difficulty": 0,
+      "speed": 8,
+      "karma": 0,
+      "wimpy": 0,
+      "treasure": null,
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [],
+      "behavior": [],
+      "attributes": [
+        "nofight"
+      ],
+      "bodyShape": "quadruped",
+      "size": "small",
+      "resistances": {}
+    },
+    "darkangel": {
+      "class": "DarkAngel",
+      "name": "Dunkler Engel",
+      "gender": "m",
+      "description": "Im Schutz der Dunkelheit suchen die Dunklen Engel nach Seelen, die sie verschlingen können. Sie sind das reine Böse – gewiss Diener Qors.",
+      "icon": "angel.bgf",
+      "deadIcon": "angelX.bgf",
+      "category": "monster",
+      "level": 200,
+      "difficulty": 9,
+      "speed": 20,
+      "karma": -100,
+      "wimpy": 0,
+      "treasure": "dark_angel",
+      "attack": [
+        "magic"
+      ],
+      "attackSpell": [
+        "fire"
+      ],
+      "behavior": [
+        "fight_aggressive",
+        "fight_newbiesafe",
+        "fight_switchalot",
+        "move_optimal_range",
+        "move_regroup"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "large",
+      "resistances": {
+        "cold": 50,
+        "fire": 50,
+        "shock": 50,
+        "nerudite": 75,
+        "magic": -5
+      },
+      "special": {
+        "spellcasting": {
+          "chance": "1/3",
+          "condition": "Distanz > Angriffsreichweite und Distanz² <= 100, Sichtlinie",
+          "spellPower": "SPELLPOWER_MAXIMUM",
+          "spells": [
+            {
+              "sid": "SID_BLIND",
+              "roll": "<20",
+              "sidValue": 46
+            },
+            {
+              "summon": "EvilTwin des Ziels",
+              "roll": "20-29"
+            },
+            {
+              "sid": "SID_HOLD",
+              "roll": "30-39",
+              "sidValue": 47
+            },
+            {
+              "summon": "Reflection von sich selbst",
+              "roll": "40-59"
+            },
+            {
+              "sid": "SID_DISCORDANCE",
+              "roll": "60-69",
+              "sidValue": 43
+            },
+            {
+              "sid": "SID_ENFEEBLE",
+              "roll": "70-79",
+              "sidValue": 53
+            },
+            {
+              "sid": "SID_FORGET",
+              "roll": "80-100",
+              "sidValue": 102
+            }
+          ]
+        },
+        "ranged": "Angriffsreichweite 7, Fernangriff Feuer (ATCK_WEAP_MAGIC + ATCK_SPELL_FIRE) als Projektil.",
+        "magicResist": "50% gegen schädliche Sprüche (x1.6 gegen Dazzle/Blind/Hold), Spellpower < 40 immer resistiert"
+      }
+    },
+    "deathspider": {
+      "class": "DeathSpider",
+      "name": "Schwarze Spinne",
+      "gender": "f",
+      "description": "Einst hielt man die schwarze Spinne für ein Schreckgespenst für Kinder – angeblich das Werk böser Zauberei, eine Verschmelzung von Mensch und Insekt. Alle alten Geschichten warnen vor ihrem außerordentlich giftigen Biss.",
+      "icon": "spidmagc.bgf",
+      "deadIcon": "spidmagX.bgf",
+      "category": "monster",
+      "level": 75,
+      "difficulty": 5,
+      "speed": 12,
+      "karma": -30,
+      "wimpy": 30,
+      "treasure": "black_spider",
+      "attack": [
+        "bite"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "move_regroup"
+      ],
+      "attributes": [
+        "spasm"
+      ],
+      "bodyShape": "spider",
+      "size": "large",
+      "resistances": {
+        "spell_all": 75,
+        "magic": 75,
+        "nonmagic": -15
+      },
+      "special": {
+        "poison": {
+          "chance": 10,
+          "lossRate": 5000,
+          "durationMs": 180000
+        }
+      }
+    },
+    "dragonfly": {
+      "class": "DragonFly",
+      "name": "Drachenfliege",
+      "gender": "f",
+      "description": "Diese kleinen Echsen wirken ausgesprochen freundlich. Mit ihren hauchdünnen Flügeln können sie kurz auffliegen. In die Enge getrieben, spucken sie übel.",
+      "icon": "dfly.bgf",
+      "deadIcon": "dflyX.bgf",
+      "category": "monster",
+      "level": 120,
+      "difficulty": 6,
+      "speed": 12,
+      "karma": 40,
+      "wimpy": 5,
+      "treasure": "dragonfly",
+      "attack": [
+        "pierce"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive"
+      ],
+      "attributes": [],
+      "bodyShape": "other",
+      "size": "small",
+      "resistances": {
+        "cold": 25,
+        "shock": 40,
+        "fire": -20,
+        "thrust": 40,
+        "nerudite": 25,
+        "magic": -10
+      }
+    },
+    "dragonflypet": {
+      "class": "DragonFlyPet",
+      "name": "zahme Drachenfliege",
+      "gender": "f",
+      "description": "Diese kleinen Echsen wirken ausgesprochen freundlich. Mit ihren hauchdünnen Flügeln können sie kurz auffliegen. In die Enge getrieben, spucken sie übel.",
+      "icon": "dflypet.bgf",
+      "deadIcon": "dflypetX.bgf",
+      "category": "summoned",
+      "level": 120,
+      "difficulty": 6,
+      "speed": 12,
+      "karma": 40,
+      "wimpy": 5,
+      "treasure": null,
+      "attack": [
+        "pierce"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_newbiesafe"
+      ],
+      "attributes": [],
+      "bodyShape": "other",
+      "size": "small",
+      "resistances": {
+        "cold": 25,
+        "shock": 40,
+        "fire": -20,
+        "thrust": 40,
+        "nerudite": 25,
+        "magic": -10
+      }
+    },
+    "dragonflyqueen": {
+      "class": "DragonFlyQueen",
+      "name": "Drachenfliegenkönigin",
+      "gender": "f",
+      "description": "Die anderen Drachenfliegen scheinen dieses seltsam gefärbte Weibchen zu verehren. Sie mustert dich – aus Neugier oder Hunger, das weißt du nicht.",
+      "icon": "dflo.bgf",
+      "deadIcon": "dfloX.bgf",
+      "category": "monster",
+      "level": 145,
+      "difficulty": 6,
+      "speed": 16,
+      "karma": 40,
+      "wimpy": 2,
+      "treasure": "dragonfly",
+      "attack": [
+        "pierce"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive"
+      ],
+      "attributes": [
+        "receive"
+      ],
+      "bodyShape": "other",
+      "size": "medium",
+      "resistances": {
+        "cold": 25,
+        "shock": 40,
+        "fire": -20,
+        "thrust": 40,
+        "nerudite": 25,
+        "magic": -10
+      }
+    },
+    "duskrat": {
+      "class": "DuskRat",
+      "name": "Dämmerratte",
+      "gender": "f",
+      "description": "Die Luft um die Ratte ist dunkel und schwer vom Bösen. Tod und Krankheit hängen in ihrem fauligen Atem. Sicher ist nur eines: Ihr Biss ist tödlich giftig.",
+      "icon": "rat.bgf",
+      "deadIcon": "ratX.bgf",
+      "category": "monster",
+      "level": 50,
+      "difficulty": 6,
+      "speed": 20,
+      "karma": -40,
+      "wimpy": 0,
+      "treasure": "rat",
+      "attack": [
+        "claw"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_switchalot",
+        "move_regroup"
+      ],
+      "attributes": [],
+      "bodyShape": "quadruped",
+      "size": "small",
+      "resistances": {
+        "fire": -30,
+        "bludgeon": 10,
+        "slash": 20
+      },
+      "drawFlags": 4194304,
+      "special": {
+        "poison": {
+          "chance": 6,
+          "lossRate": 10000,
+          "durationMs": 30000
+        },
+        "darkness": "Verringert Raumlicht um 30 solange anwesend (viLight_Penalty)."
+      }
+    },
+    "ent": {
+      "class": "Ent",
+      "name": "lebender Baum",
+      "gender": "m",
+      "description": "Ein uralter Geist fließt durch die dunklen Äste dieses Wesens. Es riecht nach altem Holz und fruchtbarer Erde. Man erzählt, er könne Blitze herbeirufen, um den Wald zu schützen.",
+      "icon": "res0003a.bgf",
+      "deadIcon": "res0003d.bgf",
+      "category": "monster",
+      "level": 50,
+      "difficulty": 4,
+      "speed": 0,
+      "karma": 40,
+      "wimpy": 0,
+      "treasure": "ent",
+      "attack": [
+        "whip"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_karma_aggressive",
+        "nomove"
+      ],
+      "attributes": [
+        "nomove"
+      ],
+      "bodyShape": "plant",
+      "size": "huge",
+      "resistances": {
+        "cold": 50,
+        "bludgeon": 50,
+        "slash": -10,
+        "fire": -10
+      },
+      "special": {
+        "spellcasting": {
+          "chance": "1/piSpell_chance (Start 10, jeder Feuertreffer -1 bis min. 2)",
+          "condition": "Distanz² < 666, Sichtlinie",
+          "spells": [
+            {
+              "sid": "SID_LIGHTNING_BOLT",
+              "sidValue": 1
+            }
+          ]
+        }
+      }
+    },
+    "evilfairy": {
+      "class": "EvilFairy",
+      "name": "Fey Dirhai",
+      "gender": "m",
+      "description": "Dunkel, boshaft und tückisch wollen diese Kobolde den Quilicia-Wald in ewige Finsternis stürzen. Ihre Verwandten, die Fey Elhai, hassen sie glühend.",
+      "icon": "faerie-e.bgf",
+      "deadIcon": "faerieXE.bgf",
+      "category": "monster",
+      "level": 60,
+      "difficulty": 5,
+      "speed": 20,
+      "karma": -50,
+      "wimpy": 10,
+      "treasure": "fairy",
+      "attack": [],
+      "attackSpell": [
+        "shock"
+      ],
+      "behavior": [
+        "fight_karma_aggressive",
+        "fight_monsters",
+        "move_regroup"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "small",
+      "resistances": {
+        "holy": -30,
+        "spell_all": 30,
+        "magic": 30,
+        "unholy": 30
+      },
+      "special": {
+        "ranged": "Fernangriff Schock-Projektil mit Licht (attack type 0, spell SHOCK)."
+      }
+    },
+    "evilent": {
+      "class": "EvilEnt",
+      "name": "kranker Baum",
+      "gender": "m",
+      "description": "Dieser lebende Baum nährt sich vom verdorbenen Boden; sein Saft ist schwarz vor Hass.",
+      "icon": "res0003a.bgf",
+      "deadIcon": "res0003d.bgf",
+      "category": "monster",
+      "level": 50,
+      "difficulty": 4,
+      "speed": 0,
+      "karma": -40,
+      "wimpy": 0,
+      "treasure": "ent",
+      "attack": [
+        "whip"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_karma_aggressive",
+        "nomove"
+      ],
+      "attributes": [
+        "nomove"
+      ],
+      "bodyShape": "plant",
+      "size": "huge",
+      "resistances": {
+        "cold": 50,
+        "bludgeon": 50,
+        "slash": -10,
+        "fire": -10
+      },
+      "special": {
+        "onHit": [
+          {
+            "sid": "SID_PALSY",
+            "chance": "1/10",
+            "ifNotEnchanted": true,
+            "sidValue": 16
+          }
+        ],
+        "spellcasting": {
+          "chance": "wie Ent",
+          "spells": [
+            {
+              "sid": "SID_LIGHTNING_BOLT",
+              "sidValue": 1
+            }
+          ]
+        }
+      }
+    },
+    "eviltwin": {
+      "class": "EvilTwin",
+      "name": "böser Zwilling",
+      "gender": "m",
+      "description": "Ein Ebenbild – und doch voller Bosheit.",
+      "icon": "btg.bgf",
+      "deadIcon": "amoebaX.bgf",
+      "category": "summoned",
+      "level": 1,
+      "difficulty": 9,
+      "speed": 12,
+      "karma": 0,
+      "wimpy": 0,
+      "treasure": null,
+      "attack": [
+        "slash"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_monsters",
+        "fight_newbiesafe",
+        "fight_singleminded"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {}
+    },
+    "fairy": {
+      "class": "Fairy",
+      "name": "Fey Elhai",
+      "gender": "m",
+      "description": "Eine der edlen Waldfeen. Die Fey Elhai sind bekannt für ihren tiefen Hass auf ihre dunklen Brüder, die Fey Dirhai.",
+      "icon": "faerie-g.bgf",
+      "deadIcon": "faerieXG.bgf",
+      "category": "monster",
+      "level": 60,
+      "difficulty": 5,
+      "speed": 20,
+      "karma": 50,
+      "wimpy": 10,
+      "treasure": "fairy",
+      "attack": [],
+      "attackSpell": [
+        "shock"
+      ],
+      "behavior": [
+        "fight_karma_aggressive",
+        "fight_monsters",
+        "move_regroup"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "small",
+      "resistances": {
+        "holy": 30,
+        "spell_all": 30,
+        "magic": 30,
+        "unholy": -30
+      },
+      "special": {
+        "ranged": "wie EvilFairy"
+      }
+    },
+    "flytrap": {
+      "class": "flytrap",
+      "name": "Menschenfresserpflanze",
+      "gender": "f",
+      "description": "Eine wilde Pflanze mit einer Vorliebe für Menschenfleisch.",
+      "icon": "ent.bgf",
+      "deadIcon": "shrub.bgf",
+      "category": "monster",
+      "level": 60,
+      "difficulty": 5,
+      "speed": 4,
+      "karma": -25,
+      "wimpy": 0,
+      "treasure": "low_human",
+      "attack": [],
+      "attackSpell": [],
+      "behavior": [],
+      "attributes": [],
+      "bodyShape": "plant",
+      "size": "large",
+      "resistances": {
+        "shock": 60,
+        "acid": 60,
+        "weapon_all": -30
+      }
+    },
+    "frogman": {
+      "class": "Frogman",
+      "name": "Froschmann",
+      "gender": "m",
+      "description": "Ein Froschmann, Angehöriger eines sanften Amphibienvolks. Sie hassen alle, die dem bösen Pfad folgen.",
+      "icon": "frogman.bgf",
+      "deadIcon": "frogmanX.bgf",
+      "category": "monster",
+      "level": 70,
+      "difficulty": 5,
+      "speed": 12,
+      "karma": 80,
+      "wimpy": 0,
+      "treasure": "frogman",
+      "attack": [
+        "pierce"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_karma_aggressive"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {
+        "nonmagic": 65,
+        "unholy": -30,
+        "cold": -10
+      }
+    },
+    "fungusbeast": {
+      "class": "FungusBeast",
+      "name": "Pilzbestie",
+      "gender": "f",
+      "description": "Dieses seltsame Wesen aus weichem, breiigem Fleisch bewegt sich langsam und bedächtig. Riesige Sporen haften an seinem Rücken.",
+      "icon": "fungbst.bgf",
+      "deadIcon": "fungX.bgf",
+      "category": "monster",
+      "level": 50,
+      "difficulty": 1,
+      "speed": 4,
+      "karma": 10,
+      "wimpy": 0,
+      "treasure": "medium",
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_wizard_killer"
+      ],
+      "attributes": [
+        "spasm"
+      ],
+      "bodyShape": "blob",
+      "size": "large",
+      "resistances": {
+        "cold": 60,
+        "pierce": 60,
+        "thrust": 60
+      },
+      "special": {
+        "ranged": "Jeder Angriff erzeugt ein Sporen-Projektil (SomethingShot); ANIM_SLEEP-Spasm."
+      }
+    },
+    "ghost": {
+      "class": "Ghost",
+      "name": "Geist",
+      "gender": "m",
+      "description": "Lumpen und verfaultes Fleisch hängen an den Knochen dieser Erscheinung. Es ist der Geist Far'Nohls, eines einstigen Tyrannen von Meridian, der Leben und Seele den dunklen Künsten opferte.",
+      "icon": "ghost.bgf",
+      "deadIcon": "ghostX.bgf",
+      "category": "boss",
+      "level": 200,
+      "difficulty": 5,
+      "speed": 16,
+      "karma": -100,
+      "wimpy": 0,
+      "treasure": "ghost",
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_wizard_killer",
+        "move_flee_frighteners",
+        "move_walkthrough_walls"
+      ],
+      "attributes": [
+        "one_treasure"
+      ],
+      "bodyShape": "floating-spirit",
+      "size": "large",
+      "resistances": {
+        "fire": 90,
+        "cold": 90,
+        "unholy": 90,
+        "acid": 90,
+        "nonmagic": 90,
+        "magic": -50,
+        "holy": -50
+      },
+      "drawFlags": 3145728,
+      "special": {
+        "spellcasting": {
+          "chance": "1/4",
+          "spellPower": 75,
+          "spells": [
+            {
+              "sid": "SID_FIREBALL",
+              "sidValue": 5
+            }
+          ]
+        }
+      }
+    },
+    "giantrat": {
+      "class": "GiantRat",
+      "name": "Riesenratte",
+      "gender": "f",
+      "description": "Die Riesenratte fletscht trotzig ihre gelben Zähne. Ihr verfilztes Fell stinkt nach Fäulnis.",
+      "icon": "rat.bgf",
+      "deadIcon": "ratX.bgf",
+      "category": "monster",
+      "level": 30,
+      "difficulty": 1,
+      "speed": 16,
+      "karma": -20,
+      "wimpy": 0,
+      "treasure": "rat",
+      "attack": [
+        "claw"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_switchalot"
+      ],
+      "attributes": [],
+      "bodyShape": "quadruped",
+      "size": "small",
+      "resistances": {
+        "fire": -20,
+        "bludgeon": -10,
+        "slash": 20
+      }
+    },
+    "groundworm": {
+      "class": "GroundWorm",
+      "name": "Erdwurm",
+      "gender": "m",
+      "description": "Ein furchterregendes, heimtückisches Wesen. Der Erdwurm lauert unter der Erde und schießt plötzlich hervor, um sein Opfer zu verschlingen.",
+      "icon": "wormm.bgf",
+      "deadIcon": "wormmX.bgf",
+      "category": "monster",
+      "level": 100,
+      "difficulty": 5,
+      "speed": 16,
+      "karma": 30,
+      "wimpy": 0,
+      "treasure": "tough",
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [
+        "acid"
+      ],
+      "behavior": [
+        "fight_aggressive"
+      ],
+      "attributes": [],
+      "bodyShape": "worm",
+      "size": "large",
+      "resistances": {
+        "magic": -20,
+        "bludgeon": -30,
+        "acid": 70,
+        "quake": 50
+      },
+      "special": {
+        "burrow": "Unterirdisch (pbSurfaced=FALSE); erster Angriff = Auftauch-Angriff (ANIM_POPUPATTACK), danach 500 ms PostPop; taucht bei Zustandswechsel ab; hinterlässt Schleimspur-Objekte (GroundWormTrailClump)."
+      }
+    },
+    "groundwormlarva": {
+      "class": "GroundWormLarva",
+      "name": "Erdwurmlarve",
+      "gender": "f",
+      "description": "Die junge Form des Erdwurms, etwas schwächer als die Ausgewachsenen. Auch sie lauert unter der Erde und schießt plötzlich hervor.",
+      "icon": "worms.bgf",
+      "deadIcon": "wormsX.bgf",
+      "category": "monster",
+      "level": 35,
+      "difficulty": 3,
+      "speed": 8,
+      "karma": -10,
+      "wimpy": 0,
+      "treasure": "worm_larva",
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [
+        "acid"
+      ],
+      "behavior": [
+        "fight_karma_aggressive"
+      ],
+      "attributes": [],
+      "bodyShape": "worm",
+      "size": "small",
+      "resistances": {
+        "magic": -20,
+        "bludgeon": -30,
+        "acid": 70,
+        "quake": 50
+      },
+      "special": {
+        "burrow": "wie GroundWorm"
+      }
+    },
+    "groundwormqueen": {
+      "class": "GroundWormQueen",
+      "name": "Erdwurmkönigin",
+      "gender": "f",
+      "description": "Die größte der Erdwürmer. Ihr gewaltiger Hunger hat sie wahnsinnig gemacht; manchmal legt sie Eier in Leichen, aus denen Larven schlüpfen.",
+      "icon": "worml.bgf",
+      "deadIcon": "wormlX.bgf",
+      "category": "boss",
+      "level": 130,
+      "difficulty": 7,
+      "speed": 8,
+      "karma": -30,
+      "wimpy": 0,
+      "treasure": "worm_queen",
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [
+        "acid"
+      ],
+      "behavior": [
+        "fight_hyperaggressive",
+        "fight_singleminded"
+      ],
+      "attributes": [],
+      "bodyShape": "worm",
+      "size": "huge",
+      "resistances": {
+        "magic": -20,
+        "bludgeon": -30,
+        "acid": 70,
+        "quake": 50
+      },
+      "special": {
+        "burrow": "wie GroundWorm"
+      }
+    },
+    "guard": {
+      "class": "Guard",
+      "name": "Wachkuh",
+      "gender": "f",
+      "description": "Die bösartige Wachkuh, die alle Missetäter bestraft.",
+      "icon": "cow.bgf",
+      "deadIcon": null,
+      "category": "monster",
+      "level": 100,
+      "difficulty": 5,
+      "speed": 16,
+      "karma": 100,
+      "wimpy": 0,
+      "treasure": null,
+      "attack": [
+        "bite"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_murderers"
+      ],
+      "attributes": [],
+      "bodyShape": "quadruped",
+      "size": "small",
+      "resistances": {}
+    },
+    "iceperson": {
+      "class": "Iceperson",
+      "name": "Eiswesen",
+      "gender": "n",
+      "description": "Ein Geschöpf ganz aus gefrorenem Wasser. Raureif bedeckt die kristallene Gestalt, ihre gezackten Glieder schimmern im fahlen Licht.",
+      "icon": "iceper_torso.bgf",
+      "deadIcon": "iceperX.bgf",
+      "category": "monster",
+      "level": 90,
+      "difficulty": 8,
+      "speed": 8,
+      "karma": 75,
+      "wimpy": 0,
+      "treasure": "ice_person",
+      "attack": [
+        "pierce"
+      ],
+      "attackSpell": [
+        "cold"
+      ],
+      "behavior": [
+        "fight_karma_aggressive",
+        "fight_wizard_killer",
+        "move_flee_frighteners",
+        "move_regroup"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "large",
+      "resistances": {
+        "cold": 99,
+        "pierce": 40,
+        "thrust": -10,
+        "magic": 20,
+        "weapon_all": 20,
+        "slash": -20,
+        "bludgeon": -10,
+        "fire": -30
+      },
+      "drawFlags": 2097152,
+      "special": {
+        "ranged": "Eisspeer-Wurf: Chance 1/5, Distanz² < 666, nur wenn Speer vorhanden; danach 10 s bis neuer Speer."
+      }
+    },
+    "kriipa": {
+      "class": "Kriipa",
+      "name": "Kriipa",
+      "gender": "m",
+      "description": "Dieses spinnenbeinige Wesen huscht durchs Blätterdach des Dschungels. Reisende werden gewarnt: Die grinsenden Echsen köpfen einen Mann mit einem Hieb ihrer dolchscharfen Klauen.",
+      "icon": "kriipa.bgf",
+      "deadIcon": "kriipaX.bgf",
+      "category": "monster",
+      "level": 160,
+      "difficulty": 6,
+      "speed": 16,
+      "karma": -50,
+      "wimpy": 2,
+      "treasure": "dragonfly",
+      "attack": [
+        "slash"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_hyperaggressive"
+      ],
+      "attributes": [],
+      "bodyShape": "quadruped",
+      "size": "medium",
+      "resistances": {
+        "cold": 30,
+        "shock": -20,
+        "fire": 30,
+        "slash": -25,
+        "nerudite": -25
+      }
+    },
+    "lich": {
+      "class": "Lich",
+      "name": "Königin Venya'cyr",
+      "gender": "f",
+      "description": "Eine edle Frau von atemberaubender Schönheit und vornehmer Haltung. Erstaunlich, wie sie ihr Antlitz all die Jahrhunderte so jung bewahrt hat.",
+      "icon": "licha.bgf",
+      "deadIcon": "lichbx.bgf",
+      "category": "boss",
+      "level": 200,
+      "difficulty": 9,
+      "speed": 16,
+      "karma": -100,
+      "wimpy": 0,
+      "treasure": "lich",
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [
+        "unholy"
+      ],
+      "behavior": [
+        "fight_aggressive",
+        "fight_hyperaggressive",
+        "fight_switchalot",
+        "fight_through_walls",
+        "fight_wizard_killer",
+        "move_flee_frighteners"
+      ],
+      "attributes": [
+        "listen",
+        "receive",
+        "teacher"
+      ],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {
+        "spell_all": 60,
+        "weapon_all": 60,
+        "nerudite": -20,
+        "bludgeon": -20,
+        "silver": -60,
+        "cold": 90,
+        "unholy": 90,
+        "acid": 30,
+        "shock": -20,
+        "fire": -20,
+        "holy": -40,
+        "huntersword": -90
+      },
+      "special": {
+        "magicResist": "Immun gegen schädliche Qor-Sprüche; 60% Resist (x1.5 Dazzle); Spellpower < 30 immer resistiert."
+      }
+    },
+    "lupoggking": {
+      "class": "LupoggKing",
+      "name": "Lupogg-König",
+      "gender": "m",
+      "description": "Der uralte König der Lupoggs herrscht über diese dunklen Höhlen. Die Felswände beben, wenn er brüllt.",
+      "icon": "lupking.bgf",
+      "deadIcon": "lupkingx.bgf",
+      "category": "boss",
+      "level": 200,
+      "difficulty": 9,
+      "speed": 8,
+      "karma": 0,
+      "wimpy": 0,
+      "treasure": "lupogg_king",
+      "attack": [
+        "claw"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_hyperaggressive",
+        "fight_wizard_killer"
+      ],
+      "attributes": [
+        "spasm"
+      ],
+      "bodyShape": "humanoid",
+      "size": "huge",
+      "resistances": {
+        "weapon_all": 40,
+        "pierce": 90,
+        "cold": 90,
+        "shock": 90,
+        "acid": -20,
+        "fire": -20,
+        "nerudite": -40
+      }
+    },
+    "lupogg": {
+      "class": "Lupogg",
+      "name": "Lupogg",
+      "gender": "m",
+      "description": "Dieser Bewohner der Tiefe, hässlich und roh, soll friedlich sein – davon ist jetzt nichts zu merken. Die Lupoggs verteidigen ihr Revier.",
+      "icon": "lupogg.bgf",
+      "deadIcon": "lupoggX.bgf",
+      "category": "monster",
+      "level": 105,
+      "difficulty": 9,
+      "speed": 2,
+      "karma": 75,
+      "wimpy": 0,
+      "treasure": "very_tough",
+      "attack": [
+        "bite"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_wizard_killer"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "large",
+      "resistances": {
+        "weapon_all": 70,
+        "cold": 90,
+        "shock": 90,
+        "acid": -20,
+        "fire": -10,
+        "slash": -10,
+        "nerudite": -25
+      }
+    },
+    "livingstatue": {
+      "class": "LivingStatue",
+      "name": "Statue",
+      "gender": "f",
+      "description": "Diese Statue ist das Abbild eines uralten Kriegers.",
+      "icon": "bta.bgf",
+      "deadIcon": "playerXa.bgf",
+      "category": "monster",
+      "level": 75,
+      "difficulty": 5,
+      "speed": 0,
+      "karma": -40,
+      "wimpy": 0,
+      "treasure": "medium_tough",
+      "attack": [
+        "slash"
+      ],
+      "attackSpell": [],
+      "behavior": [],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {},
+      "special": {
+        "dormant": "Ruht (SPEED_NONE, NPC-Verhalten) bis Spieler in Sicht (Sichtweite 3); wacht auf (100%) -> SPEED_AVERAGE, Name \"living statue\"."
+      }
+    },
+    "molluskmonster": {
+      "class": "MolluskMonster",
+      "name": "Molluskenwesen",
+      "gender": "n",
+      "description": "Ein riesiges, eher friedliches Geschöpf, das nach Nahrung sucht. Es greift selten an – doch sein dicker Panzer und seine kräftige Schere machen es zu einem harten Gegner.",
+      "icon": "mollusk.bgf",
+      "deadIcon": "molX.bgf",
+      "category": "monster",
+      "level": 150,
+      "difficulty": 7,
+      "speed": 12,
+      "karma": 90,
+      "wimpy": 0,
+      "treasure": "tough",
+      "attack": [
+        "bludgeon"
+      ],
+      "attackSpell": [],
+      "behavior": [],
+      "attributes": [],
+      "bodyShape": "mollusk",
+      "size": "large",
+      "resistances": {
+        "magic": -10,
+        "bludgeon": 30,
+        "quake": 50
+      },
+      "special": {
+        "ranged": "Steinwurf: 50% wenn Distanz > Angriffsreichweite und Distanz² <= 100.",
+        "burrow": "Taucht beim Verfolgen/Angriff aus dem Boden auf (1 s nicht kampffähig)."
+      }
+    },
+    "mummy": {
+      "class": "Mummy",
+      "name": "Mumie",
+      "gender": "f",
+      "description": "Eine Mumie. In vergilbte Binden gewickelt schlurft sie dir entgegen.",
+      "icon": "mummy.bgf",
+      "deadIcon": "mummyX.bgf",
+      "category": "monster",
+      "level": 25,
+      "difficulty": 2,
+      "speed": 4,
+      "karma": -20,
+      "wimpy": 0,
+      "treasure": "newbie",
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "move_flee_frighteners"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {
+        "unholy": 20,
+        "holy": -20,
+        "weapon_all": -20
+      }
+    },
+    "blackmummy": {
+      "class": "BlackMummy",
+      "name": "Schattenmumie",
+      "gender": "f",
+      "description": "Eine Schattenmumie. Schwärzer als die Nacht und zäher als ihre Geschwister.",
+      "icon": "mummy.bgf",
+      "deadIcon": "mummyX.bgf",
+      "category": "monster",
+      "level": 25,
+      "difficulty": 4,
+      "speed": 4,
+      "karma": -20,
+      "wimpy": 0,
+      "treasure": "newbie",
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "move_flee_frighteners"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {
+        "unholy": 20,
+        "holy": -20,
+        "weapon_all": -20
+      },
+      "drawFlags": 4194304
+    },
+    "mummynotreasure": {
+      "class": "MummyNoTreasure",
+      "name": "Mumie",
+      "gender": "f",
+      "description": "Eine Mumie. In vergilbte Binden gewickelt schlurft sie dir entgegen.",
+      "icon": "mummy.bgf",
+      "deadIcon": "mummyX.bgf",
+      "category": "monster",
+      "level": 25,
+      "difficulty": 2,
+      "speed": 4,
+      "karma": -20,
+      "wimpy": 0,
+      "treasure": null,
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "move_flee_frighteners"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {
+        "unholy": 20,
+        "holy": -20,
+        "weapon_all": -20
+      }
+    },
+    "narthylworm": {
+      "class": "NarthylWorm",
+      "name": "Narthyl-Wurm",
+      "gender": "m",
+      "description": "Trotz seiner fremdartigen Hässlichkeit sind die geschmeidigen Bewegungen des Narthyl-Wurms hypnotisch. Jeder Nerv schreit Gefahr, doch ein tranceartiger Zustand senkt sich über deinen Geist.",
+      "icon": "darkbeas.bgf",
+      "deadIcon": "dkbx.bgf",
+      "category": "monster",
+      "level": 120,
+      "difficulty": 7,
+      "speed": 8,
+      "karma": 0,
+      "wimpy": 0,
+      "treasure": "narthyl_worm",
+      "attack": [
+        "pierce"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_hyperaggressive"
+      ],
+      "attributes": [],
+      "bodyShape": "worm",
+      "size": "large",
+      "resistances": {
+        "pierce": 70,
+        "thrust": 70,
+        "unholy": 70,
+        "shock": 70,
+        "fire": 70,
+        "holy": -20
+      },
+      "special": {
+        "onHit": [
+          {
+            "effect": "AddExertion",
+            "amount": "random(3,7)*10000",
+            "note": "Ausdauerverlust beim Spieler"
+          }
+        ]
+      }
+    },
+    "orc": {
+      "class": "Orc",
+      "name": "Ork",
+      "gender": "m",
+      "description": "Dieser schmutzstarrende Diener Qors überragt jeden Menschen. In einer knorrigen Hand hält er eine Klinge.",
+      "icon": "orc.bgf",
+      "deadIcon": "orcX.bgf",
+      "category": "monster",
+      "level": 45,
+      "difficulty": 6,
+      "speed": 12,
+      "karma": -40,
+      "wimpy": 10,
+      "treasure": "orc",
+      "attack": [
+        "slash"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_switchalot",
+        "move_flee_frighteners"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "large",
+      "resistances": {
+        "unholy": 40,
+        "pierce": 40,
+        "slash": 20,
+        "holy": -25
+      },
+      "special": {
+        "fear": "Flieht vor Riesenratten (IsFrightenedOf GiantRat)."
+      }
+    },
+    "orcpitboss": {
+      "class": "OrcPitBoss",
+      "name": "Ork-Grubenboss",
+      "gender": "m",
+      "description": "Um Grubenboss zu werden, musste dieser Ork über hundert seinesgleichen erschlagen. In den Höhlen gibt es keinen furchterregenderen Krieger.",
+      "icon": "OrcPitB.bgf",
+      "deadIcon": "OrcPitbX.bgf",
+      "category": "boss",
+      "level": 115,
+      "difficulty": 7,
+      "speed": 16,
+      "karma": -90,
+      "wimpy": 0,
+      "treasure": "orc_chief",
+      "attack": [
+        "slash"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_hyperaggressive",
+        "fight_switchalot"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "large",
+      "resistances": {
+        "spell_all": 40,
+        "unholy": 40,
+        "pierce": 40,
+        "slash": 20,
+        "magic": -25,
+        "holy": -50
+      },
+      "special": {
+        "doubleAttack": "Zweiter Schlag 400 ms nach jedem zweiten Angriff (eine Animation)."
+      }
+    },
+    "caveorc": {
+      "class": "CaveOrc",
+      "name": "Höhlenork",
+      "gender": "m",
+      "description": "Dieser dreckige Ork streift hungrig durch die Höhlen, auf der Suche nach Edelsteinen und Futter.",
+      "icon": "OrcCave.bgf",
+      "deadIcon": "OrcCaveX.bgf",
+      "category": "monster",
+      "level": 80,
+      "difficulty": 7,
+      "speed": 16,
+      "karma": -55,
+      "wimpy": 4,
+      "treasure": "cave_orc",
+      "attack": [
+        "slash"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_hyperaggressive",
+        "fight_switchalot",
+        "move_flee_frighteners"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "large",
+      "resistances": {
+        "unholy": 40,
+        "pierce": 20,
+        "slash": 25,
+        "holy": -20
+      },
+      "special": {
+        "fear": "Flieht vor Riesenratten."
+      }
+    },
+    "orcwizard": {
+      "class": "OrcWizard",
+      "name": "Ork-Zauberer",
+      "gender": "m",
+      "description": "Die Ork-Zauberer schöpfen dunkle Kräfte aus der Tiefe und setzen den Willen ihres Häuptlings durch. Woher die Orks die Magie haben, weiß niemand.",
+      "icon": "orcwiza.bgf",
+      "deadIcon": "orcwizaX.bgf",
+      "category": "monster",
+      "level": 80,
+      "difficulty": 7,
+      "speed": 12,
+      "karma": -60,
+      "wimpy": 3,
+      "treasure": "orc_wizard",
+      "attack": [
+        "bludgeon"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_hyperaggressive",
+        "move_flee_frighteners"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "large",
+      "resistances": {
+        "unholy": 40,
+        "pierce": 40,
+        "slash": 40,
+        "holy": -25
+      },
+      "special": {
+        "spellcasting": {
+          "chance": "1/10",
+          "spellPower": 75,
+          "manaStart": 10,
+          "manaRegen": "+1 je 1000 ms bis 10",
+          "spells": [
+            {
+              "sid": "SID_SLITHERBOLT",
+              "roll": "<40",
+              "mana": 5,
+              "sidValue": 117
+            },
+            {
+              "sid": "SID_KILLING_FIELDS",
+              "roll": "40-49",
+              "mana": 10,
+              "sidValue": 39
+            },
+            {
+              "sid": "SID_PURGE",
+              "roll": "50-84",
+              "mana": 4,
+              "sidValue": 168
+            },
+            {
+              "sid": "SID_MANA_BOMB",
+              "roll": "85-89",
+              "mana": 6,
+              "sidValue": 68
+            },
+            {
+              "sid": "SID_FORGET",
+              "roll": "90-100",
+              "mana": 4,
+              "sidValue": 102
+            }
+          ]
+        }
+      }
+    },
+    "redant": {
+      "class": "RedAnt",
+      "name": "Mutantenameise",
+      "gender": "f",
+      "description": "Der Panzer der Mutantenameise ist dick und hart, ihre Zangen scharf und tödlich. Sie ist stärker und bösartiger als ihre dunkle Verwandte.",
+      "icon": "antr.bgf",
+      "deadIcon": "antrX.bgf",
+      "category": "monster",
+      "level": 65,
+      "difficulty": 8,
+      "speed": 12,
+      "karma": -40,
+      "wimpy": 0,
+      "treasure": "tough",
+      "attack": [
+        "bite"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_wizard_killer"
+      ],
+      "attributes": [
+        "spasm"
+      ],
+      "bodyShape": "insect",
+      "size": "medium",
+      "resistances": {
+        "fire": 65,
+        "bludgeon": 65,
+        "nerudite": -10,
+        "magic": -10
+      }
+    },
+    "reflection": {
+      "class": "Reflection",
+      "name": "Spiegelbild",
+      "gender": "n",
+      "description": "Ein Spiegelbild, das sich gegen dich wendet.",
+      "icon": "btg.bgf",
+      "deadIcon": "amoebaX.bgf",
+      "category": "summoned",
+      "level": 45,
+      "difficulty": 4,
+      "speed": 12,
+      "karma": 0,
+      "wimpy": 0,
+      "treasure": null,
+      "attack": [
+        "slash"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_monsters",
+        "fight_newbiesafe"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {}
+    },
+    "revenant": {
+      "class": "Revenant",
+      "name": "Wiedergänger",
+      "gender": "m",
+      "description": "Die Strafe für eine Missetat: ein Kampf auf Leben und Tod mit einer verlorenen Seele. Er verfolgt nur den Mörder – wer sich einmischt, teilt dessen Schicksal.",
+      "icon": "zombie.bgf",
+      "deadIcon": null,
+      "category": "summoned",
+      "level": 55,
+      "difficulty": 5,
+      "speed": 16,
+      "karma": 20,
+      "wimpy": 0,
+      "treasure": null,
+      "attack": [
+        "slash"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_singleminded",
+        "fight_through_walls",
+        "move_walkthrough_walls"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {
+        "spell_all": 40,
+        "magic": 40
+      }
+    },
+    "scorpion": {
+      "class": "Scorpion",
+      "name": "Riesenskorpion",
+      "gender": "m",
+      "description": "Der tödliche Stachel des Skorpions ragt hoch in die Luft, sein gepanzerter Leib schützt ihn vor allen außer den stärksten Hieben.",
+      "icon": "scorp.bgf",
+      "deadIcon": "scorpX.bgf",
+      "category": "monster",
+      "level": 55,
+      "difficulty": 8,
+      "speed": 16,
+      "karma": 20,
+      "wimpy": 40,
+      "treasure": "medium_tough",
+      "attack": [
+        "sting"
+      ],
+      "attackSpell": [],
+      "behavior": [],
+      "attributes": [],
+      "bodyShape": "crustacean/scorpion",
+      "size": "large",
+      "resistances": {
+        "acid": 60,
+        "slash": 60,
+        "bludgeon": -10
+      },
+      "special": {
+        "onHit": [
+          {
+            "sid": "SID_PALSY",
+            "chance": "1/5",
+            "ifNotEnchanted": true,
+            "sidValue": 16
+          }
+        ]
+      }
+    },
+    "shadowbeast": {
+      "class": "Shadowbeast",
+      "name": "Schattenbestie",
+      "gender": "f",
+      "description": "Eine magische Missgeburt aus Dschungel-Kriipa und einem halbstofflichen Wesen der Unterwelt. Wo sie ist, wird die Luft dunkler.",
+      "icon": "shadow.bgf",
+      "deadIcon": "shadowX.bgf",
+      "category": "monster",
+      "level": 200,
+      "difficulty": 7,
+      "speed": 12,
+      "karma": -100,
+      "wimpy": 10,
+      "treasure": "very_tough",
+      "attack": [
+        "slash"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive"
+      ],
+      "attributes": [],
+      "bodyShape": "quadruped",
+      "size": "large",
+      "resistances": {
+        "cold": 20,
+        "slash": 60,
+        "fire": -15,
+        "shock": -15,
+        "holy": -25
+      },
+      "drawFlags": 2097152,
+      "special": {
+        "darkness": "Verringert Raumlicht um 15."
+      }
+    },
+    "skeleton": {
+      "class": "Skeleton",
+      "name": "Skelett",
+      "gender": "n",
+      "description": "Ein paar Fetzen verfaulten Fleisches hängen an diesen Knochen. Leblos, und doch von dunkler Magie bewegt.",
+      "icon": "skelbody.bgf",
+      "deadIcon": "skelX.bgf",
+      "category": "monster",
+      "level": 75,
+      "difficulty": 5,
+      "speed": 12,
+      "karma": -50,
+      "wimpy": 0,
+      "treasure": "tough",
+      "attack": [
+        "thrust"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_switchalot",
+        "move_flee_frighteners"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {
+        "pierce": 70,
+        "thrust": 70,
+        "unholy": 70,
+        "shock": 70,
+        "cold": 70,
+        "fire": -10,
+        "holy": -20,
+        "bludgeon": -20
+      },
+      "alwaysDrops": "longsword"
+    },
+    "batteredskeleton": {
+      "class": "BatteredSkeleton",
+      "name": "verwittertes Skelett",
+      "gender": "n",
+      "description": "Menschliche Knochen unter einem verbeulten, eindeutig nichtmenschlichen Schädel. Zischende Flüssigkeit tropft von seinen Zähnen und frisst kleine Löcher in den Boden.",
+      "icon": "skelbody.bgf",
+      "deadIcon": "skelX.bgf",
+      "category": "monster",
+      "level": 60,
+      "difficulty": 4,
+      "speed": 12,
+      "karma": -70,
+      "wimpy": 0,
+      "treasure": "skeleton2",
+      "attack": [
+        "thrust"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_switchalot",
+        "move_flee_frighteners"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {
+        "pierce": 70,
+        "thrust": 70,
+        "unholy": 70,
+        "shock": 70,
+        "cold": 70,
+        "fire": -10,
+        "holy": -20,
+        "bludgeon": -20
+      },
+      "special": {
+        "onHit": [
+          {
+            "sid": "SID_PALSY",
+            "chance": "1/10",
+            "sidValue": 16
+          },
+          {
+            "sid": "SID_DEMENTIA",
+            "chance": "1/10",
+            "sidValue": 69
+          }
+        ]
+      }
+    },
+    "daemonskeleton": {
+      "class": "DaemonSkeleton",
+      "name": "Dämonenskelett",
+      "gender": "n",
+      "description": "Schon der Anblick dieser widernatürlichen Kreatur lähmt manchen vor Schreck. Welches dunkle Ritual hat sie hervorgebracht?",
+      "icon": "skelbody.bgf",
+      "deadIcon": "skelX.bgf",
+      "category": "monster",
+      "level": 130,
+      "difficulty": 8,
+      "speed": 16,
+      "karma": -90,
+      "wimpy": 0,
+      "treasure": "skeleton4",
+      "attack": [
+        "thrust"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_hyperaggressive",
+        "fight_switchalot",
+        "move_flee_frighteners"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "large",
+      "resistances": {
+        "pierce": 70,
+        "thrust": 70,
+        "unholy": 70,
+        "shock": 70,
+        "fire": 70,
+        "cold": -10,
+        "holy": -20,
+        "bludgeon": -20
+      }
+    },
+    "tuskedskeleton": {
+      "class": "TuskedSkeleton",
+      "name": "Hauerskelett",
+      "gender": "n",
+      "description": "Menschliche Knochen unter einem Schädel mit großen Hauern. Welches dunkle Ritual hat diese Missgeburt hervorgebracht?",
+      "icon": "skelbody.bgf",
+      "deadIcon": "skelX.bgf",
+      "category": "monster",
+      "level": 100,
+      "difficulty": 6,
+      "speed": 16,
+      "karma": -70,
+      "wimpy": 0,
+      "treasure": "skeleton3",
+      "attack": [
+        "slash"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_switchalot",
+        "move_flee_frighteners"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {
+        "pierce": 70,
+        "thrust": 70,
+        "unholy": 70,
+        "shock": 70,
+        "cold": 70,
+        "fire": -10,
+        "holy": -20,
+        "bludgeon": -20
+      }
+    },
+    "slime": {
+      "class": "Slime",
+      "name": "Schleim",
+      "gender": "m",
+      "description": "Eine zitternde Masse aus Glibber, die eine widerliche Spur hinterlässt. In ihrem durchsichtigen Inneren sind die Reste ihres letzten Opfers zu sehen.",
+      "icon": "amoeba.bgf",
+      "deadIcon": "amoebaX.bgf",
+      "category": "monster",
+      "level": 35,
+      "difficulty": 4,
+      "speed": 8,
+      "karma": 0,
+      "wimpy": 0,
+      "treasure": "wimpy_medium",
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [
+        "acid"
+      ],
+      "behavior": [
+        "fight_aggressive",
+        "fight_singleminded"
+      ],
+      "attributes": [],
+      "bodyShape": "blob",
+      "size": "medium",
+      "resistances": {
+        "shock": 45,
+        "unholy": 45,
+        "holy": 45,
+        "acid": 45,
+        "weapon_all": 45,
+        "bludgeon": 10,
+        "cold": -25
+      },
+      "drawFlags": 3145728
+    },
+    "snowrat": {
+      "class": "SnowRat",
+      "name": "Schneeratte",
+      "gender": "f",
+      "description": "Die eisgeborene Verwandte des Festlandungeziefers – weniger ekelhaft, aber ein weit härterer Gegner.",
+      "icon": "srat.bgf",
+      "deadIcon": "sratX.bgf",
+      "category": "monster",
+      "level": 60,
+      "difficulty": 4,
+      "speed": 16,
+      "karma": -50,
+      "wimpy": 0,
+      "treasure": "rat",
+      "attack": [
+        "claw"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive"
+      ],
+      "attributes": [],
+      "bodyShape": "quadruped",
+      "size": "small",
+      "resistances": {
+        "fire": -50,
+        "cold": 50
+      }
+    },
+    "spiderbaby": {
+      "class": "SpiderBaby",
+      "name": "Spinnenjunges",
+      "gender": "n",
+      "description": "Kleiner und schwächer als seine großen Verwandten, aber trotzdem gefährlich. Sein weicher Bauch ist prall von der letzten Mahlzeit.",
+      "icon": "spdrby.bgf",
+      "deadIcon": "spdrbyX.bgf",
+      "category": "monster",
+      "level": 25,
+      "difficulty": 4,
+      "speed": 8,
+      "karma": -10,
+      "wimpy": 0,
+      "treasure": "wimpy",
+      "attack": [
+        "bite"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive"
+      ],
+      "attributes": [
+        "spasm"
+      ],
+      "bodyShape": "spider",
+      "size": "small",
+      "resistances": {
+        "bludgeon": -15
+      }
+    },
+    "spiderqueen": {
+      "class": "SpiderQueen",
+      "name": "Spinnenkönigin",
+      "gender": "f",
+      "description": "Der riesige Eiersack macht die Spinnenkönigin langsam und schwer, doch in ihren vielen roten Augen glimmt dunkle Klugheit.",
+      "icon": "spdrqu.bgf",
+      "deadIcon": "spdrquX.bgf",
+      "category": "boss",
+      "level": 165,
+      "difficulty": 9,
+      "speed": 0,
+      "karma": -90,
+      "wimpy": 0,
+      "treasure": "spider_queen",
+      "attack": [
+        "bite"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_switchalot",
+        "nomove"
+      ],
+      "attributes": [
+        "nomove"
+      ],
+      "bodyShape": "spider",
+      "size": "huge",
+      "resistances": {
+        "spell_all": 85,
+        "magic": 85,
+        "bludgeon": 85,
+        "acid": -50,
+        "thrust": -20
+      },
+      "special": {
+        "poison": {
+          "chance": 15,
+          "lossRate": 2500,
+          "durationMs": 30000
+        }
+      }
+    },
+    "spectralmummy": {
+      "class": "SpectralMummy",
+      "name": "Gespenstermumie",
+      "gender": "f",
+      "description": "Eine Gespenstermumie. Halb durchsichtig schwebt sie zwischen den Gräbern.",
+      "icon": "mummy.bgf",
+      "deadIcon": "mummyX.bgf",
+      "category": "monster",
+      "level": 40,
+      "difficulty": 5,
+      "speed": 8,
+      "karma": -35,
+      "wimpy": 0,
+      "treasure": "mummy",
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "move_flee_frighteners"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {
+        "unholy": 20,
+        "holy": -10,
+        "fire": -10,
+        "shock": -15,
+        "bludgeon": -15
+      },
+      "drawFlags": 2097152
+    },
+    "spider": {
+      "class": "Spider",
+      "name": "Spinne",
+      "gender": "f",
+      "description": "Dieses seltsam zarte Geschöpf bewegt sich lautlos und schlägt mit tödlicher Präzision zu.",
+      "icon": "spider.bgf",
+      "deadIcon": "spiderX.bgf",
+      "category": "monster",
+      "level": 50,
+      "difficulty": 4,
+      "speed": 12,
+      "karma": -30,
+      "wimpy": 30,
+      "treasure": "medium_tough",
+      "attack": [
+        "bite"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "move_regroup"
+      ],
+      "attributes": [
+        "spasm"
+      ],
+      "bodyShape": "spider",
+      "size": "medium",
+      "resistances": {
+        "spell_all": 50,
+        "magic": 50,
+        "nonmagic": -15
+      },
+      "special": {
+        "poison": {
+          "chance": 30,
+          "lossRate": 2500,
+          "durationMs": 180000
+        }
+      }
+    },
+    "stonetroll": {
+      "class": "StoneTroll",
+      "name": "Steintroll",
+      "gender": "m",
+      "description": "Dieser Steintroll bewacht das Herz von Zjiria und starrt jeden finster an. Lauf lieber.",
+      "icon": "Troll.bgf",
+      "deadIcon": "TrollX.bgf",
+      "category": "boss",
+      "level": 120,
+      "difficulty": 8,
+      "speed": 16,
+      "karma": -100,
+      "wimpy": 0,
+      "treasure": "medium_human",
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "large",
+      "resistances": {
+        "holy": 80,
+        "acid": 80,
+        "nerudite": -80,
+        "nonmagic": 80
+      }
+    },
+    "thrasher": {
+      "class": "Thrasher",
+      "name": "Drescher",
+      "gender": "m",
+      "description": "Ein massiges Ungetüm mit peitschenden Gliedern.",
+      "icon": "res0001a.bgf",
+      "deadIcon": "res0001b.bgf",
+      "category": "boss",
+      "level": 150,
+      "difficulty": 7,
+      "speed": 16,
+      "karma": -75,
+      "wimpy": 0,
+      "treasure": "thrasher",
+      "attack": [
+        "bludgeon"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_hyperaggressive",
+        "fight_lashout",
+        "move_flee_frighteners"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "large",
+      "resistances": {
+        "pierce": 50,
+        "slash": 50,
+        "bludgeon": 50,
+        "unholy": 50,
+        "shock": 90,
+        "fire": -20,
+        "holy": -15
+      },
+      "special": {
+        "onHit": [
+          {
+            "sid": "SID_PALSY",
+            "chance": "1/20",
+            "sidValue": 16
+          }
+        ],
+        "spin": "Bei >1 erreichbaren Spielern Wirbelangriff: alle erreichbaren Spieler 7–15 Schaden.",
+        "dormant": "Ruht bis Spieler <= 7 Felder in Sichtlinie."
+      }
+    },
+    "troll": {
+      "class": "Troll",
+      "name": "Troll",
+      "gender": "m",
+      "description": "Mit knotigen Fleischwülsten bedeckt; der Troll hat mächtige Arme und rasiermesserscharfe Krallen.",
+      "icon": "troll.bgf",
+      "deadIcon": "trollX.bgf",
+      "category": "monster",
+      "level": 90,
+      "difficulty": 8,
+      "speed": 12,
+      "karma": -75,
+      "wimpy": 0,
+      "treasure": "high_human",
+      "attack": [
+        "hit"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "large",
+      "resistances": {
+        "holy": 80,
+        "acid": 80,
+        "nerudite": -80,
+        "nonmagic": 80
+      }
+    },
+    "yeti": {
+      "class": "Yeti",
+      "name": "Yeti",
+      "gender": "m",
+      "description": "Dieses prächtige weiße Tier überragt alles. Yetis sind äußerst gefährlich, vor allem in ihren Eishöhlen.",
+      "icon": "yeti.bgf",
+      "deadIcon": "yetiX.bgf",
+      "category": "boss",
+      "level": 170,
+      "difficulty": 9,
+      "speed": 8,
+      "karma": 0,
+      "wimpy": 0,
+      "treasure": "very_tough",
+      "attack": [
+        "claw"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_aggressive",
+        "fight_switchalot",
+        "move_optimal_range"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "huge",
+      "resistances": {
+        "cold": 90,
+        "shock": 90,
+        "thrust": 90,
+        "slash": 90,
+        "pierce": 90,
+        "fire": -45
+      },
+      "special": {
+        "spellcasting": {
+          "chance": "1/2 wenn Raum verzaubert",
+          "spells": [
+            {
+              "sid": "SID_DISCORDANCE",
+              "sidValue": 43
+            }
+          ]
+        }
+      }
+    },
+    "zombie": {
+      "class": "Zombie",
+      "name": "Zombie",
+      "gender": "m",
+      "description": "Ungezügeltes Böses hat diesen Toten wiederbelebt. Weißes, breiiges Fleisch klebt an weichen Knochen; die wässrigen Augen starren blind.",
+      "icon": "zombie.bgf",
+      "deadIcon": "zombieX.bgf",
+      "category": "monster",
+      "level": 55,
+      "difficulty": 4,
+      "speed": 4,
+      "karma": -45,
+      "wimpy": 0,
+      "treasure": "zombie",
+      "attack": [
+        "slash"
+      ],
+      "attackSpell": [],
+      "behavior": [
+        "fight_karma_aggressive",
+        "move_flee_frighteners"
+      ],
+      "attributes": [],
+      "bodyShape": "humanoid",
+      "size": "medium",
+      "resistances": {
+        "unholy": 50,
+        "holy": -25
+      },
+      "special": {
+        "onHit": [
+          {
+            "sid": "SID_DEMENTIA",
+            "chance": "1/5",
+            "sidValue": 69
+          }
+        ]
+      }
+    }
+  }
+}

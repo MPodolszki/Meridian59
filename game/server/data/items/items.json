@@ -1559,6 +1559,792 @@
         "item": "mysticsword",
         "weight": 4
       }
+    ],
+    "avar_chief": [
+      {
+        "item": "money",
+        "weight": 10
+      }
+    ],
+    "avar_shaman": [],
+    "avar": [
+      {
+        "item": "bread",
+        "weight": 15
+      },
+      {
+        "item": "money",
+        "weight": 14
+      },
+      {
+        "item": "turkeyleg",
+        "weight": 5
+      }
+    ],
+    "cave_orc": [
+      {
+        "item": "orctooth",
+        "weight": 30
+      },
+      {
+        "item": "scimitar",
+        "weight": 8
+      },
+      {
+        "item": "goldshield",
+        "weight": 5
+      },
+      {
+        "item": "emerald",
+        "weight": 3
+      },
+      {
+        "item": "sapphire",
+        "weight": 3
+      },
+      {
+        "item": "diamond",
+        "weight": 3
+      },
+      {
+        "item": "ruby",
+        "weight": 3
+      },
+      {
+        "item": "money",
+        "weight": 2
+      },
+      {
+        "item": "knightshield",
+        "weight": 1
+      }
+    ],
+    "dark_angel": [
+      {
+        "item": "bluedragonscale",
+        "weight": 10
+      },
+      {
+        "item": "entrootberry",
+        "weight": 20
+      },
+      {
+        "item": "inkycap",
+        "weight": 5
+      }
+    ],
+    "black_spider": [],
+    "dragonfly": [
+      {
+        "item": "meatpie",
+        "weight": 20
+      },
+      {
+        "item": "money",
+        "weight": 7
+      }
+    ],
+    "ent": [
+      {
+        "item": "entrootberry",
+        "weight": 40
+      },
+      {
+        "item": "snack",
+        "weight": 30
+      },
+      {
+        "item": "redmushroom",
+        "weight": 9
+      },
+      {
+        "item": "sapphire",
+        "weight": 8
+      },
+      {
+        "item": "emerald",
+        "weight": 8
+      },
+      {
+        "item": "purplemushroom",
+        "weight": 3
+      }
+    ],
+    "fairy": [
+      {
+        "item": "mushroom",
+        "weight": 20
+      },
+      {
+        "item": "elderberry",
+        "weight": 15
+      },
+      {
+        "item": "herbs",
+        "weight": 10
+      },
+      {
+        "item": "snack",
+        "weight": 5
+      },
+      {
+        "item": "redmushroom",
+        "weight": 5
+      },
+      {
+        "item": "bluemushroom",
+        "weight": 5
+      },
+      {
+        "item": "entrootberry",
+        "weight": 5
+      }
+    ],
+    "frogman": [
+      {
+        "item": "bluemushroom",
+        "weight": 24
+      },
+      {
+        "item": "mushroom",
+        "weight": 24
+      },
+      {
+        "item": "elderberry",
+        "weight": 24
+      },
+      {
+        "item": "entrootberry",
+        "weight": 9
+      },
+      {
+        "item": "purplemushroom",
+        "weight": 9
+      },
+      {
+        "item": "inkycap",
+        "weight": 4
+      }
+    ],
+    "ghost": [
+      {
+        "item": "mysticsword",
+        "weight": 10
+      },
+      {
+        "item": "knightshield",
+        "weight": 10
+      },
+      {
+        "item": "scimitar",
+        "weight": 7
+      },
+      {
+        "item": "diamond",
+        "weight": 5
+      },
+      {
+        "item": "ruby",
+        "weight": 5
+      }
+    ],
+    "high_human": [
+      {
+        "item": "meatpie",
+        "weight": 10
+      },
+      {
+        "item": "goldshield",
+        "weight": 8
+      },
+      {
+        "item": "longsword",
+        "weight": 7
+      },
+      {
+        "item": "money",
+        "weight": 7
+      },
+      {
+        "item": "sapphire",
+        "weight": 6
+      },
+      {
+        "item": "diamond",
+        "weight": 6
+      },
+      {
+        "item": "bluemushroom",
+        "weight": 5
+      },
+      {
+        "item": "bluedragonscale",
+        "weight": 3
+      }
+    ],
+    "ice_person": [
+      {
+        "item": "waterskin",
+        "weight": 30
+      },
+      {
+        "item": "sapphire",
+        "weight": 25
+      },
+      {
+        "item": "diamond",
+        "weight": 25
+      },
+      {
+        "item": "inkycap",
+        "weight": 10
+      },
+      {
+        "item": "purplemushroom",
+        "weight": 5
+      }
+    ],
+    "lich": [
+      {
+        "item": "scimitar",
+        "weight": 15
+      },
+      {
+        "item": "longsword",
+        "weight": 10
+      },
+      {
+        "item": "knightshield",
+        "weight": 10
+      },
+      {
+        "item": "mysticsword",
+        "weight": 5
+      }
+    ],
+    "low_human": [
+      {
+        "item": "herbs",
+        "weight": 17
+      },
+      {
+        "item": "mushroom",
+        "weight": 13
+      },
+      {
+        "item": "mace",
+        "weight": 12
+      },
+      {
+        "item": "money",
+        "weight": 10
+      },
+      {
+        "item": "mug",
+        "weight": 10
+      },
+      {
+        "item": "elderberry",
+        "weight": 9
+      },
+      {
+        "item": "apple",
+        "weight": 8
+      },
+      {
+        "item": "shortsword",
+        "weight": 7
+      },
+      {
+        "item": "metalshield",
+        "weight": 5
+      },
+      {
+        "item": "leatherarmor",
+        "weight": 5
+      },
+      {
+        "item": "emerald",
+        "weight": 4
+      }
+    ],
+    "lupogg_king": [
+      {
+        "item": "longsword",
+        "weight": 20
+      },
+      {
+        "item": "scimitar",
+        "weight": 20
+      },
+      {
+        "item": "knightshield",
+        "weight": 8
+      },
+      {
+        "item": "mysticsword",
+        "weight": 4
+      }
+    ],
+    "medium_tough": [
+      {
+        "item": "redmushroom",
+        "weight": 30
+      },
+      {
+        "item": "snack",
+        "weight": 16
+      },
+      {
+        "item": "purplemushroom",
+        "weight": 15
+      },
+      {
+        "item": "emerald",
+        "weight": 10
+      },
+      {
+        "item": "sapphire",
+        "weight": 10
+      },
+      {
+        "item": "bluemushroom",
+        "weight": 8
+      },
+      {
+        "item": "diamond",
+        "weight": 2
+      },
+      {
+        "item": "ruby",
+        "weight": 2
+      },
+      {
+        "item": "leatherarmor",
+        "weight": 2
+      },
+      {
+        "item": "longsword",
+        "weight": 1
+      },
+      {
+        "item": "hammer",
+        "weight": 1
+      },
+      {
+        "item": "axe",
+        "weight": 1
+      },
+      {
+        "item": "chainarmor",
+        "weight": 1
+      }
+    ],
+    "medium_human": [
+      {
+        "item": "solagh",
+        "weight": 40
+      }
+    ],
+    "medium": [
+      {
+        "item": "elderberry",
+        "weight": 30
+      },
+      {
+        "item": "redmushroom",
+        "weight": 17
+      },
+      {
+        "item": "bluemushroom",
+        "weight": 17
+      },
+      {
+        "item": "purplemushroom",
+        "weight": 10
+      },
+      {
+        "item": "snack",
+        "weight": 10
+      },
+      {
+        "item": "sapphire",
+        "weight": 10
+      },
+      {
+        "item": "emerald",
+        "weight": 6
+      }
+    ],
+    "narthyl_worm": [
+      {
+        "item": "bluedragonscale",
+        "weight": 15
+      }
+    ],
+    "orc_chief": [
+      {
+        "item": "orctooth",
+        "weight": 40
+      },
+      {
+        "item": "scimitar",
+        "weight": 12
+      },
+      {
+        "item": "flask",
+        "weight": 2
+      },
+      {
+        "item": "money",
+        "weight": 2
+      }
+    ],
+    "orc": [
+      {
+        "item": "orctooth",
+        "weight": 40
+      },
+      {
+        "item": "purplemushroom",
+        "weight": 20
+      },
+      {
+        "item": "scimitar",
+        "weight": 16
+      },
+      {
+        "item": "metalshield",
+        "weight": 10
+      },
+      {
+        "item": "leatherarmor",
+        "weight": 5
+      },
+      {
+        "item": "shadowamulet",
+        "weight": 3
+      },
+      {
+        "item": "money",
+        "weight": 2
+      }
+    ],
+    "orc_wizard": [
+      {
+        "item": "orctooth",
+        "weight": 35
+      },
+      {
+        "item": "solagh",
+        "weight": 6
+      },
+      {
+        "item": "purplemushroom",
+        "weight": 6
+      },
+      {
+        "item": "torch",
+        "weight": 5
+      },
+      {
+        "item": "flask",
+        "weight": 4
+      },
+      {
+        "item": "money",
+        "weight": 2
+      }
+    ],
+    "rat": [
+      {
+        "item": "herbs",
+        "weight": 30
+      },
+      {
+        "item": "mushroom",
+        "weight": 20
+      },
+      {
+        "item": "elderberry",
+        "weight": 15
+      },
+      {
+        "item": "snack",
+        "weight": 15
+      },
+      {
+        "item": "money",
+        "weight": 10
+      },
+      {
+        "item": "bluemushroom",
+        "weight": 5
+      },
+      {
+        "item": "redmushroom",
+        "weight": 5
+      }
+    ],
+    "skeleton3": [
+      {
+        "item": "bluemushroom",
+        "weight": 15
+      },
+      {
+        "item": "snack",
+        "weight": 14
+      },
+      {
+        "item": "inkycap",
+        "weight": 13
+      },
+      {
+        "item": "money",
+        "weight": 12
+      },
+      {
+        "item": "emerald",
+        "weight": 10
+      },
+      {
+        "item": "sapphire",
+        "weight": 10
+      },
+      {
+        "item": "diamond",
+        "weight": 8
+      }
+    ],
+    "skeleton4": [
+      {
+        "item": "bluemushroom",
+        "weight": 23
+      },
+      {
+        "item": "bluedragonscale",
+        "weight": 10
+      },
+      {
+        "item": "emerald",
+        "weight": 10
+      },
+      {
+        "item": "sapphire",
+        "weight": 10
+      },
+      {
+        "item": "diamond",
+        "weight": 8
+      },
+      {
+        "item": "money",
+        "weight": 7
+      },
+      {
+        "item": "inkycap",
+        "weight": 5
+      }
+    ],
+    "spider_queen": [
+      {
+        "item": "emerald",
+        "weight": 10
+      },
+      {
+        "item": "sapphire",
+        "weight": 8
+      },
+      {
+        "item": "diamond",
+        "weight": 7
+      },
+      {
+        "item": "bluedragonscale",
+        "weight": 6
+      },
+      {
+        "item": "ruby",
+        "weight": 4
+      }
+    ],
+    "very_tough": [
+      {
+        "item": "bluemushroom",
+        "weight": 25
+      },
+      {
+        "item": "inkycap",
+        "weight": 14
+      },
+      {
+        "item": "purplemushroom",
+        "weight": 12
+      },
+      {
+        "item": "sapphire",
+        "weight": 12
+      },
+      {
+        "item": "diamond",
+        "weight": 9
+      },
+      {
+        "item": "ruby",
+        "weight": 7
+      },
+      {
+        "item": "bluedragonscale",
+        "weight": 7
+      },
+      {
+        "item": "mysticsword",
+        "weight": 1
+      }
+    ],
+    "wimpy": [
+      {
+        "item": "herbs",
+        "weight": 30
+      },
+      {
+        "item": "elderberry",
+        "weight": 20
+      },
+      {
+        "item": "mushroom",
+        "weight": 20
+      },
+      {
+        "item": "snack",
+        "weight": 20
+      },
+      {
+        "item": "redmushroom",
+        "weight": 5
+      },
+      {
+        "item": "bluemushroom",
+        "weight": 5
+      }
+    ],
+    "wimpy_medium": [
+      {
+        "item": "herbs",
+        "weight": 20
+      },
+      {
+        "item": "snack",
+        "weight": 20
+      },
+      {
+        "item": "mushroom",
+        "weight": 17
+      },
+      {
+        "item": "elderberry",
+        "weight": 15
+      },
+      {
+        "item": "redmushroom",
+        "weight": 10
+      },
+      {
+        "item": "bluemushroom",
+        "weight": 8
+      },
+      {
+        "item": "emerald",
+        "weight": 5
+      },
+      {
+        "item": "sapphire",
+        "weight": 5
+      }
+    ],
+    "worm_larva": [
+      {
+        "item": "mushroom",
+        "weight": 30
+      },
+      {
+        "item": "money",
+        "weight": 20
+      },
+      {
+        "item": "herbs",
+        "weight": 20
+      },
+      {
+        "item": "redmushroom",
+        "weight": 20
+      },
+      {
+        "item": "orctooth",
+        "weight": 5
+      },
+      {
+        "item": "sapphire",
+        "weight": 5
+      }
+    ],
+    "worm_queen": [
+      {
+        "item": "bluemushroom",
+        "weight": 13
+      },
+      {
+        "item": "diamond",
+        "weight": 10
+      },
+      {
+        "item": "emerald",
+        "weight": 10
+      },
+      {
+        "item": "hammer",
+        "weight": 10
+      },
+      {
+        "item": "chainarmor",
+        "weight": 5
+      },
+      {
+        "item": "sapphire",
+        "weight": 5
+      },
+      {
+        "item": "ruby",
+        "weight": 5
+      },
+      {
+        "item": "inkycap",
+        "weight": 5
+      },
+      {
+        "item": "money",
+        "weight": 5
+      },
+      {
+        "item": "axe",
+        "weight": 4
+      },
+      {
+        "item": "longsword",
+        "weight": 4
+      },
+      {
+        "item": "goldshield",
+        "weight": 4
+      },
+      {
+        "item": "metalshield",
+        "weight": 4
+      },
+      {
+        "item": "purplemushroom",
+        "weight": 3
+      }
     ]
   }
 }

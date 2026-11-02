@@ -79,7 +79,7 @@ public sealed partial class World
             attackType = "punch";
         }
         d += BlessDamage(a);   // plAttack_modifiers: bless.kod ModifyDamage
-        d = CombatRules.Resist(d, m.Kind.Resistances.GetValueOrDefault(attackType));
+        d = CombatRules.Resist(d, m.Kind.ResistanceTo(attackType));
         return Math.Max(d, 1);
     }
 

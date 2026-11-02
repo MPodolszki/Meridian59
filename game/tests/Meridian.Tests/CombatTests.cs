@@ -19,7 +19,10 @@ public sealed class CombatTests : IAsyncLifetime
     ]);
 
     private static readonly MonsterKind Weakling = new("Zombie", "zombie.bgf", 1, 1, 1, 0.0, TimeSpan.FromHours(1), 0, 64);
-    private static readonly MonsterKind Brute = new("Zombie", "zombie.bgf", 999, 30, 30, 1.0, TimeSpan.FromMilliseconds(100), 300, 20 * 64);
+    private static readonly MonsterKind Brute = new("Zombie", "zombie.bgf", 999, 30, 30, 1.0, TimeSpan.FromMilliseconds(100), 300, 20 * 64)
+    {
+        Behavior = new HashSet<string> { "fight_aggressive" },
+    };
 
     private readonly string _accountsPath = Path.Combine(Path.GetTempPath(), $"meridian-accounts-{Guid.NewGuid():N}.db");
     private readonly CancellationTokenSource _cts = new(TimeSpan.FromSeconds(30));
@@ -82,6 +85,19 @@ public sealed class CombatTests : IAsyncLifetime
         await WaitForAsync(anna, events, e => e is ClientEvent.Chat c && c.Text.Contains("getötet"));
         await WaitForAsync(anna, events, e => e is ClientEvent.HealthChanged { Hp: 20 });
         Assert.True(events.OfType<ClientEvent.EnteredRoom>().Count() >= 2);
+    }
+
+    [Fact]
+    public async Task PoisonousBite_PoisonsPlayer()
+    {
+        var (anna, events) = await EnterAsync();
+        var biter = new MonsterKind("Spinne", "spider.bgf", 999, 1, 1, 1.0, TimeSpan.FromMilliseconds(100), 300, 20 * 64)
+        {
+            Behavior = new HashSet<string> { "fight_aggressive" },
+            Poison = new PoisonAttack(1, 2500, TimeSpan.FromMinutes(3)),
+        };
+        _server.World.SpawnMonster(50, biter, new GridPos(50, 5));
+        await WaitForAsync(anna, events, e => e is ClientEvent.Chat c && c.Text.Contains("vergiftet"));
     }
 
     [Fact]
