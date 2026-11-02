@@ -1,5 +1,5 @@
 {
-  "_hinweis": "Sprüche aus kod/object/passive/spell (heal.kod, hospice.kod, persench/touchatk/zap.kod, creafood.kod): Nummer (SID_*), Schule (1 Shal'ille, 2 Qor, 3 Kraanan, 4 Faren, 5 Riija, 6 Jala), Stufe, Mana, Zauberzeit (ms), Reagenzien. Standardwerte aus spell.kod: exertion 2, chanceToIncrease 20, castTime 0. Texte eigene Übersetzung. viHit_Factor der Berührungszauber wird im Original nicht ausgewertet und fehlt daher.",
+  "_hinweis": "Sprüche aus kod/object/passive/spell (heal.kod, hospice.kod, persench/touchatk/zap.kod, creafood.kod): Nummer (SID_*), Schule (1 Shal'ille, 2 Qor, 3 Kraanan, 4 Faren, 5 Riija, 6 Jala), Stufe, Mana, Zauberzeit (ms), Reagenzien. Standardwerte aus spell.kod: exertion 2, chanceToIncrease 20, castTime 0. Texte eigene Übersetzung. viHit_Factor der Berührungszauber wird im Original nicht ausgewertet und fehlt daher. Weitere Sprüche aus docs/kod/spells_catalog.json (Werte maschinell, Wirkung docs/magic.md).",
   "spells": [
     {
       "key": "minorheal",
@@ -423,6 +423,468 @@
       "castText": "Kreidiger Schleim quillt aus deinen Poren und überzieht deinen ganzen Körper.",
       "offText": "Der gesegnete Schleim blubbert davon, der Schutz vor Säure ist vergangen.",
       "hitText": "Du überziehst {0} mit schützendem Schleim."
+    },
+    {
+      "key": "fireball",
+      "sid": 5,
+      "name": "Feuerball",
+      "icon": "ifirebal.bgf",
+      "school": 4,
+      "level": 4,
+      "mana": 7,
+      "chanceToIncrease": 7,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "redmushroom",
+          "number": 2
+        },
+        {
+          "item": "orctooth",
+          "number": 1
+        }
+      ],
+      "effect": "attack",
+      "minDamage": 8,
+      "maxDamage": 12,
+      "attackType": "fire",
+      "description": "Schleudert einen Flammenball auf das Ziel. Braucht rote Pilze und Orkzähne.",
+      "hitText": "Ein Feuerball trifft {0}!"
+    },
+    {
+      "key": "lightning",
+      "sid": 1,
+      "name": "Blitz",
+      "icon": "ilitning.bgf",
+      "school": 4,
+      "level": 5,
+      "mana": 10,
+      "chanceToIncrease": 7,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "bluemushroom",
+          "number": 2
+        },
+        {
+          "item": "orctooth",
+          "number": 1
+        }
+      ],
+      "effect": "attack",
+      "minDamage": 13,
+      "maxDamage": 18,
+      "attackType": "shock",
+      "description": "Ein Blitzstrahl fährt in das Ziel. Braucht blaue Pilze und Orkzähne.",
+      "hitText": "Ein Blitz schlägt in {0} ein!"
+    },
+    {
+      "key": "shockingfury",
+      "sid": 164,
+      "name": "Schockende Wut",
+      "icon": "ishkfury.bgf",
+      "school": 4,
+      "level": 3,
+      "mana": 8,
+      "chanceToIncrease": 5,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "bluemushroom",
+          "number": 2
+        },
+        {
+          "item": "elderberry",
+          "number": 1
+        }
+      ],
+      "effect": "attack",
+      "minDamage": 12,
+      "maxDamage": 20,
+      "attackType": "shock",
+      "description": "Knisternde Entladung gegen ein nahes Ziel. Braucht blaue Pilze und Holunderbeeren.",
+      "hitText": "Knisternde Funken fahren in {0}!"
+    },
+    {
+      "key": "blastoffire",
+      "sid": 165,
+      "name": "Feuerstoß",
+      "icon": "iblfire.bgf",
+      "school": 4,
+      "level": 4,
+      "mana": 8,
+      "chanceToIncrease": 5,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "redmushroom",
+          "number": 2
+        },
+        {
+          "item": "elderberry",
+          "number": 1
+        }
+      ],
+      "effect": "attack",
+      "minDamage": 15,
+      "maxDamage": 23,
+      "attackType": "fire",
+      "description": "Ein Stoß sengender Flammen gegen ein nahes Ziel. Braucht rote Pilze und Holunderbeeren.",
+      "hitText": "Flammen hüllen {0} ein!"
+    },
+    {
+      "key": "explosivefrost",
+      "sid": 166,
+      "name": "Explosiver Frost",
+      "icon": "iexfrost.bgf",
+      "school": 4,
+      "level": 4,
+      "mana": 8,
+      "chanceToIncrease": 5,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "elderberry",
+          "number": 1
+        }
+      ],
+      "effect": "attack",
+      "minDamage": 13,
+      "maxDamage": 25,
+      "attackType": "cold",
+      "description": "Eisige Splitter bersten auf dem Ziel. Braucht Holunderbeeren.",
+      "hitText": "Eisiger Frost zerspringt auf {0}!"
+    },
+    {
+      "key": "splashofacid",
+      "sid": 167,
+      "name": "Säurespritzer",
+      "icon": "isplacid.bgf",
+      "school": 2,
+      "level": 4,
+      "mana": 10,
+      "chanceToIncrease": 5,
+      "targets": 1,
+      "reagents": [],
+      "effect": "attack",
+      "minDamage": 16,
+      "maxDamage": 25,
+      "attackType": "acid",
+      "description": "Ätzende Säure spritzt auf ein nahes Ziel.",
+      "hitText": "Säure zischt auf {0}!"
+    },
+    {
+      "key": "vampiricdrain",
+      "sid": 22,
+      "name": "Vampirischer Entzug",
+      "icon": "ivamptou.bgf",
+      "school": 2,
+      "level": 3,
+      "mana": 10,
+      "exertion": 4,
+      "chanceToIncrease": 5,
+      "targets": 1,
+      "reagents": [],
+      "effect": "drain",
+      "minDamage": 12,
+      "maxDamage": 18,
+      "attackType": "unholy",
+      "description": "Saugt dem Ziel Lebenskraft aus; die Hälfte davon heilt dich.",
+      "hitText": "Du saugst {0} Lebenskraft aus!"
+    },
+    {
+      "key": "majorheal",
+      "sid": 42,
+      "name": "Große Heilung",
+      "icon": "imajheal.bgf",
+      "school": 1,
+      "level": 5,
+      "mana": 20,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "herbs",
+          "number": 5
+        }
+      ],
+      "effect": "majorheal",
+      "description": "Shal'illes Kraft schließt auch tiefe Wunden. Braucht Kräuter.",
+      "castText": "Erstaunt siehst du, wie sich deine Wunden schließen, wie durch Zauberei.",
+      "unnecessary": "{0} ist kerngesund."
+    },
+    {
+      "key": "breathoflife",
+      "sid": 148,
+      "name": "Lebensatem",
+      "icon": "ibreath.bgf",
+      "school": 1,
+      "level": 1,
+      "mana": 3,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "herbs",
+          "number": 1
+        }
+      ],
+      "effect": "breathoflife",
+      "description": "Gibt einem anderen einen Teil deiner eigenen Lebenskraft.",
+      "castText": "Du spürst, wie fremde Lebenskraft deinen Körper erfüllt."
+    },
+    {
+      "key": "relay",
+      "sid": 158,
+      "name": "Kraftübertragung",
+      "icon": "irelay.bgf",
+      "school": 3,
+      "level": 1,
+      "mana": 5,
+      "exertion": 0,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "snack",
+          "number": 1
+        }
+      ],
+      "effect": "relay",
+      "description": "Gibt einem anderen einen Teil deiner Ausdauer; er erhält ein Viertel mehr.",
+      "castText": "Du spürst, wie fremde Kraft deinen Körper erfüllt."
+    },
+    {
+      "key": "curepoison",
+      "sid": 37,
+      "name": "Gift heilen",
+      "icon": "icurpoi.bgf",
+      "school": 1,
+      "level": 2,
+      "mana": 10,
+      "chanceToIncrease": 30,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "herbs",
+          "number": 2
+        },
+        {
+          "item": "elderberry",
+          "number": 1
+        }
+      ],
+      "effect": "curepoison",
+      "description": "Shal'illes Kraft bekämpft das Gift im Blut. Braucht Kräuter und Holunderbeeren.",
+      "castText": "Die Kraft Shal'illes bekämpft das Gift in deinem Blut."
+    },
+    {
+      "key": "hold",
+      "sid": 47,
+      "name": "Festhalten",
+      "icon": "ihold.bgf",
+      "school": 2,
+      "level": 4,
+      "mana": 15,
+      "exertion": 8,
+      "chanceToIncrease": 10,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "purplemushroom",
+          "number": 2
+        }
+      ],
+      "effect": "hold",
+      "description": "Eine magische Kraft hält das Ziel kurz an Ort und Stelle fest. Braucht Purpurpilze.",
+      "hitText": "{0} wird von einer magischen Kraft festgehalten."
+    },
+    {
+      "key": "blind",
+      "sid": 46,
+      "name": "Blindheit",
+      "icon": "iblind.bgf",
+      "school": 2,
+      "level": 5,
+      "mana": 15,
+      "exertion": 6,
+      "chanceToIncrease": 15,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "entrootberry",
+          "number": 2
+        },
+        {
+          "item": "purplemushroom",
+          "number": 1
+        }
+      ],
+      "effect": "blind",
+      "description": "Brennender Schmerz raubt dem Ziel das Augenlicht. Braucht Entwurzelbeeren und Purpurpilze.",
+      "hitText": "{0} ist geblendet."
+    },
+    {
+      "key": "dazzle",
+      "sid": 161,
+      "name": "Gleißen",
+      "icon": "idazzle.bgf",
+      "school": 1,
+      "level": 4,
+      "mana": 12,
+      "exertion": 6,
+      "chanceToIncrease": 15,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "emerald",
+          "number": 1
+        },
+        {
+          "item": "purplemushroom",
+          "number": 1
+        }
+      ],
+      "effect": "dazzle",
+      "description": "Ein Strom reinen Lichts blendet das Ziel. Braucht Smaragde und Purpurpilze.",
+      "hitText": "{0} ist vom Licht geblendet."
+    },
+    {
+      "key": "enfeeble",
+      "sid": 53,
+      "name": "Schwächen",
+      "icon": "ienfeebl.bgf",
+      "school": 2,
+      "level": 3,
+      "mana": 5,
+      "exertion": 4,
+      "chanceToIncrease": 30,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "orctooth",
+          "number": 1
+        }
+      ],
+      "effect": "enfeeble",
+      "description": "Die Muskeln des Ziels werden zu Wasser. Braucht Orkzähne.",
+      "hitText": "{0} wirkt plötzlich kraftlos."
+    },
+    {
+      "key": "vertigo",
+      "sid": 107,
+      "name": "Schwindel",
+      "icon": "ivertigo.bgf",
+      "school": 5,
+      "level": 3,
+      "mana": 12,
+      "exertion": 10,
+      "chanceToIncrease": 15,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "dragonflyeye",
+          "number": 2
+        },
+        {
+          "item": "solagh",
+          "number": 1
+        }
+      ],
+      "effect": "vertigo",
+      "description": "Das Ziel taumelt benommen und verwirrt. Braucht Drachenfliegenaugen und Solagh.",
+      "hitText": "{0} wirkt seltsam benommen und verwirrt."
+    },
+    {
+      "key": "earthquake",
+      "sid": 14,
+      "name": "Erdbeben",
+      "icon": "irthquak.bgf",
+      "school": 4,
+      "level": 5,
+      "mana": 12,
+      "castTime": 5000,
+      "chanceToIncrease": 10,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "redmushroom",
+          "number": 2
+        },
+        {
+          "item": "purplemushroom",
+          "number": 2
+        }
+      ],
+      "effect": "earthquake",
+      "description": "Faren lässt die Erde beben – alles im Raum wird umhergeworfen, auch du selbst. Braucht rote und purpurne Pilze.",
+      "castText": "Du reckst die Arme zum Himmel und rufst Farens Zorn herbei!"
+    },
+    {
+      "key": "finalrites",
+      "sid": 133,
+      "name": "Letzte Riten",
+      "icon": "ifinrite.bgf",
+      "school": 1,
+      "level": 5,
+      "mana": 20,
+      "exertion": 15,
+      "castTime": 10000,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "emerald",
+          "number": 2
+        },
+        {
+          "item": "elderberry",
+          "number": 5
+        }
+      ],
+      "effect": "finalrites",
+      "attackType": "holy",
+      "description": "Heiliger Staub verbrennt alle Untoten im Raum. Braucht Smaragde und Holunderbeeren.",
+      "castText": "Du zerreibst die Reagenzien zu feinem Pulver und wirfst es murmelnd gen Himmel."
+    },
+    {
+      "key": "flash",
+      "sid": 113,
+      "name": "Blitzlicht",
+      "icon": "iflash.bgf",
+      "school": 5,
+      "level": 1,
+      "mana": 15,
+      "exertion": 3,
+      "chanceToIncrease": 15,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "dragonflyeye",
+          "number": 2
+        }
+      ],
+      "effect": "flash",
+      "description": "Ein greller Lichtblitz lähmt die Monster im Raum für einen Augenblick. Braucht Drachenfliegenaugen.",
+      "castText": "Ein greller Lichtblitz erhellt den Raum!"
+    },
+    {
+      "key": "holysymbol",
+      "sid": 132,
+      "name": "Heiliges Symbol",
+      "icon": "iholysym.bgf",
+      "school": 1,
+      "level": 1,
+      "mana": 8,
+      "exertion": 15,
+      "castTime": 2000,
+      "chanceToIncrease": 15,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "elderberry",
+          "number": 3
+        }
+      ],
+      "effect": "holysymbol",
+      "description": "Ein Zeichen der Reinheit Shal'illes, das Untote vertreibt. Braucht Holunderbeeren.",
+      "castText": "Deine Hände zeichnen zarte Linien in die Luft – Shal'illes Reinheit als Schutz gegen das Unheilige."
     }
   ],
   "startingSpells": [

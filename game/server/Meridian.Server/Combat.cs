@@ -111,6 +111,9 @@ public sealed record MonsterKind(
     /// <summary>Gift beim Treffer (poison.kod): Chance 1/n, Verlust lossRate/1000 LP alle 10 s, Dauer.</summary>
     public PoisonAttack? Poison { get; init; }
 
+    /// <summary>Untot (Heiliges Symbol, Letzte Riten wirken).</summary>
+    public bool Undead { get; init; }
+
     public bool Aggressive => Behavior.Contains("fight_aggressive") || Behavior.Contains("fight_hyperaggressive");
     public bool KarmaAggressive => Behavior.Contains("fight_karma_aggressive");
     public bool Immobile => Behavior.Contains("nomove") || SpeedFinePerSecond == 0;
@@ -214,6 +217,7 @@ public sealed record MonsterKind(
                 Karma = e.GetProperty("karma").GetInt32(), Wimpy = e.GetProperty("wimpy").GetInt32(),
                 Treasure = Str("treasure"), AlwaysDrops = Str("alwaysDrops"), Gender = Str("gender") ?? "m",
                 Description = Str("description"), Behavior = behavior, Poison = poison,
+                Undead = e.TryGetProperty("undead", out var ud) && ud.GetBoolean(),
                 DrawFlags = e.TryGetProperty("drawFlags", out var df) ? df.GetUInt32() : 0,
                 Resistances = e.GetProperty("resistances").EnumerateObject().ToDictionary(r => r.Name, r => r.Value.GetInt32()),
                 AttackType = spellAttack.FirstOrDefault(),
@@ -248,5 +252,12 @@ public sealed class Monster(uint id, MonsterKind kind, Room room, GridPos home)
     public GridPos? PathGoal { get; set; }
     public DateTime NextAttack { get; set; }
     public DateTime? DiedAt { get; set; }
+    /// <summary>Zauberwirkungen: festgehalten (Festhalten, Blitzlicht), blind (Blindheit, Gleißen), gelähmt (Schwächen,
+    /// Schwindel), vertrieben vom Heiligen Symbol.</summary>
+    public DateTime HeldUntil { get; set; }
+    public DateTime BlindUntil { get; set; }
+    public DateTime PalsyUntil { get; set; }
+    public Avatar? TurnedBy { get; set; }
+    public DateTime TurnedUntil { get; set; }
     public bool Alive => DiedAt is null;
 }

@@ -562,6 +562,7 @@ public partial class Main : Node3D
         }
         root.AddChild(new Label3D
         {
+            Name = "Name",
             Text = _session.Resolve(o.NameRsc),
             // NPCs gelb, Monster rot wie in vielen MMOs
             Modulate = o.IsAttackable ? new Color(1f, 0.35f, 0.3f) : o.IsNpc ? new Color(1f, 0.85f, 0.3f) : Colors.White,
@@ -788,6 +789,7 @@ public partial class Main : Node3D
             _status.Text = "Kein Gegner in der Nähe.";
             return;
         }
+        SetTarget(best);
         // Zum Gegner drehen
         var dir = _avatars[best].Position - self.Position;
         _yaw = Mathf.Atan2(-dir.X, -dir.Z);

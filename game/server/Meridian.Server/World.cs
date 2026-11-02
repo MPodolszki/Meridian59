@@ -594,6 +594,16 @@ public sealed partial class World
         }
         if (m.Kind.Peaceful)
             return;   // Kühe stehen nur herum
+        // Zauberwirkungen (docs/magic.md): festgehalten = nichts tun; geblendet = kein Ziel, kein Kampf.
+        if (now < m.HeldUntil)
+            return;
+        if (now < m.BlindUntil)
+        {
+            m.Target = null;
+            return;
+        }
+        if (m.TurnedBy is { } turner && (now >= m.TurnedUntil || turner.Room != room))
+            m.TurnedBy = null;
 
         // Ziel wählen (brain.kod GetHatred, vereinfacht): aggressive Monster greifen den nächsten Spieler in Sichtweite
         // an, karma-aggressive nur Spieler mit entgegengesetztem Karma; alle wehren sich, wenn man sie angreift.
@@ -607,6 +617,12 @@ public sealed partial class World
 
         // Flucht (HealthBelowWimpy): unter viWimpy Prozent Lebenspunkten vom Ziel weg statt angreifen.
         bool fleeing = m.Target is not null && m.Kind.Wimpy > 0 && m.Hp * 100 / Math.Max(1, m.MaxHp) < m.Kind.Wimpy;
+        // Vom Heiligen Symbol vertriebene Untote fliehen vor dem Wirker (TurnedBy).
+        if (m.TurnedBy is { } scary)
+        {
+            m.Target = scary;
+            fleeing = true;
+        }
         (int row, int col) goal = m.Target is { } target
             ? fleeing ? FleePoint(m, target) : (target.Row, target.Col)
             : (Room.Fine(m.Home.Row), Room.Fine(m.Home.Col));
@@ -642,13 +658,18 @@ public sealed partial class World
             BroadcastRoom(room, GameReplies.Turn(m.Id, m.Angle));
             BroadcastRoom(room, GameReplies.Animate(ToRoomObject(m), GameReplies.AttackGroup, 4, 600));
             victim.LastCombat = now;
-            if (CombatRules.HitChance(m.Kind.Offense, PlayerDefense(victim)) < _random.Next(1, 101))
+            // Lähmung (ENCH_PALSY: Schwächen, Schwindel): Offensive und Schaden × 3/4.
+            bool palsy = now < m.PalsyUntil;
+            int offense = palsy ? m.Kind.Offense * 3 / 4 : m.Kind.Offense;
+            if (CombatRules.HitChance(offense, PlayerDefense(victim)) < _random.Next(1, 101))
             {
                 victim.Dodged = true;
                 Tell(victim, $"{Article(m.Kind)} verfehlt dich.");
                 return;
             }
             int damage = m.Kind.RollDamage(_random);
+            if (palsy)
+                damage = Math.Max(1, damage * 3 / 4);
             // Widerstände (resist.kod AddResistance) gegen die Angriffsart des Monsters, falls es eine hat.
             if (m.Kind.AttackType is { } type)
                 damage = CombatRules.Resist(damage, EnchantState(victim, "resist", type));
@@ -804,15 +825,21 @@ public sealed partial class World
                 Tell(avatar, $"Du triffst {Article(m.Kind, accusative: true)} für {damage} Schaden ({m.Hp}/{m.MaxHp}).");
                 return;
             }
-            m.DiedAt = now;
-            m.Target = null;
-            Tell(avatar, $"Du hast {Article(m.Kind, accusative: true)} besiegt!");
-            BroadcastRoom(m.Room, GameReplies.Animate(ToRoomObject(m), GameReplies.DeathGroup, 9, 1500));
-            PracticeDefense(avatar, m);
-            avatar.KillTarget = null;
-            CreateTreasure(m);
-            MonsterKilled(m.Room);
+            KillMonster(avatar, m, now);
         }
+    }
+
+    /// <summary>monster.kod Killed: Todesanimation, Beute, Generator benachrichtigen.</summary>
+    private void KillMonster(Avatar killer, Monster m, DateTime now)
+    {
+        m.DiedAt = now;
+        m.Target = null;
+        Tell(killer, $"Du hast {Article(m.Kind, accusative: true)} besiegt!");
+        BroadcastRoom(m.Room, GameReplies.Animate(ToRoomObject(m), GameReplies.DeathGroup, 9, 1500));
+        PracticeDefense(killer, m);
+        killer.KillTarget = null;
+        CreateTreasure(m);
+        MonsterKilled(m.Room);
     }
 
     private void KillPlayer(Avatar victim, Monster killer)

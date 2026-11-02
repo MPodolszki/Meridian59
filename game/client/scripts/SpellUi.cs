@@ -95,7 +95,8 @@ public partial class Main
         await session.RequestEnchantmentsAsync();
     }
 
-    /// <summary>Ausgewählten Spruch wirken: mit einem Ziel auf sich selbst, sonst ohne Ziel.</summary>
+    /// <summary>Ausgewählten Spruch wirken: mit einem Ziel auf das aktuelle Ziel (angeklickte Figur oder mit F
+    /// angegriffenes Monster), sonst auf sich selbst; ohne Ziel ohne.</summary>
     private async void CastSelected()
     {
         if (_session is not { InWorld: true } || _spellList.GetSelectedItems() is not { Length: > 0 } sel || sel[0] >= _knownSpells.Count)
@@ -104,6 +105,7 @@ public partial class Main
         await SendOwnPosition();
         if (_avatars.TryGetValue(_session.PlayerId, out var self))
             CharacterModel.PlayOnce(self, "Cast");
-        await _session.CastAsync(spell.Spell.Id, spell.Targets == 1 ? [_session.PlayerId] : []);
+        uint target = _currentTarget != 0 && _avatars.ContainsKey(_currentTarget) ? _currentTarget : _session.PlayerId;
+        await _session.CastAsync(spell.Spell.Id, spell.Targets == 1 ? [target] : []);
     }
 }

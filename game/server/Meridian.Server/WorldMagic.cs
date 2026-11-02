@@ -3,7 +3,11 @@ using Meridian.Protocol;
 namespace Meridian.Server;
 
 /// <summary>Zauber in Arbeit (Trance, spell.kod BeginCastingTrance) bzw. aktiver Berührungszauber.</summary>
-public sealed record PendingCast(SpellDefinition Spell, Avatar? Target, int Power, DateTime Due);
+public sealed record PendingCast(SpellDefinition Spell, Avatar? Target, int Power, DateTime Due)
+{
+    /// <summary>Monster als Ziel (Angriffs- und Schwächungszauber).</summary>
+    public Monster? Victim { get; init; }
+}
 
 public sealed record TouchAttack(SpellDefinition Spell, int Power, DateTime Until);
 
@@ -187,11 +191,19 @@ public sealed partial class World
                 return;
             }
             Avatar? target = null;
+            Monster? victim = null;
             if (spell.Targets == 1)
             {
                 if (targets.Count != 1)
                     return;
-                if (!a.Room.Avatars.TryGetValue(targets[0].Id, out target))
+                victim = a.Room.Monsters.FirstOrDefault(m => m.Id == targets[0].Id && m.Alive);
+                // Hilfreiche Sprüche mit einem Monster als Ziel wirken auf den Zaubernden (Komfort des neuen Clients:
+                // das Ziel bleibt beim Monster, Heilung trifft trotzdem einen selbst; docs/magic.md).
+                if (victim is not null && !MonsterEffects.Contains(spell.Effect))
+                    victim = null;
+                if (victim is null && !a.Room.Avatars.TryGetValue(targets[0].Id, out target))
+                    target = a.Room.Monsters.Any(m => m.Id == targets[0].Id) ? a : null;
+                if (victim is null && target is null)
                 {
                     Tell(a, $"Du kannst {spell.Name} nicht darauf wirken.");
                     return;
@@ -199,17 +211,17 @@ public sealed partial class World
             }
 
             int power = SpellPower(a, spell);
-            if (!CanPayCosts(a, spell, target, power))
+            if (!CanPayCosts(a, spell, target, power) || !CanTarget(a, spell, target, victim))
                 return;
 
             var trance = MagicRules.TranceTime(spell, power);
             if (trance == TimeSpan.Zero)
             {
-                Complete(a, spell, target, power);
+                Complete(a, spell, target, power, victim);
                 return;
             }
             Tell(a, $"Du konzentrierst dich ganz auf {spell.Name}.");
-            a.Casting = new PendingCast(spell, target, power, DateTime.UtcNow + trance);
+            a.Casting = new PendingCast(spell, target, power, DateTime.UtcNow + trance) { Victim = victim };
         }
     }
 
@@ -269,14 +281,14 @@ public sealed partial class World
     }
 
     /// <summary>Nach der Trance: Erfolgswurf, Kosten (PayCosts), Wirkung (CastSpell), Üben (ImproveAbility).</summary>
-    private void Complete(Avatar a, SpellDefinition spell, Avatar? target, int power)
+    private void Complete(Avatar a, SpellDefinition spell, Avatar? target, int power, Monster? victim = null)
     {
-        if (target is not null && target.Room != a.Room)
+        if (target is not null && target.Room != a.Room || victim is not null && (victim.Room != a.Room || !victim.Alive))
         {
             Tell(a, $"Das Ziel von {spell.Name} ist nicht mehr da.");
             return;
         }
-        if (!CanPayCosts(a, spell, target, power))
+        if (!CanPayCosts(a, spell, target, power) || !CanTarget(a, spell, target, victim))
             return;
 
         int cost = MagicRules.ManaCost(spell, power);
@@ -330,6 +342,9 @@ public sealed partial class World
             }
             case "bless" or "superstrength" or "haste" or "resist":
                 Enchant(a, target ?? a, spell, power);
+                break;
+            default:
+                CastSchoolSpell(a, spell, target, victim, power);
                 break;
             case "touchattack":
             {
@@ -407,7 +422,7 @@ public sealed partial class World
         if (a.Casting is { } c && now >= c.Due)
         {
             a.Casting = null;
-            Complete(a, c.Spell, c.Target, c.Power);
+            Complete(a, c.Spell, c.Target, c.Power, c.Victim);
         }
 
         var s = a.State;

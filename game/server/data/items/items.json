@@ -1305,6 +1305,19 @@
       "translation": 44,
       "legsMale": "bfe.bgf",
       "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "dragonflyeye",
+      "kodClass": "DragonflyEye",
+      "name": "Drachenfliegenauge",
+      "icon": "dflyeye.bgf",
+      "value": 50,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Drachenfliegenaugen",
+      "description": "Das schillernde Facettenauge einer Drachenfliege."
     }
   ],
   "treasure": {

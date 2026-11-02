@@ -166,7 +166,17 @@ public partial class Main
         _camera.LookAt(head);
     }
 
-    /// <summary>Linksklick auf eine Figur (NPC, Monster, Spieler): anschauen.</summary>
+    /// <summary>Aktuelles Ziel für Zauber (wie WoW: angeklickte Figur bzw. mit F angegriffenes Monster).</summary>
+    private uint _currentTarget;
+
+    private void SetTarget(uint id)
+    {
+        _currentTarget = id;
+        if (_session is not null && _avatars.TryGetValue(id, out var node) && node.GetNodeOrNull<Label3D>("Name") is { } label)
+            _status.Text = $"Ziel: {label.Text}";
+    }
+
+    /// <summary>Linksklick auf eine Figur (NPC, Monster, Spieler): anschauen und als Ziel wählen.</summary>
     private bool TryLookAt(Vector2 screen)
     {
         if (_session is not { InWorld: true })
@@ -187,6 +197,7 @@ public partial class Main
         }
         if (best == 0)
             return false;
+        SetTarget(best);
         _ = _session.LookAsync(best);
         return true;
     }

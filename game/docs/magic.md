@@ -84,6 +84,38 @@ in Tos schlagen körperlich zu, dort bringen sie also noch nichts. Lehrer sind i
 bei der Charaktererstellung (OfferToNewCharacters). Das Verbot, in Sicherheitszonen andere zu verzaubern
 (ROOM_NO_COMBAT), fehlt noch.
 
+## Schulsprüche auf Monster, Heilung, Flächenzauber (`WorldSpells.cs`)
+
+Werte (SID, Schule, Stufe, Mana, Trance, Reagenzien) maschinell aus `docs/kod/spells_catalog.json`, Formeln aus den
+KOD-Dateien (Zeilenangaben im Katalog). Spruchstärke wie oben.
+
+| Spruch | Schule/Stufe | Wirkung |
+|---|---|---|
+| Feuerball (5), Blitz (1) | Faren 4/5 | Random(8,12) bzw. (13,18) × (50 + Stärke/2) / 99 Feuer- bzw. Blitzschaden |
+| Schockende Wut (164), Feuerstoß (165), Explosiver Frost (166) | Faren 3/4 | Random(12,20)/(15,23)/(13,25) × (50 + Stärke/2) / 99 |
+| Säurespritzer (167) | Qor 4 | Random(16,25) × (50 + Stärke/2) / 99 Säure |
+| Vampirischer Entzug (22) | Qor 3 | Random(12,18) × … unheilig; heilt den Wirker um den halben Schaden (beim Töten 9) |
+| Große Heilung (42) | Shal'ille 5 | Random(7,13) + Stärke/5 + Karma/5, 0..50 |
+| Lebensatem (148) | Shal'ille 1 | gibt (Karma des Ziels 10..80) % der eigenen LP ab, Ziel erhält (75 + Stärke/2) % davon, bis 150 % bzw. 130 |
+| Kraftübertragung (158) | Kraanan 1 | min(Stärke, Ausdauer − 10, 150 − Ausdauer Ziel), Ziel erhält 5/4 |
+| Gift heilen (37) | Shal'ille 2 | ganz bei Random(1,100) < Stärke oder schwachem Gift, sonst Giftstärke − Stärke % |
+| Festhalten (47) | Qor 4 | Monster steht und kämpft nicht: Random(D/2, D), D = 2000 + 40 × Stärke ms |
+| Blindheit (46), Gleißen (161) | Qor 5, Shal'ille 4 | Monster ohne Ziel: Random(d/2,d) mit d = 5 + Stärke/6 s (3..20) bzw. Stärke/12 + Karmaunterschied/20 s (3..15) |
+| Schwächen (53), Schwindel (107) | Qor 3, Riija 3 | Lähmung: Offensive und Schaden des Monsters × 3/4 |
+| Erdbeben (14) | Faren 5 | alle Monster: Random(5,9) × (1 + Stärke/25), voll bis 8 Felder, ab 20 keiner; trifft auch den Wirker |
+| Letzte Riten (133) | Shal'ille 5 | alle Untoten: Random(1,5) + Stärke/20 + 2 × (Karmaunterschied/40), heilig |
+| Blitzlicht (113) | Riija 1 | jedes Monster mit 33 + 2 × Stärke/3 % für 1 s festgehalten |
+| Heiliges Symbol (132) | Shal'ille 1 | Untote fliehen 9 min/Schwierigkeit vor dem Wirker, bei klarem Fehlschlag greifen sie an |
+
+Resistenzen der Monster wirken wie bei Waffen (`MonsterKind.ResistanceTo`, `spell_all` auf alle Zauber).
+Ziel im Godot-Client: die zuletzt angeklickte Figur bzw. das mit F angegriffene Monster, sonst man selbst.
+
+Abweichungen: Spieler als Ziel schädlicher Sprüche gibt es noch nicht (kein PvP); das Erdbeben verschont andere
+Spieler, und der Wirker fällt nicht unter 1 LP. Geschosse (Feuerball, Blitz) treffen sofort, ohne sichtbares
+Projektil. Hilfreiche Sprüche mit einem Monster als Ziel wirken auf den Zaubernden (Komfort für den neuen Client).
+Lernen: die Lehrer sind die Tempelpriester in der Wildnis – bis Tempel und Wildnis existieren, sind diese Sprüche
+nicht erlernbar (nur bei der Charaktererstellung, sofern Stufe ≤ 2).
+
 ## Noch nicht umgesetzt
 Weitere Verzauberungen (Entdecken, Unsichtbarkeit, Nachtsicht …), Raumzauber (Licht, Dunkelheit, Nebel), Wände, Riija/Jala,
 Spruch-Murmeln für Umstehende, Karma-Änderung durch Heilen, Raumboni nach Gelände.

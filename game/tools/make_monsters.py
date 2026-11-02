@@ -136,6 +136,7 @@ for m in catalog:
         "behavior": sorted(f[3:].lower() for f in beh if f.startswith("AI_")),
         "attributes": sorted(f[4:].lower() for f in attrs if f.startswith("MOB_")),
         "bodyShape": m.get("bodyShape"), "size": m.get("size"),
+        "undead": "undead" in m.get("tags", []),
     }
     res = {}
     for r in m.get("resistances") or []:
