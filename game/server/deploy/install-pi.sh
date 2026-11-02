@@ -14,4 +14,4 @@ cp /opt/meridian/meridian-server.service /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable --now meridian-server
 systemctl --no-pager status meridian-server | head -5
-echo "Account anlegen: sudo -u meridian /opt/meridian/Meridian.Server add-account <name> <passwort> --accounts /opt/meridian/data/accounts.json"
+echo "Account anlegen: sudo -u meridian /opt/meridian/Meridian.Server add-account <name> <passwort> --database /opt/meridian/data/meridian.db"

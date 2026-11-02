@@ -2,10 +2,12 @@
 using Meridian.Server;
 
 // Aufruf:
-//   Meridian.Server [--port 5959] [--accounts accounts.json] [--world data/world/tos.json]
+//   Meridian.Server [--port 5959] [--database meridian.db] [--world data/world/tos.json]
 //                   [--client-dir <resource-ordner>] [--player-icon blank.bgf] [--start-room 52]
-//                   [--database meridian.db] [--save-period 5]
-//   Meridian.Server add-account <name> <passwort> [--admin] [--accounts accounts.json]
+//                   [--save-period 5] [--accounts accounts.json]
+//   Meridian.Server add-account <name> <passwort> [--admin] [--database meridian.db]
+// --accounts: alte Account-Datei, wird beim ersten Start in die Datenbank übernommen. Ohne --database liegt
+// die Datenbank neben dieser Datei.
 
 string accountsPath = "accounts.json";
 int port = 5959;
@@ -13,7 +15,7 @@ string? clientDir = null;
 string worldPath = Path.Combine(AppContext.BaseDirectory, "data", "world", "tos.json");
 string playerIcon = "blank.bgf";
 int? startRoom = null;
-string? database = null;   // Standard: meridian.db neben der Account-Datei
+string? database = null;
 int savePeriodMinutes = 5;
 var positional = new List<string>();
 bool admin = false;
@@ -35,12 +37,13 @@ for (int i = 0; i < args.Length; i++)
     }
 }
 
-var accounts = AccountStore.Load(accountsPath);
+database ??= Path.Combine(Path.GetDirectoryName(Path.GetFullPath(accountsPath))!, "meridian.db");
+var accounts = AccountStore.Open(database, importJson: accountsPath);
 
 if (positional is ["add-account", var name, var password])
 {
     accounts.AddOrUpdate(name, password, admin ? ClientAccountType.Admin : ClientAccountType.Normal);
-    Console.WriteLine($"Account '{name}' gespeichert in {Path.GetFullPath(accountsPath)}");
+    Console.WriteLine($"Account '{name}' gespeichert in {Path.GetFullPath(database)}");
     return 0;
 }
 if (positional.Count > 0)
@@ -50,7 +53,7 @@ if (positional.Count > 0)
 }
 
 if (accounts.Count == 0)
-    Log.Warn($"Keine Accounts in {Path.GetFullPath(accountsPath)} – anlegen mit: add-account <name> <passwort>");
+    Log.Warn($"Keine Accounts in {Path.GetFullPath(database)} – anlegen mit: add-account <name> <passwort>");
 
 using var cts = new CancellationTokenSource();
 // Strg+C und SIGTERM (systemd stop) beenden den Server sauber.
@@ -84,7 +87,7 @@ var server = new GameServer(new ServerOptions
     World = world,
     PlayerIcon = playerIcon,
     ClientResourceDir = clientDir,
-    Database = database ?? Path.Combine(Path.GetDirectoryName(Path.GetFullPath(accountsPath))!, "meridian.db"),
+    Database = database,
     SavePeriod = TimeSpan.FromMinutes(savePeriodMinutes),
 }, accounts);
 server.Start();

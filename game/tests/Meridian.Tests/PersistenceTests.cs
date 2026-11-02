@@ -18,14 +18,13 @@ public sealed class PersistenceTests : IAsyncLifetime
     private static string Data(params string[] parts) => Path.Combine([AppContext.BaseDirectory, "data", .. parts]);
 
     private readonly string _dir = Path.Combine(Path.GetTempPath(), $"meridian-persist-{Guid.NewGuid():N}");
-    private string AccountsPath => Path.Combine(_dir, "accounts.json");
     private string DatabasePath => Path.Combine(_dir, "meridian.db");
     private readonly CancellationTokenSource _timeout = new(TimeSpan.FromSeconds(30));
 
     public Task InitializeAsync()
     {
         Directory.CreateDirectory(_dir);
-        AccountStore.Load(AccountsPath).AddOrUpdate("Anna", "pw");
+        AccountStore.Open(DatabasePath).AddOrUpdate("Anna", "pw");
         return Task.CompletedTask;
     }
 
@@ -44,7 +43,7 @@ public sealed class PersistenceTests : IAsyncLifetime
             Items = ItemCatalog.Load(Data("items", "items.json")),
             Shops = ShopFile.Load(Data("shops", "tos.json")),
             Database = DatabasePath,
-        }, AccountStore.Load(AccountsPath));
+        }, AccountStore.Open(DatabasePath));
         server.Start();
         var cts = CancellationTokenSource.CreateLinkedTokenSource(_timeout.Token);
         return (server, server.RunAsync(cts.Token), cts);
@@ -105,6 +104,18 @@ public sealed class PersistenceTests : IAsyncLifetime
         Assert.Equal(50, loaded.Room);
         Assert.Equal([new SavedItem("money", 40)], loaded.Inventory);
         Assert.Empty(loaded.Bank);
+    }
+
+    [Fact]
+    public void OldAccountFile_IsImportedOnce()
+    {
+        string json = Path.Combine(_dir, "old-accounts.json");
+        string db = Path.Combine(_dir, "import.db");
+        File.WriteAllText(json, """[{"Name":"Bob","PasswordDigestHex":"00112233445566778899AABBCCDDEEFF","Type":0,"CharacterId":1005}]""");
+        var accounts = AccountStore.Open(db, importJson: json);
+        Assert.Equal(1, accounts.Count);
+        Assert.True(File.Exists(json + ".imported"));
+        Assert.NotNull(AccountStore.Open(db).Verify("bob", Convert.FromHexString("00112233445566778899AABBCCDDEEFF")));
     }
 
     private static int Money(ClientSession s) => (int)(s.Inventory.FirstOrDefault(o => o.Icon == "coin.bgf")?.Amount ?? 0);

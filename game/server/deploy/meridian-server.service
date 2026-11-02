@@ -8,7 +8,7 @@ Wants=network-online.target
 [Service]
 User=meridian
 WorkingDirectory=/opt/meridian
-ExecStart=/opt/meridian/Meridian.Server --port 5959 --accounts /opt/meridian/data/accounts.json
+ExecStart=/opt/meridian/Meridian.Server --port 5959 --database /opt/meridian/data/meridian.db --accounts /opt/meridian/data/accounts.json
 Restart=on-failure
 RestartSec=5
 # SIGTERM beendet den Server sauber (Program.cs)

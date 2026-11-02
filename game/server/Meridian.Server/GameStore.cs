@@ -18,13 +18,13 @@ public sealed record SavedCharacter
 public sealed record SavedItem(string Item, int Number = 1);
 
 /// <summary>
-/// Spielstand in einer SQLite-Datenbank (eine Datei, kein Datenbankserver, läuft auch auf dem Pi).
+/// Accounts und Spielstand in einer SQLite-Datenbank (eine Datei, kein Datenbankserver, läuft auch auf dem Pi).
 /// Ein Charakter wird immer komplett in einer Transaktion geschrieben, ein Absturz hinterlässt also nie einen
 /// halben Stand. Schema-Version in PRAGMA user_version. Siehe docs/decisions.md.
 /// </summary>
 public sealed class GameStore
 {
-    public const int SchemaVersion = 1;
+    public const int SchemaVersion = 2;
 
     private readonly string _connectionString;
     private readonly object _write = new();
@@ -81,6 +81,48 @@ public sealed class GameStore
                 );
                 PRAGMA user_version = 1;
                 """, tx);
+            tx.Commit();
+        }
+        if (version < 2)
+        {
+            using var tx = c.BeginTransaction();
+            Execute(c, """
+                CREATE TABLE accounts (
+                    name          TEXT PRIMARY KEY COLLATE NOCASE,
+                    password_md5  TEXT NOT NULL,
+                    type          INTEGER NOT NULL,
+                    character_id  INTEGER NOT NULL UNIQUE
+                );
+                PRAGMA user_version = 2;
+                """, tx);
+            tx.Commit();
+        }
+    }
+
+    // ---------------------------------------------------------------- Accounts
+
+    public List<Account> LoadAccounts()
+    {
+        using var c = Open();
+        using var cmd = Command(c, "SELECT name, password_md5, type, character_id FROM accounts");
+        using var r = cmd.ExecuteReader();
+        var list = new List<Account>();
+        while (r.Read())
+            list.Add(new Account(r.GetString(0), r.GetString(1), (Meridian.Protocol.ClientAccountType)r.GetInt32(2), (uint)r.GetInt64(3)));
+        return list;
+    }
+
+    public void SaveAccounts(IEnumerable<Account> accounts)
+    {
+        lock (_write)
+        {
+            using var c = Open();
+            using var tx = c.BeginTransaction();
+            foreach (var a in accounts)
+                Execute(c, """
+                    INSERT INTO accounts (name, password_md5, type, character_id) VALUES ($name, $pw, $type, $id)
+                    ON CONFLICT(name) DO UPDATE SET password_md5 = $pw, type = $type;
+                    """, tx, ("$name", a.Name), ("$pw", a.PasswordDigestHex), ("$type", (int)a.Type), ("$id", a.CharacterId));
             tx.Commit();
         }
     }

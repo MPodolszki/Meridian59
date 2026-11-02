@@ -6,14 +6,14 @@ namespace Meridian.Tests;
 /// <summary>Der Godot-unabhängige Client (ClientSession) gegen den neuen Server.</summary>
 public sealed class ClientSessionTests : IAsyncLifetime
 {
-    private readonly string _accountsPath = Path.Combine(Path.GetTempPath(), $"meridian-accounts-{Guid.NewGuid():N}.json");
+    private readonly string _accountsPath = Path.Combine(Path.GetTempPath(), $"meridian-accounts-{Guid.NewGuid():N}.db");
     private readonly CancellationTokenSource _cts = new(TimeSpan.FromSeconds(30));
     private GameServer _server = null!;
     private Task _serverTask = null!;
 
     public Task InitializeAsync()
     {
-        var accounts = AccountStore.Load(_accountsPath);
+        var accounts = AccountStore.Open(_accountsPath);
         accounts.AddOrUpdate("Anna", "pw");
         accounts.AddOrUpdate("Bert", "pw");
         _server = new GameServer(new ServerOptions { Port = 0 }, accounts);
@@ -26,7 +26,8 @@ public sealed class ClientSessionTests : IAsyncLifetime
     {
         _cts.Cancel();
         await _serverTask;
-        File.Delete(_accountsPath);
+        foreach (var f in new[] { _accountsPath, _accountsPath + "-wal", _accountsPath + "-shm" })
+            File.Delete(f);
     }
 
     [Fact]

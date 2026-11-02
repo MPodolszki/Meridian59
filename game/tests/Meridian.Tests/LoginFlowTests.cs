@@ -7,7 +7,7 @@ namespace Meridian.Tests;
 /// <summary>Spielt Login- und Game-Ablauf wie der Original-Client gegen einen echten Server auf einem freien Port durch.</summary>
 public sealed class LoginFlowTests : IAsyncLifetime
 {
-    private readonly string _accountsPath = Path.Combine(Path.GetTempPath(), $"meridian-accounts-{Guid.NewGuid():N}.json");
+    private readonly string _accountsPath = Path.Combine(Path.GetTempPath(), $"meridian-accounts-{Guid.NewGuid():N}.db");
     private readonly CancellationTokenSource _cts = new(TimeSpan.FromSeconds(30));
     private GameServer _server = null!;
     private Task _serverTask = null!;
@@ -15,7 +15,7 @@ public sealed class LoginFlowTests : IAsyncLifetime
 
     public Task InitializeAsync()
     {
-        var accounts = AccountStore.Load(_accountsPath);
+        var accounts = AccountStore.Open(_accountsPath);
         accounts.AddOrUpdate("Tester", "geheim");
         accounts.AddOrUpdate("Zweiter", "geheim");
         _server = new GameServer(new ServerOptions { Port = 0 }, accounts);
@@ -30,7 +30,8 @@ public sealed class LoginFlowTests : IAsyncLifetime
             c.Dispose();
         _cts.Cancel();
         await _serverTask;
-        File.Delete(_accountsPath);
+        foreach (var f in new[] { _accountsPath, _accountsPath + "-wal", _accountsPath + "-shm" })
+            File.Delete(f);
     }
 
     [Fact]

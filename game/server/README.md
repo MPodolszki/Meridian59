@@ -56,7 +56,7 @@ Dann auf dem Pi:
 
 ```bash
 sudo ~/meridian-upload/install-pi.sh
-sudo -u meridian /opt/meridian/Meridian.Server add-account Tester geheim --accounts /opt/meridian/data/accounts.json
+sudo -u meridian /opt/meridian/Meridian.Server add-account Tester geheim --database /opt/meridian/data/meridian.db
 sudo systemctl restart meridian-server
 journalctl -u meridian-server -f
 ```
@@ -69,11 +69,11 @@ Accounts werden beim Start gelesen, nach `add-account` daher neu starten.
 | Option | Bedeutung |
 |---|---|
 | `--port 5959` | TCP-Port |
-| `--accounts accounts.json` | Account-Datei |
+| `--accounts accounts.json` | Alte Account-Datei: wird beim ersten Start in die Datenbank übernommen (danach `*.imported`) |
 | `--room tosinn.roo` | Raumdatei des Clients für den Startraum |
 | `--world data/world/tos.json` | Weltbeschreibung (Dialoge aus `data/dialog/<gleicher Name>`, Händler aus `data/shops/<gleicher Name>`, Gegenstände aus `data/items/items.json`) |
 | `--start-room 52` | Startraum überschreiben (zum Testen einzelner Räume) |
-| `--database meridian.db` | SQLite-Datenbank für den Spielstand (Standard: neben der Account-Datei) |
+| `--database meridian.db` | SQLite-Datenbank für Accounts und Spielstand (Standard: neben `--accounts`) |
 | `--save-period 5` | Automatisch speichern alle n Minuten (0 = aus); zusätzlich beim Ausloggen und Beenden |
 | `--client-dir <pfad>` | `resource`-Ordner eines Original-Clients: Raum-Security wird aus der `.roo` gelesen (sonst wird der Spieler im Original-Client „blind“) |
 

@@ -21,14 +21,14 @@ public sealed class CombatTests : IAsyncLifetime
     private static readonly MonsterKind Weakling = new("Zombie", "zombie.bgf", 1, 1, 1, 0.0, TimeSpan.FromHours(1), 0, 64);
     private static readonly MonsterKind Brute = new("Zombie", "zombie.bgf", 999, 30, 30, 1.0, TimeSpan.FromMilliseconds(100), 300, 20 * 64);
 
-    private readonly string _accountsPath = Path.Combine(Path.GetTempPath(), $"meridian-accounts-{Guid.NewGuid():N}.json");
+    private readonly string _accountsPath = Path.Combine(Path.GetTempPath(), $"meridian-accounts-{Guid.NewGuid():N}.db");
     private readonly CancellationTokenSource _cts = new(TimeSpan.FromSeconds(30));
     private GameServer _server = null!;
     private Task _serverTask = null!;
 
     public Task InitializeAsync()
     {
-        var accounts = AccountStore.Load(_accountsPath);
+        var accounts = AccountStore.Open(_accountsPath);
         accounts.AddOrUpdate("Anna", "pw");
         _server = new GameServer(new ServerOptions { Port = 0, World = World, RandomSeed = 1 }, accounts);
         _server.Start();
@@ -40,7 +40,8 @@ public sealed class CombatTests : IAsyncLifetime
     {
         _cts.Cancel();
         await _serverTask;
-        File.Delete(_accountsPath);
+        foreach (var f in new[] { _accountsPath, _accountsPath + "-wal", _accountsPath + "-shm" })
+            File.Delete(f);
     }
 
     [Fact]

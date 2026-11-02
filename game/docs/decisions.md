@@ -83,5 +83,8 @@ skaliert das nicht. SQLite ist eine einzelne Datei ohne Datenbankserver, läuft 
 für linux-arm64 wird mitgeliefert), schreibt transaktionssicher und lässt sich abfragen. Ein späterer Umzug auf
 PostgreSQL bleibt möglich, weil der Zugriff in `GameStore` gekapselt ist.
 
-**Noch nicht in der Datenbank:** Accounts (weiter `accounts.json`), Gegenstände am Boden, Monster und
+Seit Schema 2 liegen auch die Accounts in der Datenbank (Tabelle `accounts`); eine alte `accounts.json`
+wird beim ersten Start übernommen und in `accounts.json.imported` umbenannt.
+
+**Noch nicht in der Datenbank:** Gegenstände am Boden, Monster und
 freigeschaltete Händlerwaren – diese beginnen nach einem Neustart frisch.
