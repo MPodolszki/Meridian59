@@ -47,3 +47,66 @@ public sealed class ClockTests
         Assert.Equal(spawns, world.MonstersIn(world.StartRoom).Count > 0);
     }
 }
+
+/// <summary>Wegfindung der Monster auf dem Höhenraster (A*).</summary>
+public sealed class RoomGridTests
+{
+    // 5×5, Wand in Spalte 3 mit Lücke in Zeile 5:  . . # . .
+    private static RoomGrid Grid()
+    {
+        var floor = new int[5, 5];
+        for (int r = 0; r < 4; r++)
+            floor[r, 2] = -1;
+        return new RoomGrid(floor);
+    }
+
+    [Fact]
+    public void FindPath_GoesAroundWall()
+    {
+        var path = Grid().FindPath(new GridPos(1, 1), new GridPos(1, 5));
+        Assert.NotNull(path);
+        Assert.Equal(new GridPos(1, 5), path![^1]);
+        Assert.Contains(new GridPos(5, 3), path);   // durch die Lücke
+        Assert.All(path, p => Assert.True(Grid().IsWalkable(p.Row, p.Col)));
+    }
+
+    [Fact]
+    public void FindPath_Unreachable_ReturnsNull()
+    {
+        var floor = new int[3, 3];
+        for (int r = 0; r < 3; r++)
+            floor[r, 1] = -1;
+        Assert.Null(new RoomGrid(floor).FindPath(new GridPos(1, 1), new GridPos(1, 3)));
+    }
+
+    [Fact]
+    public void Graveyard_LayoutIsLoaded_AndGeneratorsAreWalkable()
+    {
+        var grid = RoomGrid.Load(Path.Combine(AppContext.BaseDirectory, "data", "rooms", "tosgrave.json"), new GridPos(14, 18));
+        foreach (var g in new[] { new GridPos(9, 31), new GridPos(7, 24), new GridPos(12, 6), new GridPos(23, 16) })
+            Assert.True(grid.IsWalkable(g.Row, g.Col), $"Generator {g} nicht begehbar");
+        Assert.NotNull(grid.FindPath(new GridPos(9, 31), new GridPos(14, 18)));
+    }
+
+    [Fact]
+    public void Monster_WalksAroundWall_BackHome()
+    {
+        var def = new WorldDefinition(1, [new RoomDefinition(1, "Test", "test.roo") { Teleport = new GridPos(1, 5) }]);
+        var world = new World(def, new ResourceRegistry(), "blank.bgf", seed: 1);
+        var grid = Grid();
+        world.StartRoom.Grid = grid;
+        var kind = new MonsterKind("Zombie", "zombie.bgf", 10, 1, 1, 0, TimeSpan.FromHours(1), 200, 64);
+        // Heim rechts der Wand, Monster steht links davon.
+        var monster = world.SpawnMonster(1, kind, new GridPos(1, 5));
+        monster.Row = Room.Fine(1);
+        monster.Col = Room.Fine(1);
+
+        var now = DateTime.UtcNow;
+        for (int i = 0; i < 200 && (monster.Row / 64, monster.Col / 64) != (1, 5); i++)
+        {
+            world.Tick(now.AddMilliseconds(250 * i), 0.25);
+            Assert.True(grid.IsWalkable(monster.Row / 64, monster.Col / 64), $"Monster in der Wand bei {monster.Row / 64}/{monster.Col / 64}");
+        }
+        Assert.Equal((1, 5), (monster.Row / 64, monster.Col / 64));
+    }
+}

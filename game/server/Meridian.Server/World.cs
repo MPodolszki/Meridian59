@@ -52,6 +52,8 @@ public sealed class Room(RoomDefinition definition)
     public List<(MonsterKind Kind, int Weight)> MonsterTable { get; } = new();
     public int MaxMonsters { get; set; }
     public bool NightOnly { get; set; }
+    /// <summary>Begehbarkeit (aus rooms/*.json); null = keine Wände bekannt, Monster laufen geradlinig.</summary>
+    public RoomGrid? Grid { get; set; }
     public DateTime NextSpawn { get; set; }
 
     /// <summary>KOD-Feinkoordinate für die Mitte eines Grid-Felds.</summary>
@@ -428,10 +430,14 @@ public sealed partial class World
 
         if (!inRange && dist > 8)
         {
+            // Mit bekannten Wänden: zum nächsten Feld des A*-Wegs statt geradlinig zum Ziel.
+            var waypoint = room.Grid is null ? goal : NextWaypoint(m, room.Grid, goal);
+            double toWaypoint = waypoint is { } w ? Distance(m.Row, m.Col, w.row, w.col) : 0;
             double step = Math.Min(dist - (m.Target is null ? 0 : CombatRules.MeleeRange * 0.6), m.Kind.SpeedFinePerSecond * seconds);
-            if (step > 0)
+            step = Math.Min(step, toWaypoint);
+            if (step > 0 && waypoint is { } wp)
             {
-                double dr = (goal.row - m.Row) / dist, dc = (goal.col - m.Col) / dist;
+                double dr = (wp.row - m.Row) / toWaypoint, dc = (wp.col - m.Col) / toWaypoint;
                 m.Row = (ushort)Math.Round(m.Row + dr * step);
                 m.Col = (ushort)Math.Round(m.Col + dc * step);
                 m.Angle = AngleTowards(dr, dc);
@@ -464,6 +470,42 @@ public sealed partial class World
 
     /// <summary>Erholung wie player.kod: Lebenspunkte im Takt von CalculateHealthTime (mehr Ausdauer = schneller),
     /// Ausdauer im Takt von GetRestTime bis zur Ruheschwelle 80.</summary>
+    /// <summary>Nächster Wegpunkt (Feldmitte) auf dem A*-Weg zum Ziel; der Weg wird neu berechnet, wenn sich das
+    /// Zielfeld ändert. null = Ziel unerreichbar (Monster bleibt stehen).</summary>
+    private static (int row, int col)? NextWaypoint(Monster m, RoomGrid grid, (int row, int col) goal)
+    {
+        var from = new GridPos(m.Row / 64, m.Col / 64);
+        var to = new GridPos(goal.row / 64, goal.col / 64);
+        if (from == to)
+            return goal;
+        if (m.Path is null || m.PathGoal != to || m.Path.Count == 0)
+        {
+            m.PathGoal = to;
+            m.Path = grid.FindPath(from, to);
+        }
+        if (m.Path is null)
+            return null;
+        // Erreichte Felder abhaken; das letzte Feld ist das Zielfeld, dort direkt aufs Ziel zulaufen.
+        while (m.Path.Count > 0 && m.Path[0] == from)
+            m.Path.RemoveAt(0);
+        if (m.Path.Count == 0 || m.Path[0] == to)
+            return goal;
+        return (Room.Fine(m.Path[0].Row), Room.Fine(m.Path[0].Col));
+    }
+
+    /// <summary>Höhenraster der Räume laden (data/rooms/&lt;roo&gt;.json), Bezugsboden am Ankunftspunkt.</summary>
+    public void LoadGrids(string directory)
+    {
+        if (!Directory.Exists(directory))
+            return;
+        foreach (var room in _rooms.Values)
+        {
+            string path = Path.Combine(directory, Path.GetFileNameWithoutExtension(room.Definition.Roo).ToLowerInvariant() + ".json");
+            if (File.Exists(path))
+                room.Grid = RoomGrid.Load(path, room.Definition.Teleport);
+        }
+    }
+
     private void TickRegen(Avatar a, DateTime now)
     {
         if (a.Hp < a.MaxHp && a.Hp > 0)

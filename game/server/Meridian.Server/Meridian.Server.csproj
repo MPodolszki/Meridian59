@@ -14,6 +14,8 @@
   <ItemGroup>
     <!-- Weltdaten neben die ausführbare Datei kopieren -->
     <None Include="..\data\**\*.json" LinkBase="data" CopyToOutputDirectory="PreserveNewest" />
+    <!-- Höhenraster der Räume (vom Client), für Monster-Wegfindung -->
+    <None Include="..\..\client\rooms\*.json" LinkBase="data\rooms" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>

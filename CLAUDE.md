@@ -57,5 +57,6 @@ Accounts und Spielstand der Charaktere in SQLite (meridian.db, decisions.md).
 Gegenstände benutzen/ausrüsten mit Waffenschaden, Rüstung, Essen und Ausdauer (combat.md, trade.md).
 Handel zwischen Spielern (trade.md).
 Tag-Nacht-Wechsel mit Originaluhr und Raumlicht (daynight.md).
-Offen: Wegfindung für Monster,
+Monster-Wegfindung per A* auf den Raum-Höhenrastern (combat.md).
+Offen: Spielerbewegung serverseitig prüfen,
 schönere Häuser/Innenräume, Original-Client-Test.

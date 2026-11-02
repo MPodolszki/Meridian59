@@ -17,6 +17,8 @@ public sealed record ServerOptions
     public int? RandomSeed { get; init; }
     /// <summary>Dialogtexte der NPCs.</summary>
     public DialogFile Dialogs { get; init; } = DialogFile.Empty;
+    /// <summary>Höhenraster der Räume für Monster-Wegfindung (Standard: data/rooms neben dem Server).</summary>
+    public string? RoomLayoutDirectory { get; init; } = Path.Combine(AppContext.BaseDirectory, "data", "rooms");
     /// <summary>Feste Spielstunde statt der Uhr (Tests, Entwicklung); null = Originaluhr.</summary>
     public int? FixedHour { get; init; }
     /// <summary>Gegenstandskatalog und Beutetabellen.</summary>
@@ -54,6 +56,8 @@ public sealed class GameServer
         {
             FixedHour = options.FixedHour,
         };
+        if (options.RoomLayoutDirectory is { } layouts)
+            World.LoadGrids(layouts);
         if (options.Database is { } database)
         {
             Store = new GameStore(database);

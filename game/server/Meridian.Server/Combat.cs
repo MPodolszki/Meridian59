@@ -105,6 +105,9 @@ public sealed class Monster(uint id, MonsterKind kind, Room room, GridPos home)
     public ushort Col { get; set; } = Room.Fine(home.Col);
     public ushort Angle { get; set; }
     public Avatar? Target { get; set; }
+    /// <summary>Aktueller A*-Weg (Felder) und sein Zielfeld.</summary>
+    public List<GridPos>? Path { get; set; }
+    public GridPos? PathGoal { get; set; }
     public DateTime NextAttack { get; set; }
     public DateTime? DiedAt { get; set; }
     public bool Alive => DiedAt is null;

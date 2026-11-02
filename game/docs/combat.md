@@ -26,8 +26,12 @@ aber stark vereinfacht. Werte in `server/Meridian.Server/Combat.cs`.
 - Monster: Friedhof (70) und Krypta (71) mit den Spawn-Punkten und Anteilen aus KOD
   (85/15 bzw. 80/20 Zombie/Skelett), max. 6 bzw. 5; bis zur Hälfte alle 2 s, danach alle 20 s ein neues.
   Neue Monster nur nachts (Spielstunde < 5 oder > 21, siehe daynight.md); vorhandene bleiben tagsüber.
-- Monster laufen geradlinig (noch keine Wegfindung/Wände auf dem Server), verfolgen Ziele bis zur doppelten
-  Aggro-Reichweite und kehren sonst zum Spawn-Punkt zurück.
+- Monster verfolgen Ziele bis zur doppelten Aggro-Reichweite und kehren sonst zum Spawn-Punkt zurück.
+- **Wegfindung:** Der Server lädt die Höhenraster der Räume (`client/rooms/*.json`, aus den .roo erzeugt; im
+  Server unter `data/rooms`) und sucht per A* (8 Richtungen, keine Ecken schneiden) einen Weg über begehbare
+  Felder (höchstens eine Stufe über dem Boden am Ankunftspunkt). Unerreichbare Ziele: Monster bleibt stehen.
+  **Abweichung:** Das Original hat kein A*; Monster gehen dort feldweise in Zielrichtung, und der Server
+  verwirft Schritte durch Wände (blakserv roomdata.c). Spielerbewegungen prüft der Server noch nicht.
 
 Protokoll:
 - Lebenspunkte: `BP_STAT` Gruppe 1, Nr. 1 (wie `user_stat_health`).
