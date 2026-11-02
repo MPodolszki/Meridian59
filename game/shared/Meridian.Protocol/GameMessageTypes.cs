@@ -97,6 +97,8 @@ public enum GameMessage : byte
 /// <summary>Unterbefehle von BP_USERCOMMAND (UC_* aus include/proto.h), soweit benutzt.</summary>
 public enum UserCommandType : byte
 {
+    Stand = 6,
+    Safety = 7,                 // u8
     Deposit = 35,               // u32 Betrag
     Withdraw = 36,              // u32 Betrag
     Balance = 37,

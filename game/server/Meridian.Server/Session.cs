@@ -208,6 +208,28 @@ public sealed class Session(int id, TcpClient client, GameServer server)
                     SendInventory();
                 break;
 
+            // Abfragen des Original-Clients nach dem Betreten (user.kod).
+            case GameMessage.SendStatGroups when _avatar is not null:
+                foreach (string g in StatGroupNames)
+                    EnsureResource(g);
+                PostGame(GameReplies.StatGroups(StatGroupNames.Select(g => server.Resources[g]).ToList()));
+                break;
+
+            case GameMessage.SendStats when _avatar is not null:
+                SendStatGroup(r.U8());
+                break;
+
+            case GameMessage.SendSpells when _avatar is not null:
+                PostGame(GameReplies.EmptySpells());
+                break;
+
+            case GameMessage.SendSkills when _avatar is not null:
+                PostGame(GameReplies.EmptySkills());
+                break;
+
+            case GameMessage.SendEnchantments when _avatar is not null:
+                break;   // keine Verzauberungen (SendEnchantmentIcons schickt dann nichts)
+
             case GameMessage.ReqUse when _avatar is not null:
                 server.World.Use(_avatar, r.U32() & ObjectId.Mask);
                 break;
@@ -266,6 +288,9 @@ public sealed class Session(int id, TcpClient client, GameServer server)
                     case UserCommandType.Balance:
                         server.World.BankCommand(_avatar, command);
                         break;
+                    case UserCommandType.Stand:
+                    case UserCommandType.Safety:
+                        break;   // Ausruhen und PvP-Sicherheit gibt es noch nicht
                     default:
                         Log.Info($"Session {id}: Benutzerbefehl {command} wird noch nicht unterstützt");
                         break;
@@ -425,6 +450,32 @@ public sealed class Session(int id, TcpClient client, GameServer server)
 
     public const string HealthName = "Lebenspunkte";
     public const string VigorName = "Ausdauer";
+    public const string ManaName = "Mana";
+
+    /// <summary>Stat-Gruppen wie user.kod ToCliStatGroups (Condition, Stats, Spells, Skills).</summary>
+    private static readonly string[] StatGroupNames = ["Zustand", "Werte", "Sprüche", "Fertigkeiten"];
+
+    /// <summary>BP_STAT_GROUP auf BP_SEND_STATS: Gruppe 1 = Lebenspunkte, Mana, Ausdauer; die übrigen sind noch leer.</summary>
+    private void SendStatGroup(byte group)
+    {
+        if (_avatar is null)
+            return;
+        if (group != 1)
+        {
+            PostGame(GameReplies.StatGroup(group, []));
+            return;
+        }
+        EnsureResource(HealthName);
+        EnsureResource(ManaName);
+        EnsureResource(VigorName);
+        var res = server.Resources;
+        PostGame(GameReplies.StatGroup(1,
+        [
+            (1, res[HealthName], _avatar.Hp, _avatar.MaxHp),
+            (2, res[ManaName], 0, 0),
+            (3, res[VigorName], _avatar.State.Vigor, CombatRules.MaxVigor),
+        ]));
+    }
 
     /// <summary>Ausdauer als BP_STAT (Gruppe 1, Nr. 3 – wie user_stat_vigor im Original).</summary>
     public void SendVigor()

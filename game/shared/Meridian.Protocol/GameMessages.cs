@@ -136,6 +136,30 @@ public static class GameReplies
             .U8(group).U8(num).U32(nameRsc).U8(1 /* STATS_NUMERIC */).U8(1 /* STAT_INT */)
             .U32((uint)value).U32(0).U32(100).U32((uint)max).ToArray();
 
+    /// <summary>BP_STAT_GROUPS: Namen der Stat-Gruppen (Original: Condition, Stats, Spells, Skills).</summary>
+    public static byte[] StatGroups(IReadOnlyList<uint> nameRscs)
+    {
+        var w = new PacketWriter((byte)GameMessage.StatGroups).U8((byte)nameRscs.Count);
+        foreach (uint rsc in nameRscs)
+            w.U32(rsc);
+        return w.ToArray();
+    }
+
+    /// <summary>BP_STAT_GROUP: numerische Werte einer Gruppe (Nr., Name, Wert, Maximum) wie user.kod ToCliStats.</summary>
+    public static byte[] StatGroup(byte group, IReadOnlyList<(byte Num, uint NameRsc, int Value, int Max)> stats)
+    {
+        var w = new PacketWriter((byte)GameMessage.StatGroup).U8(group).U8((byte)stats.Count);
+        foreach (var s in stats)
+            w.U8(s.Num).U32(s.NameRsc).U8(1 /* STATS_NUMERIC */).U8(1 /* STAT_INT */)
+                .U32((uint)s.Value).U32(0).U32(100).U32((uint)s.Max);
+        return w.ToArray();
+    }
+
+    /// <summary>Leere BP_SPELLS- bzw. BP_SKILLS-Liste (noch keine Magie/Fertigkeiten).</summary>
+    public static byte[] EmptySpells() => new PacketWriter((byte)GameMessage.Spells).U16(0).ToArray();
+
+    public static byte[] EmptySkills() => new PacketWriter((byte)GameMessage.Skills).U16(0).ToArray();
+
     /// <summary>
     /// BP_CHANGE mit einmaliger Animation (ANIMATE_ONCE). Konvention des neuen Clients:
     /// Gruppe 2..4 = Angriff, Gruppe 9 = Sterben.

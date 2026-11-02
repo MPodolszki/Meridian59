@@ -1,4 +1,4 @@
-# Test mit dem Original-Client (Stand 2026-11-02, noch nicht durchgeführt)
+# Test mit dem Original-Client (Stand 2026-11-02)
 
 Ziel: Der Original-Client (Windows, `clientd3d`) verbindet sich mit dem neuen Server. Unter Linux mit Wine.
 
@@ -10,11 +10,21 @@ Der Client mit Grafiken ist nicht im Repo (Original-Assets). Bezugsquellen:
 
 Installer bzw. Ordner z. B. nach `~/Downloads` legen; Installation dann mit `wine <installer>.exe`.
 
+## Ergebnis 2026-11-02
+Steam-Client (Meridian 59, App 893390) unter Wine 11.17: **Login, Charakterwahl und Eintritt in Tos klappen.**
+Der Client meldet sich als Version 7.37 und fragt danach `BP_SEND_STAT_GROUPS`, `BP_SEND_STATS`,
+`BP_SEND_SPELLS`, `BP_SEND_SKILLS`, `BP_SEND_ENCHANTMENTS` sowie `UC_STAND`/`UC_SAFETY` ab – der Server antwortet
+jetzt wie user.kod (Gruppen Zustand/Werte/Sprüche/Fertigkeiten, Gruppe 1 mit Lebenspunkten/Mana/Ausdauer,
+leere Spruch-/Fertigkeitslisten). Ohne `/Q` bleibt der Client auf dem Startbildschirm.
+Bildschirmfotos vom GNOME-Wayland-Desktop sind per Skript nicht möglich; die Darstellung muss man selbst ansehen.
+
+Start: `game/tools/run-original-client.sh NAME PASSWORT [HOST] [PORT]`.
+
 ## Starten gegen den eigenen Server
 Der Client nimmt Host und Port von der Kommandozeile (`clientd3d/config.c` ConfigOverride):
 
 ```bash
-wine meridian.exe /H:127.0.0.1 /P:5959 /U:Tester /W:geheim
+wine Meridian.exe /Q /H:127.0.0.1 /P:5959 /U:Tester /W:geheim
 ```
 
 Alternativ in `meridian.ini`, Abschnitt `[Comm]`: `Hostname=127.0.0.1`, `SocketPort=5959`.
