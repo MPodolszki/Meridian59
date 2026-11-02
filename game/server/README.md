@@ -73,6 +73,8 @@ Accounts werden beim Start gelesen, nach `add-account` daher neu starten.
 | `--room tosinn.roo` | Raumdatei des Clients für den Startraum |
 | `--world data/world/tos.json` | Weltbeschreibung (Dialoge aus `data/dialog/<gleicher Name>`, Händler aus `data/shops/<gleicher Name>`, Gegenstände aus `data/items/items.json`) |
 | `--start-room 52` | Startraum überschreiben (zum Testen einzelner Räume) |
+| `--database meridian.db` | SQLite-Datenbank für den Spielstand (Standard: neben der Account-Datei) |
+| `--save-period 5` | Automatisch speichern alle n Minuten (0 = aus); zusätzlich beim Ausloggen und Beenden |
 | `--client-dir <pfad>` | `resource`-Ordner eines Original-Clients: Raum-Security wird aus der `.roo` gelesen (sonst wird der Spieler im Original-Client „blind“) |
 
 ## Original-Client verbinden

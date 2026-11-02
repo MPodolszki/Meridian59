@@ -654,6 +654,85 @@ public sealed partial class World
         NpcTell(banker, avatar, $"Hier sind deine {amount} Schillinge. Danke für dein Vertrauen.");
     }
 
+    // ------------------------------------------------------------------ Spielstand (GameStore)
+
+    private void RememberPosition(Avatar a)
+    {
+        if (a.Room is null)
+            return;
+        _leftSinceSave.Add(a.Id);
+        a.State.RoomId = a.Room.Definition.Id;
+        a.State.Row = a.Row;
+        a.State.Col = a.Col;
+        a.State.Angle = a.Angle;
+        a.State.Hp = a.Hp;
+    }
+
+    /// <summary>Charaktere, deren Stand seit dem letzten Speichern festgehalten wurde (eingeloggt oder ausgeloggt).</summary>
+    private readonly HashSet<uint> _leftSinceSave = new();
+
+    /// <summary>Zu speichernde Charaktere: alle eingeloggten (mit aktueller Position) und die seit dem
+    /// letzten Speichern ausgeloggten. Die Liste der Ausgeloggten wird dabei geleert.</summary>
+    public Dictionary<uint, SavedCharacter> TakeCharactersToSave()
+    {
+        lock (_gate)
+        {
+            foreach (var a in _rooms.Values.SelectMany(r => r.Avatars.Values))
+                RememberPosition(a);
+            var ids = new HashSet<uint>(_leftSinceSave);
+            _leftSinceSave.Clear();
+            return ids.Where(_characters.ContainsKey).ToDictionary(id => id, id => ToSaved(_characters[id]));
+        }
+    }
+
+    /// <summary>Nach einem fehlgeschlagenen Speichern beim nächsten Mal erneut versuchen.</summary>
+    public void SaveFailed(IEnumerable<uint> ids)
+    {
+        lock (_gate)
+            _leftSinceSave.UnionWith(ids);
+    }
+
+    private static SavedCharacter ToSaved(CharacterState c) => new()
+    {
+        Room = c.RoomId,
+        Row = c.Row,
+        Col = c.Col,
+        Angle = c.Angle,
+        Hp = c.Hp,
+        Inventory = c.Inventory.Select(i => new SavedItem(i.Kind.Key, i.Number)).ToList(),
+        Bank = new Dictionary<int, int>(c.Bank),
+    };
+
+    /// <summary>Gespeicherte Charaktere laden (beim Serverstart, bevor jemand eingeloggt ist).</summary>
+    public void LoadCharacters(IReadOnlyDictionary<uint, SavedCharacter> characters)
+    {
+        lock (_gate)
+        {
+            foreach (var (id, saved) in characters)
+            {
+                var state = new CharacterState
+                {
+                    Initialized = true,
+                    RoomId = saved.Room,
+                    Row = saved.Row,
+                    Col = saved.Col,
+                    Angle = saved.Angle,
+                    Hp = saved.Hp,
+                };
+                foreach (var item in saved.Inventory)
+                {
+                    if (_items.TryGet(item.Item, out var kind))
+                        state.Inventory.Add(NewItem(kind, item.Number));
+                    else
+                        Log.Warn($"Charakter {id}: unbekannter Gegenstand '{item.Item}' im Spielstand – entfällt");
+                }
+                foreach (var (bank, amount) in saved.Bank)
+                    state.Bank[bank] = amount;
+                _characters[id] = state;
+            }
+        }
+    }
+
     // ------------------------------------------------------------------ Händler einrichten
 
     private void SetUpMerchants(ShopFile shops)

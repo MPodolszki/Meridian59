@@ -97,6 +97,12 @@ public sealed class CharacterState
     /// <summary>Kontostand je Bank (KOD Bank-Objekte, Tos = 1).</summary>
     public Dictionary<int, int> Bank { get; } = new();
     public bool Initialized { get; set; }
+    /// <summary>Letzte Position beim Ausloggen (null = noch nie in der Welt) und Lebenspunkte.</summary>
+    public int? RoomId { get; set; }
+    public ushort Row { get; set; }
+    public ushort Col { get; set; }
+    public ushort Angle { get; set; }
+    public int? Hp { get; set; }
 
     public Item? Find(ItemKind kind) => Inventory.FirstOrDefault(i => i.Kind == kind);
     public Item? Find(uint id) => Inventory.FirstOrDefault(i => i.Id == id);

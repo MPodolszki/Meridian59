@@ -70,3 +70,18 @@ nicht von Hand. Körper aus MPFB (CC0), Haut/Augen/Haare/Kleidung aus dem MakeHu
 ## 2026-11-01 – Vorerst nur eine Rasse: Zwerge
 Alle Spieler sind Zwerge und werden im Client mit demselben Modell (models/dwarf.glb) dargestellt.
 Weitere Rassen kommen später; dann muss die Rasse über das Protokoll übertragen werden.
+
+## 2026-11-02 – Persistenz: SQLite
+Der Spielstand der Charaktere (Raum, Position, Lebenspunkte, Inventar, Bankkonten) liegt in einer
+SQLite-Datenbank (`meridian.db`, Standard neben `accounts.json`; Code `server/Meridian.Server/GameStore.cs`).
+Gespeichert wird beim Ausloggen, beim Beenden des Servers und alle 5 Minuten für alle eingeloggten Charaktere,
+jeweils vollständig pro Charakter in einer Transaktion. Schema-Version über `PRAGMA user_version`.
+
+**Begründung:** Das Original speichert den ganzen Spielstand als Snapshot (blakserv `SaveAll`, alle 180 min
+oder per Admin-Befehl); bei einem Absturz ist alles seit dem letzten Speichern weg, und für ein größeres MMO
+skaliert das nicht. SQLite ist eine einzelne Datei ohne Datenbankserver, läuft auf dem Pi (native Bibliothek
+für linux-arm64 wird mitgeliefert), schreibt transaktionssicher und lässt sich abfragen. Ein späterer Umzug auf
+PostgreSQL bleibt möglich, weil der Zugriff in `GameStore` gekapselt ist.
+
+**Noch nicht in der Datenbank:** Accounts (weiter `accounts.json`), Gegenstände am Boden, Monster und
+freigeschaltete Händlerwaren – diese beginnen nach einem Neustart frisch.

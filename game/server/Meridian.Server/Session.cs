@@ -431,6 +431,8 @@ public sealed class Session(int id, TcpClient client, GameServer server)
             return;
         server.World.Leave(_avatar);
         _avatar = null;
+        // Abweichung vom Original (nur periodisch/Admin): beim Ausloggen sichern, damit nichts verloren geht.
+        server.SaveGame($"{_account?.Name} loggt aus");
     }
 
     // ---------------------------------------------------------------- Senden

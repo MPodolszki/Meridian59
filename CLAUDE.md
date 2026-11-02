@@ -36,7 +36,6 @@ unverändert im Repo und dient als Referenz.
   für Protokoll und Spiellogik. Siehe game/docs/decisions.md.
 
 ## Offene Entscheidungen
-- Datenbank und Persistenz
 - Skriptsprache für Inhalte (vorerst Spiellogik direkt in C#)
 
 Getroffene Entscheidungen werden in game/docs/decisions.md festgehalten.
@@ -54,6 +53,7 @@ Monster auf Friedhof/Krypta. Gegenstände, Inventar, Schillinge, Kaufen/Verkaufe
 Beute zum Aufheben (docs/trade.md, eng am KOD-Original). Client (Godot 4.7.2) mit texturiertem Tos, animierten
 Figuren aus Blender (Zwerg, Zombie, Skelett via game/tools/blender/make_character.py), Lebensanzeige, Angriff (F),
 Inventar (I), Laden (B), Aufheben (G). Nichts davon gegen das Original getestet.
-Offen: Persistenz (offene Entscheidung; Inventar/Konten gehen bei Serverneustart verloren), Gegenstände
+Spielstand der Charaktere in SQLite (meridian.db, decisions.md).
+Offen: Accounts in die Datenbank übernehmen, Gegenstände
 benutzen/ausrüsten, Handel zwischen Spielern, Tag-Nacht-Wechsel, Wegfindung für Monster,
 schönere Häuser/Innenräume, Original-Client-Test.

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Auf dem Pi ausführen (sudo). Installiert/aktualisiert den Server nach /opt/meridian
-# und richtet den systemd-Dienst ein. Accounts in /opt/meridian/data bleiben erhalten.
+# und richtet den systemd-Dienst ein. Accounts und Spielstand (meridian.db) in /opt/meridian/data bleiben erhalten.
 set -euo pipefail
 src="$(cd "$(dirname "$0")" && pwd)"
 

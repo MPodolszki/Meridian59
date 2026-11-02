@@ -153,6 +153,14 @@ public sealed partial class World
         lock (_gate)
         {
             avatar.State = StateFor(avatar.Id);
+            // Wie im Original erscheint man dort, wo man ausgeloggt hat.
+            if (avatar.State.RoomId is { } roomId && _rooms.TryGetValue(roomId, out var saved))
+            {
+                avatar.Angle = avatar.State.Angle;
+                avatar.Hp = Math.Clamp(avatar.State.Hp ?? avatar.MaxHp, 1, avatar.MaxHp);
+                Place(avatar, saved, avatar.State.Row, avatar.State.Col);
+                return;
+            }
             var (row, col) = StartRoom.ArrivalPoint;
             Place(avatar, StartRoom, row, col);
         }
@@ -163,6 +171,7 @@ public sealed partial class World
         lock (_gate)
         {
             CancelOfferLocked(avatar);
+            RememberPosition(avatar);
             Remove(avatar);
         }
     }

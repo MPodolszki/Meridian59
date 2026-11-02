@@ -11,6 +11,7 @@ TestResults/
 
 # Lokale Laufzeitdaten des Servers
 server/**/accounts.json
+server/**/meridian.db*
 
 # Server-Builds für Deployment
 publish/

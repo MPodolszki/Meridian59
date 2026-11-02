@@ -4,6 +4,7 @@ using Meridian.Server;
 // Aufruf:
 //   Meridian.Server [--port 5959] [--accounts accounts.json] [--world data/world/tos.json]
 //                   [--client-dir <resource-ordner>] [--player-icon blank.bgf] [--start-room 52]
+//                   [--database meridian.db] [--save-period 5]
 //   Meridian.Server add-account <name> <passwort> [--admin] [--accounts accounts.json]
 
 string accountsPath = "accounts.json";
@@ -12,6 +13,8 @@ string? clientDir = null;
 string worldPath = Path.Combine(AppContext.BaseDirectory, "data", "world", "tos.json");
 string playerIcon = "blank.bgf";
 int? startRoom = null;
+string? database = null;   // Standard: meridian.db neben der Account-Datei
+int savePeriodMinutes = 5;
 var positional = new List<string>();
 bool admin = false;
 
@@ -26,6 +29,8 @@ for (int i = 0; i < args.Length; i++)
         case "--world": worldPath = args[++i]; break;
         case "--player-icon": playerIcon = args[++i]; break;
         case "--start-room": startRoom = int.Parse(args[++i]); break;
+        case "--database": database = args[++i]; break;
+        case "--save-period": savePeriodMinutes = int.Parse(args[++i]); break;
         default: positional.Add(args[i]); break;
     }
 }
@@ -79,6 +84,8 @@ var server = new GameServer(new ServerOptions
     World = world,
     PlayerIcon = playerIcon,
     ClientResourceDir = clientDir,
+    Database = database ?? Path.Combine(Path.GetDirectoryName(Path.GetFullPath(accountsPath))!, "meridian.db"),
+    SavePeriod = TimeSpan.FromMinutes(savePeriodMinutes),
 }, accounts);
 server.Start();
 await server.RunAsync(cts.Token);

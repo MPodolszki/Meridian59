@@ -49,7 +49,8 @@ Daten: `server/data/items/items.json`, `server/data/shops/tos.json`; Client: `cl
 - Beute liegt auf dem Boden (OF_GETTABLE) und wird mit `BP_REQ_GET` aufgehoben, `BP_REQ_DROP` legt ab.
 
 ## Abweichungen vom Original
-- **Keine Persistenz:** Inventar und Konten leben nur, solange der Server läuft (offene Entscheidung Persistenz).
+- Inventar und Konten werden in SQLite gespeichert (decisions.md); Gegenstände am Boden und freigeschaltete
+  Händlerwaren gehen bei einem Neustart verloren.
 - Kein Gewicht/Volumen (`ReqNewHold`), keine Haltbarkeit (Langschwert-Schäden), keine magischen Gegenstände,
   Token, Siegelringe oder Quest-Gegenstände in der Beute.
 - Gegenstände benutzen/ausrüsten (Essen, Waffen, Fackel) fehlt noch.
