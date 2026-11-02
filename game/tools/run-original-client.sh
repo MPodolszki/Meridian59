@@ -12,8 +12,11 @@ if [ ! -d "$dst" ]; then
     cp -r "$src" "$dst"
 fi
 cd "$dst"
+# Software-Renderer des Clients: Mit Direct3D bleibt unter Wine/Wayland die Oberfläche (Text, Werte, Inventar)
+# schwarz oder flackert.
+sed -i 's/^softwarerenderer=false/softwarerenderer=true/' config.ini 2>/dev/null || true
 export WINEPREFIX="$HOME/.cache/meridian/wineprefix" WINEDEBUG=-all
-# Virtueller Wine-Desktop: ohne ihn bleiben unter Wayland/XWayland Textfenster, Werte und Inventar schwarz.
+# Eigener Wine-Desktop als Fenster.
 # /Q: Schnellstart ohne Startbildschirm (clientd3d/config.c ConfigOverride)
 exec wine explorer "/desktop=Meridian,${M59_SIZE:-1600x900}" "$(winepath -w "$dst/Meridian.exe")" \
     /Q "/H:$host" "/P:$port" "/U:$user" "/W:$pass"
