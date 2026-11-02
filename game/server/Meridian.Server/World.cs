@@ -144,7 +144,41 @@ public sealed partial class World
     public IReadOnlyCollection<Room> Rooms => _rooms.Values;
 
     public RoomObject ToRoomObject(Avatar a) =>
-        new(a.Id, _resources[a.Name], new ObjectAppearance(_resources[PlayerIcon]), a.Row, a.Col, a.Angle, FlagPlayer);
+        new(a.Id, _resources[a.Name], new ObjectAppearance(_resources[PlayerIcon], 1, PlayerOverlays(a)), a.Row, a.Col, a.Angle, FlagPlayer);
+
+    /// <summary>Körperteile des männlichen Standard-Charakters (player.kod SendOverlays, system.kod charinfo_*_ax):
+    /// linker/rechter Arm, Beine, Kopf, Mund, Augen, Nase, Haare; dazu die Waffe in der Hand.</summary>
+    public static readonly string[] PlayerOverlayIcons =
+        ["bla.bgf", "bra.bgf", "bfa.bgf", "phax.bgf", "pmax.bgf", "peax.bgf", "pnax.bgf", "ptac.bgf"];
+
+    private const byte SkinXlat = 0x01;   // XLAT_TO_SKIN1
+
+    private List<Overlay> PlayerOverlays(Avatar a)
+    {
+        var weapon = a.State.Inventory.FirstOrDefault(i => i.Used && i.Kind.Overlay is not null);
+        bool leftHandBusy = a.State.Inventory.Any(i => i.Used && i.Kind.Slot == "shield");
+        var list = new List<Overlay>
+        {
+            new(_resources["bla.bgf"], 31 /* HS_LEFT_HAND */, leftHandBusy ? (ushort)7 : (ushort)1),
+            new(_resources["bra.bgf"], 21 /* HS_RIGHT_HAND */, weapon is null ? (ushort)1 : (ushort)17),
+            new(_resources["bfa.bgf"], 41 /* HS_LEGS */),
+            new(_resources["phax.bgf"], 1 /* HS_HEAD */, 1, SkinXlat),
+            new(_resources["pmax.bgf"], 12 /* HS_MOUTH */, 1, SkinXlat),
+            new(_resources["peax.bgf"], 11 /* HS_EYES */, 1, SkinXlat),
+            new(_resources["pnax.bgf"], 14 /* HS_NOSE */, 1, SkinXlat),
+            new(_resources["ptac.bgf"], 13 /* HS_TOUPEE */),
+        };
+        if (weapon?.Kind.Overlay is { } overlay)
+            list.Add(new(_resources[overlay], 22 /* HS_RIGHT_WEAPON */, 4));
+        return list;
+    }
+
+    /// <summary>Aussehen eines Spielers hat sich geändert (z. B. Waffe angelegt): BP_CHANGE an den Raum.</summary>
+    private void AppearanceChanged(Avatar a)
+    {
+        if (a.Room is not null)
+            BroadcastRoom(a.Room, GameReplies.Change(ToRoomObject(a)));
+    }
 
     public RoomObject ToRoomObject(Monster m) =>
         new(m.Id, _resources[m.Kind.Name], new ObjectAppearance(_resources[m.Kind.Icon]), m.Row, m.Col, m.Angle, FlagAttackable);

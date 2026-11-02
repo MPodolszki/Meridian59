@@ -387,6 +387,9 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         _avatar = new Avatar(characterId, _account.Name, this);
         EnsureResource(InterfaceModule);
         PostGame(GameReplies.LoadModule(server.Resources[InterfaceModule]));
+        // Grafiken der Spielerfiguren (Körperteile, Waffen in der Hand) für alle Spieler im Raum.
+        foreach (string icon in World.PlayerOverlayIcons.Concat(server.World.Items.Kinds.Select(k => k.Overlay).OfType<string>()))
+            EnsureResource(icon);
 
         server.World.Enter(_avatar);
         SendPlayer();

@@ -373,7 +373,8 @@
       "slot": "weapon",
       "weaponType": "slash",
       "weaponQuality": "normal",
-      "windowOverlay": "povaxe.bgf"
+      "windowOverlay": "povaxe.bgf",
+      "overlay": "axeov.bgf"
     },
     {
       "key": "hammer",
@@ -389,7 +390,8 @@
       "slot": "weapon",
       "weaponType": "bludgeon",
       "weaponQuality": "normal",
-      "windowOverlay": "povhamr.bgf"
+      "windowOverlay": "povhamr.bgf",
+      "overlay": "hamrov.bgf"
     },
     {
       "key": "mace",
@@ -405,7 +407,8 @@
       "slot": "weapon",
       "weaponType": "bludgeon",
       "weaponQuality": "low",
-      "windowOverlay": "povmace.bgf"
+      "windowOverlay": "povmace.bgf",
+      "overlay": "maceov.bgf"
     },
     {
       "key": "longsword",
@@ -421,7 +424,8 @@
       "slot": "weapon",
       "weaponType": "thrust",
       "weaponQuality": "normal",
-      "windowOverlay": "povsword.bgf"
+      "windowOverlay": "povsword.bgf",
+      "overlay": "swordov.bgf"
     },
     {
       "key": "martyrscroll",

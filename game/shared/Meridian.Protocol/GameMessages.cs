@@ -1,7 +1,11 @@
 namespace Meridian.Protocol;
 
-/// <summary>Grafische Darstellung eines Objekts: Icon-Ressource und Animation (protocol.md 4.2/4.5).</summary>
-public sealed record ObjectAppearance(uint IconRsc, ushort Group = 1);
+/// <summary>Grafische Darstellung eines Objekts: Icon-Ressource, Animation und Overlays (protocol.md 4.2/4.5).</summary>
+public sealed record ObjectAppearance(uint IconRsc, ushort Group = 1, IReadOnlyList<Overlay>? Overlays = null);
+
+/// <summary>Overlay auf einem Objekt (z. B. Kopf, Arme eines Spielers): Grafik, Hotspot (HS_*), Bildgruppe und
+/// optional eine Farbübersetzung (ANIMATE_TRANSLATION, XLAT_*).</summary>
+public sealed record Overlay(uint IconRsc, byte Hotspot, ushort Group = 1, byte Translation = 0);
 
 /// <summary>Objekt in einem Raum (protocol.md 4.6). Koordinaten in KOD-Feinkoordinaten (Feld*64 + fein).
 /// Amount != null kennzeichnet Mengen-Gegenstände (KOD NumberItem): Tag 1 in der ID, danach die Menge.</summary>
@@ -181,7 +185,7 @@ public static class GameReplies
         var w = new PacketWriter((byte)GameMessage.Change);
         WriteObjectDesc(w, o);
         w.U8((byte)AnimationType.Once).U32(periodMs).U16(low).U16(high).U16(1);
-        return w.U8(0).ToArray();
+        return WriteOverlays(w, o.Appearance.Overlays).ToArray();
     }
 
     public const ushort AttackGroup = 2;
@@ -245,7 +249,7 @@ public static class GameReplies
     {
         var w = WriteObjectDesc(new PacketWriter((byte)GameMessage.Change), o);
         WriteAnimation(w, o.Appearance.Group);
-        return w.U8(0).ToArray();
+        return WriteOverlays(w, o.Appearance.Overlays).ToArray();
     }
 
     /// <summary>BP_BUY_LIST: Verkäufer, dann je Ware object_desc und Preis (KOD user.kod UserBuy).</summary>
@@ -293,7 +297,21 @@ public static class GameReplies
             .U32(0)    // rarity
             .U16(0);   // dlight: keine Lichtquelle
         WriteAnimation(w, o.Appearance.Group);
-        return w.U8(0);   // keine Overlays
+        return WriteOverlays(w, o.Appearance.Overlays);
+    }
+
+    /// <summary>overlays := u8 n, n × {rsc icon, u8 hotspot, [9, u8 xlat] animation}.</summary>
+    private static PacketWriter WriteOverlays(PacketWriter w, IReadOnlyList<Overlay>? overlays)
+    {
+        w.U8((byte)(overlays?.Count ?? 0));
+        foreach (var ov in overlays ?? [])
+        {
+            w.U32(ov.IconRsc).U8(ov.Hotspot);
+            if (ov.Translation != 0)
+                w.U8(9 /* ANIMATE_TRANSLATION */).U8(ov.Translation);
+            WriteAnimation(w, ov.Group);
+        }
+        return w;
     }
 
     private static PacketWriter WriteRoomObject(PacketWriter w, RoomObject o)
@@ -301,7 +319,7 @@ public static class GameReplies
         WriteObjectDesc(w, o);
         w.U16(o.Row).U16(o.Col).U16(o.Angle);
         WriteAnimation(w, o.Appearance.Group);   // Bewegungsanimation
-        return w.U8(0);                          // Bewegungs-Overlays
+        return WriteOverlays(w, o.Appearance.Overlays);   // Bewegungs-Overlays (hier dieselben)
     }
 
     private static void WriteAnimation(PacketWriter w, ushort group) =>

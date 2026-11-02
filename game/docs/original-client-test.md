@@ -22,7 +22,8 @@ Unter Wine (GNOME/Wayland) bleiben Textfenster, Werte und Inventar mit dem Direc
 Bildschirmfotos vom GNOME-Wayland-Desktop sind per Skript nicht möglich; die Darstellung muss man selbst ansehen.
 
 Darstellung: Tos ist im Original-Client zu sehen. Damit Figuren nicht unsichtbar bleiben, schickt der Server jetzt
-die Original-Grafiknamen: Spieler `bta.bgf` (Körper; Kopf/Arme/Beine als Overlays fehlen noch), NPCs ihr KOD-Icon
+die Original-Grafiknamen: Spieler `bta.bgf` mit den Overlays des männlichen Standard-Charakters (player.kod SendOverlays:
+`bla`/`bra`/`bfa`, `phax`/`pmax`/`peax`/`pnax` mit Hautfarbe, `ptac`; Waffe `maceov` usw. an HS_RIGHT_WEAPON), NPCs ihr KOD-Icon
 (`tsinnk.bgf`, `tsapoth.bgf`, `tsbanker.bgf`, `tswatch.bgf`, in `data/world/tos.json`), Zombie `zombie.bgf`,
 Skelett `skelbody.bgf`; Gegenstände hatten schon die KOD-Icons. Der eigene Client bildet `skelbody` auf sein
 Skelett-Modell ab, alles Unbekannte wird zum Zwerg.
@@ -44,6 +45,7 @@ Geprüft 2026-11-02 (Steam-Client, Wine, Software-Renderer):
 | Bank (`deposit`/`balance`/`withdraw` bei Skivlat) | geht |
 | Kampf auf dem Friedhof nachts (Taste E, Treffer/Schaden) | geht |
 | Verkaufen/Anbieten (`offer`), Beute aufheben (`get`), Essen | geht |
+| Andere Spieler als vollständige Figur (Körper `bta` + Arme, Beine, Kopf, Gesicht, Haare; Waffe in der Hand) | geht |
 
 Hinweis: Der Steam-Client hat eine neue Tastenbelegung (`config.ini`): Angriff E, Sagen F, Gehen/Öffnen Leertaste.
 

@@ -202,6 +202,8 @@ public sealed partial class World
             item.Used = true;
             avatar.Session.Post(GameReplies.Use(item.Id));
             SendWindowOverlay(avatar, item, visible: true);
+            if (item.Kind.Overlay is not null || slot == "shield")
+                AppearanceChanged(avatar);
             Tell(avatar, slot switch
             {
                 "weapon" => $"Du nimmst {item.Describe()} in die Hand.",
@@ -225,6 +227,8 @@ public sealed partial class World
         item.Used = false;
         avatar.Session.Post(GameReplies.Unuse(item.Id));
         SendWindowOverlay(avatar, item, visible: false);
+        if (item.Kind.Overlay is not null || item.Kind.Slot == "shield")
+            AppearanceChanged(avatar);
         if (!quiet)
             Tell(avatar, item.Kind.Slot == "armor" ? $"Du ziehst {item.Describe()} aus." : $"Du legst {item.Describe()} weg.");
     }

@@ -26,6 +26,8 @@ public sealed record ItemKind(string Key, string Name, string Icon, int Value)
     public string WeaponQuality { get; init; } = "normal";
     /// <summary>Höchste Schadensminderung (defmod viDamage_base).</summary>
     public int DamageReduce { get; init; }
+    /// <summary>Waffe in der Hand der Spielerfigur (KOD player_*_overlay_icon_rsc, z. B. maceov.bgf).</summary>
+    public string? Overlay { get; init; }
     /// <summary>Waffe in der Ego-Ansicht (KOD vrWeapon_window_overlay, z. B. povmace.bgf).</summary>
     public string? WindowOverlay { get; init; }
     /// <summary>Lichtquelle, wenn benutzt (Fackel).</summary>
