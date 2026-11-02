@@ -102,7 +102,13 @@ unsere Modelle:
 
     blender -b -P game/tools/blender/retarget_animations.py -- AnimationLibrary_Godot_Standard.gltf game/client/models/dwarf.glb
 
-Clips: Idle, Walk, Run, Sprint, Attack, Punch, Die, Hit, Cast, Jump_Start/Loop/Land, Interact, Idle_Torch.
+Clips: Idle, Walk, Run, Sprint, Attack, Punch, Punch2, Die, Hit, HitHead, Cast, CastIdle, Jump_Start/Loop/Land,
+Interact, PickUp, Idle_Torch, CombatIdle, Talk, Dance, SitDown/Sit/StandUp, Crouch, CrouchWalk, Roll, Swim, SwimIdle.
+
+Rumpf, Hals und Kopf übernehmen die Drehung relativ zur Ruhelage; Gliedmaßen werden auf die Knochenrichtung der
+Quelle ausgerichtet, weil Quelle (A-Pose) und Ziel (T-Pose) verschiedene Grundhaltungen haben – sonst stehen die
+Arme verdreht ab und schwingen kaum. Seitwärts- und Rückwärtsclips fehlen in der Bibliothek: seitlich dreht sich der
+Körper, rückwärts läuft der Gehen-Clip rückwärts.
 
 ## Springen (`scripts/JumpControl.cs`)
 

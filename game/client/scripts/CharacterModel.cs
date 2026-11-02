@@ -35,7 +35,8 @@ public static class CharacterModel
         if (Player(holder) is { } player)
         {
             // glTF-Animationen werden ohne Schleife importiert.
-            foreach (string name in new[] { "Idle", "Walk", "Run", "Sprint", "Jump_Loop", "Idle_Torch" })
+            foreach (string name in new[] { "Idle", "Walk", "Run", "Sprint", "Jump_Loop", "Idle_Torch", "CombatIdle", "Talk",
+                         "Dance", "Sit", "Crouch", "CrouchWalk", "Swim", "SwimIdle", "CastIdle" })
                 if (player.HasAnimation(name))
                     player.GetAnimation(name).LoopMode = Animation.LoopModeEnum.Linear;
             player.Play("Idle");

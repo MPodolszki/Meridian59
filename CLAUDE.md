@@ -84,5 +84,5 @@ Barloque (Nord/Süd, Hafen, Läden, Gericht, Gefängnis, Gildenmeisterhalle) (do
 
 Godot-Client: WoW-Steuerung/Kamera, Waldränder auf grünen Karten, Spielerlicht in dunklen Räumen, Lauf-Automatik --route.
 
-Offen (Client): Armhaltung/-schwung falsch (retarget_animations.py überträgt nur Drehung relativ zur Ruhelage; Gliedmaßen auf Quellrichtung ausrichten – Quelle AnimationLibrary_Godot_Standard.gltf neu laden, Nutzer fragen), weitere Animationen (seitlich, rückwärts, Emotes), detailliertere Boden-/Gebäudetexturen.
+Godot-Client: Arme korrekt (Gliedmaßen nach Quellrichtung), 29 Clips inkl. Sitzen, Ducken, Tanzen, Schwimmen; detailliertere Texturen. Testdatenbank dauerhaft in ~/.local/share/meridian.
 Offen: Wildnis zwischen den Städten, Tempel, Kanalisationen (Jasper, Barloque), Heimatstadt je Spieler, Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.

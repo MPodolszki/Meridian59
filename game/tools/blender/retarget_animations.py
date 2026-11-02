@@ -6,10 +6,13 @@ Aufruf (Blender im Hintergrund):
 QUELLE: AnimationLibrary_Godot_Standard.gltf (Rigify-Knochen DEF-*), MODELL: unsere Figur mit Skelett
 „game_engine“ (Unreal-Namen). Die vorhandenen Animationen des Modells werden ersetzt.
 
-Verfahren: Für jedes Bild wird die Rotation jedes Quellknochens relativ zu seiner Ruhelage im Armature-Raum
-bestimmt und auf die Ruhelage des Zielknochens übertragen (Zielrotation = Quellpose · Quellruhe⁻¹ · Zielruhe).
-Damit spielen unterschiedliche Grundhaltungen (T-/A-Pose) keine Rolle. Die Hüfte wird zusätzlich verschoben,
-skaliert mit dem Verhältnis der Hüfthöhen. Blickrichtungen werden angeglichen.
+Verfahren: Rumpf, Hals und Kopf übernehmen die Rotation des Quellknochens relativ zu seiner Ruhelage im
+Armature-Raum (Zielrotation = Quellpose · Quellruhe⁻¹ · Zielruhe) – so bleiben Drehungen um die eigene Achse
+erhalten. Gliedmaßen (Schlüsselbein, Arme, Hände, Finger, Beine, Füße) werden dagegen so gedreht, dass ihre
+Knochenrichtung der gepositionierten Quellrichtung entspricht (kürzeste Drehung von der Zielruhe aus). Das ist
+nötig, weil Quelle (A-Pose) und Ziel (T-Pose) verschiedene Grundhaltungen haben: Die reine Relativübertragung ließ
+die Arme um den Unterschied verdreht abstehen. Die Hüfte wird zusätzlich verschoben, skaliert mit dem Verhältnis
+der Hüfthöhen. Blickrichtungen werden angeglichen.
 """
 import math
 import sys
@@ -38,10 +41,20 @@ for side, s in (("L", "l"), ("R", "r")):
 # Unsere Clipnamen ← Quaternius-Clips (Schleifen bleiben Schleifen)
 CLIPS = {
     "Idle": "Idle_Loop", "Walk": "Walk_Loop", "Run": "Jog_Fwd_Loop", "Sprint": "Sprint_Loop",
-    "Attack": "Sword_Attack", "Punch": "Punch_Jab", "Die": "Death01", "Hit": "Hit_Chest",
-    "Cast": "Spell_Simple_Shoot", "Jump_Start": "Jump_Start", "Jump_Loop": "Jump_Loop", "Jump_Land": "Jump_Land",
-    "Interact": "Interact", "Idle_Torch": "Idle_Torch_Loop",
+    "Attack": "Sword_Attack", "Punch": "Punch_Jab", "Punch2": "Punch_Cross", "Die": "Death01",
+    "Hit": "Hit_Chest", "HitHead": "Hit_Head",
+    "Cast": "Spell_Simple_Shoot", "CastIdle": "Spell_Simple_Idle_Loop",
+    "Jump_Start": "Jump_Start", "Jump_Loop": "Jump_Loop", "Jump_Land": "Jump_Land",
+    "Interact": "Interact", "PickUp": "PickUp_Table", "Idle_Torch": "Idle_Torch_Loop",
+    "CombatIdle": "Sword_Idle", "Talk": "Idle_Talking_Loop", "Dance": "Dance_Loop",
+    "SitDown": "Sitting_Enter", "Sit": "Sitting_Idle_Loop", "StandUp": "Sitting_Exit",
+    "Crouch": "Crouch_Idle_Loop", "CrouchWalk": "Crouch_Fwd_Loop", "Roll": "Roll",
+    "Swim": "Swim_Fwd_Loop", "SwimIdle": "Swim_Idle_Loop",
 }
+
+# Gliedmaßen: Richtung angleichen statt Relativdrehung (siehe Kopfkommentar)
+LIMB_PREFIXES = ("clavicle", "upperarm", "lowerarm", "hand", "thigh", "calf", "foot", "ball",
+                 "index", "middle", "ring", "pinky", "thumb")
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 
@@ -114,7 +127,12 @@ for clip, src_name in CLIPS.items():
             name = bone.name
             rest = tgt_rest[name]
             src = inverse.get(name)
-            if src is not None:
+            if src is not None and name.startswith(LIMB_PREFIXES):
+                sp = source.pose.bones[src].matrix          # gepost im Quell-Armature-Raum
+                src_dir = to_target_rot @ (sp.to_quaternion() @ Vector((0, 1, 0)))
+                rest_dir = rest.to_quaternion() @ Vector((0, 1, 0))
+                rot = rest_dir.rotation_difference(src_dir) @ rest.to_quaternion()
+            elif src is not None:
                 sp = source.pose.bones[src].matrix          # gepost im Quell-Armature-Raum
                 delta = sp.to_quaternion() @ src_rest[src].to_quaternion().inverted()
                 rot = to_target_rot @ delta @ to_target_rot.inverted() @ rest.to_quaternion()
