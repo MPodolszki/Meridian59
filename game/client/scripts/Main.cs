@@ -548,7 +548,9 @@ public partial class Main : Node3D
         spawn.Y = GroundHeightAt(spawn);
         var root = new Node3D { Position = spawn, Rotation = new Vector3(0, ToYaw(o.Angle), 0) };
         // Modell nach Icon (zombie.bgf → models/zombie.glb); Spieler und NPCs sind vorerst Zwerge.
-        root.AddChild(CharacterModel.Create(o.Icon));
+        var figure = CharacterModel.Create(o.Icon);
+        root.AddChild(figure);
+        CharacterModel.ApplyDrawFlags(figure, o.Flags);
         if (o.IsActivatable)
             PropModels.SetLever(root, o.Group == 2);
         if (o.IsAttackable)
@@ -563,7 +565,7 @@ public partial class Main : Node3D
             Text = _session.Resolve(o.NameRsc),
             // NPCs gelb, Monster rot wie in vielen MMOs
             Modulate = o.IsAttackable ? new Color(1f, 0.35f, 0.3f) : o.IsNpc ? new Color(1f, 0.85f, 0.3f) : Colors.White,
-            Position = new Vector3(0, o.IsAttackable ? 2.0f : 1.7f, 0),
+            Position = new Vector3(0, o.IsAttackable ? Mathf.Max(2.0f, CharacterModel.Height(figure) + 0.3f) : 1.7f, 0),
             Billboard = BaseMaterial3D.BillboardModeEnum.Enabled,
         });
         AddChild(root);

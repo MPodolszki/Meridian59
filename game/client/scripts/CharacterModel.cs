@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 
 namespace Meridian.Client;
@@ -18,9 +19,9 @@ public static class CharacterModel
         // Gegenstände/Tiere ohne Figur (Kuh, Portal, Schild) aus Grundformen.
         if (PropModels.Create(kind) is { } prop)
             return prop;
-        // Grafiknamen des Originals (KOD vrIcon) auf eigene Modelle abbilden; Spieler/NPCs sind Zwerge.
-        // Mumien und Drescher (res0001a.bgf) nutzen vorerst das Zombie-Modell.
-        kind = kind switch { "skelbody" => "skeleton", "mummy" or "res0001a" => "zombie", _ => kind };
+        // Grafiknamen des Originals (KOD vrIcon) = Name des eigenen Modells (tools/blender/creatures.py);
+        // Spieler/NPCs sind Zwerge.
+        kind = kind switch { "skelbody" => "skeleton", _ => kind };
         string path = $"res://models/{kind}.glb";
         if (!ResourceLoader.Exists(path))
             path = "res://models/dwarf.glb";
@@ -42,6 +43,45 @@ public static class CharacterModel
             player.Play("Idle");
         }
         return holder;
+    }
+
+    /// <summary>Zeichenflags des Servers: OF_BLACK (Schattenmumie) dunkel, OF_TRANSLUCENT50 (Gespenstermumie) halb
+    /// durchsichtig, OF_TRANSLUCENT25/75 entsprechend.</summary>
+    public static void ApplyDrawFlags(Node3D figure, uint flags)
+    {
+        uint fx = flags & 0x00700000;
+        if (fx == 0)
+            return;
+        float alpha = fx switch { 0x00100000 => 0.75f, 0x00200000 => 0.5f, 0x00300000 => 0.25f, _ => 1f };
+        foreach (var mesh in figure.FindChildren("*", "MeshInstance3D", true, false).OfType<MeshInstance3D>())
+        {
+            if (fx == 0x00400000)
+                for (int i = 0; i < mesh.GetSurfaceOverrideMaterialCount(); i++)
+                    if (mesh.Mesh.SurfaceGetMaterial(i) is BaseMaterial3D m)
+                    {
+                        var dark = (BaseMaterial3D)m.Duplicate();
+                        dark.AlbedoColor = new Color(0.08f, 0.07f, 0.1f);
+                        dark.AlbedoTexture = null;
+                        mesh.SetSurfaceOverrideMaterial(i, dark);
+                    }
+            if (alpha < 1f)
+                mesh.Transparency = 1f - alpha;
+        }
+    }
+
+    /// <summary>Höhe der Figur in Metern (für die Namensanzeige über großen Monstern).</summary>
+    public static float Height(Node3D figure)
+    {
+        // Noch nicht im Szenenbaum: Transformationen bis zur Figur selbst aufmultiplizieren.
+        float top = 0f;
+        foreach (var mesh in figure.FindChildren("*", "MeshInstance3D", true, false).OfType<MeshInstance3D>())
+        {
+            var t = mesh.Transform;
+            for (var n = mesh.GetParent() as Node3D; n is not null && n != figure; n = n.GetParent() as Node3D)
+                t = n.Transform * t;
+            top = Mathf.Max(top, (t * mesh.GetAabb()).End.Y);
+        }
+        return top;
     }
 
     /// <summary>Natürliches Tempo der Bewegungsclips (Universal Animation Library) in m/s bei Zwergengröße.</summary>

@@ -131,3 +131,17 @@ Leertaste: Sprung mit ca. 0,9 m Höhe (4,2 m/s Absprung, 9,8 m/s² Schwerkraft),
 optisch, andere Spieler sehen ihn nicht, über Wände oder auf Dächer springt man nicht. Die Kamera bleibt auf
 Fußhöhe. Die Leertaste wird vor der GUI abgefangen (sonst löst sie den zuletzt geklickten Button aus); in
 Textfeldern bleibt sie ein Leerzeichen.
+
+## Monster-Modelle (`tools/blender/make_creature.py`)
+
+Alle Monster des Originals haben eigene, prozedural gebaute Modelle (46 Stück): Grundkörper (Ellipsoide, Röhren,
+Kegel) auf einem Skelett, je Bauplan (Vierbeiner, Insekt, Spinne, Skorpion, Hundertfüßer, Wurm, Geist/Fee, Baum,
+fleischfressende Pflanze, Dornen, Schleim/Pilz, Schnecke, Zweibeiner mit Schnabel/Hauern/Robe/Flügeln) mit den Clips
+Idle, Walk, Run, Attack, Die aus Gangmustern. Maße, Farben und Merkmale stehen in `tools/blender/creatures.py`; der
+Dateiname ist der Name der Original-Grafik (`orc.bgf` → `models/orc.glb`), so braucht der Client keine Tabelle.
+Schattenmumie (OF_BLACK) wird dunkel, Gespenstermumie (OF_TRANSLUCENT50) halb durchsichtig gezeichnet.
+
+```bash
+blender -b --python game/tools/blender/make_creature.py -- game/client/models [art …] [--preview ordner]
+```
+
