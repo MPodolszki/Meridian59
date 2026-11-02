@@ -271,11 +271,11 @@ public static class RoomDecor
         var frame = Textured("planks", 1.5f, new Color(0.22f, 0.14f, 0.08f));
         var glow = new StandardMaterial3D
         {
-            AlbedoColor = new Color(1f, 0.8f, 0.4f, 0.55f),
+            AlbedoColor = new Color(1f, 0.8f, 0.45f, 0.22f),
             Transparency = BaseMaterial3D.TransparencyEnum.Alpha,
             EmissionEnabled = true,
             Emission = new Color(1f, 0.75f, 0.35f),
-            EmissionEnergyMultiplier = 1.5f,
+            EmissionEnergyMultiplier = 0.6f,
             ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded,
         };
         var doors = new Batch(new BoxMesh { Size = Vector3.One }, wood);
@@ -312,7 +312,7 @@ public static class RoomDecor
             }
             if (!open)
                 return;
-            marks.Add(new Transform3D(Basis.FromScale(new Vector3(1.4f, 0.03f, 1.4f)), center + Vector3.Up * 0.03f));
+            marks.Add(new Transform3D(Basis.FromScale(new Vector3(0.9f, 0.02f, 0.9f)), center + Vector3.Up * 0.03f));
             if (target.Length > 0)
                 root.AddChild(new Label3D
                 {
