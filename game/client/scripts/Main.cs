@@ -74,7 +74,7 @@ public partial class Main : Node3D
 
     /// <summary>
     /// Für Tests/Entwicklung: godot --path game/client -- --login NAME PASSWORT [--host H] [--port P]
-    /// [--screenshot DATEI] [--walk SEKUNDEN]. Mit --screenshot wird nach dem Betreten des Raums
+    /// [--screenshot DATEI] [--walk SEKUNDEN] [--create show|auto]. Mit --screenshot wird nach dem Betreten des Raums
     /// (und optionalem Laufen) ein Bild gespeichert und der Client beendet.
     /// </summary>
     private void ApplyCommandLine()
@@ -92,6 +92,7 @@ public partial class Main : Node3D
                 case "--fight": _autoFight = args[++i] == "1"; break;
                 case "--inventory": _autoInventory = args[++i] == "1"; break;
                 case "--shop": _autoShop = args[++i] == "1"; break;
+                case "--create": _autoCreate = args[++i]; break;
                 case "--walk": _autoWalkSeconds = float.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture); break;
                 case "--login" when i + 2 < args.Length:
                     _user.Text = args[++i];
@@ -105,6 +106,8 @@ public partial class Main : Node3D
     }
 
     private bool _autoLogin;
+    /// <summary>Neuer Charakter: "show" fotografiert den Dialog, "auto" erstellt mit Vorgaben und betritt die Welt.</summary>
+    private string? _autoCreate;
     private float _screenshotDelay = 1.5f;
     private bool _autoFight;
     private bool _autoInventory;
@@ -241,6 +244,7 @@ public partial class Main : Node3D
 
         BuildTradeUi(ui);
         BuildSpellUi(ui);
+        BuildCreationUi(ui);
     }
 
     private static LineEdit AddField(VBoxContainer box, string label, string value)
@@ -256,7 +260,7 @@ public partial class Main : Node3D
     private async void OnConnectPressed()
     {
         _session?.Dispose();
-        _session = new ClientSession();
+        _session = new ClientSession { CreateNewCharacters = true };
         _session.Event += OnSessionEvent;
         try
         {
@@ -270,7 +274,7 @@ public partial class Main : Node3D
 
     private void OnSessionEvent(ClientEvent e)
     {
-        if (HandleTradeEvent(e) || HandleSpellEvent(e))
+        if (HandleTradeEvent(e) || HandleSpellEvent(e) || HandleCreationEvent(e))
             return;
         switch (e)
         {

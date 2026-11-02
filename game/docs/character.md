@@ -16,4 +16,11 @@ Wie im Original (`kod/util/system.kod` SendCharInfo/BP_NEW_CHARINFO, `player.kod
 - Der gewählte Name ist der Charaktername im Spiel (der Account-Name bleibt für den Login).
 - Aussehen: Körper `bta`/`btb`, Arme/Beine je Geschlecht, Kopf, Augen, Nase, Mund mit Hautfarbe, Haare mit
   Haarfarbe (Overlays). Gespeichert in SQLite (`characters.profile`).
-- Godot-Client: hat noch keinen eigenen Assistenten und steigt ohne Erstellung ein (Standard-Aussehen und -Werte).
+- Godot-Client (`client/scripts/CreationUi.cs`): eigener Dialog mit denselben Nachrichten wie char.dll – Name,
+  Beschreibung, Geschlecht, Frisur/Augen/Nase/Mund (als „Variante n“, da der Client die BGF-Grafiken nicht zeigt),
+  Haar-/Hautfarbe, sechs Werte (Summe ≤ 200) und Sprüche/Fertigkeiten (≤ 45 Punkte). Lehnt der Server ab
+  (`BP_CHARINFO_NOT_OK`, z. B. Name vergeben), bleibt der Dialog offen.
+  **Abweichung:** Die 3D-Figur ist weiterhin der Zwerg; Geschlecht und Gesicht wirken nur auf die Darstellung im
+  Original-Client.
+- `ClientSession.CreateNewCharacters` schaltet die Erstellung ein; Bots/Tests lassen sie aus und betreten neue
+  Charaktere wie bisher mit Standard-Aussehen.

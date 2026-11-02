@@ -77,3 +77,74 @@ public sealed class CharacterCreationTests
         Assert.DoesNotContain(_world.Spells.All, s => s.Key == "hospice" && CharacterCreation.Offered(s));
     }
 }
+
+/// <summary>Erstellung über das Netz mit der ClientSession (wie der Godot-Client).</summary>
+public sealed class CharacterCreationFlowTests : IAsyncLifetime
+{
+    private static string Data(params string[] parts) => Path.Combine([AppContext.BaseDirectory, "data", .. parts]);
+
+    private readonly string _db = Path.Combine(Path.GetTempPath(), $"meridian-create-{Guid.NewGuid():N}.db");
+    private readonly CancellationTokenSource _cts = new(TimeSpan.FromSeconds(30));
+    private GameServer _server = null!;
+    private Task _run = null!;
+
+    public Task InitializeAsync()
+    {
+        var accounts = AccountStore.Open(_db);
+        accounts.AddOrUpdate("Neuling", "pw");
+        _server = new GameServer(new ServerOptions
+        {
+            Port = 0,
+            World = new WorldDefinition(1, [new RoomDefinition(1, "R", "r.roo") { Teleport = new GridPos(5, 5) }]),
+            Items = ItemCatalog.Load(Data("items", "items.json")),
+            Spells = SpellBook.Load(Data("spells", "spells.json")),
+            Skills = SkillBook.Load(Data("skills", "skills.json")),
+            Database = _db,
+        }, accounts);
+        _server.Start();
+        _run = _server.RunAsync(_cts.Token);
+        return Task.CompletedTask;
+    }
+
+    public async Task DisposeAsync()
+    {
+        _cts.Cancel();
+        await _run;
+        foreach (var f in new[] { _db, _db + "-wal", _db + "-shm" })
+            File.Delete(f);
+    }
+
+    [Fact]
+    public async Task NewAccount_CreatesCharacter_AndEntersWorldWithChosenName()
+    {
+        using var c = new ClientSession { CreateNewCharacters = true };
+        var events = new List<ClientEvent>();
+        c.Event += events.Add;
+        await c.ConnectAsync("127.0.0.1", _server.Port, "Neuling", "pw");
+        await WaitForAsync(c, events, e => e is ClientEvent.CharacterCreation);
+        var choices = events.OfType<ClientEvent.CharacterCreation>().Single().Choices;
+        Assert.Equal(14, choices.HairColors.Length);
+        Assert.Contains(choices.Spells, s => s.Name == "Kleine Heilung" && s.Cost == 10);
+        Assert.Contains(choices.Skills, s => s.Name == "Faustschlag");
+
+        var f = choices.Female;
+        await c.CreateCharacterAsync(choices.CharacterId, "Dis", "Eine Schmiedin.", 2,
+            [f.Head, f.Hair[1], f.Eyes[0], f.Noses[0], f.Mouths[0]], choices.HairColors[2], choices.SkinColors[1],
+            [30, 30, 30, 30, 40, 40], [choices.Spells.First(s => s.Name == "Kleine Heilung").Id], [430]);
+        await WaitForAsync(c, events, e => e is ClientEvent.EnteredRoom);
+        await WaitForAsync(c, events, e => e is ClientEvent.ObjectAdded a && a.Object.Id == c.PlayerId);
+        var self = events.OfType<ClientEvent.ObjectAdded>().Last(e => e.Object.Id == c.PlayerId).Object;
+        Assert.Equal("Dis", c.Resolve(self.NameRsc));
+        Assert.Equal("btb.bgf", self.Icon);
+    }
+
+    private async Task WaitForAsync(ClientSession s, List<ClientEvent> events, Func<ClientEvent, bool> match)
+    {
+        while (!events.Any(match))
+        {
+            _cts.Token.ThrowIfCancellationRequested();
+            await Task.Delay(10);
+            s.ProcessEvents();
+        }
+    }
+}

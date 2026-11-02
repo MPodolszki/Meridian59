@@ -69,11 +69,26 @@ public abstract record ClientEvent
     /// <summary>Gegenangebot (BP_COUNTEROFFER), bei Händlern Geld.</summary>
     public sealed record CounterOffer(IReadOnlyList<ClientObject> Items) : ClientEvent;
     public sealed record OfferCanceled : ClientEvent;
+    /// <summary>Neuer Charakter: Auswahl für die Erstellung (BP_CHARINFO), danach <see cref="ClientSession.CreateCharacterAsync"/>.</summary>
+    public sealed record CharacterCreation(CharacterChoices Choices) : ClientEvent;
+    /// <summary>Erstellung abgelehnt (BP_CHARINFO_NOT_OK), z. B. Name vergeben.</summary>
+    public sealed record CharacterRejected : ClientEvent;
     /// <summary>Ein anderer Spieler bietet dir etwas an (BP_OFFER); antworten mit Gegenangebot oder Abbruch.</summary>
     public sealed record OfferReceived(ClientObject Offerer, IReadOnlyList<ClientObject> Items) : ClientEvent;
     /// <summary>Eigenes Gegenangebot bestätigt (BP_COUNTEROFFERED).</summary>
     public sealed record CounterOffered(IReadOnlyList<ClientObject> Items) : ClientEvent;
 }
+
+/// <summary>Auswahllisten der Charaktererstellung (BP_CHARINFO); Grafiken als Namen, z. B. "ptac.bgf".</summary>
+public sealed record CharacterChoices(
+    uint CharacterId, string Name, byte[] HairColors, byte[] SkinColors,
+    FaceOptions Male, FaceOptions Female,
+    IReadOnlyList<CreationAbility> Spells, IReadOnlyList<CreationAbility> Skills);
+
+public sealed record FaceOptions(string[] Hair, string Head, string[] Eyes, string[] Noses, string[] Mouths);
+
+/// <summary>Wählbarer Startspruch bzw. -fertigkeit mit Kosten (10/25 Punkte, Budget 45).</summary>
+public sealed record CreationAbility(uint Id, string Name, string Description, int Cost, int School);
 
 /// <summary>Spruch aus Sicht des Clients: Objekt (Name/Icon), Anzahl Ziele, Schule, Fähigkeit in %.</summary>
 public sealed record ClientSpell(ClientObject Spell, int Targets, int School, int Ability);
@@ -108,6 +123,11 @@ public sealed class ClientSession : IDisposable
     private string _username = "";
     private string _password = "";
     private bool _charactersRequested;
+    private (uint Id, string Name) _newCharacter;
+
+    /// <summary>Neue Charaktere erst erstellen (Dialog, <see cref="ClientEvent.CharacterCreation"/>) statt sie mit
+    /// Standardaussehen zu betreten. Bots und Tests lassen das aus.</summary>
+    public bool CreateNewCharacters { get; set; }
 
     public uint PlayerId { get; private set; }
     public uint RoomId { get; private set; }
@@ -171,6 +191,35 @@ public sealed class ClientSession : IDisposable
         SendGameAsync(new PacketWriter((byte)GameMessage.ReqAttack).U8(1).U32(id).ToArray());
 
     public Task QuitAsync() => SendGameAsync([(byte)GameMessage.ReqQuit]);
+
+    /// <summary>Neuen Charakter anlegen (BP_SYSTEM/BP_NEW_CHARINFO wie char.dll): Gesichtsteile als Ressourcen-IDs
+    /// in der Reihenfolge Kopf, Haare, Augen, Nase, Mund; Werte Stärke, Intellekt, Ausdauer, Geschick, Mystik, Zielen.</summary>
+    public Task CreateCharacterAsync(uint characterId, string name, string description, int gender,
+        IReadOnlyList<string> faceParts, byte hairColor, byte skinColor, IReadOnlyList<int> stats,
+        IReadOnlyCollection<uint> spells, IReadOnlyCollection<uint> skills)
+    {
+        var w = new PacketWriter((byte)GameMessage.System).U8(48).U32(characterId).Str(name).Str(description).U8((byte)gender);
+        w.U16((ushort)faceParts.Count);
+        foreach (string part in faceParts)
+            w.U32(ResourceId(part));
+        w.U8(hairColor).U8(skinColor).U16((ushort)stats.Count);
+        foreach (int s in stats)
+            w.U32((uint)s);
+        w.U16((ushort)spells.Count);
+        foreach (uint s in spells)
+            w.U32(s);
+        w.U16((ushort)skills.Count);
+        foreach (uint s in skills)
+            w.U32(s);
+        return _conn!.SendAsync(w.ToArray(), _cts.Token);
+    }
+
+    /// <summary>Ressourcen-ID zu einem Text, den der Server geschickt hat (Umkehrung von <see cref="Resolve"/>).</summary>
+    private uint ResourceId(string value)
+    {
+        lock (_resources)
+            return _resources.FirstOrDefault(kv => kv.Value == value).Key;
+    }
 
     /// <summary>Spruchliste anfordern (BP_SEND_SPELLS); Antwort BP_SPELLS und Stat-Gruppe 3.</summary>
     public Task RequestSpellsAsync() => SendGameAsync([(byte)GameMessage.SendSpells]);
@@ -333,10 +382,65 @@ public sealed class ClientSession : IDisposable
                     break;
                 }
                 uint id = r.U32();
-                Enqueue(new ClientEvent.Status($"Wähle Charakter {r.Str()}"));
+                string name = r.Str();
+                bool firstTime = r.U8() == 1;
+                if (firstTime && CreateNewCharacters)
+                {
+                    // Neuer Charakter: Auswahllisten anfordern (BP_SYSTEM/BP_SEND_CHARINFO wie char.dll).
+                    _newCharacter = (id, name);
+                    Enqueue(new ClientEvent.Status("Neuer Charakter – bitte erstellen"));
+                    await _conn!.SendAsync([(byte)GameMessage.System, 49]);
+                    break;
+                }
+                Enqueue(new ClientEvent.Status($"Wähle Charakter {name}"));
                 await _conn!.SendAsync(new PacketWriter((byte)GameMessage.UseCharacter).U32(id).ToArray());
                 break;
             }
+            case GameMessage.CharInfo:
+            {
+                var hair = new byte[r.U8()];
+                for (int i = 0; i < hair.Length; i++) hair[i] = r.U8();
+                var skin = new byte[r.U8()];
+                for (int i = 0; i < skin.Length; i++) skin[i] = r.U8();
+                FaceOptions Face(ref PacketReader rr)
+                {
+                    string[] List(ref PacketReader x)
+                    {
+                        var l = new string[x.U32()];
+                        for (int i = 0; i < l.Length; i++) l[i] = Resolve(x.U32());
+                        return l;
+                    }
+                    var h = List(ref rr);
+                    string head = Resolve(rr.U32());
+                    var eyes = List(ref rr);
+                    var noses = List(ref rr);
+                    var mouths = List(ref rr);
+                    return new FaceOptions(h, head, eyes, noses, mouths);
+                }
+                var male = Face(ref r);
+                var female = Face(ref r);
+                var spells = new List<CreationAbility>();
+                uint n = r.U32();
+                for (int i = 0; i < n; i++)
+                    spells.Add(new CreationAbility(r.U32(), Resolve(r.U32()), Resolve(r.U32()), (int)r.U32(), r.U8()));
+                var skills = new List<CreationAbility>();
+                n = r.U32();
+                for (int i = 0; i < n; i++)
+                    skills.Add(new CreationAbility(r.U32(), Resolve(r.U32()), Resolve(r.U32()), (int)r.U32(), 0));
+                var (cid, cname) = _newCharacter;
+                Enqueue(new ClientEvent.CharacterCreation(new CharacterChoices(cid, cname, hair, skin, male, female, spells, skills)));
+                break;
+            }
+            case GameMessage.CharInfoOk:
+            {
+                uint id = r.U32() & ObjectId.Mask;
+                Enqueue(new ClientEvent.Status("Charakter erstellt"));
+                await _conn!.SendAsync(new PacketWriter((byte)GameMessage.UseCharacter).U32(id).ToArray());
+                break;
+            }
+            case GameMessage.CharInfoNotOk:
+                Enqueue(new ClientEvent.CharacterRejected());
+                break;
             case GameMessage.Player:
             {
                 PlayerId = r.U32();
