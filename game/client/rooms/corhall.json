@@ -1,4 +1,4 @@
-{"source": "corhall.roo", "rows": 11, "cols": 13, "ceiling": 340, "exits": [[2, 3, "Cor Noth"], [3, 3, "Cor Noth"], [2, 7, "Cor Noth"], [3, 7, "Cor Noth"], [2, 8, "Cor Noth"], [3, 8, "Cor Noth"]], "locked": [], "floor": [
+{"source": "corhall.roo", "rows": 11, "cols": 13, "ceiling": 340, "exits": [[2, 3, "Cor Noth"], [3, 3, "Cor Noth"], [2, 7, "Cor Noth"], [3, 7, "Cor Noth"], [2, 8, "Cor Noth"], [3, 8, "Cor Noth"]], "locked": [], "outdoors": false, "floor": [
     [-1,-1,-1,120,120,120,120,-1,-1,-1,-1,-1,-1],
     [-1,-1,-1,120,120,120,120,-1,-1,-1,-1,-1,-1],
     [-1,120,120,120,120,120,120,-1,-1,-1,-1,-1,-1],

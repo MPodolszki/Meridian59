@@ -1,4 +1,4 @@
-{"source": "tostan.roo", "rows": 8, "cols": 8, "ceiling": 96, "exits": [[6, 3, "The Streets of Tos"]], "locked": [], "floor": [
+{"source": "tostan.roo", "rows": 8, "cols": 8, "ceiling": 96, "exits": [[6, 3, "The Streets of Tos"]], "locked": [], "outdoors": false, "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,-1,0,0,0,0,0,0],
     [-1,-1,0,0,0,0,0,0],

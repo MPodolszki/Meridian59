@@ -1,4 +1,4 @@
-{"source": "tosinn.roo", "rows": 11, "cols": 11, "ceiling": 276, "exits": [[1, 3, "The Cellar"], [3, 10, "The Streets of Tos"], [3, 1, "The Streets of Tos"], [10, 8, "The Streets of Tos"]], "locked": [[1, 4], [6, 10], [7, 10], [4, 4]], "floor": [
+{"source": "tosinn.roo", "rows": 11, "cols": 11, "ceiling": 276, "exits": [[1, 3, "The Cellar"], [3, 10, "The Streets of Tos"], [3, 1, "The Streets of Tos"], [10, 8, "The Streets of Tos"]], "locked": [[1, 4], [6, 10], [7, 10], [4, 4]], "outdoors": false, "floor": [
     [100,100,100,180,173,159,138,-1,-1,-1,-1],
     [100,100,100,180,100,100,130,-1,-1,-1,-1],
     [100,100,100,100,100,100,114,-1,100,100,-1],

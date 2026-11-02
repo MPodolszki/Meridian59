@@ -1,4 +1,4 @@
-{"source": "guest1.roo", "rows": 8, "cols": 11, "ceiling": 110, "exits": [[1, 6, "Raza"]], "locked": [[8, 9]], "floor": [
+{"source": "guest1.roo", "rows": 8, "cols": 11, "ceiling": 110, "exits": [[1, 6, "Raza"]], "locked": [[8, 9]], "outdoors": false, "floor": [
     [-1,-1,-1,-1,20,20,-1,-1,-1,-1,-1],
     [20,20,20,20,20,20,20,20,20,20,20],
     [20,20,20,20,20,20,20,20,20,20,20],

@@ -1,4 +1,4 @@
-{"source": "jasab6.roo", "rows": 21, "cols": 16, "ceiling": 96, "exits": [[5, 8, "West Jasper"]], "locked": [], "floor": [
+{"source": "jasab6.roo", "rows": 21, "cols": 16, "ceiling": 96, "exits": [[5, 8, "West Jasper"]], "locked": [], "outdoors": false, "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,-1],
     [-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,-1],

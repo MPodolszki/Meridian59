@@ -29,6 +29,8 @@ public sealed class RoomLayout
     public List<(int Row, int Col)> Locked { get; } = new();
     /// <summary>Gelände ("village": Wiese statt Pflaster), Wassertiefe je Feld (SF_DEPTH 0–3) und Bäume/Sträucher.</summary>
     public string? Terrain { get; private set; }
+    /// <summary>Außenraum laut Raumdaten (null = unbekannt, dann entscheidet die Größe).</summary>
+    public bool? Outdoors { get; private set; }
     /// <summary>Ränder mit Randausgang ("NORTH", "SOUTH", "WEST", "EAST"); nur dort darf man das Raster verlassen.</summary>
     public HashSet<string> Edges { get; } = new();
     private string[]? _depth;
@@ -78,6 +80,8 @@ public sealed class RoomLayout
         if (root.TryGetProperty("edges", out var edges))
             foreach (var e in edges.EnumerateArray())
                 layout.Edges.Add(e.GetString() ?? "");
+        if (root.TryGetProperty("outdoors", out var outdoorsFlag))
+            layout.Outdoors = outdoorsFlag.GetBoolean();
         if (root.TryGetProperty("terrain", out var terrain))
             layout.Terrain = terrain.GetString();
         if (root.TryGetProperty("depth", out var depth))
@@ -185,11 +189,72 @@ public sealed class RoomLayout
         }
         if (!outdoors)
             AddEnclosure(root, materials, cellSize, wallHeight);
+        else if (IsGreen(Terrain))
+            root.AddChild(ForestEdge(cellSize));
         root.AddChild(RoomDecor.Build(this, cellSize, outdoors, wallHeight));
         foreach (var t in Trees)
             root.AddChild(Tree(t.Shrub, new Vector3((t.Col + 1 + t.FineCol / 64f) * cellSize,
                 HeightMeters(Math.Max(FloorAt(t.Row, t.Col), 0), cellSize), (t.Row + 1 + t.FineRow / 64f) * cellSize)));
         return root;
+    }
+
+    private static bool IsGreen(string? terrain) => terrain is "village" or "forest";
+
+    /// <summary>
+    /// Kartenrand wie in Meridian: Wandfelder (-1) und ein Ring außerhalb des Rasters werden zu dichtem Wald, an der
+    /// Grenze zum begehbaren Boden zusätzlich Büsche. Alles als MultiMesh (Stämme, Kronen, Büsche) für wenig
+    /// Zeichenaufrufe; Position und Größe pseudozufällig, aber je Feld fest.
+    /// </summary>
+    private Node3D ForestEdge(float cellSize)
+    {
+        var trunks = new List<Transform3D>();
+        var crowns = new List<Transform3D>();
+        var bushes = new List<Transform3D>();
+        const int ring = 3;
+        for (int r = -ring; r < Rows + ring; r++)
+            for (int c = -ring; c < Cols + ring; c++)
+            {
+                bool inside = r >= 0 && c >= 0 && r < Rows && c < Cols;
+                if (inside && FloorAt(r, c) >= 0)
+                    continue;
+                // Bodenhöhe aus dem höchsten begehbaren Nachbarn (sonst Bezugsboden)
+                float ground = 0;
+                bool border = false;
+                for (int dr = -1; dr <= 1; dr++)
+                    for (int dc = -1; dc <= 1; dc++)
+                        if (FloorAt(r + dr, c + dc) is var f and >= 0)
+                        {
+                            border = true;
+                            ground = Math.Max(ground, HeightMeters(f, cellSize));
+                        }
+                uint h = (uint)(r * 73856093) ^ (uint)(c * 19349663);
+                float Rand(int k) => ((h >> (k * 5)) & 31) / 31f;
+                var basePos = new Vector3((c + 1 + 0.2f + 0.6f * Rand(0)) * cellSize, ground, (r + 1 + 0.2f + 0.6f * Rand(1)) * cellSize);
+                float size = 0.8f + 0.6f * Rand(2);
+                trunks.Add(new Transform3D(Basis.Identity.Scaled(new Vector3(size, size, size)), basePos + new Vector3(0, 1.3f * size, 0)));
+                crowns.Add(new Transform3D(Basis.Identity.Scaled(new Vector3(size, size * (0.9f + 0.4f * Rand(3)), size)),
+                    basePos + new Vector3(0, 3.2f * size, 0)));
+                if (border)
+                    bushes.Add(new Transform3D(Basis.Identity.Scaled(new Vector3(1 + Rand(4), 0.7f + 0.3f * Rand(5), 1 + Rand(6))),
+                        basePos + new Vector3(0.3f * cellSize * (Rand(5) - 0.5f), 0.35f, 0.3f * cellSize * (Rand(6) - 0.5f))));
+            }
+        var edge = new Node3D { Name = "ForestEdge" };
+        edge.AddChild(Instances(new CylinderMesh { TopRadius = 0.18f, BottomRadius = 0.28f, Height = 2.6f },
+            new Color(0.30f, 0.21f, 0.13f), trunks));
+        edge.AddChild(Instances(new SphereMesh { Radius = 1.7f, Height = 3.2f, RadialSegments = 12, Rings = 6 },
+            new Color(0.17f, 0.33f, 0.12f), crowns));
+        edge.AddChild(Instances(new SphereMesh { Radius = 0.8f, Height = 1.2f, RadialSegments = 10, Rings = 5 },
+            new Color(0.22f, 0.40f, 0.15f), bushes));
+        return edge;
+    }
+
+    private static MultiMeshInstance3D Instances(Mesh mesh, Color color, List<Transform3D> transforms)
+    {
+        mesh.SurfaceSetMaterial(0, new StandardMaterial3D { AlbedoColor = color, Roughness = 1f });
+        var multi = new MultiMesh { TransformFormat = MultiMesh.TransformFormatEnum.Transform3D, Mesh = mesh, InstanceCount = transforms.Count };
+        for (int i = 0; i < transforms.Count; i++)
+            multi.SetInstanceTransform(i, transforms[i]);
+        return new MultiMeshInstance3D { Multimesh = multi };
     }
 
     /// <summary>Innenräume: Wände ringsum außerhalb des Rasters bis zur Decke, damit man nicht in den Himmel schaut
@@ -247,6 +312,18 @@ public sealed class RoomLayout
                 MaterialOverride = Material(materials, kind == "water" ? "water" : !outdoors ? "planks" : terrain == "village" ? "grass" : "street"),
             };
             root.AddChild(tile);
+            return;
+        }
+
+        // Wald- und Dorfgebiete: statt Felswänden begrenzen Bäume und Büsche die Karte (AddForestEdge); hier nur Boden.
+        if (kind == "wall" && outdoors && IsGreen(terrain))
+        {
+            root.AddChild(new MeshInstance3D
+            {
+                Mesh = new BoxMesh { Size = new Vector3(width, 12.5f, cellSize) },
+                Position = new Vector3(x, 0.5f - 6.25f, z),
+                MaterialOverride = Material(materials, "grass"),
+            });
             return;
         }
 

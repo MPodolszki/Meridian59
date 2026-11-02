@@ -1,4 +1,4 @@
-{"source": "jashall.roo", "rows": 15, "cols": 13, "ceiling": 170, "exits": [[14, 7, "East Jasper"]], "locked": [], "floor": [
+{"source": "jashall.roo", "rows": 15, "cols": 13, "ceiling": 170, "exits": [[14, 7, "East Jasper"]], "locked": [], "outdoors": false, "floor": [
     [0,0,0,0,0,0,5,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0],
     [0,0,0,24,24,24,24,24,24,24,0,0,0],

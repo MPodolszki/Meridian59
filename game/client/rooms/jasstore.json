@@ -1,4 +1,4 @@
-{"source": "jasstore.roo", "rows": 25, "cols": 18, "ceiling": 170, "exits": [[19, 1, "East Jasper"], [19, 2, "East Jasper"]], "locked": [], "floor": [
+{"source": "jasstore.roo", "rows": 25, "cols": 18, "ceiling": 170, "exits": [[19, 1, "East Jasper"], [19, 2, "East Jasper"]], "locked": [], "outdoors": false, "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1],
     [-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1],

@@ -1,4 +1,4 @@
-{"source": "barhall.roo", "rows": 26, "cols": 14, "ceiling": 384, "exits": [[26, 8, "North Barloque"]], "locked": [], "floor": [
+{"source": "barhall.roo", "rows": 26, "cols": 14, "ceiling": 384, "exits": [[26, 8, "North Barloque"]], "locked": [], "outdoors": false, "floor": [
     [-1,224,224,224,224,240,240,240,224,224,224,224,224,-1],
     [-1,224,224,224,224,240,240,240,224,224,224,224,224,256],
     [-1,224,224,224,224,224,224,224,224,224,224,224,224,-1],

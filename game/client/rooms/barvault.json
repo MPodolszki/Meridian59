@@ -1,4 +1,4 @@
-{"source": "barvault.roo", "rows": 9, "cols": 13, "ceiling": 256, "exits": [[3, 12, "The Ports of Barloque"], [2, 12, "The Ports of Barloque"]], "locked": [], "floor": [
+{"source": "barvault.roo", "rows": 9, "cols": 13, "ceiling": 256, "exits": [[3, 12, "The Ports of Barloque"], [2, 12, "The Ports of Barloque"]], "locked": [], "outdoors": false, "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,160,128,128,128,192,128,128,128,128,128,128,128],
     [-1,192,128,128,128,128,128,128,128,128,128,128,160],

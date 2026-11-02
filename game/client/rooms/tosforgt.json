@@ -1,4 +1,4 @@
-{"source": "tosforgt.roo", "rows": 8, "cols": 8, "ceiling": 85, "exits": [[2, 2, "The Streets of Tos"], [2, 3, "The Streets of Tos"]], "locked": [], "floor": [
+{"source": "tosforgt.roo", "rows": 8, "cols": 8, "ceiling": 85, "exits": [[2, 2, "The Streets of Tos"], [2, 3, "The Streets of Tos"]], "locked": [], "outdoors": false, "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,0,0,0,0,0,0,-1],
     [-1,0,0,0,0,0,0,-1],

@@ -82,4 +82,7 @@ Jasper (Ost/West, Bank mit Tos-Konto, Läden, 14 verlassene Häuser) (docs/jaspe
 
 Barloque (Nord/Süd, Hafen, Läden, Gericht, Gefängnis, Gildenmeisterhalle) (docs/barloque.md).
 
+Godot-Client: WoW-Steuerung/Kamera, Waldränder auf grünen Karten, Spielerlicht in dunklen Räumen, Lauf-Automatik --route.
+
+Offen (Client): Armhaltung/-schwung falsch (retarget_animations.py überträgt nur Drehung relativ zur Ruhelage; Gliedmaßen auf Quellrichtung ausrichten – Quelle AnimationLibrary_Godot_Standard.gltf neu laden, Nutzer fragen), weitere Animationen (seitlich, rückwärts, Emotes), detailliertere Boden-/Gebäudetexturen.
 Offen: Wildnis zwischen den Städten, Tempel, Kanalisationen (Jasper, Barloque), Heimatstadt je Spieler, Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.

@@ -399,12 +399,32 @@ public partial class Main : Node3D
         // Innenräume liegen unter einer Decke; dort tragen Lampen und mehr Umgebungslicht.
         _environment.AmbientLightEnergy = _outdoors ? Mathf.Lerp(0.3f, 1f, t) : Mathf.Lerp(0.7f, 1.1f, t);
         RoomDecor.SetDaylight(t);
+        UpdatePlayerGlow(light);
         if (_environment.Sky?.SkyMaterial is ProceduralSkyMaterial sky)
         {
             sky.SkyTopColor = new Color(0.02f, 0.03f, 0.08f).Lerp(new Color(0.38f, 0.45f, 0.55f), t);
             sky.SkyHorizonColor = new Color(0.05f, 0.06f, 0.12f).Lerp(new Color(0.65f, 0.67f, 0.7f), t);
             sky.GroundHorizonColor = sky.SkyHorizonColor;
         }
+    }
+
+    private OmniLight3D? _playerGlow;
+
+    /// <summary>In dunklen Räumen (Grüfte, Nacht) ein schwacher, warmer Lichtschein um die eigene Figur, damit man
+    /// den Weg sieht – das Original zeigt die nähere Umgebung auch im Dunkeln.</summary>
+    private void UpdatePlayerGlow(byte light)
+    {
+        if (_session is not { InWorld: true } || !_avatars.TryGetValue(_session.PlayerId, out var self))
+            return;
+        if (_playerGlow is null || !IsInstanceValid(_playerGlow) || _playerGlow.GetParent() != self)
+        {
+            _playerGlow = new OmniLight3D { Name = "Glow", Position = new Vector3(0, 2.2f, 0), LightColor = new Color(1f, 0.85f, 0.65f), ShadowEnabled = false };
+            self.AddChild(_playerGlow);
+        }
+        float darkness = Mathf.Clamp((180f - light) / 100f, 0f, 1f);
+        _playerGlow.LightEnergy = 2.2f * darkness;
+        _playerGlow.OmniRange = 9f + 5f * darkness;
+        _playerGlow.Visible = darkness > 0.01f;
     }
 
     /// <summary>Ersetzt die Raumgeometrie (Platzhalter aus rooms/*.json). Ohne Layout bleibt nur die Grasfläche.</summary>
@@ -435,7 +455,7 @@ public partial class Main : Node3D
             return;
         _roomGeometry?.QueueFree();
         // Außenbereiche haben Fels/Pflaster, Innenräume Putz/Holz; Außen erkennbar an der Größe.
-        bool outdoors = _outdoors = _layout.Rows * _layout.Cols > 420;
+        bool outdoors = _outdoors = _layout.Outdoors ?? _layout.Rows * _layout.Cols > 420;
         _roomGeometry = _layout.Build(CellSize, outdoors);
         AddChild(_roomGeometry);
         ApplyAmbientLight(_lastLight);   // Innen/außen ist erst jetzt bekannt
