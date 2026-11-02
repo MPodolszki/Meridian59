@@ -724,6 +724,400 @@
       "translation": 34,
       "legsMale": "bfe.bgf",
       "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantsplain",
+      "kodClass": "PantsC",
+      "name": "Hose (rot)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 18,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantsbgreen",
+      "kodClass": "PantsC",
+      "name": "Hose (hellgrün)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 12,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantssky",
+      "kodClass": "PantsC",
+      "name": "Hose (himmelblau)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 13,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantsdblue",
+      "kodClass": "PantsC",
+      "name": "Hose (dunkelblau)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 14,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantspurple",
+      "kodClass": "PantsC",
+      "name": "Hose (lila)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 15,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantsgold",
+      "kodClass": "PantsC",
+      "name": "Hose (golden)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 16,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantsbblue",
+      "kodClass": "PantsC",
+      "name": "Hose (leuchtend blau)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 17,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantshair1",
+      "kodClass": "PantsC",
+      "name": "Hose (erdfarben I)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 45,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantshair2",
+      "kodClass": "PantsC",
+      "name": "Hose (erdfarben II)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 46,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantshair3",
+      "kodClass": "PantsC",
+      "name": "Hose (erdfarben III)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 47,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
+    },
+    {
+      "key": "pantsskin1",
+      "kodClass": "PantsA",
+      "name": "Hose (hell)",
+      "icon": "pantsA.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "color": 1,
+      "legsMale": "bfa.bgf",
+      "legsFemale": "bfb.bgf"
+    },
+    {
+      "key": "pantsskin2",
+      "kodClass": "PantsA",
+      "name": "Hose (beige)",
+      "icon": "pantsA.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "color": 2,
+      "legsMale": "bfa.bgf",
+      "legsFemale": "bfb.bgf"
+    },
+    {
+      "key": "pantsskin4",
+      "kodClass": "PantsA",
+      "name": "Hose (dunkelbraun)",
+      "icon": "pantsA.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "color": 3,
+      "legsMale": "bfa.bgf",
+      "legsFemale": "bfb.bgf"
+    },
+    {
+      "key": "pantsared",
+      "kodClass": "PantsA",
+      "name": "Hose (rot, schlicht)",
+      "icon": "pantsA.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "color": 0,
+      "legsMale": "bfa.bgf",
+      "legsFemale": "bfb.bgf"
+    },
+    {
+      "key": "pantsagray",
+      "kodClass": "PantsA",
+      "name": "Hose (grau)",
+      "icon": "pantsA.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "color": 9,
+      "legsMale": "bfa.bgf",
+      "legsFemale": "bfb.bgf"
+    },
+    {
+      "key": "skirtskin1",
+      "kodClass": "Skirt",
+      "name": "Rock (hell)",
+      "icon": "lgSkirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "einen",
+      "description": "Dieser lange Rock bedeckt die Beine hübsch, schützt aber kaum.",
+      "slot": "legs",
+      "color": 1,
+      "legsMale": "bfc.bgf",
+      "legsFemale": "bfd.bgf"
+    },
+    {
+      "key": "skirtskin2",
+      "kodClass": "Skirt",
+      "name": "Rock (beige)",
+      "icon": "lgSkirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "einen",
+      "description": "Dieser lange Rock bedeckt die Beine hübsch, schützt aber kaum.",
+      "slot": "legs",
+      "color": 2,
+      "legsMale": "bfc.bgf",
+      "legsFemale": "bfd.bgf"
+    },
+    {
+      "key": "skirtskin4",
+      "kodClass": "Skirt",
+      "name": "Rock (dunkelbraun)",
+      "icon": "lgSkirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "einen",
+      "description": "Dieser lange Rock bedeckt die Beine hübsch, schützt aber kaum.",
+      "slot": "legs",
+      "color": 3,
+      "legsMale": "bfc.bgf",
+      "legsFemale": "bfd.bgf"
+    },
+    {
+      "key": "skirtred",
+      "kodClass": "Skirt",
+      "name": "Rock (rot)",
+      "icon": "lgSkirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "einen",
+      "description": "Dieser lange Rock bedeckt die Beine hübsch, schützt aber kaum.",
+      "slot": "legs",
+      "color": 0,
+      "legsMale": "bfc.bgf",
+      "legsFemale": "bfd.bgf"
+    },
+    {
+      "key": "skirtgreen",
+      "kodClass": "Skirt",
+      "name": "Rock (grün)",
+      "icon": "lgSkirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "einen",
+      "description": "Dieser lange Rock bedeckt die Beine hübsch, schützt aber kaum.",
+      "slot": "legs",
+      "color": 5,
+      "legsMale": "bfc.bgf",
+      "legsFemale": "bfd.bgf"
+    },
+    {
+      "key": "skirtblue",
+      "kodClass": "Skirt",
+      "name": "Rock (blau)",
+      "icon": "lgSkirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "einen",
+      "description": "Dieser lange Rock bedeckt die Beine hübsch, schützt aber kaum.",
+      "slot": "legs",
+      "color": 6,
+      "legsMale": "bfc.bgf",
+      "legsFemale": "bfd.bgf"
+    },
+    {
+      "key": "skirtyellow",
+      "kodClass": "Skirt",
+      "name": "Rock (gelb)",
+      "icon": "lgSkirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "einen",
+      "description": "Dieser lange Rock bedeckt die Beine hübsch, schützt aber kaum.",
+      "slot": "legs",
+      "color": 8,
+      "legsMale": "bfc.bgf",
+      "legsFemale": "bfd.bgf"
+    },
+    {
+      "key": "shirtred",
+      "kodClass": "Shirt",
+      "name": "Hemd (rot)",
+      "icon": "defshirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "ein",
+      "description": "Dieses Hemd bedeckt das Nötigste, schützt aber kaum.",
+      "slot": "shirt",
+      "color": 0
+    },
+    {
+      "key": "shirtblack",
+      "kodClass": "Shirt",
+      "name": "Hemd (schwarz)",
+      "icon": "defshirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "ein",
+      "description": "Dieses Hemd bedeckt das Nötigste, schützt aber kaum.",
+      "slot": "shirt",
+      "color": 12
+    },
+    {
+      "key": "shirtgray",
+      "kodClass": "Shirt",
+      "name": "Hemd (grau)",
+      "icon": "defshirt.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "ein",
+      "description": "Dieses Hemd bedeckt das Nötigste, schützt aber kaum.",
+      "slot": "shirt",
+      "color": 9
     }
   ],
   "treasure": {

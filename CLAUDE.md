@@ -76,4 +76,6 @@ Raza vollständig: Mausoleum-Rätsel mit Hebeln/Tür/Endkampf, Museum, Kleidung 
 
 Marion mit Gasthaus, Läden, Gruft (3 Ebenen) eng am Original; Raza-Portal führt dorthin (docs/marion.md).
 
-Offen: weitere Gebiete (Cor, Jasper, Wälder um Marion, Tempel), Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.
+Cor Noth mit Läden, Schneiderin, Waffenmeister (Fertigkeiten lernen wie Sprüche) (docs/cor.md).
+
+Offen: Jasper, Barloque, Wildnis/Wälder, Tempel, Heimatstadt je Spieler, Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.

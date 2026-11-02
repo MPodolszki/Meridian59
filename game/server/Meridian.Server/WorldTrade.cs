@@ -457,7 +457,9 @@ public sealed partial class World
             // GetForSale: erlernbare Sprüche stehen vor den Gegenständen (cons-Reihenfolge).
             var spells = merchant.Definition.Spells.Select(k => _spells[k]).OfType<SpellDefinition>()
                 .Where(sp => CannotLearn(avatar.State, sp) is null).ToList();
-            if (list.Count == 0 && spells.Count == 0)
+            var skills = merchant.Definition.Skills.Select(k => _skills[k]).OfType<SkillDefinition>()
+                .Where(sk => CannotLearn(avatar.State, sk) is null).ToList();
+            if (list.Count == 0 && spells.Count == 0 && skills.Count == 0)
             {
                 NpcSay(npc, avatar.Room, "Ich habe im Moment leider nichts zu verkaufen.");
                 return;
@@ -467,6 +469,7 @@ public sealed partial class World
             foreach (var (item, _) in list)
                 EnsureItemResources(avatar.Session, item);
             var entries = spells.Select(sp => new BuyListEntry(ToSpellObject(avatar.Session, sp), (uint)sp.Price))
+                .Concat(skills.Select(sk => new BuyListEntry(ToSkillObject(avatar.Session, sk), (uint)sk.Price)))
                 .Concat(list.Select(e => new BuyListEntry(ToRoomObject(e.Item), (uint)PriceOf(e, merchant)))).ToList();
             avatar.Session.Post(GameReplies.BuyList(ToRoomObject(npc), entries));
         }
@@ -487,6 +490,11 @@ public sealed partial class World
                 if (_spells.ByObjectId(r.Id) is { } spell && merchant.Definition.Spells.Contains(spell.Key, StringComparer.OrdinalIgnoreCase))
                 {
                     BuySpell(avatar, npc, spell);
+                    continue;
+                }
+                if (_skills.ByObjectId(r.Id) is { } skill && merchant.Definition.Skills.Contains(skill.Key, StringComparer.OrdinalIgnoreCase))
+                {
+                    BuySkill(avatar, npc, skill);
                     continue;
                 }
                 var entry = merchant.Stock.FirstOrDefault(s => s.Item.Id == r.Id);

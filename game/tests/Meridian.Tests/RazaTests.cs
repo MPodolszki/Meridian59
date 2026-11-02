@@ -44,7 +44,7 @@ public sealed class RazaTests : IAsyncDisposable
     }
 
     [Fact]
-    public async Task Portal_WarnsFirst_ThenLeadsToTheInnOfMarion_WithStartingGear()
+    public async Task Portal_WarnsFirst_ThenLeadsToAHometownInn_WithStartingGear()
     {
         var (c, events) = await EnterAsync(1018);
         Assert.Equal("The Grand Museum of Raza", events.OfType<ClientEvent.EnteredRoom>().Last().RoomName);
@@ -52,8 +52,8 @@ public sealed class RazaTests : IAsyncDisposable
         await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.StartsWith("Achtung"));
         await c.MoveAsync(Room.Fine(4), Room.Fine(11), false);   // wieder herunter
         await c.MoveAsync(Room.Fine(2), Room.Fine(11), false);   // und erneut hinein
-        // Einzige vorhandene Heimatstadt ist Marion: ins Gasthaus „Limping Toad“ (SetRandomHomeroom).
-        await WaitForAsync(c, events, e => e is ClientEvent.EnteredRoom { RoomName: "The Limping Toad Inn and Tavern" });
+        // SetRandomHomeroom über die vorhandenen Heimatstädte: Gasthaus von Marion oder Cor Noth.
+        await WaitForAsync(c, events, e => e is ClientEvent.EnteredRoom { RoomName: "The Limping Toad Inn and Tavern" or "Cibilo Creek Inn" });
         // AddRealWorldObjects: 1000 Schillinge dazu (Start 2500), ein zweiter Streitkolben, 5 Äpfel.
         await WaitForAsync(c, events, _ => c.Inventory.Count(o => c.Resolve(o.NameRsc) == "Streitkolben") == 2
             && c.Inventory.Any(o => c.Resolve(o.NameRsc) is "Apfel" or "Äpfel" && o.Amount == 5)
@@ -114,6 +114,23 @@ public sealed class RazaTests : IAsyncDisposable
     }
 
     [Fact]
+    public async Task CorNoth_WeaponsMaster_TeachesSkills()
+    {
+        var (c, events) = await EnterAsync(154);
+        var rook = events.OfType<ClientEvent.ObjectAdded>().First(e => c.Resolve(e.Object.NameRsc).StartsWith("Rook")).Object;
+        await c.RequestBuyAsync(rook.Id);
+        await WaitForAsync(c, events, e => e is ClientEvent.BuyList);
+        var list = events.OfType<ClientEvent.BuyList>().Last().Items;
+        Assert.Contains(list, i => c.Resolve(i.Item.NameRsc) == "Langschwert");
+        // Stufe 1 ist immer erlernbar (PlayerCanLearn), Preis 250 × 2^1.
+        var mace = list.Single(i => c.Resolve(i.Item.NameRsc) == "Streitkolbenkampf");
+        Assert.Equal(500u, mace.Price);
+        Assert.DoesNotContain(list, i => c.Resolve(i.Item.NameRsc) == "Faustschlag");   // schon bekannt
+        await c.BuyItemsAsync(rook.Id, [new ObjectRef(mace.Item.Id, null)]);
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat { Text: "Du hast Streitkolbenkampf gelernt." });
+    }
+
+    [Fact]
     public void Clothing_ColorsLikeEncodeTwoColorXlat()
     {
         var items = ItemCatalog.Load(Data("items", "items.json"));
@@ -153,8 +170,8 @@ public sealed class RazaTests : IAsyncDisposable
             Items = ItemCatalog.Load(Data("items", "items.json")),
             Spells = SpellBook.Load(Data("spells", "spells.json")),
             Skills = SkillBook.Load(Data("skills", "skills.json")),
-            Shops = ShopFile.Merge([ShopFile.Load(Data("shops", "raza.json")), ShopFile.Load(Data("shops", "marion.json"))]),
-            Dialogs = DialogFile.Merge([DialogFile.Load(Data("dialog", "raza.json")), DialogFile.Load(Data("dialog", "marion.json"))]),
+            Shops = ShopFile.Merge(new[] { "raza", "marion", "cor" }.Select(a => ShopFile.Load(Data("shops", a + ".json")))),
+            Dialogs = DialogFile.Merge(new[] { "raza", "marion", "cor" }.Select(a => DialogFile.Load(Data("dialog", a + ".json")))),
             Database = _db,
         }, accounts);
         _server.Start();

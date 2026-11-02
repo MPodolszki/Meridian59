@@ -13,6 +13,10 @@ public sealed record SkillDefinition(string Key, int Skid, string Name, string I
     public string? Description { get; init; }
 
     public uint ObjectId => Skill.ObjectIdBase + (uint)Skid;
+    /// <summary>Schule (alle Kampffertigkeiten: SKS_FENCING 10).</summary>
+    public int School { get; init; } = Skill.SchoolFencing;
+    /// <summary>skill.kod GetValue: 250 × 2^Stufe.</summary>
+    public int Price => 250 * (1 << Level);
 
     public int RequisiteStat(Attributes a) => Requisite switch
     {
@@ -28,6 +32,7 @@ public sealed record SkillDefinition(string Key, int Skid, string Name, string I
 public static class Skill
 {
     public const uint ObjectIdBase = 0x00600000;
+    public const int SchoolFencing = 10;
     public const int Dodge = 401, Parry = 402, Block = 404, Slash = 421, Punch = 430, Brawling = 450;
 }
 
@@ -51,6 +56,8 @@ public sealed class SkillBook
     public IReadOnlyList<SkillDefinition> Starting { get; }
     public IEnumerable<SkillDefinition> All => _bySkid.Values;
     public SkillDefinition? BySkid(int skid) => _bySkid.GetValueOrDefault(skid);
+    public SkillDefinition? this[string key] => _bySkid.Values.FirstOrDefault(s => s.Key == key);
+    public SkillDefinition? ByObjectId(uint id) => id > Skill.ObjectIdBase ? BySkid((int)(id - Skill.ObjectIdBase)) : null;
 
     public static SkillBook Load(string path)
     {

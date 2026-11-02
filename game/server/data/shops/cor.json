@@ -1,0 +1,158 @@
+{
+  "_hinweis": "Händler von Cor Noth (towns/crnthtwn). Feenflügel (Solomon), Ehering und Spruch Beleben (D'Franco), Vergessenstrank (Rook) fehlen noch.",
+  "shops": {
+    "CornothGrocer": {
+      "markup": 4,
+      "buyer": true,
+      "buysTypes": [
+        "reagent",
+        "light"
+      ],
+      "forSale": [
+        {
+          "item": "torch",
+          "number": 4
+        },
+        {
+          "item": "elderberry",
+          "number": 4
+        },
+        {
+          "item": "bluemushroom",
+          "number": 4
+        },
+        {
+          "item": "redmushroom",
+          "number": 4
+        },
+        {
+          "item": "waterskin",
+          "number": 4
+        },
+        {
+          "item": "bread",
+          "number": 4
+        },
+        {
+          "item": "apple",
+          "number": 4
+        }
+      ]
+    },
+    "CorNothSergeant": {
+      "markup": 5,
+      "forSale": [
+        {
+          "item": "longsword"
+        },
+        {
+          "item": "shortsword"
+        },
+        {
+          "item": "mace"
+        },
+        {
+          "item": "leatherarmor"
+        }
+      ],
+      "skills": [
+        "dodge",
+        "punch",
+        "slash",
+        "axe",
+        "hammer",
+        "brawling",
+        "shortsword",
+        "mace",
+        "sword",
+        "parry"
+      ]
+    },
+    "CorNothTailor": {
+      "markup": 2,
+      "forSale": [
+        {
+          "item": "pantsplain"
+        },
+        {
+          "item": "pantsbgreen"
+        },
+        {
+          "item": "pantssky"
+        },
+        {
+          "item": "pantsdblue"
+        },
+        {
+          "item": "pantspurple"
+        },
+        {
+          "item": "pantsgold"
+        },
+        {
+          "item": "pantsbblue"
+        },
+        {
+          "item": "pantshair1"
+        },
+        {
+          "item": "pantshair2"
+        },
+        {
+          "item": "pantshair3"
+        },
+        {
+          "item": "pantsskin1"
+        },
+        {
+          "item": "pantsskin2"
+        },
+        {
+          "item": "pantsskin4"
+        },
+        {
+          "item": "pantsared"
+        },
+        {
+          "item": "pantsagray"
+        },
+        {
+          "item": "pantsblack"
+        },
+        {
+          "item": "skirtskin1"
+        },
+        {
+          "item": "skirtskin2"
+        },
+        {
+          "item": "skirtskin4"
+        },
+        {
+          "item": "skirtred"
+        },
+        {
+          "item": "skirtorange"
+        },
+        {
+          "item": "skirtgreen"
+        },
+        {
+          "item": "skirtblue"
+        },
+        {
+          "item": "skirtyellow"
+        },
+        {
+          "item": "shirtred"
+        },
+        {
+          "item": "shirtblack"
+        },
+        {
+          "item": "shirtgray"
+        }
+      ]
+    }
+  }
+}

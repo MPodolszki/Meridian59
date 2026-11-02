@@ -29,12 +29,14 @@ public sealed record ShopDefinition
     public IReadOnlyList<SaleEntry> ForSale { get; init; } = [];
     /// <summary>Lehrbare Sprüche (plFor_sale, dritte Liste), Schlüssel aus data/spells.</summary>
     public IReadOnlyList<string> Spells { get; init; } = [];
+    /// <summary>Lehrbare Fertigkeiten (Schlüssel aus data/skills), z. B. Rook in Cor Noth.</summary>
+    public IReadOnlyList<string> Skills { get; init; } = [];
     /// <summary>Waren, die erst nach Nennung ihres Namens angeboten werden (LIBACT_CONDITIONAL).</summary>
     public IReadOnlyList<ConditionalSale> Conditional { get; init; } = [];
     /// <summary>Antwort auf ungewollte Geschenke (vrUnwanted_give), %s = Name des NPCs.</summary>
     public string? UnwantedGive { get; init; }
 
-    public bool Seller => ForSale.Count > 0 || Conditional.Count > 0 || Spells.Count > 0;
+    public bool Seller => ForSale.Count > 0 || Conditional.Count > 0 || Spells.Count > 0 || Skills.Count > 0;
 }
 
 /// <summary>Geschenk <paramref name="Item"/> ab <paramref name="Min"/> Stück gegen <paramref name="Gives"/>; sonst <paramref name="TooFew"/>.</summary>

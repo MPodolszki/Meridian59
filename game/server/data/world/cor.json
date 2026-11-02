@@ -1,0 +1,628 @@
+{
+  "source": "kod/object/active/holder/room/crnthrm (Meridian 59), erzeugt mit tools/make_cor.py",
+  "startRoom": 150,
+  "rooms": [
+    {
+      "id": 150,
+      "constant": "RID_CORNOTH",
+      "kodClass": "CorNoth",
+      "name": "Cor Noth",
+      "roo": "cornoth.roo",
+      "music": "city04.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "teleport": {
+        "row": 20,
+        "col": 20
+      },
+      "exits": [
+        {
+          "row": 11,
+          "col": 60,
+          "to": 153,
+          "toRow": 4,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 23,
+          "col": 32,
+          "to": 152,
+          "toRow": 3,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 24,
+          "col": 37,
+          "to": 152,
+          "toRow": 3,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 25,
+          "col": 37,
+          "to": 152,
+          "toRow": 3,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 38,
+          "col": 31,
+          "to": 701,
+          "toRow": 20,
+          "toCol": 13,
+          "rotate": "270"
+        },
+        {
+          "row": 39,
+          "col": 31,
+          "to": 701,
+          "toRow": 20,
+          "toCol": 13,
+          "rotate": "270"
+        },
+        {
+          "row": 37,
+          "col": 58,
+          "to": 711,
+          "toRow": 11,
+          "toCol": 10,
+          "rotate": "225"
+        },
+        {
+          "row": 24,
+          "col": 20,
+          "to": 151,
+          "toRow": 9,
+          "toCol": 7,
+          "rotate": "180"
+        },
+        {
+          "row": 24,
+          "col": 19,
+          "to": 151,
+          "toRow": 9,
+          "toCol": 7,
+          "rotate": "180"
+        },
+        {
+          "row": 1,
+          "col": 39,
+          "to": 574,
+          "toRow": 54,
+          "toCol": 24,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 40,
+          "to": 574,
+          "toRow": 54,
+          "toCol": 25,
+          "rotate": "NONE"
+        },
+        {
+          "row": 30,
+          "col": 69,
+          "to": 575,
+          "toRow": 6,
+          "toCol": 19,
+          "rotate": "NONE"
+        },
+        {
+          "row": 31,
+          "col": 69,
+          "to": 575,
+          "toRow": 7,
+          "toCol": 19,
+          "rotate": "NONE"
+        },
+        {
+          "row": 41,
+          "col": 12,
+          "to": 155,
+          "toRow": 4,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 11,
+          "col": 33,
+          "to": 156,
+          "toRow": 10,
+          "toCol": 25,
+          "rotate": "NONE"
+        },
+        {
+          "row": 10,
+          "col": 8,
+          "to": 154,
+          "toRow": 7,
+          "toCol": 6,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 40,
+          "col": 22,
+          "message": "Die Tür ist verschlossen."
+        },
+        {
+          "row": 44,
+          "col": 9,
+          "message": "Die Tür ist verschlossen."
+        },
+        {
+          "row": 27,
+          "col": 12,
+          "message": "Die Tür ist verschlossen."
+        },
+        {
+          "row": 27,
+          "col": 13,
+          "message": "Die Tür ist verschlossen."
+        },
+        {
+          "row": 28,
+          "col": 12,
+          "message": "Die Tür ist verschlossen."
+        },
+        {
+          "row": 28,
+          "col": 13,
+          "message": "Die Tür ist verschlossen."
+        },
+        {
+          "row": 21,
+          "col": 16,
+          "message": "Die Tür ist verschlossen."
+        },
+        {
+          "row": 11,
+          "col": 17,
+          "message": "Die Tür ist verschlossen."
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 574,
+          "toConstant": "RID_G4",
+          "toRow": 48,
+          "toCol": 24,
+          "rotate": "NONE"
+        }
+      ],
+      "objects": [
+        {
+          "type": "TREE",
+          "row": 4,
+          "col": 43,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 7,
+          "col": 48,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 5,
+          "col": 58,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 20,
+          "col": 57,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 26,
+          "col": 65,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 36,
+          "col": 44,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 30,
+          "col": 53,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 28,
+          "col": 48,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 21,
+          "col": 41,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 31,
+          "col": 42,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 40,
+          "col": 44,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 21,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 27,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 16,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 38,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 46,
+      "cols": 70
+    },
+    {
+      "id": 151,
+      "constant": "RID_COR_GROCER",
+      "kodClass": "CorGrocer",
+      "name": "Solomon's Edibles",
+      "roo": "corgroc.roo",
+      "music": "smithy.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 5,
+        "col": 5
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 10,
+          "col": 7,
+          "to": 150,
+          "toRow": 23,
+          "toCol": 20,
+          "rotate": "180"
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "CornothGrocer",
+          "name": "Solomon",
+          "icon": "cngrocer.bgf",
+          "role": "Krämer",
+          "row": 3,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        }
+      ],
+      "rows": 10,
+      "cols": 10
+    },
+    {
+      "id": 152,
+      "constant": "RID_COR_HALL",
+      "kodClass": "CorHall",
+      "name": "The Adventurer's Hall of Cor Noth",
+      "roo": "corhall.roo",
+      "music": "main.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 3,
+        "col": 3
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 2,
+          "col": 3,
+          "to": 150,
+          "toRow": 21,
+          "toCol": 32,
+          "rotate": "NONE"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "to": 150,
+          "toRow": 21,
+          "toCol": 32,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 7,
+          "to": 150,
+          "toRow": 24,
+          "toCol": 39,
+          "rotate": "NONE"
+        },
+        {
+          "row": 3,
+          "col": 7,
+          "to": 150,
+          "toRow": 24,
+          "toCol": 39,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 8,
+          "to": 150,
+          "toRow": 24,
+          "toCol": 39,
+          "rotate": "NONE"
+        },
+        {
+          "row": 3,
+          "col": 8,
+          "to": 150,
+          "toRow": 24,
+          "toCol": 39,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 11,
+      "cols": 13
+    },
+    {
+      "id": 153,
+      "constant": "RID_COR_INN",
+      "kodClass": "CorInn",
+      "name": "Cibilo Creek Inn",
+      "roo": "corinn.roo",
+      "music": "bar2.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 5,
+        "col": 5
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 3,
+          "col": 1,
+          "to": 150,
+          "toRow": 11,
+          "toCol": 59,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 10,
+          "col": 7,
+          "message": "Die Tür ist verschlossen."
+        },
+        {
+          "row": 10,
+          "col": 4,
+          "message": "Die Tür ist verschlossen."
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "CorNothInnKeeper",
+          "name": "D'Franco",
+          "icon": "cninnk.bgf",
+          "role": "Wirt",
+          "row": 3,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 2048
+        }
+      ],
+      "rows": 10,
+      "cols": 13
+    },
+    {
+      "id": 154,
+      "constant": "RID_COR_WEAPONSMASTER",
+      "kodClass": "CorWeaponsMaster",
+      "name": "The Weapon Master's Abode",
+      "roo": "weaponsm.roo",
+      "music": "smithy.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 5,
+        "col": 5
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 5,
+          "col": 6,
+          "to": 154,
+          "toRow": 5,
+          "toCol": 8,
+          "rotate": "NONE"
+        },
+        {
+          "row": 5,
+          "col": 7,
+          "to": 154,
+          "toRow": 5,
+          "toCol": 5,
+          "rotate": "NONE"
+        },
+        {
+          "row": 8,
+          "col": 6,
+          "to": 150,
+          "toRow": 11,
+          "toCol": 8,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 1,
+          "col": 7,
+          "message": "Rook lässt dich nicht in seine Privaträume."
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "CorNothSergeant",
+          "name": "Rook",
+          "icon": "cnsarge.bgf",
+          "role": "Waffenmeister",
+          "row": 4,
+          "col": 3,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 1024
+        }
+      ],
+      "rows": 8,
+      "cols": 10
+    },
+    {
+      "id": 155,
+      "constant": "RID_COR_TAILOR",
+      "kodClass": "CorTailor",
+      "name": "The Spindle and the Spinster",
+      "roo": "cortail.roo",
+      "music": "city04.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 6,
+        "col": 3
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 3,
+          "col": 3,
+          "to": 150,
+          "toRow": 40,
+          "toCol": 12,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 11,
+          "col": 7,
+          "message": "Die Tür ist verschlossen."
+        },
+        {
+          "row": 11,
+          "col": 13,
+          "message": "Die Tür ist verschlossen."
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "CorNothTailor",
+          "name": "Hester Gilk",
+          "icon": "cntailor.bgf",
+          "role": "Schneiderin",
+          "row": 4,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 29,
+      "cols": 41
+    },
+    {
+      "id": 156,
+      "constant": "RID_COR_UNIV",
+      "kodClass": "CornothUniversity",
+      "name": "The Hall of Genealogy",
+      "roo": "coruniv.roo",
+      "music": "main.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 3,
+        "col": 25
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 11,
+          "col": 25,
+          "to": 150,
+          "toRow": 12,
+          "toCol": 33,
+          "rotate": "NONE"
+        }
+      ],
+      "rows": 60,
+      "cols": 60
+    }
+  ]
+}

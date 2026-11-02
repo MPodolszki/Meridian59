@@ -1,0 +1,106 @@
+{
+  "_hinweis": "Bewohner von Cor Noth (towns/crnthtwn), Texte sinngemäß nach dem Original.",
+  "npcs": {
+    "CornothGrocer": {
+      "title": "Krämer",
+      "description": "Dieser Laden spiegelt den erlesenen, exotischen Geschmack seines Besitzers. Solomon hat Waren und Kunst aus unvorstellbaren Winkeln der Welt gesammelt – angeblich sogar Reliquien von jenseits davon.",
+      "greeting": "Oh willkommen, willkommen, willkommen!",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "buy",
+            "essen"
+          ],
+          "reply": "Fackeln, Holunderbeeren, Pilze, Wasserschläuche, Brot und Äpfel – schau dich um (B). Reagenzien kaufe ich gern."
+        },
+        {
+          "keywords": [
+            "herbutte"
+          ],
+          "reply": "Herbutte! Ach, was für ein feiner Mensch."
+        }
+      ]
+    },
+    "CorNothInnKeeper": {
+      "title": "Wirt",
+      "description": "Das Cibilo Creek Inn ist ein beliebter Treffpunkt für Studenten und Gelehrte der nahen Universität. D'Franco ermuntert jede gute Diskussion, auch wenn seine eigenen Ansichten eher konservativ sind.",
+      "greeting": "Guten Tag!",
+      "topics": [
+        {
+          "keywords": [
+            "lied",
+            "singen",
+            "lernen",
+            "spruch",
+            "beleben"
+          ],
+          "reply": "Das Arbeitslied meines Großvaters? Ich glaube, deine Stimme ist noch nicht so weit. Sprich mit Parrin, was er meint."
+        },
+        {
+          "keywords": [
+            "prinzessin",
+            "princess"
+          ],
+          "reply": "Die Prinzessin? Davon will ich hier nichts hören."
+        },
+        {
+          "keywords": [
+            "universität",
+            "univ"
+          ],
+          "reply": "Die Universität liegt gleich nördlich vom Platz. Dort kannst du auch deine Heimatstadt wählen."
+        }
+      ]
+    },
+    "CorNothSergeant": {
+      "title": "Waffenmeister",
+      "description": "Ein Adliger und ehemaliger Offizier, der sich mit steifer Würde bewegt. Rook ist Waffenmeister und lebt davon, Schülern den Weg des Kriegers zu lehren. Seine Schwertkünste sind berühmt und unerreicht.",
+      "greeting": "",
+      "topics": [
+        {
+          "keywords": [
+            "lernen",
+            "lehren",
+            "fertigkeit",
+            "kampf",
+            "buy",
+            "kaufen"
+          ],
+          "reply": "Ich lehre Ausweichen, Parieren, Faustschlag, Raufen, Hieb und den Umgang mit Schwert, Kurzschwert, Streitkolben, Hammer und Axt – sofern du bereit bist (B)."
+        },
+        {
+          "keywords": [
+            "sir"
+          ],
+          "reply": "Wenigstens einer, der Manieren hat."
+        },
+        {
+          "keywords": [
+            "prinzessin",
+            "princess"
+          ],
+          "reply": "Sprich in meiner Gegenwart nicht von ihr."
+        }
+      ]
+    },
+    "CorNothTailor": {
+      "title": "Schneiderin",
+      "description": "Hester stammt aus einem fernen Land; ihre geschickte Näharbeit folgt einer Tradition, die Nützlichkeit mit kraftvoller Kunst verbindet. Ihre Kleider sind wunderschön.",
+      "greeting": "Bitte trag mir nicht überall Schlamm herein.",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "kleid",
+            "hose",
+            "rock",
+            "hemd",
+            "buy"
+          ],
+          "reply": "Hosen, Röcke und Hemden in vielen Farben – such dir etwas aus (B)."
+        }
+      ]
+    }
+  }
+}

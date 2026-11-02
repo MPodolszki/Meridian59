@@ -481,36 +481,68 @@ public sealed partial class World
 
     // ------------------------------------------------------------------ Lernen (PlayerCanLearn)
 
+    /// <summary>Bekannte Sprüche und Fertigkeiten als (Schule, Stufe, Fähigkeit) – PlayerCanLearn zählt beide Listen.</summary>
+    private IEnumerable<(int School, int Level, int Ability)> Learned(CharacterState s) =>
+        s.Spells.Select(kv => (_spells.BySid(kv.Key), kv.Value)).Where(x => x.Item1 is not null)
+            .Select(x => (x.Item1!.School, x.Item1.Level, x.Value))
+        .Concat(s.Skills.Select(kv => (_skills.BySkid(kv.Key), kv.Value)).Where(x => x.Item1 is not null)
+            .Select(x => (x.Item1!.School, x.Item1.Level, x.Value)));
+
     /// <summary>player.kod PlayerCanLearn: null = darf lernen, sonst der Grund.</summary>
-    public string? CannotLearn(CharacterState s, SpellDefinition spell)
+    public string? CannotLearn(CharacterState s, SpellDefinition spell) => s.Spells.ContainsKey(spell.Sid)
+        ? "Diesen Spruch kennst du bereits."
+        : CannotLearn(s, spell.School, spell.Level, spell.Name);
+
+    /// <summary>PlayerCanLearn für Fertigkeiten (Schule SKS_FENCING), gleiche Regeln wie für Sprüche.</summary>
+    public string? CannotLearn(CharacterState s, SkillDefinition skill) => s.Skills.ContainsKey(skill.Skid)
+        ? "Diese Fertigkeit beherrschst du bereits."
+        : CannotLearn(s, skill.School, skill.Level, skill.Name);
+
+    private string? CannotLearn(CharacterState s, int school, int level, string name)
     {
-        if (s.Spells.ContainsKey(spell.Sid))
-            return "Diesen Spruch kennst du bereits.";
-        var known = s.Spells.Select(kv => (Spell: _spells.BySid(kv.Key), Ability: kv.Value))
-            .Where(x => x.Spell is not null && x.Spell.School == spell.School).ToList();
-        if (known.Any(x => x.Spell!.Level == spell.Level + 1))
+        var known = Learned(s).Where(x => x.School == school).ToList();
+        if (known.Any(x => x.Level == level + 1))
             return null;
-        int atLevel = known.Count(x => x.Spell!.Level == spell.Level);
+        int atLevel = known.Count(x => x.Level == level);
         bool knowOne = false;
         if (atLevel > 0)
         {
-            if (spell.Level > 2 || atLevel >= 2)
+            if (level > 2 || atLevel >= 2)
                 return null;
             knowOne = true;
         }
-        int have = spell.Level > 1
-            ? known.Where(x => x.Spell!.Level == spell.Level - 1).Select(x => x.Ability).OrderDescending().Take(3).Sum()
+        int have = level > 1
+            ? known.Where(x => x.Level == level - 1).Select(x => x.Ability).OrderDescending().Take(3).Sum()
             : 3 * 99;
         if (have == 0)
-            return $"Dir fehlen die Grundlagen der Schule für {spell.Name}.";
-        int points = s.Spells.Keys.Select(_spells.BySid).OfType<SpellDefinition>()
-            .GroupBy(sp => sp.School).Sum(g => MagicRules.LevelLearnPoints(g.Max(sp => sp.Level)));
+            return $"Dir fehlen die Grundlagen der Schule für {name}.";
+        int points = Learned(s).GroupBy(x => x.School).Sum(g => MagicRules.LevelLearnPoints(g.Max(x => x.Level)));
         if (!knowOne)
-            points += MagicRules.LevelLearnPoints(spell.Level) - MagicRules.LevelLearnPoints(spell.Level - 1);
+            points += MagicRules.LevelLearnPoints(level) - MagicRules.LevelLearnPoints(level - 1);
         int need = points * MagicRules.PointsSlope + (297 - MagicRules.MaxLearnPoints * MagicRules.PointsSlope)
                    - s.Attributes.Intellect * 2 * MagicRules.PointsSlope / 5;
         need = Math.Max(need, MagicRules.MinNeededToAdvance);
-        return have >= need ? null : $"Du bist in der Schule von {spell.Name} noch nicht weit genug.";
+        return have >= need ? null : $"Du bist in der Schule von {name} noch nicht weit genug.";
+    }
+
+    /// <summary>Fertigkeit beim Lehrer kaufen (monster.kod Buy, Zweig für Fertigkeiten): 250 × 2^Stufe.</summary>
+    private void BuySkill(Avatar a, Npc npc, SkillDefinition skill)
+    {
+        if (CannotLearn(a.State, skill) is { } reason)
+        {
+            NpcSay(npc, a.Room, reason);
+            return;
+        }
+        if ((a.State.Find(_items.Money)?.Number ?? 0) < skill.Price)
+        {
+            NpcSay(npc, a.Room, $"Komm wieder, wenn du genug Geld für {skill.Name} hast.");
+            return;
+        }
+        TakeMoney(a, skill.Price);
+        int req = skill.RequisiteStat(a.State.Attributes);
+        a.State.Skills[skill.Skid] = Math.Clamp(_random.Next(req / 2, req + 1) / 2, 1, 25);
+        Tell(a, $"Du hast {skill.Name} gelernt.");
+        a.Session.SendSkillStats();
     }
 
     /// <summary>Spruch beim Händler kaufen (monster.kod Buy, Zweig für Sprüche): Preis ohne Aufschlag.</summary>
