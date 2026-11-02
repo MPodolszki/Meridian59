@@ -65,4 +65,6 @@ Magie erster Umfang: Charakterwerte, Mana, Zaubern, 4 Sprüche, Lernen (docs/mag
 Charaktererstellung wie im Original, im Original-Client getestet (docs/character.md).
 Kampf nach Original-Formeln mit Fertigkeiten (docs/combat.md, combat-original.md).
 Godot-Client: echte Animationen (Quaternius CC0, retargetet), Türen per Linksklick, flüssige Bewegung.
-Offen: Charaktererstellung im Godot-Client, Springen (Leertaste), persönliche Verzauberungen, weitere Gebiete außer Tos.
+Charaktererstellung auch im Godot-Client (Dialog, `--create show|auto`).
+
+Offen: Springen (Leertaste), persönliche Verzauberungen, weitere Gebiete außer Tos.
