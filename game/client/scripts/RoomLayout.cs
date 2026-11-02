@@ -140,10 +140,13 @@ public sealed class RoomLayout
 
         if (kind == "floor")
         {
+            // Bodenplatte von einer festen Unterkante bis zur Bodenhöhe: Felder unter dem Bezugsboden (negative
+            // Höhe, z. B. tiefer liegende Straßenteile) dürfen keine Quader mit negativer Dicke werden – das gab Löcher.
+            const float bottom = -12f;
             var tile = new MeshInstance3D
             {
-                Mesh = new BoxMesh { Size = new Vector3(width, 0.1f + height, cellSize) },
-                Position = new Vector3(x, (height - 0.1f) / 2f, z),
+                Mesh = new BoxMesh { Size = new Vector3(width, height - bottom, cellSize) },
+                Position = new Vector3(x, (height + bottom) / 2f, z),
                 MaterialOverride = Material(materials, outdoors ? "street" : "planks"),
             };
             root.AddChild(tile);
