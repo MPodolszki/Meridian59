@@ -15,5 +15,15 @@ public sealed class ResourceRegistry
     private readonly ConcurrentDictionary<string, uint> _ids = new(StringComparer.Ordinal);
     private int _next = (int)FirstId;
 
-    public uint this[string value] => _ids.GetOrAdd(value, _ => (uint)Interlocked.Increment(ref _next));
+    private readonly ConcurrentDictionary<uint, string> _names = new();
+
+    public uint this[string value] => _ids.GetOrAdd(value, v =>
+    {
+        uint id = (uint)Interlocked.Increment(ref _next);
+        _names[id] = v;
+        return id;
+    });
+
+    /// <summary>Text zu einer vergebenen ID (z. B. Gesichtsteile, die der Client in BP_NEW_CHARINFO zurückschickt).</summary>
+    public string? NameOf(uint id) => _names.GetValueOrDefault(id);
 }

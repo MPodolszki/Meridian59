@@ -67,6 +67,13 @@ public sealed class AccountStore
         }
     }
 
+    /// <summary>Ist der Name als Account eines anderen vergeben (Charakternamen müssen eindeutig sein)?</summary>
+    public bool IsNameTaken(string name, string ownAccount)
+    {
+        lock (_gate)
+            return _accounts.ContainsKey(name) && !string.Equals(name, ownAccount, StringComparison.OrdinalIgnoreCase);
+    }
+
     /// <summary>Account bei passendem Namen (ohne Groß/Klein) und Digest, sonst null.</summary>
     public Account? Verify(string name, ReadOnlySpan<byte> passwordDigest)
     {

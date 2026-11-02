@@ -148,29 +148,28 @@ public sealed partial class World
     public IReadOnlyCollection<Room> Rooms => _rooms.Values;
 
     public RoomObject ToRoomObject(Avatar a) =>
-        new(a.Id, _resources[a.Name], new ObjectAppearance(_resources[PlayerIcon], 1, PlayerOverlays(a)), a.Row, a.Col, a.Angle, FlagPlayer);
+        new(a.Id, _resources[a.Name], new ObjectAppearance(_resources[a.State.Appearance.Body], 1, PlayerOverlays(a)), a.Row, a.Col, a.Angle, FlagPlayer);
 
     /// <summary>Körperteile des männlichen Standard-Charakters (player.kod SendOverlays, system.kod charinfo_*_ax):
     /// linker/rechter Arm, Beine, Kopf, Mund, Augen, Nase, Haare; dazu die Waffe in der Hand.</summary>
     public static readonly string[] PlayerOverlayIcons =
         ["bla.bgf", "bra.bgf", "bfa.bgf", "phax.bgf", "pmax.bgf", "peax.bgf", "pnax.bgf", "ptac.bgf"];
 
-    private const byte SkinXlat = 0x01;   // XLAT_TO_SKIN1
-
     private List<Overlay> PlayerOverlays(Avatar a)
     {
         var weapon = a.State.Inventory.FirstOrDefault(i => i.Used && i.Kind.Overlay is not null);
         bool leftHandBusy = a.State.Inventory.Any(i => i.Used && i.Kind.Slot == "shield");
+        var look = a.State.Appearance;
         var list = new List<Overlay>
         {
-            new(_resources["bla.bgf"], 31 /* HS_LEFT_HAND */, leftHandBusy ? (ushort)7 : (ushort)1),
-            new(_resources["bra.bgf"], 21 /* HS_RIGHT_HAND */, weapon is null ? (ushort)1 : (ushort)17),
-            new(_resources["bfa.bgf"], 41 /* HS_LEGS */),
-            new(_resources["phax.bgf"], 1 /* HS_HEAD */, 1, SkinXlat),
-            new(_resources["pmax.bgf"], 12 /* HS_MOUTH */, 1, SkinXlat),
-            new(_resources["peax.bgf"], 11 /* HS_EYES */, 1, SkinXlat),
-            new(_resources["pnax.bgf"], 14 /* HS_NOSE */, 1, SkinXlat),
-            new(_resources["ptac.bgf"], 13 /* HS_TOUPEE */),
+            new(_resources[look.LeftArm], 31 /* HS_LEFT_HAND */, leftHandBusy ? (ushort)7 : (ushort)1),
+            new(_resources[look.RightArm], 21 /* HS_RIGHT_HAND */, weapon is null ? (ushort)1 : (ushort)17),
+            new(_resources[look.Legs], 41 /* HS_LEGS */),
+            new(_resources[look.Head], 1 /* HS_HEAD */, 1, look.SkinXlat),
+            new(_resources[look.Mouth], 12 /* HS_MOUTH */, 1, look.SkinXlat),
+            new(_resources[look.Eyes], 11 /* HS_EYES */, 1, look.SkinXlat),
+            new(_resources[look.Nose], 14 /* HS_NOSE */, 1, look.SkinXlat),
+            new(_resources[look.Hair], 13 /* HS_TOUPEE */, 1, look.HairXlat),
         };
         if (weapon?.Kind.Overlay is { } overlay)
             list.Add(new(_resources[overlay], 22 /* HS_RIGHT_WEAPON */, 4));
@@ -223,7 +222,9 @@ public sealed partial class World
             {
                 s.EnsureResource(other.Name);
                 s.EnsureResource(PlayerIcon);
-                return (ToRoomObject(other), other == avatar ? "Das bist du selbst, ein stämmiger Zwerg." : $"Du siehst {other.Name}, einen Zwerg.");
+                string desc = other.State.Description.Length > 0 ? other.State.Description
+                    : other == avatar ? "Das bist du selbst, ein stämmiger Zwerg." : $"Du siehst {other.Name}, einen Zwerg.";
+                return (ToRoomObject(other), desc);
             }
             if (avatar.Room.Monsters.FirstOrDefault(m => m.Id == id) is { } monster)
             {

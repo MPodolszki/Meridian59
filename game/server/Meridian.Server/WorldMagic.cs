@@ -59,6 +59,68 @@ public sealed partial class World
                 .Select(x => (x.Item1!, x.Value)).ToList();
     }
 
+    // ------------------------------------------------------------------ Charaktererstellung
+
+    /// <summary>Neuer Charakter (BP_CHARACTERS-Flag 1): noch nie in der Welt und nicht erstellt.</summary>
+    public bool IsFirstTime(uint characterId)
+    {
+        lock (_gate)
+            return !_characters.TryGetValue(characterId, out var s) || !s.Created && !s.Initialized;
+    }
+
+    public string? CharacterName(uint characterId)
+    {
+        lock (_gate)
+            return _characters.GetValueOrDefault(characterId)?.Name;
+    }
+
+    /// <summary>BP_NEW_CHARINFO übernehmen (system.kod + player.kod Konstruktion). false = BP_CHARINFO_NOT_OK.
+    /// <paramref name="nameTaken"/> prüft Namen anderer Accounts.</summary>
+    public bool CreateCharacter(CharacterCreation.Request req, Func<string, bool> nameTaken)
+    {
+        lock (_gate)
+        {
+            if (!IsFirstTimeLocked(req.CharacterId) || !CharacterCreation.ValidName(req.Name)
+                || req.Description.Length > CharacterCreation.MaxDescriptionLength
+                || req.Gender is not (Appearance.Male or Appearance.Female)
+                || nameTaken(req.Name)
+                || _characters.Any(c => c.Key != req.CharacterId && string.Equals(c.Value.Name, req.Name, StringComparison.OrdinalIgnoreCase))
+                || _rooms.Values.SelectMany(r => r.Npcs).Any(n => string.Equals(n.Name, req.Name, StringComparison.OrdinalIgnoreCase)))
+                return false;
+
+            var s = new CharacterState
+            {
+                Name = req.Name,
+                Description = req.Description,
+                Appearance = CharacterCreation.Face(req, _resources.NameOf),
+                Attributes = CharacterCreation.Stats(req.Stats),
+                Created = true,
+            };
+            _characters[req.CharacterId] = s;
+            s = StateFor(req.CharacterId);   // Startausrüstung
+
+            // Sprüche: nur angebotene, Budget 45 Punkte (sonst keine), Reagenzien für je 10 Zauber.
+            var chosen = req.Spells.Select(id => _spells.BySid((int)id)).OfType<SpellDefinition>()
+                .Where(CharacterCreation.Offered).Distinct().ToList();
+            if (chosen.Sum(CharacterCreation.SpellCost) > CharacterCreation.SpellBudget)
+                chosen.Clear();
+            s.MagicInitialized = true;
+            s.MaxMana = MagicRules.InitialMaxMana(s.Attributes);
+            s.Mana = s.MaxMana;
+            foreach (var spell in chosen)
+            {
+                s.Spells[spell.Sid] = MagicRules.InitialAbility(spell, s.Attributes, _random);
+                foreach (var r in spell.Reagents)
+                    if (_items.TryGet(r.Item, out var kind))
+                        GiveSilently(s, kind, r.Number * 10);
+            }
+            _leftSinceSave.Add(req.CharacterId);
+            return true;
+        }
+    }
+
+    private bool IsFirstTimeLocked(uint id) => !_characters.TryGetValue(id, out var s) || !s.Created && !s.Initialized;
+
     // ------------------------------------------------------------------ Spruchstärke
 
     /// <summary>GetSpellPower: Fähigkeit/2 + Schulbonus (0..30) + Nebenbonus (0..10), begrenzt 1..99.

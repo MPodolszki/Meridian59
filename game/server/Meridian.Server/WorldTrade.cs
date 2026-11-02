@@ -1023,6 +1023,7 @@ public sealed partial class World
         Inventory = c.Inventory.Select(i => new SavedItem(i.Kind.Key, i.Number, i.Used)).ToList(),
         Vigor = c.Vigor,
         Stomach = (int)c.Stomach,
+        Profile = new SavedProfile(c.Name, c.Description, c.Appearance, c.Created),
         Magic = c.MagicInitialized
             ? new SavedMagic(c.Attributes, c.Karma, c.Mana, c.MaxMana, new(c.Spells), new(c.SchoolCasts))
             : null,
@@ -1056,6 +1057,13 @@ public sealed partial class World
                 }
                 foreach (var (bank, amount) in saved.Bank)
                     state.Bank[bank] = amount;
+                if (saved.Profile is { } profile)
+                {
+                    state.Name = profile.Name;
+                    state.Description = profile.Description;
+                    state.Appearance = profile.Appearance;
+                    state.Created = profile.Created;
+                }
                 if (saved.Magic is { } magic)
                 {
                     state.MagicInitialized = true;

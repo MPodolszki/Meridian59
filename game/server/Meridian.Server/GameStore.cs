@@ -14,6 +14,8 @@ public sealed record SavedCharacter
     public int Stomach { get; init; }
     /// <summary>Charakterwerte, Mana und Sprüche (null = noch nie vergeben).</summary>
     public SavedMagic? Magic { get; init; }
+    /// <summary>Name, Beschreibung, Aussehen aus der Charaktererstellung (null = Standard).</summary>
+    public SavedProfile? Profile { get; init; }
     public List<SavedItem> Inventory { get; init; } = [];
     public Dictionary<int, int> Bank { get; init; } = [];
 }
@@ -21,6 +23,9 @@ public sealed record SavedCharacter
 /// <summary>Magie eines Charakters (als JSON in characters.magic).</summary>
 public sealed record SavedMagic(Attributes Attributes, int Karma, int Mana, int MaxMana,
     Dictionary<int, int> Spells, Dictionary<int, int> SchoolCasts);
+
+/// <summary>Charakterprofil (als JSON in characters.profile).</summary>
+public sealed record SavedProfile(string? Name, string Description, Appearance Appearance, bool Created);
 
 /// <summary>Gegenstand per Schlüssel aus dem Katalog; Objekt-IDs werden beim Laden neu vergeben.</summary>
 public sealed record SavedItem(string Item, int Number = 1, bool Used = false);
@@ -32,7 +37,7 @@ public sealed record SavedItem(string Item, int Number = 1, bool Used = false);
 /// </summary>
 public sealed class GameStore
 {
-    public const int SchemaVersion = 4;
+    public const int SchemaVersion = 5;
 
     private readonly string _connectionString;
     private readonly object _write = new();
@@ -122,6 +127,12 @@ public sealed class GameStore
             Execute(c, "ALTER TABLE characters ADD COLUMN magic TEXT; PRAGMA user_version = 4;", tx);
             tx.Commit();
         }
+        if (version < 5)
+        {
+            using var tx = c.BeginTransaction();
+            Execute(c, "ALTER TABLE characters ADD COLUMN profile TEXT; PRAGMA user_version = 5;", tx);
+            tx.Commit();
+        }
     }
 
     // ---------------------------------------------------------------- Accounts
@@ -164,16 +175,17 @@ public sealed class GameStore
             foreach (var (id, ch) in characters)
             {
                 Execute(c, """
-                    INSERT INTO characters (id, room, row, col, angle, hp, vigor, stomach, magic, saved_at)
-                    VALUES ($id, $room, $row, $col, $angle, $hp, $vigor, $stomach, $magic, $at)
+                    INSERT INTO characters (id, room, row, col, angle, hp, vigor, stomach, magic, profile, saved_at)
+                    VALUES ($id, $room, $row, $col, $angle, $hp, $vigor, $stomach, $magic, $profile, $at)
                     ON CONFLICT(id) DO UPDATE SET room = $room, row = $row, col = $col, angle = $angle, hp = $hp,
-                        vigor = $vigor, stomach = $stomach, magic = $magic, saved_at = $at;
+                        vigor = $vigor, stomach = $stomach, magic = $magic, profile = $profile, saved_at = $at;
                     DELETE FROM inventory WHERE character_id = $id;
                     DELETE FROM bank_accounts WHERE character_id = $id;
                     """, tx,
                     ("$id", id), ("$room", ch.Room), ("$row", ch.Row), ("$col", ch.Col), ("$angle", ch.Angle),
                     ("$hp", ch.Hp), ("$vigor", ch.Vigor), ("$stomach", ch.Stomach),
-                    ("$magic", ch.Magic is null ? null : System.Text.Json.JsonSerializer.Serialize(ch.Magic)), ("$at", now.ToString("O")));
+                    ("$magic", ch.Magic is null ? null : System.Text.Json.JsonSerializer.Serialize(ch.Magic)),
+                    ("$profile", ch.Profile is null ? null : System.Text.Json.JsonSerializer.Serialize(ch.Profile)), ("$at", now.ToString("O")));
                 for (int slot = 0; slot < ch.Inventory.Count; slot++)
                     Execute(c, "INSERT INTO inventory (character_id, slot, item, number, used) VALUES ($id, $slot, $item, $number, $used)", tx,
                         ("$id", id), ("$slot", slot), ("$item", ch.Inventory[slot].Item), ("$number", ch.Inventory[slot].Number),
@@ -190,7 +202,7 @@ public sealed class GameStore
     {
         using var c = Open();
         var result = new Dictionary<uint, SavedCharacter>();
-        using (var cmd = Command(c, "SELECT id, room, row, col, angle, hp, vigor, stomach, magic FROM characters"))
+        using (var cmd = Command(c, "SELECT id, room, row, col, angle, hp, vigor, stomach, magic, profile FROM characters"))
         using (var r = cmd.ExecuteReader())
         {
             while (r.Read())
@@ -204,6 +216,7 @@ public sealed class GameStore
                     Vigor = r.IsDBNull(6) ? null : r.GetInt32(6),
                     Stomach = r.GetInt32(7),
                     Magic = r.IsDBNull(8) ? null : System.Text.Json.JsonSerializer.Deserialize<SavedMagic>(r.GetString(8)),
+                    Profile = r.IsDBNull(9) ? null : System.Text.Json.JsonSerializer.Deserialize<SavedProfile>(r.GetString(9)),
                 };
         }
         using (var cmd = Command(c, "SELECT character_id, item, number, used FROM inventory ORDER BY character_id, slot"))

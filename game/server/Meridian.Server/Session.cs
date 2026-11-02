@@ -191,7 +191,16 @@ public sealed class Session(int id, TcpClient client, GameServer server)
                 break;
 
             case GameMessage.SendCharacters:
-                PostGame(GameReplies.Characters([new CharacterEntry(_account!.CharacterId, _account.Name, false)], Motd));
+            {
+                uint cid = _account!.CharacterId;
+                PostGame(GameReplies.Characters(
+                    [new CharacterEntry(cid, server.World.CharacterName(cid) ?? _account.Name, server.World.IsFirstTime(cid))], Motd));
+                break;
+            }
+
+            // Charaktererstellung des Original-Clients (char.dll) über BP_SYSTEM.
+            case GameMessage.System:
+                HandleSystem(ref r);
                 break;
 
             case GameMessage.UseCharacter:
@@ -385,17 +394,45 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         return true;
     }
 
+    /// <summary>BP_SYSTEM: 49 = BP_SEND_CHARINFO (Auswahllisten), 48 = BP_NEW_CHARINFO (neuer Charakter).</summary>
+    private void HandleSystem(ref PacketReader r)
+    {
+        byte sub = r.U8();
+        if (_avatar is not null || _account is null)
+            return;
+        if (sub == CharacterCreation.SendCharInfo)
+        {
+            uint Rsc(string s)
+            {
+                EnsureResource(s);
+                return server.Resources[s];
+            }
+            PostGame(CharacterCreation.CharInfo(Rsc, server.World.Spells.All.OrderBy(s => s.School).ThenBy(s => s.Level).ToList()));
+            return;
+        }
+        if (sub != CharacterCreation.NewCharInfo)
+            return;
+        var req = CharacterCreation.Parse(ref r);
+        bool ok = req.CharacterId == _account.CharacterId
+            && server.World.CreateCharacter(req, n => server.Accounts.IsNameTaken(n, _account.Name));
+        Log.Info($"Session {id}: Charaktererstellung {(ok ? "angenommen" : "abgelehnt")} für '{req.Name}'");
+        PostGame(ok ? CharacterCreation.CharInfoOk(req.CharacterId) : CharacterCreation.CharInfoNotOk());
+        if (ok)
+            server.SaveGame("neuer Charakter");
+    }
+
     private void UseCharacter(uint characterId)
     {
         if (characterId != _account!.CharacterId || _avatar is not null)
             return;
 
-        Log.Info($"Session {id}: {_account.Name} betritt die Welt");
-        _avatar = new Avatar(characterId, _account.Name, this);
+        string name = server.World.CharacterName(characterId) ?? _account.Name;
+        Log.Info($"Session {id}: {name} betritt die Welt");
+        _avatar = new Avatar(characterId, name, this);
         EnsureResource(InterfaceModule);
         PostGame(GameReplies.LoadModule(server.Resources[InterfaceModule]));
         // Grafiken der Spielerfiguren (Körperteile, Waffen in der Hand) für alle Spieler im Raum.
-        foreach (string icon in World.PlayerOverlayIcons.Concat(server.World.Items.Kinds.Select(k => k.Overlay).OfType<string>()))
+        foreach (string icon in CharacterCreation.AllIcons.Concat(server.World.Items.Kinds.Select(k => k.Overlay).OfType<string>()))
             EnsureResource(icon);
 
         server.World.Enter(_avatar);

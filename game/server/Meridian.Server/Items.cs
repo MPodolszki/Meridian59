@@ -128,6 +128,11 @@ public sealed class CharacterState
     public Dictionary<int, int> Spells { get; } = new();
     public Dictionary<int, int> SchoolCasts { get; } = new();
     public bool MagicInitialized { get; set; }
+    /// <summary>Charaktererstellung: gewählter Name, Beschreibung, Aussehen; Created = Erstellung abgeschlossen.</summary>
+    public string? Name { get; set; }
+    public string Description { get; set; } = "";
+    public Appearance Appearance { get; set; } = Appearance.Default;
+    public bool Created { get; set; }
     /// <summary>Ausdauer (KOD piVigor, 0..200, Start 100) und Rest-Anstrengung in 1/10000 Punkten (piExertion).</summary>
     public int Vigor { get; set; } = CombatRules.StartVigor;
     public int Exertion { get; set; }
