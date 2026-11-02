@@ -60,5 +60,5 @@ Tag-Nacht-Wechsel mit Originaluhr und Raumlicht (daynight.md).
 Monster-Wegfindung per A* auf den Raum-Höhenrastern (combat.md).
 Teleport-Erkennung für Spielerbewegungen wie im Original (combat.md).
 Häuser mit Fachwerkfassaden und Innenräume mit Decke/Lampen im Client (client/README.md).
-Original-Client (Steam, Wine) getestet: Login, Welt, Chat, Anschauen, Kaufen, Bank, Türen, Kampf gehen (original-client-test.md).
-Offen: Anbieten/Beute im Original-Client prüfen, Spieler-Overlays (Kopf/Arme/Beine) für den Original-Client.
+Original-Client (Steam, Wine) getestet: Login, Welt, Chat, Anschauen, Kaufen, Anbieten, Bank, Türen, Kampf, Beute gehen (original-client-test.md).
+Offen: Spieler-Overlays (Kopf/Arme/Beine) für den Original-Client.

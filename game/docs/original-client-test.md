@@ -43,7 +43,7 @@ Geprüft 2026-11-02 (Steam-Client, Wine, Software-Renderer):
 | Türen (Leertaste) und Rand-Ausgang zum Friedhof | geht |
 | Bank (`deposit`/`balance`/`withdraw` bei Skivlat) | geht |
 | Kampf auf dem Friedhof nachts (Taste E, Treffer/Schaden) | geht |
-| Verkaufen/Anbieten (`offer`), Beute aufheben (`get`) | noch nicht geprüft |
+| Verkaufen/Anbieten (`offer`), Beute aufheben (`get`), Essen | geht |
 
 Hinweis: Der Steam-Client hat eine neue Tastenbelegung (`config.ini`): Angriff E, Sagen F, Gehen/Öffnen Leertaste.
 
