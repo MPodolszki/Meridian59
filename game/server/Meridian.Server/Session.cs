@@ -417,7 +417,10 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         foreach (var a in present)
             EnsureResource(a.Name);
         foreach (var n in room.Npcs)
+        {
             EnsureResource(n.DisplayName);
+            EnsureResource(server.World.NpcIcon(n));
+        }
         var monsters = server.World.MonstersIn(room);
         foreach (var m in monsters)
         {

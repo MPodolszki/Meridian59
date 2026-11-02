@@ -86,7 +86,7 @@ public sealed record MonsterKind(
     // Zombie: SPEED_VERY_SLOW, Stufe 55, karma-aggressiv. Skelett: SPEED_AVERAGE, Stufe 75, aggressiv.
     public static readonly MonsterKind Zombie = new("Zombie", "zombie.bgf", 24, 1, 4, 0.6, TimeSpan.FromSeconds(2.4), 70, 5 * 64)
         { Level = 55, Difficulty = 4, Treasure = "zombie" };
-    public static readonly MonsterKind Skeleton = new("Skelett", "skeleton.bgf", 36, 2, 6, 0.65, TimeSpan.FromSeconds(1.8), 140, 7 * 64)
+    public static readonly MonsterKind Skeleton = new("Skelett", "skelbody.bgf", 36, 2, 6, 0.65, TimeSpan.FromSeconds(1.8), 140, 7 * 64)
         { Level = 75, Difficulty = 5, Treasure = "tough", AlwaysDrops = "longsword" };
 }
 

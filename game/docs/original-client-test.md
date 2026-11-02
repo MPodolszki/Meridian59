@@ -18,6 +18,12 @@ jetzt wie user.kod (Gruppen Zustand/Werte/Sprüche/Fertigkeiten, Gruppe 1 mit Le
 leere Spruch-/Fertigkeitslisten). Ohne `/Q` bleibt der Client auf dem Startbildschirm.
 Bildschirmfotos vom GNOME-Wayland-Desktop sind per Skript nicht möglich; die Darstellung muss man selbst ansehen.
 
+Darstellung: Tos ist im Original-Client zu sehen. Damit Figuren nicht unsichtbar bleiben, schickt der Server jetzt
+die Original-Grafiknamen: Spieler `bta.bgf` (Körper; Kopf/Arme/Beine als Overlays fehlen noch), NPCs ihr KOD-Icon
+(`tsinnk.bgf`, `tsapoth.bgf`, `tsbanker.bgf`, `tswatch.bgf`, in `data/world/tos.json`), Zombie `zombie.bgf`,
+Skelett `skelbody.bgf`; Gegenstände hatten schon die KOD-Icons. Der eigene Client bildet `skelbody` auf sein
+Skelett-Modell ab, alles Unbekannte wird zum Zwerg.
+
 Start: `game/tools/run-original-client.sh NAME PASSWORT [HOST] [PORT]`.
 
 ## Starten gegen den eigenen Server

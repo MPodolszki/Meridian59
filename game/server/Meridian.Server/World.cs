@@ -154,7 +154,10 @@ public sealed partial class World
 
     /// <summary>Händler tragen OF_BUYABLE (verkauft) bzw. OF_OFFERABLE (kauft/nimmt an), wie im Original.</summary>
     public RoomObject ToRoomObject(Npc n) =>
-        new(n.Id, _resources[n.DisplayName], new ObjectAppearance(_resources[PlayerIcon]), n.Row, n.Col, n.Angle, NpcFlags(n));
+        new(n.Id, _resources[n.DisplayName], new ObjectAppearance(_resources[NpcIcon(n)]), n.Row, n.Col, n.Angle, NpcFlags(n));
+
+    /// <summary>Grafik eines NPCs (KOD vrIcon, z. B. tsinnk.bgf); ohne Angabe die Spielergrafik.</summary>
+    public string NpcIcon(Npc n) => n.Definition.Icon ?? PlayerIcon;
 
     private static uint NpcFlags(Npc n)
     {

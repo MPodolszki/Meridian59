@@ -439,7 +439,7 @@ public sealed partial class World
                 return;
             }
             avatar.Session.EnsureResource(npc.DisplayName);
-            avatar.Session.EnsureResource(PlayerIcon);
+            avatar.Session.EnsureResource(NpcIcon(npc));
             foreach (var (item, _) in list)
                 EnsureItemResources(avatar.Session, item);
             var entries = list.Select(e => new BuyListEntry(ToRoomObject(e.Item), (uint)PriceOf(e, merchant))).ToList();

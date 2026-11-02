@@ -10,10 +10,12 @@ public static class CharacterModel
 {
     private const string LockMeta = "anim_lock_until";
 
-    /// <summary>Figur passend zur Icon-Ressource ("zombie.bgf" → models/zombie.glb); sonst Zwerg.</summary>
+    /// <summary>Figur passend zur Icon-Ressource ("zombie.bgf" → models/zombie.glb, "skelbody.bgf" → skeleton); sonst Zwerg.</summary>
     public static Node3D Create(string icon)
     {
         string kind = System.IO.Path.GetFileNameWithoutExtension(icon).ToLowerInvariant();
+        // Grafiknamen des Originals (KOD vrIcon) auf eigene Modelle abbilden; Spieler/NPCs sind Zwerge.
+        kind = kind switch { "skelbody" => "skeleton", _ => kind };
         string path = $"res://models/{kind}.glb";
         if (!ResourceLoader.Exists(path))
             path = "res://models/dwarf.glb";

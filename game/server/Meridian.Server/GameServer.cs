@@ -30,7 +30,7 @@ public sealed record ServerOptions
     /// <summary>Automatisches Speichern (Original SavePeriod 180 min; hier kürzer, weil es nur geänderte Charaktere schreibt).</summary>
     public TimeSpan SavePeriod { get; init; } = TimeSpan.FromMinutes(5);
     /// <summary>Grafik (.bgf des Clients) für Spieler.</summary>
-    public string PlayerIcon { get; init; } = "blank.bgf";
+    public string PlayerIcon { get; init; } = "bta.bgf";   // KOD player_male_icon_rsc
     /// <summary>Optional: Ressourcen-Ordner eines Original-Clients, um die Raum-Security aus den .roo-Dateien zu lesen.</summary>
     public string? ClientResourceDir { get; init; }
 }

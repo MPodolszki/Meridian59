@@ -75,6 +75,8 @@ public sealed record NpcDefinition(string KodClass, int Row, int Col)
 {
     public string? Name { get; init; }
     public string? Role { get; init; }
+    /// <summary>Grafik aus KOD (vrIcon), z. B. "tsinnk.bgf".</summary>
+    public string? Icon { get; init; }
     public int FineRow { get; init; } = 32;
     public int FineCol { get; init; } = 32;
     public int Angle { get; init; }

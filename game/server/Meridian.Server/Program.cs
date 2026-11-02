@@ -3,7 +3,7 @@ using Meridian.Server;
 
 // Aufruf:
 //   Meridian.Server [--port 5959] [--database meridian.db] [--world data/world/tos.json]
-//                   [--client-dir <resource-ordner>] [--player-icon blank.bgf] [--start-room 52]
+//                   [--client-dir <resource-ordner>] [--player-icon bta.bgf] [--start-room 52]
 //                   [--save-period 5] [--accounts accounts.json] [--hour 23]
 //   Meridian.Server add-account <name> <passwort> [--admin] [--database meridian.db]
 // --accounts: alte Account-Datei, wird beim ersten Start in die Datenbank übernommen. Ohne --database liegt
@@ -13,7 +13,7 @@ string accountsPath = "accounts.json";
 int port = 5959;
 string? clientDir = null;
 string worldPath = Path.Combine(AppContext.BaseDirectory, "data", "world", "tos.json");
-string playerIcon = "blank.bgf";
+string playerIcon = "bta.bgf";   // Körper des männlichen Spielers im Original
 int? startRoom = null;
 string? database = null;
 int savePeriodMinutes = 5;

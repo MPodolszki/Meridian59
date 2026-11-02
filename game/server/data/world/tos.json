@@ -913,6 +913,7 @@
         {
           "kodClass": "TosInnKeeper",
           "name": "Paddock",
+          "icon": "tsinnk.bgf",
           "role": "Wirt (Krug, Käse; bedingt: Purpurpilz, Orkzahn)",
           "row": 7,
           "col": 9,
@@ -1085,6 +1086,7 @@
         {
           "kodClass": "TosApothecary",
           "name": "Frisconar",
+          "icon": "tsapoth.bgf",
           "role": "Apotheker (Reagenzien, Fackel, Flasche; lehrt Spruch Hospice; bedingt: Solagh)",
           "row": 4,
           "col": 6,
@@ -1177,6 +1179,7 @@
         {
           "kodClass": "TosBanker",
           "name": "Skivlat",
+          "icon": "tsbanker.bgf",
           "role": "Bankier (deposit/withdraw/balance; verkauft Edelsteine: Smaragd, Saphir, Diamant)",
           "row": 7,
           "col": 4,
@@ -1762,6 +1765,7 @@
         {
           "kodClass": "TosWatcher",
           "name": "Watcher",
+          "icon": "tswatch.bgf",
           "role": "Arena-Aufseher (Kampfrichter der Arena des Kraanan)",
           "row": 13,
           "col": 20,
