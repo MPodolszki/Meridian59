@@ -26,6 +26,8 @@ public partial class Main : Node3D
     private readonly HashSet<uint> _monsters = new();
     private ProgressBar _health = null!;
     private Label _healthText = null!;
+    private ProgressBar _vigor = null!;
+    private Label _vigorText = null!;
 
     private Camera3D _camera = null!;
     private MeshInstance3D _grass = null!;
@@ -197,6 +199,11 @@ public partial class Main : Node3D
         ui.AddChild(_health);
         _healthText = new Label { Position = new Vector2(28, 20), Visible = false };
         ui.AddChild(_healthText);
+        _vigor = new ProgressBar { Position = new Vector2(20, 46), Size = new Vector2(260, 22), ShowPercentage = false, Visible = false };
+        _vigor.AddThemeStyleboxOverride("fill", new StyleBoxFlat { BgColor = new Color(0.75f, 0.6f, 0.1f) });
+        ui.AddChild(_vigor);
+        _vigorText = new Label { Position = new Vector2(28, 46), Visible = false };
+        ui.AddChild(_vigorText);
 
         _chatLog = new RichTextLabel
         {
@@ -255,6 +262,12 @@ public partial class Main : Node3D
                 _health.MaxValue = hp.MaxHp;
                 _health.Value = hp.Hp;
                 _healthText.Text = $"Lebenspunkte {hp.Hp} / {hp.MaxHp}";
+                break;
+            case ClientEvent.VigorChanged v:
+                _vigor.Visible = _vigorText.Visible = true;
+                _vigor.MaxValue = v.MaxVigor;
+                _vigor.Value = v.Vigor;
+                _vigorText.Text = $"Ausdauer {v.Vigor} / {v.MaxVigor}";
                 break;
             case ClientEvent.ObjectAnimated anim:
                 if (_avatars.TryGetValue(anim.Id, out var animated))
@@ -429,6 +442,8 @@ public partial class Main : Node3D
         _targets[o.Id] = root.Position;
         if (self)
         {
+            _torchLight = null;
+            CallDeferred(MethodName.UpdateTorchLight);
             _yaw = root.Rotation.Y;
             _lastSentPos = root.Position;
             _lastSentYaw = _yaw;

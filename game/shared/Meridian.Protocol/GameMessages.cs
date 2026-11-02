@@ -170,6 +170,20 @@ public static class GameReplies
 
     public static byte[] InventoryAdd(RoomObject o) => WriteObjectDesc(new PacketWriter((byte)GameMessage.InventoryAdd), o).ToArray();
 
+    /// <summary>BP_USE / BP_UNUSE: Gegenstand wird benutzt (ausgerüstet) bzw. abgelegt.</summary>
+    public static byte[] Use(uint id) => new PacketWriter((byte)GameMessage.Use).U32(id).ToArray();
+
+    public static byte[] Unuse(uint id) => new PacketWriter((byte)GameMessage.Unuse).U32(id).ToArray();
+
+    /// <summary>BP_USE_LIST: alle benutzten Gegenstände (nach BP_INVENTORY).</summary>
+    public static byte[] UseList(IReadOnlyCollection<uint> ids)
+    {
+        var w = new PacketWriter((byte)GameMessage.UseList).U16((ushort)ids.Count);
+        foreach (uint id in ids)
+            w.U32(id);
+        return w.ToArray();
+    }
+
     public static byte[] InventoryRemove(uint id) => new PacketWriter((byte)GameMessage.InventoryRemove).U32(id).ToArray();
 
     /// <summary>BP_CHANGE ohne Animation, z. B. geänderte Menge eines Gegenstands (KOD SomethingChanged).</summary>

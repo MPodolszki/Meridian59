@@ -10,12 +10,14 @@ public sealed record SavedCharacter
     public ushort Col { get; init; }
     public ushort Angle { get; init; }
     public int? Hp { get; init; }
+    public int? Vigor { get; init; }
+    public int Stomach { get; init; }
     public List<SavedItem> Inventory { get; init; } = [];
     public Dictionary<int, int> Bank { get; init; } = [];
 }
 
 /// <summary>Gegenstand per Schlüssel aus dem Katalog; Objekt-IDs werden beim Laden neu vergeben.</summary>
-public sealed record SavedItem(string Item, int Number = 1);
+public sealed record SavedItem(string Item, int Number = 1, bool Used = false);
 
 /// <summary>
 /// Accounts und Spielstand in einer SQLite-Datenbank (eine Datei, kein Datenbankserver, läuft auch auf dem Pi).
@@ -24,7 +26,7 @@ public sealed record SavedItem(string Item, int Number = 1);
 /// </summary>
 public sealed class GameStore
 {
-    public const int SchemaVersion = 2;
+    public const int SchemaVersion = 3;
 
     private readonly string _connectionString;
     private readonly object _write = new();
@@ -97,6 +99,17 @@ public sealed class GameStore
                 """, tx);
             tx.Commit();
         }
+        if (version < 3)
+        {
+            using var tx = c.BeginTransaction();
+            Execute(c, """
+                ALTER TABLE characters ADD COLUMN vigor INTEGER;
+                ALTER TABLE characters ADD COLUMN stomach INTEGER NOT NULL DEFAULT 0;
+                ALTER TABLE inventory ADD COLUMN used INTEGER NOT NULL DEFAULT 0;
+                PRAGMA user_version = 3;
+                """, tx);
+            tx.Commit();
+        }
     }
 
     // ---------------------------------------------------------------- Accounts
@@ -139,17 +152,19 @@ public sealed class GameStore
             foreach (var (id, ch) in characters)
             {
                 Execute(c, """
-                    INSERT INTO characters (id, room, row, col, angle, hp, saved_at)
-                    VALUES ($id, $room, $row, $col, $angle, $hp, $at)
-                    ON CONFLICT(id) DO UPDATE SET room = $room, row = $row, col = $col, angle = $angle, hp = $hp, saved_at = $at;
+                    INSERT INTO characters (id, room, row, col, angle, hp, vigor, stomach, saved_at)
+                    VALUES ($id, $room, $row, $col, $angle, $hp, $vigor, $stomach, $at)
+                    ON CONFLICT(id) DO UPDATE SET room = $room, row = $row, col = $col, angle = $angle, hp = $hp,
+                        vigor = $vigor, stomach = $stomach, saved_at = $at;
                     DELETE FROM inventory WHERE character_id = $id;
                     DELETE FROM bank_accounts WHERE character_id = $id;
                     """, tx,
                     ("$id", id), ("$room", ch.Room), ("$row", ch.Row), ("$col", ch.Col), ("$angle", ch.Angle),
-                    ("$hp", ch.Hp), ("$at", now.ToString("O")));
+                    ("$hp", ch.Hp), ("$vigor", ch.Vigor), ("$stomach", ch.Stomach), ("$at", now.ToString("O")));
                 for (int slot = 0; slot < ch.Inventory.Count; slot++)
-                    Execute(c, "INSERT INTO inventory (character_id, slot, item, number) VALUES ($id, $slot, $item, $number)", tx,
-                        ("$id", id), ("$slot", slot), ("$item", ch.Inventory[slot].Item), ("$number", ch.Inventory[slot].Number));
+                    Execute(c, "INSERT INTO inventory (character_id, slot, item, number, used) VALUES ($id, $slot, $item, $number, $used)", tx,
+                        ("$id", id), ("$slot", slot), ("$item", ch.Inventory[slot].Item), ("$number", ch.Inventory[slot].Number),
+                        ("$used", ch.Inventory[slot].Used ? 1 : 0));
                 foreach (var (bank, amount) in ch.Bank)
                     Execute(c, "INSERT INTO bank_accounts (character_id, bank, amount) VALUES ($id, $bank, $amount)", tx,
                         ("$id", id), ("$bank", bank), ("$amount", amount));
@@ -162,7 +177,7 @@ public sealed class GameStore
     {
         using var c = Open();
         var result = new Dictionary<uint, SavedCharacter>();
-        using (var cmd = Command(c, "SELECT id, room, row, col, angle, hp FROM characters"))
+        using (var cmd = Command(c, "SELECT id, room, row, col, angle, hp, vigor, stomach FROM characters"))
         using (var r = cmd.ExecuteReader())
         {
             while (r.Read())
@@ -173,14 +188,16 @@ public sealed class GameStore
                     Col = (ushort)r.GetInt32(3),
                     Angle = (ushort)r.GetInt32(4),
                     Hp = r.IsDBNull(5) ? null : r.GetInt32(5),
+                    Vigor = r.IsDBNull(6) ? null : r.GetInt32(6),
+                    Stomach = r.GetInt32(7),
                 };
         }
-        using (var cmd = Command(c, "SELECT character_id, item, number FROM inventory ORDER BY character_id, slot"))
+        using (var cmd = Command(c, "SELECT character_id, item, number, used FROM inventory ORDER BY character_id, slot"))
         using (var r = cmd.ExecuteReader())
         {
             while (r.Read())
                 if (result.TryGetValue((uint)r.GetInt64(0), out var ch))
-                    ch.Inventory.Add(new SavedItem(r.GetString(1), r.GetInt32(2)));
+                    ch.Inventory.Add(new SavedItem(r.GetString(1), r.GetInt32(2), r.GetInt32(3) != 0));
         }
         using (var cmd = Command(c, "SELECT character_id, bank, amount FROM bank_accounts"))
         using (var r = cmd.ExecuteReader())

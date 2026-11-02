@@ -1,5 +1,5 @@
 {
-  "_hinweis": "Gegenstände mit Werten aus KOD (viValue_average, NumberItem, viItem_type, Icon). Namen/Beschreibungen eigener Text. treasure = plTreasure aus kod/object/passive/trestype (zombiet.kod, tought.kod).",
+  "_hinweis": "Gegenstände mit Werten aus KOD (viValue_average, NumberItem, viItem_type, Icon). Namen/Beschreibungen eigener Text. treasure = plTreasure aus kod/object/passive/trestype (zombiet.kod, tought.kod). Ausrüstung: slot weapon/shield/armor, weaponType/weaponQuality (weapon.kod), damageReduce (defmod viDamage_base). Essen: nutrition/filling (food.kod).",
   "items": [
     {
       "key": "money",
@@ -25,7 +25,10 @@
       ],
       "number": true,
       "plural": "Krüge Starkbier",
-      "description": "Dunkles, schäumendes Bier aus Paddocks Fass."
+      "description": "Dunkles, schäumendes Bier aus Paddocks Fass.",
+      "nutrition": 6,
+      "filling": 8,
+      "beverage": true
     },
     {
       "key": "cheese",
@@ -38,7 +41,9 @@
       ],
       "number": true,
       "plural": "Laibe Käse",
-      "description": "Ein fester, würziger Käse aus dem Umland von Tos."
+      "description": "Ein fester, würziger Käse aus dem Umland von Tos.",
+      "nutrition": 30,
+      "filling": 40
     },
     {
       "key": "bread",
@@ -51,7 +56,9 @@
       ],
       "number": true,
       "plural": "Laibe Brot",
-      "description": "Ein knuspriger Laib Brot."
+      "description": "Ein knuspriger Laib Brot.",
+      "nutrition": 20,
+      "filling": 40
     },
     {
       "key": "waterskin",
@@ -64,7 +71,10 @@
       ],
       "number": true,
       "plural": "Wasserschläuche",
-      "description": "Ein lederner Schlauch mit frischem Wasser."
+      "description": "Ein lederner Schlauch mit frischem Wasser.",
+      "nutrition": 3,
+      "filling": 6,
+      "beverage": true
     },
     {
       "key": "snack",
@@ -78,7 +88,9 @@
       ],
       "number": true,
       "plural": "essbare Pilze",
-      "description": "Ein kleiner Pilz, den man bedenkenlos essen kann."
+      "description": "Ein kleiner Pilz, den man bedenkenlos essen kann.",
+      "nutrition": 5,
+      "filling": 15
     },
     {
       "key": "inkycap",
@@ -91,7 +103,9 @@
       ],
       "number": true,
       "plural": "Tintlinge",
-      "description": "Ein seltener, dunkel verfärbter Pilz."
+      "description": "Ein seltener, dunkel verfärbter Pilz.",
+      "nutrition": 50,
+      "filling": 25
     },
     {
       "key": "herbs",
@@ -277,7 +291,9 @@
         "light"
       ],
       "article": "eine",
-      "description": "Eine pechgetränkte Fackel."
+      "description": "Eine pechgetränkte Fackel.",
+      "slot": "shield",
+      "light": true
     },
     {
       "key": "flask",
@@ -325,7 +341,9 @@
         "shield"
       ],
       "article": "einen",
-      "description": "Ein runder, vergoldeter Schild."
+      "description": "Ein runder, vergoldeter Schild.",
+      "slot": "shield",
+      "damageReduce": 1
     },
     {
       "key": "chainarmor",
@@ -337,7 +355,9 @@
         "armor"
       ],
       "article": "eine",
-      "description": "Eine Rüstung aus vernieteten Eisenringen."
+      "description": "Eine Rüstung aus vernieteten Eisenringen.",
+      "slot": "armor",
+      "damageReduce": 2
     },
     {
       "key": "axe",
@@ -349,7 +369,10 @@
         "weapon"
       ],
       "article": "eine",
-      "description": "Eine schwere Kampfaxt."
+      "description": "Eine schwere Kampfaxt.",
+      "slot": "weapon",
+      "weaponType": "slash",
+      "weaponQuality": "normal"
     },
     {
       "key": "hammer",
@@ -361,7 +384,10 @@
         "weapon"
       ],
       "article": "einen",
-      "description": "Ein wuchtiger Kriegshammer."
+      "description": "Ein wuchtiger Kriegshammer.",
+      "slot": "weapon",
+      "weaponType": "bludgeon",
+      "weaponQuality": "normal"
     },
     {
       "key": "mace",
@@ -373,7 +399,10 @@
         "weapon"
       ],
       "article": "einen",
-      "description": "Ein einfacher Streitkolben mit eisernem Kopf."
+      "description": "Ein einfacher Streitkolben mit eisernem Kopf.",
+      "slot": "weapon",
+      "weaponType": "bludgeon",
+      "weaponQuality": "low"
     },
     {
       "key": "longsword",
@@ -385,7 +414,10 @@
         "weapon"
       ],
       "article": "ein",
-      "description": "Eine lange, zweischneidige Klinge."
+      "description": "Eine lange, zweischneidige Klinge.",
+      "slot": "weapon",
+      "weaponType": "thrust",
+      "weaponQuality": "normal"
     },
     {
       "key": "martyrscroll",

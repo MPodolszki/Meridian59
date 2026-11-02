@@ -17,6 +17,7 @@ public sealed class Avatar(uint id, string name, Session session)
     public DateTime NextAttack { get; set; }
     public DateTime LastCombat { get; set; }
     public DateTime NextRegen { get; set; }
+    public DateTime NextRest { get; set; }
 
     /// <summary>Besitz (Inventar, Bankkonten) des Charakters.</summary>
     public CharacterState State { get; set; } = new();
@@ -193,6 +194,9 @@ public sealed partial class World
             }
             avatar.Row = row;
             avatar.Col = col;
+            // user.kod: Anstrengung pro Bewegung = EXERTION_PER_MOVE × (Tempo·5/6)²
+            int s56 = speed * 5 / 6;
+            AddExertion(avatar, CombatRules.ExertionPerMove * s56 * s56);
             // Bit 7: Objekt dreht sich in Laufrichtung.
             Broadcast(avatar, GameReplies.Move(avatar.Id, row, col, (byte)(speed | 0x80)));
             return null;
@@ -408,7 +412,7 @@ public sealed partial class World
                 Tell(victim, $"{Article(m.Kind)} verfehlt dich.");
                 return;
             }
-            int damage = _random.Next(m.Kind.MinDamage, m.Kind.MaxDamage + 1);
+            int damage = ReduceByArmor(victim, _random.Next(m.Kind.MinDamage, m.Kind.MaxDamage + 1));
             victim.Hp = Math.Max(0, victim.Hp - damage);
             Tell(victim, $"{Article(m.Kind)} trifft dich für {damage} Schaden.");
             victim.Session.SendHealth();
@@ -417,13 +421,37 @@ public sealed partial class World
         }
     }
 
+    /// <summary>Erholung wie player.kod: Lebenspunkte im Takt von CalculateHealthTime (mehr Ausdauer = schneller),
+    /// Ausdauer im Takt von GetRestTime bis zur Ruheschwelle 80.</summary>
     private void TickRegen(Avatar a, DateTime now)
     {
-        if (a.Hp >= a.MaxHp || now - a.LastCombat < CombatRules.OutOfCombat || now < a.NextRegen)
-            return;
-        a.NextRegen = now + CombatRules.RegenInterval;
-        a.Hp++;
-        a.Session.SendHealth();
+        if (a.Hp < a.MaxHp && a.Hp > 0)
+        {
+            if (a.NextRegen == default)
+                a.NextRegen = now + CombatRules.HealthTime(a.State.Vigor, a.MaxHp);
+            else if (now >= a.NextRegen)
+            {
+                a.NextRegen = now + CombatRules.HealthTime(a.State.Vigor, a.MaxHp);
+                a.Hp++;
+                a.Session.SendHealth();
+            }
+        }
+        else
+            a.NextRegen = default;
+
+        if (a.State.Vigor < CombatRules.VigorRestThreshold)
+        {
+            if (a.NextRest == default)
+                a.NextRest = now + CombatRules.RestTime;
+            else if (now >= a.NextRest)
+            {
+                a.NextRest = now + CombatRules.RestTime;
+                a.State.Vigor++;
+                a.Session.SendVigor();
+            }
+        }
+        else
+            a.NextRest = default;
     }
 
     /// <summary>Angriff eines Spielers (BP_REQ_ATTACK) auf ein Monster.</summary>
@@ -446,7 +474,13 @@ public sealed partial class World
             }
             if (now < avatar.NextAttack)
                 return;
+            if (avatar.State.Vigor < CombatRules.AttackVigor)
+            {
+                Tell(avatar, "Du bist zu erschöpft, um zu kämpfen.");
+                return;
+            }
             avatar.NextAttack = now + CombatRules.PlayerAttackCooldown;
+            AddExertion(avatar, CombatRules.ExertionPerAttack);
             avatar.LastCombat = now;
             avatar.Angle = AngleTowards(m.Row - avatar.Row, m.Col - avatar.Col);
             BroadcastRoom(avatar.Room, GameReplies.Animate(ToRoomObject(avatar), GameReplies.AttackGroup, 4, 500));
@@ -457,7 +491,8 @@ public sealed partial class World
                 Tell(avatar, $"Du verfehlst {Article(m.Kind, accusative: true)}.");
                 return;
             }
-            int damage = _random.Next(CombatRules.PlayerMinDamage, CombatRules.PlayerMaxDamage + 1);
+            var (min, max) = Weapon(avatar) is { } weapon ? CombatRules.WeaponDamage(weapon.Kind) : (CombatRules.PlayerMinDamage, CombatRules.PlayerMaxDamage);
+            int damage = Math.Max(1, _random.Next(min, max + 1));
             m.Hp -= damage;
             if (m.Hp > 0)
             {

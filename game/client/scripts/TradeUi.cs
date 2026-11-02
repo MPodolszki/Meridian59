@@ -8,7 +8,8 @@ namespace Meridian.Client;
 
 /// <summary>
 /// Inventar, Geld und Handel im Client: I = Inventar, B = beim nächsten Händler kaufen, G = Gegenstand aufheben.
-/// Im Inventar: Ablegen oder dem nächsten Händler anbieten (Verkauf per Gegenangebot wie im Original).
+/// Im Inventar: Benutzen (Essen, Waffe/Schild/Rüstung/Fackel an- und ablegen), Fallenlassen oder dem nächsten
+/// Händler anbieten (Verkauf per Gegenangebot wie im Original).
 /// Bank per Chat: „einzahlen 100“, „abheben 100“, „kontostand“ (oder deposit/withdraw/balance).
 /// </summary>
 public partial class Main
@@ -45,7 +46,10 @@ public partial class Main
         var invButtons = new HBoxContainer();
         _inventoryAmount = new SpinBox { MinValue = 1, MaxValue = 1, Value = 1, TooltipText = "Menge" };
         invButtons.AddChild(_inventoryAmount);
-        var drop = new Button { Text = "Ablegen" };
+        var use = new Button { Text = "Benutzen" };
+        use.Pressed += UseSelected;
+        invButtons.AddChild(use);
+        var drop = new Button { Text = "Fallen lassen" };
         drop.Pressed += DropSelected;
         invButtons.AddChild(drop);
         var offer = new Button { Text = "Anbieten" };
@@ -110,6 +114,7 @@ public partial class Main
             case ClientEvent.InventoryChanged inv:
                 _inventory = inv.Items.ToList();
                 RefreshInventory();
+                UpdateTorchLight();
                 return true;
             case ClientEvent.BuyList list:
                 _shopSeller = list.Seller.Id;
@@ -142,7 +147,7 @@ public partial class Main
         var money = _inventory.FirstOrDefault(o => o.Icon == "coin.bgf");
         _moneyLabel.Text = $"Geld: {money?.Amount ?? 0} Schillinge";
         foreach (var o in _inventory)
-            _inventoryList.AddItem(_session.Describe(o));
+            _inventoryList.AddItem(_session.Describe(o) + (o.Used ? "  (benutzt)" : ""));
         if (selected is { } s && s < _inventory.Count)
             _inventoryList.Select(s);
         UpdateInventoryAmount();
@@ -161,6 +166,37 @@ public partial class Main
 
     private ObjectRef? SelectedRef() =>
         SelectedInventoryItem is { } item ? new ObjectRef(item.Id, item.Amount is null ? null : (uint)_inventoryAmount.Value) : null;
+
+    /// <summary>Benutzen bzw. bei benutzten Gegenständen wieder ablegen.</summary>
+    private async void UseSelected()
+    {
+        if (_session is not { InWorld: true } || SelectedInventoryItem is not { } item)
+            return;
+        if (item.Used)
+            await _session.UnuseAsync(item.Id);
+        else
+            await _session.UseAsync(item.Id);
+    }
+
+    private OmniLight3D? _torchLight;
+
+    /// <summary>Benutzte Fackel leuchtet am eigenen Zwerg (KOD Fackel: LIGHT_FIRE).</summary>
+    private void UpdateTorchLight()
+    {
+        if (_session is null || !_avatars.TryGetValue(_session.PlayerId, out var self))
+            return;
+        bool lit = _inventory.Any(o => o.Used && o.Icon == "torch.bgf");
+        if (lit && !IsInstanceValid(_torchLight))
+        {
+            _torchLight = new OmniLight3D { LightColor = new Color(1f, 0.65f, 0.3f), LightEnergy = 2.5f, OmniRange = 9f, Position = new Vector3(0.35f, 1.4f, 0) };
+            self.AddChild(_torchLight);
+        }
+        else if (!lit && IsInstanceValid(_torchLight))
+        {
+            _torchLight!.QueueFree();
+            _torchLight = null;
+        }
+    }
 
     private async void DropSelected()
     {

@@ -180,6 +180,42 @@ public sealed class TradeTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task Use_EquipsWeapon_AndUnuseRemovesIt()
+    {
+        var (anna, events) = await EnterAsync();
+        await WaitForAsync(anna, events, _ => Money(anna) == 3500);
+        var mace = anna.Inventory.Single(o => anna.Resolve(o.NameRsc) == "Streitkolben");
+        await anna.UseAsync(mace.Id);
+        await WaitForAsync(anna, events, _ => anna.Inventory.Any(o => o.Id == mace.Id && o.Used));
+        await WaitForAsync(anna, events, e => e is ClientEvent.Chat { Text: "Du nimmst einen Streitkolben in die Hand." });
+        await anna.UnuseAsync(mace.Id);
+        await WaitForAsync(anna, events, _ => anna.Inventory.Any(o => o.Id == mace.Id && !o.Used));
+    }
+
+    [Fact]
+    public async Task Eating_RaisesVigor_UntilFull()
+    {
+        var (anna, events) = await EnterAsync();
+        await WaitForAsync(anna, events, e => e is ClientEvent.VigorChanged { Vigor: 100, MaxVigor: 200 });
+        uint paddock = Npc(anna, events, "Paddock");
+        await anna.RequestBuyAsync(paddock);
+        await WaitForAsync(anna, events, e => e is ClientEvent.BuyList);
+        var cheese = events.OfType<ClientEvent.BuyList>().Last().Items[0].Item;
+        await anna.BuyItemsAsync(paddock, [new ObjectRef(cheese.Id, 3)]);
+        await WaitForAsync(anna, events, _ => anna.Inventory.Any(o => anna.Resolve(o.NameRsc) == "Laibe Käse"));
+
+        uint mine() => anna.Inventory.First(o => anna.Resolve(o.NameRsc).Contains("Käse")).Id;
+        await anna.UseAsync(mine());
+        // Käse: Nährwert 30 → Ausdauer 130, Sättigung 40
+        await WaitForAsync(anna, events, e => e is ClientEvent.VigorChanged { Vigor: 130 });
+        await anna.UseAsync(mine());
+        await WaitForAsync(anna, events, e => e is ClientEvent.Chat { Text: "Du bist fast satt." });
+        await anna.UseAsync(mine());
+        await WaitForAsync(anna, events, e => e is ClientEvent.Chat { Text: "Du bist zu satt, um noch etwas zu essen." });
+        Assert.Contains(anna.Inventory, o => anna.Resolve(o.NameRsc) == "Laib Käse" && o.Amount == 1);
+    }
+
+    [Fact]
     public async Task Drop_PartOfMoney_LiesOnTheFloor()
     {
         var (anna, events) = await EnterAsync();

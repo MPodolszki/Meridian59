@@ -19,6 +19,22 @@ public sealed record ItemKind(string Key, string Name, string Icon, int Value)
     public IReadOnlyList<string> Types { get; init; } = [];
     public string? Description { get; init; }
 
+    /// <summary>Ausrüstungsplatz: "weapon", "shield" (auch Fackel) oder "armor"; null = nicht ausrüstbar.</summary>
+    public string? Slot { get; init; }
+    /// <summary>Waffen (weapon.kod): "bludgeon", "thrust", "slash"; Qualität "low", "normal", "high".</summary>
+    public string? WeaponType { get; init; }
+    public string WeaponQuality { get; init; } = "normal";
+    /// <summary>Höchste Schadensminderung (defmod viDamage_base).</summary>
+    public int DamageReduce { get; init; }
+    /// <summary>Lichtquelle, wenn benutzt (Fackel).</summary>
+    public bool Light { get; init; }
+    /// <summary>Essen (food.kod): Nährwert (→ Ausdauer) und Sättigung; Getränk für die Meldungen.</summary>
+    public int Nutrition { get; init; }
+    public int Filling { get; init; }
+    public bool Beverage { get; init; }
+
+    public bool IsFood => Is("food") && Filling > 0;
+
     public bool Is(string type) => Types.Contains(type);
     public bool IsMoney => Is("money");
 
@@ -77,6 +93,8 @@ public sealed class Item(uint id, ItemKind kind, int number = 1)
     public uint Id => id;
     public ItemKind Kind => kind;
     public int Number { get; set; } = kind.Number ? number : 1;
+    /// <summary>Ausgerüstet/benutzt (KOD poOwner-Liste plUsing).</summary>
+    public bool Used { get; set; }
 
     /// <summary>Wert wie KOD GetValue: Mengen-Gegenstände Anzahl × Wert.</summary>
     public int Value => Kind.Number ? Number * Kind.Value : Kind.Value;
@@ -97,6 +115,12 @@ public sealed class CharacterState
     /// <summary>Kontostand je Bank (KOD Bank-Objekte, Tos = 1).</summary>
     public Dictionary<int, int> Bank { get; } = new();
     public bool Initialized { get; set; }
+    /// <summary>Ausdauer (KOD piVigor, 0..200, Start 100) und Rest-Anstrengung in 1/10000 Punkten (piExertion).</summary>
+    public int Vigor { get; set; } = CombatRules.StartVigor;
+    public int Exertion { get; set; }
+    /// <summary>Mageninhalt 0..100 (piStomach), leert sich mit der Zeit.</summary>
+    public double Stomach { get; set; }
+    public DateTime StomachUpdated { get; set; } = DateTime.UtcNow;
     /// <summary>Letzte Position beim Ausloggen (null = noch nie in der Welt) und Lebenspunkte.</summary>
     public int? RoomId { get; set; }
     public ushort Row { get; set; }

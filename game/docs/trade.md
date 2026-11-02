@@ -48,12 +48,21 @@ Daten: `server/data/items/items.json`, `server/data/shops/tos.json`; Client: `cl
 - Skelette lassen zusätzlich immer ein Langschwert fallen (skel.kod).
 - Beute liegt auf dem Boden (OF_GETTABLE) und wird mit `BP_REQ_GET` aufgehoben, `BP_REQ_DROP` legt ab.
 
+## Benutzen (`BP_REQ_USE`/`BP_REQ_UNUSE` → `BP_USE`/`BP_UNUSE`, `BP_USE_LIST` nach `BP_INVENTORY`)
+- Waffen, Schilde (auch die Fackel), Rüstungen werden angelegt, je Platz einer; ein bereits angelegter wird abgelegt.
+  Werte siehe combat.md. Die benutzte Fackel leuchtet im Client.
+- Essen/Trinken (food.kod): Sättigung kommt in den Magen (max. 100, leert sich um 0,12/s), der Nährwert wird zu
+  Ausdauer; Meldungen bei halb/fast satt. Werte: Krug Starkbier 6/8, Käse 30/40, Brot 20/40, Wasserschlauch 3/6,
+  essbarer Pilz 5/15, Tintling 50/25 (Nährwert/Sättigung).
+- Benutzte Gegenstände, Ausdauer und Magen werden mitgespeichert.
+
 ## Abweichungen vom Original
 - Inventar und Konten werden in SQLite gespeichert (decisions.md); Gegenstände am Boden und freigeschaltete
   Händlerwaren gehen bei einem Neustart verloren.
 - Kein Gewicht/Volumen (`ReqNewHold`), keine Haltbarkeit (Langschwert-Schäden), keine magischen Gegenstände,
   Token, Siegelringe oder Quest-Gegenstände in der Beute.
-- Gegenstände benutzen/ausrüsten (Essen, Waffen, Fackel) fehlt noch.
+- Ausrüsten tauscht automatisch; das Original verlangt teils erst das Ablegen. Keine Haltbarkeit/Abnutzung,
+  keine Alkoholwirkung, Fackel brennt nicht ab.
 - Handel zwischen Spielern fehlt noch (nur Spieler ↔ NPC).
 - Aufheben nur innerhalb von 2 Feldern; höchstens 40 Gegenstände pro Raum am Boden (ältere verschwinden) –
   das Original räumt anders auf.

@@ -7,8 +7,9 @@ namespace Meridian.Server;
 public static class CombatRules
 {
     public const int PlayerMaxHp = 20;
-    public const int PlayerMinDamage = 2;          // Zwergenfäuste
-    public const int PlayerMaxDamage = 6;
+    /// <summary>Faustschlag ohne Waffe: Random(1,4) (stroke/unarmed.kod).</summary>
+    public const int PlayerMinDamage = 1;
+    public const int PlayerMaxDamage = 4;
     public const double PlayerHitChance = 0.75;
     public static readonly TimeSpan PlayerAttackCooldown = TimeSpan.FromSeconds(1.2);
     /// <summary>Nahkampfreichweite in KOD-Feineinheiten (64 = 1 Feld).</summary>
@@ -17,6 +18,49 @@ public static class CombatRules
     public static readonly TimeSpan RegenInterval = TimeSpan.FromSeconds(4);
     public static readonly TimeSpan OutOfCombat = TimeSpan.FromSeconds(8);
     public static readonly TimeSpan CorpseTime = TimeSpan.FromSeconds(2);
+
+    // Ausdauer (player.kod): Start 100, max. 200, Erholung im Stand bis 80.
+    public const int StartVigor = 100;
+    public const int MaxVigor = 200;
+    public const int VigorRestThreshold = 80;
+    /// <summary>Ab so viel angesammelter Anstrengung wird Ausdauer abgezogen (MIN_VIGOR_CHANGE).</summary>
+    public const int MinVigorChange = 20000;
+    /// <summary>EXERTION_PER_MOVE (user.kod): Anstrengung pro Bewegung = 2 × (Tempo·5/6)².</summary>
+    public const int ExertionPerMove = 2;
+    /// <summary>Anstrengung pro Schlag: 1000 × viSkillExertion (Standard 2).</summary>
+    public const int ExertionPerAttack = 2000;
+    /// <summary>Ausdauer, die man für einen Schlag mindestens braucht (HasVigor).</summary>
+    public const int AttackVigor = 2;
+    /// <summary>Annahme für das noch fehlende Attribut Stamina (1..50).</summary>
+    public const int Stamina = 25;
+    /// <summary>FOOD_USE_RATE: Magen leert sich um 0,12 pro Sekunde.</summary>
+    public const double StomachPerSecond = 12 / 100.0;
+
+    /// <summary>player.kod CalculateHealthTime: Zeit bis zum nächsten Lebenspunkt, schneller mit mehr Ausdauer.</summary>
+    public static TimeSpan HealthTime(int vigor, int maxHp)
+    {
+        int ms = (200 - vigor) * (200 - vigor) / 6 + 1000;
+        ms = (125 - Stamina) * ms / 100;
+        ms = ms * 100 / Math.Clamp(maxHp, 40, 100);
+        return TimeSpan.FromMilliseconds(ms);
+    }
+
+    /// <summary>player.kod GetRestTime: Zeit bis zum nächsten Ausdauerpunkt beim Ausruhen.</summary>
+    public static TimeSpan RestTime => TimeSpan.FromMilliseconds(1000 + 30 * (51 - Stamina));
+
+    /// <summary>weapon.kod GetBaseDamage: Grundschaden nach Waffentyp plus Qualität.</summary>
+    public static (int Min, int Max) WeaponDamage(ItemKind weapon)
+    {
+        var (min, max) = weapon.WeaponType switch
+        {
+            "bludgeon" => (4, 8),   // WEAPON_DAMAGE_MID
+            "thrust" => (3, 8),     // WEAPON_DAMAGE_LOW
+            "slash" => (5, 11),     // WEAPON_DAMAGE_HIGH
+            _ => (PlayerMinDamage, PlayerMaxDamage),
+        };
+        int bonus = weapon.WeaponQuality switch { "low" => -1, "high" => 1, _ => 0 };
+        return (min + bonus, max + bonus);
+    }
 }
 
 /// <summary>Monsterart mit Werten.</summary>

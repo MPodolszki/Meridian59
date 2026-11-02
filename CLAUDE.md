@@ -54,6 +54,6 @@ Beute zum Aufheben (docs/trade.md, eng am KOD-Original). Client (Godot 4.7.2) mi
 Figuren aus Blender (Zwerg, Zombie, Skelett via game/tools/blender/make_character.py), Lebensanzeige, Angriff (F),
 Inventar (I), Laden (B), Aufheben (G). Nichts davon gegen das Original getestet.
 Accounts und Spielstand der Charaktere in SQLite (meridian.db, decisions.md).
-Offen: Gegenstände
-benutzen/ausrüsten, Handel zwischen Spielern, Tag-Nacht-Wechsel, Wegfindung für Monster,
+Gegenstände benutzen/ausrüsten mit Waffenschaden, Rüstung, Essen und Ausdauer (combat.md, trade.md).
+Offen: Handel zwischen Spielern, Tag-Nacht-Wechsel, Wegfindung für Monster,
 schönere Häuser/Innenräume, Original-Client-Test.

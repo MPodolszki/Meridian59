@@ -15,6 +15,8 @@ public sealed class ClientObject(uint id)
     public uint Flags { get; set; }
     /// <summary>Menge bei Mengen-Gegenständen (Tag 1 in der ID), sonst null.</summary>
     public uint? Amount { get; set; }
+    /// <summary>Im Inventar: benutzt/ausgerüstet (BP_USE, BP_USE_LIST).</summary>
+    public bool Used { get; set; }
 
     /// <summary>OF_PLAYER (include/proto.h) nicht gesetzt → Nicht-Spieler-Figur (NPC oder Monster).</summary>
     public bool IsNpc => (Flags & ObjectFlags.Player) == 0 && !IsAttackable && !IsGettable;
@@ -47,6 +49,8 @@ public abstract record ClientEvent
     public sealed record ObjectRemoved(uint Id) : ClientEvent;
     public sealed record Chat(string Text) : ClientEvent;
     public sealed record HealthChanged(int Hp, int MaxHp) : ClientEvent;
+    /// <summary>Ausdauer (BP_STAT Gruppe 1, Nr. 3).</summary>
+    public sealed record VigorChanged(int Vigor, int MaxVigor) : ClientEvent;
     /// <summary>Einmalige Animation eines Objekts (BP_CHANGE): Angriff oder Sterben.</summary>
     public sealed record ObjectAnimated(uint Id, bool Death) : ClientEvent;
     public sealed record Disconnected(string Reason) : ClientEvent;
@@ -147,6 +151,12 @@ public sealed class ClientSession : IDisposable
         SendGameAsync(new PacketWriter((byte)GameMessage.ReqAttack).U8(1).U32(id).ToArray());
 
     public Task QuitAsync() => SendGameAsync([(byte)GameMessage.ReqQuit]);
+
+    /// <summary>Gegenstand benutzen (BP_REQ_USE): Essen essen, Waffe/Schild/Rüstung/Fackel anlegen.</summary>
+    public Task UseAsync(uint id) => SendGameAsync(new PacketWriter((byte)GameMessage.ReqUse).U32(id).ToArray());
+
+    /// <summary>Benutzten Gegenstand ablegen (BP_REQ_UNUSE).</summary>
+    public Task UnuseAsync(uint id) => SendGameAsync(new PacketWriter((byte)GameMessage.ReqUnuse).U32(id).ToArray());
 
     /// <summary>Gegenstand vom Boden aufheben (BP_REQ_GET).</summary>
     public Task GetAsync(uint id) => SendGameAsync(new PacketWriter((byte)GameMessage.ReqGet).U32(id).ToArray());
@@ -349,11 +359,12 @@ public sealed class ClientSession : IDisposable
             {
                 byte group = r.U8(), num = r.U8();
                 r.U32();                                // Name
-                if (r.U8() == 1 && r.U8() == 1 && group == 1 && num == 1)
+                if (r.U8() == 1 && r.U8() == 1 && group == 1 && num is 1 or 3)
                 {
                     int value = (int)r.U32();
                     r.U32(); r.U32();                   // min, max (Balken)
-                    Enqueue(new ClientEvent.HealthChanged(value, (int)r.U32()));
+                    int max = (int)r.U32();
+                    Enqueue(num == 1 ? new ClientEvent.HealthChanged(value, max) : new ClientEvent.VigorChanged(value, max));
                 }
                 break;
             }
@@ -363,7 +374,7 @@ public sealed class ClientSession : IDisposable
                 if (PeekOnceAnimation(ref r) is { } low)
                     Enqueue(new ClientEvent.ObjectAnimated(o.Id, low >= 9));
                 else
-                    UpdateInventory(list => { int i = list.FindIndex(x => x.Id == o.Id); if (i >= 0) list[i] = o; });
+                    UpdateInventory(list => { int i = list.FindIndex(x => x.Id == o.Id); if (i >= 0) { o.Used = list[i].Used; list[i] = o; } });
                 break;
             }
             case GameMessage.Inventory:
@@ -376,6 +387,23 @@ public sealed class ClientSession : IDisposable
             {
                 var o = ReadObjectDesc(ref r);
                 UpdateInventory(list => { list.RemoveAll(x => x.Id == o.Id); list.Add(o); });
+                break;
+            }
+            case GameMessage.Use:
+            case GameMessage.Unuse:
+            {
+                uint id = r.U32() & ObjectId.Mask;
+                bool used = (GameMessage)frame.Type == GameMessage.Use;
+                UpdateInventory(list => { foreach (var o in list) if (o.Id == id) o.Used = used; });
+                break;
+            }
+            case GameMessage.UseList:
+            {
+                int n = r.U16();
+                var ids = new HashSet<uint>();
+                for (int i = 0; i < n; i++)
+                    ids.Add(r.U32() & ObjectId.Mask);
+                UpdateInventory(list => { foreach (var o in list) o.Used = ids.Contains(o.Id); });
                 break;
             }
             case GameMessage.InventoryRemove:

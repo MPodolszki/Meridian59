@@ -122,9 +122,11 @@ public sealed partial class World
         Take(a, item);
     }
 
-    /// <summary>Gegenstand aus dem Inventar entfernen (KOD LeaveHold).</summary>
+    /// <summary>Gegenstand aus dem Inventar entfernen (KOD LeaveHold); benutzte werden vorher abgelegt.</summary>
     private void Take(Avatar a, Item item)
     {
+        if (item.Used)
+            UnuseLocked(a, item, quiet: true);
         if (a.State.Inventory.Remove(item))
             a.Session.Post(GameReplies.InventoryRemove(item.Id));
     }
@@ -133,6 +135,127 @@ public sealed partial class World
     {
         if (amount > 0 && a.State.Find(_items.Money) is { } money)
             TakeNumber(a, money, Math.Min(amount, money.Number));
+    }
+
+    // ------------------------------------------------------------------ Benutzen / Ausrüsten (BP_REQ_USE, BP_REQ_UNUSE)
+
+    /// <summary>IDs der benutzten Gegenstände für BP_USE_LIST.</summary>
+    public List<uint> UsedItems(Avatar avatar)
+    {
+        lock (_gate)
+            return avatar.State.Inventory.Where(i => i.Used).Select(i => i.Id).ToList();
+    }
+
+    private static Item? Weapon(Avatar a) => a.State.Inventory.FirstOrDefault(i => i.Used && i.Kind.Slot == "weapon");
+
+    /// <summary>Rüstung und Schild mindern Schaden: je Teil Random(r/3, r), insgesamt höchstens Schaden − 1 (defmod.kod).</summary>
+    private int ReduceByArmor(Avatar a, int damage)
+    {
+        foreach (var piece in a.State.Inventory.Where(i => i.Used && i.Kind.DamageReduce > 0))
+        {
+            int r = piece.Kind.DamageReduce;
+            damage -= Math.Clamp(_random.Next(r / 3, r + 1), 0, Math.Max(0, damage - 1));
+        }
+        return damage;
+    }
+
+    /// <summary>Gegenstand benutzen: Essen wird gegessen, Waffen/Schilde/Rüstungen werden angelegt
+    /// (ein Gegenstand je Platz; ein bereits angelegter wird dabei abgelegt).</summary>
+    public void Use(Avatar avatar, uint id)
+    {
+        lock (_gate)
+        {
+            if (avatar.State.Find(id) is not { } item)
+                return;
+            if (item.Kind.IsFood)
+            {
+                Eat(avatar, item);
+                return;
+            }
+            if (item.Kind.Slot is not { } slot)
+            {
+                Tell(avatar, $"Mit {item.Describe()} kannst du nichts anfangen.");
+                return;
+            }
+            if (item.Used)
+                return;
+            foreach (var other in avatar.State.Inventory.Where(i => i.Used && i.Kind.Slot == slot).ToList())
+                UnuseLocked(avatar, other, quiet: false);
+            item.Used = true;
+            avatar.Session.Post(GameReplies.Use(item.Id));
+            Tell(avatar, slot switch
+            {
+                "weapon" => $"Du nimmst {item.Describe()} in die Hand.",
+                "armor" => $"Du ziehst {item.Describe()} an.",
+                _ => item.Kind.Light ? $"Du zündest {item.Describe()} an." : $"Du nimmst {item.Describe()} in die Hand.",
+            });
+        }
+    }
+
+    public void Unuse(Avatar avatar, uint id)
+    {
+        lock (_gate)
+        {
+            if (avatar.State.Find(id) is { Used: true } item)
+                UnuseLocked(avatar, item, quiet: false);
+        }
+    }
+
+    private void UnuseLocked(Avatar avatar, Item item, bool quiet)
+    {
+        item.Used = false;
+        avatar.Session.Post(GameReplies.Unuse(item.Id));
+        if (!quiet)
+            Tell(avatar, item.Kind.Slot == "armor" ? $"Du ziehst {item.Describe()} aus." : $"Du legst {item.Describe()} weg.");
+    }
+
+    /// <summary>Essen und Trinken wie food.kod/player.kod EatSomething: Magen darf nicht über 100,
+    /// Nährwert wird zu Ausdauer, eine Einheit wird verbraucht.</summary>
+    private void Eat(Avatar a, Item food)
+    {
+        UpdateStomach(a.State);
+        if (a.State.Stomach + food.Kind.Filling > 100)
+        {
+            Tell(a, food.Kind.Beverage ? "Du kannst keinen Schluck mehr trinken." : "Du bist zu satt, um noch etwas zu essen.");
+            return;
+        }
+        double before = a.State.Stomach;
+        a.State.Stomach += food.Kind.Filling;
+        Tell(a, food.Kind.Beverage ? $"Du trinkst {food.Kind.Describe(1)}." : $"Du isst {food.Kind.Describe(1)}.");
+        AddExertion(a, -10000 * food.Kind.Nutrition);
+        if (a.State.Stomach >= 50 && a.State.Stomach < 75 && before < 50)
+            Tell(a, "Du bist halb satt.");
+        if (a.State.Stomach >= 75 && before < 75)
+            Tell(a, "Du bist fast satt.");
+        TakeNumber(a, food, 1);
+    }
+
+    private static void UpdateStomach(CharacterState s)
+    {
+        var now = DateTime.UtcNow;
+        s.Stomach = Math.Clamp(s.Stomach - (now - s.StomachUpdated).TotalSeconds * CombatRules.StomachPerSecond, 1, 100);
+        s.StomachUpdated = now;
+    }
+
+    /// <summary>player.kod AddExertion: Anstrengung sammelt sich und kostet ab MIN_VIGOR_CHANGE Ausdauer;
+    /// negative Anstrengung (Essen) gibt Ausdauer.</summary>
+    private void AddExertion(Avatar a, int amount)
+    {
+        var s = a.State;
+        s.Exertion += amount;
+        if (Math.Abs(s.Exertion) <= CombatRules.MinVigorChange)
+            return;
+        int lost = s.Exertion / 10000;
+        s.Vigor = Math.Clamp(s.Vigor - lost, 0, CombatRules.MaxVigor);
+        s.Exertion -= lost * 10000;
+        a.Session.SendVigor();
+    }
+
+    /// <summary>Ausdauer für BP_STAT.</summary>
+    public int VigorOf(Avatar a)
+    {
+        lock (_gate)
+            return a.State.Vigor;
     }
 
     // ------------------------------------------------------------------ Boden: Aufheben und Ablegen
@@ -699,7 +822,9 @@ public sealed partial class World
         Col = c.Col,
         Angle = c.Angle,
         Hp = c.Hp,
-        Inventory = c.Inventory.Select(i => new SavedItem(i.Kind.Key, i.Number)).ToList(),
+        Inventory = c.Inventory.Select(i => new SavedItem(i.Kind.Key, i.Number, i.Used)).ToList(),
+        Vigor = c.Vigor,
+        Stomach = (int)c.Stomach,
         Bank = new Dictionary<int, int>(c.Bank),
     };
 
@@ -718,11 +843,13 @@ public sealed partial class World
                     Col = saved.Col,
                     Angle = saved.Angle,
                     Hp = saved.Hp,
+                    Vigor = saved.Vigor ?? CombatRules.StartVigor,
+                    Stomach = saved.Stomach,
                 };
                 foreach (var item in saved.Inventory)
                 {
                     if (_items.TryGet(item.Item, out var kind))
-                        state.Inventory.Add(NewItem(kind, item.Number));
+                        state.Inventory.Add(new Item(++_nextItemId, kind, item.Number) { Used = item.Used && kind.Slot is not null });
                     else
                         Log.Warn($"Charakter {id}: unbekannter Gegenstand '{item.Item}' im Spielstand – entfällt");
                 }

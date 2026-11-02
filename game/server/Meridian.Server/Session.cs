@@ -205,7 +205,15 @@ public sealed class Session(int id, TcpClient client, GameServer server)
 
             case GameMessage.ReqInventory:
                 if (_avatar is not null)
-                    PostGame(GameReplies.Inventory(server.World.InventoryOf(_avatar)));
+                    SendInventory();
+                break;
+
+            case GameMessage.ReqUse when _avatar is not null:
+                server.World.Use(_avatar, r.U32() & ObjectId.Mask);
+                break;
+
+            case GameMessage.ReqUnuse when _avatar is not null:
+                server.World.Unuse(_avatar, r.U32() & ObjectId.Mask);
                 break;
 
             case GameMessage.ReqGet when _avatar is not null:
@@ -347,7 +355,8 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         SendPlayer();
         SendRoomContents();
         SendHealth();
-        PostGame(GameReplies.Inventory(server.World.InventoryOf(_avatar)));
+        SendVigor();
+        SendInventory();
         SendEchoPing();
     }
 
@@ -411,6 +420,23 @@ public sealed class Session(int id, TcpClient client, GameServer server)
     }
 
     public const string HealthName = "Lebenspunkte";
+    public const string VigorName = "Ausdauer";
+
+    /// <summary>Ausdauer als BP_STAT (Gruppe 1, Nr. 3 – wie user_stat_vigor im Original).</summary>
+    public void SendVigor()
+    {
+        if (_avatar is null)
+            return;
+        EnsureResource(VigorName);
+        PostGame(GameReplies.Stat(1, 3, server.Resources[VigorName], _avatar.State.Vigor, CombatRules.MaxVigor));
+    }
+
+    /// <summary>BP_INVENTORY und danach BP_USE_LIST wie user.kod.</summary>
+    private void SendInventory()
+    {
+        PostGame(GameReplies.Inventory(server.World.InventoryOf(_avatar!)));
+        PostGame(GameReplies.UseList(server.World.UsedItems(_avatar!)));
+    }
 
     /// <summary>Systemtext im Chatfenster (BP_MESSAGE mit dynamischer Format-Ressource).</summary>
     public void SendText(string text)
