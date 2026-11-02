@@ -250,7 +250,11 @@ public sealed class Session(int id, TcpClient client, GameServer server)
                 break;
 
             case GameMessage.SendEnchantments when _avatar is not null:
-                break;   // keine Verzauberungen (SendEnchantmentIcons schickt dann nichts)
+                // user.kod SendEnchantmentIcons: nur Typ 1 (eigene Verzauberungen); Raumverzauberungen gibt es nicht.
+                if (r.Remaining == 0 || r.U8() == GameReplies.EnchantmentPlayer)
+                    foreach (var o in server.World.EnchantmentObjects(_avatar))
+                        PostGame(GameReplies.AddEnchantment(o));
+                break;
 
             case GameMessage.ReqUse when _avatar is not null:
                 server.World.Use(_avatar, r.U32() & ObjectId.Mask);

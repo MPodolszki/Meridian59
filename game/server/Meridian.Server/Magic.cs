@@ -14,7 +14,8 @@ public sealed record SpellDefinition(string Key, int Sid, string Name, string Ic
     /// <summary>Anzahl Ziele (GetNumSpellTargets): 0 = keins, 1 = ein Ziel.</summary>
     public int Targets { get; init; }
     public IReadOnlyList<SpellReagent> Reagents { get; init; } = [];
-    /// <summary>Wirkung: "heal", "hospice", "createfood", "touchattack".</summary>
+    /// <summary>Wirkung: "heal", "hospice", "createfood", "touchattack", persönliche Verzauberungen "bless",
+    /// "superstrength", "haste", "resist".</summary>
     public string Effect { get; init; } = "";
     public int MinDamage { get; init; } = 3;
     public int MaxDamage { get; init; } = 6;
@@ -24,6 +25,11 @@ public sealed record SpellDefinition(string Key, int Sid, string Name, string Ic
     public string? CastText { get; init; }
     public string? Unnecessary { get; init; }
     public string? OffText { get; init; }
+    /// <summary>Verzauberungsdauer GetDuration: Random(d/2, d) mit d = Basis + Stärke × je Punkt (Sekunden).</summary>
+    public int DurationBase { get; init; }
+    public int DurationPerPower { get; init; }
+    /// <summary>Widerstand (resist.kod GetResistanceStrength): Stärke/2 + Basis, gegen <see cref="AttackType"/>.</summary>
+    public int ResistBase { get; init; } = 1;
     public string? HitText { get; init; }
 
     /// <summary>Objekt-ID des Spruchs im Protokoll (BP_SPELLS, BP_REQ_CAST).</summary>
@@ -151,3 +157,7 @@ public static class MagicRules
     public static TimeSpan TranceTime(SpellDefinition s, int power) =>
         s.CastTime == 0 ? TimeSpan.Zero : TimeSpan.FromMilliseconds(s.CastTime * (150 - power) / 100);
 }
+
+/// <summary>Aktive persönliche Verzauberung: Zustand aus InitializeEnchantmentState (Segen: Stärke, Superstärke:
+/// Stärkebonus, Eile: Stärke, Widerstand: Prozent) und Ende.</summary>
+public sealed record Enchantment(int State, DateTime Until);

@@ -95,6 +95,8 @@ public sealed record MonsterKind(
     public int KodSpeed { get; init; }
     /// <summary>Resistenzen in Prozent je Angriffsart ("bludgeon", "thrust", "slash", "holy", "unholy", "fire", "cold", "shock", "acid").</summary>
     public IReadOnlyDictionary<string, int> Resistances { get; init; } = new Dictionary<string, int>();
+    /// <summary>Magische Angriffsart ("fire", "cold", "shock", "acid") für Spieler-Widerstände; null = Waffe/Klaue.</summary>
+    public string? AttackType { get; init; }
 
     /// <summary>Schaden eines Treffers: feste Spanne, sonst Fuzzy(Stufe / Random(10,15)).</summary>
     public int RollDamage(Random rnd) =>

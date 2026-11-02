@@ -74,7 +74,7 @@ public partial class Main : Node3D
 
     /// <summary>
     /// Für Tests/Entwicklung: godot --path game/client -- --login NAME PASSWORT [--host H] [--port P]
-    /// [--screenshot DATEI] [--walk SEKUNDEN] [--create show|auto] [--jump 1]. Mit --screenshot wird nach dem Betreten des Raums
+    /// [--screenshot DATEI] [--walk SEKUNDEN] [--create show|auto] [--jump 1] [--cast SPRUCH]. Mit --screenshot wird nach dem Betreten des Raums
     /// (und optionalem Laufen) ein Bild gespeichert und der Client beendet.
     /// </summary>
     private void ApplyCommandLine()
@@ -94,6 +94,7 @@ public partial class Main : Node3D
                 case "--shop": _autoShop = args[++i] == "1"; break;
                 case "--create": _autoCreate = args[++i]; break;
                 case "--jump": _autoJump = args[++i] == "1"; break;
+                case "--cast": _autoCast = args[++i]; break;
                 case "--walk": _autoWalkSeconds = float.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture); break;
                 case "--login" when i + 2 < args.Length:
                     _user.Text = args[++i];
@@ -109,6 +110,8 @@ public partial class Main : Node3D
     private bool _autoLogin;
     /// <summary>Neuer Charakter: "show" fotografiert den Dialog, "auto" erstellt mit Vorgaben und betritt die Welt.</summary>
     private string? _autoCreate;
+    /// <summary>Spruch (Name), den „--create auto“ wählt und der Client nach dem Betreten auf sich wirkt.</summary>
+    private string? _autoCast;
     private float _screenshotDelay = 1.5f;
     private bool _autoFight;
     private bool _autoInventory;
@@ -121,6 +124,7 @@ public partial class Main : Node3D
 
     private void UpdateAutomation(double delta)
     {
+        UpdateAutoCast(delta);
         if (_autoFight && _session is { InWorld: true } && (_autoFightTimer -= delta) <= 0)
         {
             _autoFightTimer = 1.3;

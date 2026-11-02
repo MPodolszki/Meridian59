@@ -131,6 +131,8 @@ public sealed class CharacterState
     public int MaxMana { get; set; }
     public Dictionary<int, int> Spells { get; } = new();
     public Dictionary<int, int> SchoolCasts { get; } = new();
+    /// <summary>Persönliche Verzauberungen (SID → Zustand und Ende), player.kod plEnchantments.</summary>
+    public Dictionary<int, Enchantment> Enchantments { get; } = new();
     /// <summary>Fertigkeiten (SKID → Fähigkeit %), Schläge je Waffenfertigkeit (Übungszähler), Verbesserungen
     /// im laufenden Zeitfenster (Advancement Points) und dessen Ende.</summary>
     public Dictionary<int, int> Skills { get; } = new();

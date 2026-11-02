@@ -66,6 +66,8 @@ public enum GameMessage : byte
     SpellAdd = 142,
     SpellRemove = 143,
     Skills = 144,
+    AddEnchantment = 147,
+    RemoveEnchantment = 148,
     Quit = 149,
     Background = 150,
     PlayerOverlay = 151,

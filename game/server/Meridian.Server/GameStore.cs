@@ -26,7 +26,11 @@ public sealed record SavedMagic(Attributes Attributes, int Karma, int Mana, int 
 {
     /// <summary>Fertigkeiten (SKID → Fähigkeit %); fehlt in älteren Ständen.</summary>
     public Dictionary<int, int> Skills { get; init; } = new();
+    /// <summary>Persönliche Verzauberungen (SID → Zustand, Restdauer in ms); die Zeit läuft offline nicht weiter.</summary>
+    public Dictionary<int, SavedEnchantment> Enchantments { get; init; } = new();
 }
+
+public sealed record SavedEnchantment(int State, long RemainingMs);
 
 /// <summary>Charakterprofil (als JSON in characters.profile).</summary>
 public sealed record SavedProfile(string? Name, string Description, Appearance Appearance, bool Created);

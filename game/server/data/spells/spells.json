@@ -223,6 +223,206 @@
       "effect": "createweapon",
       "description": "Kraanan schenkt dem Kämpfer eine Waffe.",
       "castText": "{0} erscheint."
+    },
+    {
+      "key": "bless",
+      "sid": 11,
+      "name": "Segen",
+      "icon": "blessico.bgf",
+      "school": 3,
+      "level": 2,
+      "mana": 6,
+      "chanceToIncrease": 25,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "mushroom",
+          "number": 2
+        },
+        {
+          "item": "sapphire",
+          "number": 2
+        }
+      ],
+      "effect": "bless",
+      "durationBase": 40,
+      "durationPerPower": 6,
+      "description": "Kraanans Segen macht Angriffe treffsicherer und kräftiger. Braucht Pilze und Saphire.",
+      "castText": "Kraanan erfüllt dich mit dem Geist des Kampfes.",
+      "offText": "Der Geist des Kampfes hat dich verlassen.",
+      "hitText": "Kraanan erfüllt {0} mit dem Geist des Kampfes."
+    },
+    {
+      "key": "superstrength",
+      "sid": 17,
+      "name": "Superstärke",
+      "icon": "istreng.bgf",
+      "school": 3,
+      "level": 2,
+      "mana": 10,
+      "chanceToIncrease": 30,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "mushroom",
+          "number": 2
+        },
+        {
+          "item": "orctooth",
+          "number": 1
+        }
+      ],
+      "effect": "superstrength",
+      "durationBase": 300,
+      "durationPerPower": 6,
+      "description": "Erfüllt deinen Körper mit übermenschlicher Stärke. Braucht Pilze und Orkzähne.",
+      "castText": "Dein Blut kribbelt von Kraanans Kraft. Du bist bereit für den Kampf!",
+      "offText": "Kraanans übermenschliche Stärke verlässt dich, du bist wieder ein gewöhnlicher Sterblicher.",
+      "hitText": "{0} taumelt unter der Wucht von Kraanans Kraft."
+    },
+    {
+      "key": "haste",
+      "sid": 116,
+      "name": "Eile",
+      "icon": "ihaste.bgf",
+      "school": 3,
+      "level": 2,
+      "mana": 10,
+      "chanceToIncrease": 15,
+      "targets": 1,
+      "castTime": 2000,
+      "exertion": 0,
+      "reagents": [
+        {
+          "item": "snack",
+          "number": 5
+        }
+      ],
+      "effect": "haste",
+      "description": "Mindert die Erschöpfung beim Rennen. Braucht essbare Pilze.",
+      "castText": "Dein Blut beginnt zu kribbeln und spült mit jedem Herzschlag die Müdigkeit aus deinen Beinen.",
+      "offText": "Die Energie in deinem Blut ebbt ab, und Rennen fällt plötzlich schwerer.",
+      "hitText": "{0} wird mit deiner magischen Energie aufgeladen."
+    },
+    {
+      "key": "resistfire",
+      "sid": 29,
+      "name": "Feuer widerstehen",
+      "icon": "iresfire.bgf",
+      "school": 4,
+      "level": 2,
+      "mana": 4,
+      "chanceToIncrease": 30,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "mushroom",
+          "number": 3
+        },
+        {
+          "item": "redmushroom",
+          "number": 1
+        }
+      ],
+      "effect": "resist",
+      "attackType": "fire",
+      "resistBase": 25,
+      "durationBase": 180,
+      "durationPerPower": 6,
+      "description": "Kühle magische Energie mindert einige Minuten lang Schaden durch Feuer. Braucht Pilze und rote Pilze.",
+      "castText": "Kühle magische Energie pulsiert durch deinen Körper.",
+      "offText": "Dein Körper wird spürbar wärmer, der Schutz vor Feuer ist vergangen.",
+      "hitText": "Du hüllst {0} in magischen Schutz vor Feuer."
+    },
+    {
+      "key": "resistcold",
+      "sid": 36,
+      "name": "Kälte widerstehen",
+      "icon": "irescold.bgf",
+      "school": 4,
+      "level": 2,
+      "mana": 9,
+      "chanceToIncrease": 30,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "mushroom",
+          "number": 3
+        },
+        {
+          "item": "redmushroom",
+          "number": 1
+        }
+      ],
+      "effect": "resist",
+      "attackType": "cold",
+      "resistBase": 5,
+      "durationBase": 300,
+      "durationPerPower": 6,
+      "description": "Faren erfüllt deinen Körper mit magischem Feuer, das Schaden durch Kälte mindert. Braucht Pilze und rote Pilze.",
+      "castText": "Farens magisches Feuer dringt in deinen Körper.",
+      "offText": "Dein Körper kühlt spürbar ab, der Schutz vor Kälte ist vergangen.",
+      "hitText": "Der Körper von {0} brennt mit Farens magischem Feuer."
+    },
+    {
+      "key": "resistshock",
+      "sid": 28,
+      "name": "Blitzen widerstehen",
+      "icon": "iresshok.bgf",
+      "school": 4,
+      "level": 3,
+      "mana": 6,
+      "chanceToIncrease": 30,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "mushroom",
+          "number": 3
+        },
+        {
+          "item": "bluemushroom",
+          "number": 1
+        }
+      ],
+      "effect": "resist",
+      "attackType": "shock",
+      "resistBase": 25,
+      "durationBase": 180,
+      "durationPerPower": 3,
+      "description": "Faren wappnet dich gegen Blitzangriffe. Braucht Pilze und blaue Pilze.",
+      "castText": "Faren wappnet dich gegen Blitzangriffe.",
+      "offText": "Farens Magie weicht, Blitze können dir wieder schaden.",
+      "hitText": "Faren wappnet {0} gegen Blitzangriffe."
+    },
+    {
+      "key": "resistacid",
+      "sid": 149,
+      "name": "Säure widerstehen",
+      "icon": "iresacid.bgf",
+      "school": 1,
+      "level": 2,
+      "mana": 9,
+      "chanceToIncrease": 30,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "herbs",
+          "number": 2
+        },
+        {
+          "item": "entrootberry",
+          "number": 1
+        }
+      ],
+      "effect": "resist",
+      "attackType": "acid",
+      "resistBase": 15,
+      "durationBase": 300,
+      "durationPerPower": 6,
+      "description": "Überzieht deinen Körper mit gesegnetem Schleim, der Säureschaden mindert. Braucht Kräuter und Entwurzelbeeren.",
+      "castText": "Kreidiger Schleim quillt aus deinen Poren und überzieht deinen ganzen Körper.",
+      "offText": "Der gesegnete Schleim blubbert davon, der Schutz vor Säure ist vergangen.",
+      "hitText": "Du überziehst {0} mit schützendem Schleim."
     }
   ],
   "startingSpells": [

@@ -35,6 +35,7 @@ public sealed partial class World
             off += weapon.Kind.WeaponType switch { "bludgeon" => 75, "thrust" => 125, _ => 0 };
             off += weapon.Kind.WeaponQuality == "high" ? 50 : 0;
         }
+        off += EnchantState(a, "bless");   // plAttack_modifiers: bless.kod ModifyHitRoll
         return Math.Clamp(off, 1, 1000);
     }
 
@@ -56,7 +57,7 @@ public sealed partial class World
     private int PlayerDamage(Avatar a, Monster m, out string attackType)
     {
         var s = a.State;
-        int mightBonus = Math.Clamp(s.Attributes.Might - 25, 0, 40);
+        int mightBonus = Math.Clamp(EffectiveMight(a) - 25, 0, 40);
         int d;
         if (TouchStrike(a, DateTime.UtcNow) is { } touch)
         {
@@ -77,6 +78,7 @@ public sealed partial class World
             d = SkillOf(a, Skill.Brawling) * 5 / 100 + (100 + mightBonus) * d / 100;
             attackType = "punch";
         }
+        d += BlessDamage(a);   // plAttack_modifiers: bless.kod ModifyDamage
         d = CombatRules.Resist(d, m.Kind.Resistances.GetValueOrDefault(attackType));
         return Math.Max(d, 1);
     }

@@ -68,4 +68,6 @@ Godot-Client: echte Animationen (Quaternius CC0, retargetet), Türen per Linkskl
 Charaktererstellung auch im Godot-Client (Dialog, `--create show|auto`).
 Springen mit der Leertaste (nur Client-Optik, docs: client/README.md).
 
-Offen: persönliche Verzauberungen, weitere Gebiete außer Tos.
+Persönliche Verzauberungen: Segen, Superstärke, Eile, Widerstände (docs/magic.md).
+
+Offen: weitere Gebiete außer Tos.

@@ -1014,7 +1014,12 @@ public sealed partial class World
         Stomach = (int)c.Stomach,
         Profile = new SavedProfile(c.Name, c.Description, c.Appearance, c.Created),
         Magic = c.MagicInitialized
-            ? new SavedMagic(c.Attributes, c.Karma, c.Mana, c.MaxMana, new(c.Spells), new(c.SchoolCasts)) { Skills = new(c.Skills) }
+            ? new SavedMagic(c.Attributes, c.Karma, c.Mana, c.MaxMana, new(c.Spells), new(c.SchoolCasts))
+            {
+                Skills = new(c.Skills),
+                Enchantments = c.Enchantments.ToDictionary(kv => kv.Key,
+                    kv => new SavedEnchantment(kv.Value.State, (long)Math.Max((kv.Value.Until - DateTime.UtcNow).TotalMilliseconds, 0))),
+            }
             : null,
         Bank = new Dictionary<int, int>(c.Bank),
     };
@@ -1066,6 +1071,8 @@ public sealed partial class World
                         state.SchoolCasts[school] = casts;
                     foreach (var (skid, ability) in magic.Skills)
                         state.Skills[skid] = ability;
+                    foreach (var (sid, e) in magic.Enchantments)
+                        state.Enchantments[sid] = new Enchantment(e.State, DateTime.UtcNow.AddMilliseconds(e.RemainingMs));
                 }
                 _characters[id] = state;
             }

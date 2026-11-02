@@ -137,7 +137,8 @@ public partial class Main
         {
             _gender.Selected = 1;
             FillFaceChoices();
-            _abilities.FirstOrDefault(a => a.Spell).Box?.SetPressedNoSignal(true);
+            var spell = _abilities.FirstOrDefault(a => a.Spell && a.Ability.Name == _autoCast);
+            (spell.Box ?? _abilities.FirstOrDefault(a => a.Spell).Box)?.SetPressedNoSignal(true);
             UpdateCreationTotals();
             CallDeferred(MethodName.OnCreatePressed);
         }

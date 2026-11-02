@@ -307,7 +307,8 @@ public sealed partial class World
             DetectTeleport(avatar);
             // user.kod: Anstrengung pro Bewegung = EXERTION_PER_MOVE × (Tempo·5/6)²
             int s56 = speed * 5 / 6;
-            AddExertion(avatar, CombatRules.ExertionPerMove * s56 * s56);
+            // Eile: Anstrengung × (100 − Stärke) / 100.
+            AddExertion(avatar, CombatRules.ExertionPerMove * s56 * s56 * (100 - Math.Min(EnchantState(avatar, "haste"), 100)) / 100);
             // Bit 7: Objekt dreht sich in Laufrichtung.
             Broadcast(avatar, GameReplies.Move(avatar.Id, row, col, (byte)(speed | 0x80)));
             return null;
@@ -568,7 +569,11 @@ public sealed partial class World
                 Tell(victim, $"{Article(m.Kind)} verfehlt dich.");
                 return;
             }
-            int damage = AssessPlayerDamage(victim, m.Kind.RollDamage(_random));
+            int damage = m.Kind.RollDamage(_random);
+            // Widerstände (resist.kod AddResistance) gegen die Angriffsart des Monsters, falls es eine hat.
+            if (m.Kind.AttackType is { } type)
+                damage = CombatRules.Resist(damage, EnchantState(victim, "resist", type));
+            damage = AssessPlayerDamage(victim, damage);
             victim.Hp = Math.Max(0, victim.Hp - damage);
             Tell(victim, $"{Article(m.Kind)} trifft dich für {damage} Schaden.");
             victim.Session.SendHealth();

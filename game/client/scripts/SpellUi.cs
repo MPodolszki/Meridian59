@@ -11,6 +11,8 @@ public partial class Main
 {
     private ProgressBar _manaBar = null!;
     private Label _manaText = null!;
+    /// <summary>Aktive persönliche Verzauberungen (Segen, Superstärke, …) unter dem Mana-Balken.</summary>
+    private Label _enchantmentText = null!;
     private PanelContainer _spellPanel = null!;
     private ItemList _spellList = null!;
     private List<ClientSpell> _knownSpells = new();
@@ -23,6 +25,9 @@ public partial class Main
         ui.AddChild(_manaBar);
         _manaText = new Label { Position = new Vector2(28, 72), Visible = false };
         ui.AddChild(_manaText);
+        _enchantmentText = new Label { Position = new Vector2(20, 98), Visible = false };
+        _enchantmentText.AddThemeColorOverride("font_color", new Color(0.75f, 0.85f, 1f));
+        ui.AddChild(_enchantmentText);
 
         _spellPanel = new PanelContainer { Position = new Vector2(940, 400), Visible = false };
         var box = new VBoxContainer { CustomMinimumSize = new Vector2(320, 220) };
@@ -55,12 +60,39 @@ public partial class Main
                 foreach (var sp in _knownSpells)
                     _spellList.AddItem($"{_session!.Resolve(sp.Spell.NameRsc)}  ({SchoolNames[Mathf.Clamp(sp.School, 0, 6)]}, {sp.Ability} %)");
                 return true;
+            case ClientEvent.EnchantmentsChanged ench:
+                if (ench.Enchantments.Count > 0)
+                    _autoCast = null;   // Automatik: Spruch sitzt
+                _enchantmentText.Visible = ench.Enchantments.Count > 0;
+                _enchantmentText.Text = "Verzaubert: " + string.Join(", ", ench.Enchantments.Select(o => _session!.Resolve(o.NameRsc)));
+                return true;
             case ClientEvent.EnteredRoom when !_spellsRequested && _session is not null:
                 _spellsRequested = true;
-                _ = _session.RequestSpellsAsync();
+                _ = RequestSpellsAndEnchantments(_session);
                 return false;   // Raumwechsel wird weiter normal behandelt
         }
         return false;
+    }
+
+    private double _autoCastTimer;
+
+    /// <summary>„--cast“: den Spruch alle 1,5 s wirken, bis er sitzt (Zauber können misslingen).</summary>
+    private void UpdateAutoCast(double delta)
+    {
+        if (_autoCast is null || _session is not { InWorld: true } || (_autoCastTimer -= delta) > 0)
+            return;
+        _autoCastTimer = 1.5;
+        int index = _knownSpells.FindIndex(sp => _session.Resolve(sp.Spell.NameRsc) == _autoCast);
+        if (index < 0)
+            return;
+        _spellList.Select(index);
+        CastSelected();
+    }
+
+    private static async System.Threading.Tasks.Task RequestSpellsAndEnchantments(ClientSession session)
+    {
+        await session.RequestSpellsAsync();
+        await session.RequestEnchantmentsAsync();
     }
 
     /// <summary>Ausgewählten Spruch wirken: mit einem Ziel auf sich selbst, sonst ohne Ziel.</summary>

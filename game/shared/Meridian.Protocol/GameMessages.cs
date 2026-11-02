@@ -187,6 +187,17 @@ public static class GameReplies
     public static byte[] Skills(IReadOnlyCollection<RoomObject> skills) =>
         WriteObjectList(new PacketWriter((byte)GameMessage.Skills), skills).ToArray();
 
+    /// <summary>ENCHANTMENT_PLAYER: Verzauberung des Spielers (Symbole neben der Statusleiste).</summary>
+    public const byte EnchantmentPlayer = 1;
+
+    /// <summary>BP_ADD_ENCHANTMENT: u8 Typ, object_desc des Spruchs (user.kod ShowAddEnchantment).</summary>
+    public static byte[] AddEnchantment(RoomObject spell, byte type = EnchantmentPlayer) =>
+        WriteObjectDesc(new PacketWriter((byte)GameMessage.AddEnchantment).U8(type), spell).ToArray();
+
+    /// <summary>BP_REMOVE_ENCHANTMENT: u8 Typ, u32 Spruch-ID.</summary>
+    public static byte[] RemoveEnchantment(uint spellId, byte type = EnchantmentPlayer) =>
+        new PacketWriter((byte)GameMessage.RemoveEnchantment).U8(type).U32(spellId).ToArray();
+
     /// <summary>BP_SPELL_ADD: neu gelernter Spruch.</summary>
     public static byte[] SpellAdd(RoomObject spell, byte targets, byte school) =>
         WriteObjectDesc(new PacketWriter((byte)GameMessage.SpellAdd), spell).U8(targets).U8(school).ToArray();

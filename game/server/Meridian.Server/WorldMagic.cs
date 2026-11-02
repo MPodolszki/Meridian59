@@ -240,6 +240,8 @@ public sealed partial class World
                 return false;
             }
         }
+        if (IsEnchantment(spell) && !CanEnchant(a, target ?? a, spell))
+            return false;
         if (spell.Effect == "touchattack" && a.Touch is { } t && t.Spell == spell && t.Until > DateTime.UtcNow)
         {
             Tell(a, $"Du bist bereits mit {spell.Name} verzaubert.");
@@ -326,6 +328,9 @@ public sealed partial class World
                 ChangeMana(target, amount);
                 break;
             }
+            case "bless" or "superstrength" or "haste" or "resist":
+                Enchant(a, target ?? a, spell, power);
+                break;
             case "touchattack":
             {
                 // GetDuration: Random(Stärke/3, Stärke/2), begrenzt 10..75, × 6 s.
@@ -398,6 +403,7 @@ public sealed partial class World
 
     private void TickMagic(Avatar a, DateTime now)
     {
+        TickEnchantments(a, now);
         if (a.Casting is { } c && now >= c.Due)
         {
             a.Casting = null;

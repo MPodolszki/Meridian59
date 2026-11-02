@@ -55,6 +55,8 @@ public abstract record ClientEvent
     public sealed record ManaChanged(int Mana, int MaxMana) : ClientEvent;
     /// <summary>Bekannte Sprüche (BP_SPELLS, BP_SPELL_ADD, Fähigkeit aus Stat-Gruppe 3).</summary>
     public sealed record SpellsChanged(IReadOnlyList<ClientSpell> Spells) : ClientEvent;
+    /// <summary>Aktive Verzauberungen des eigenen Charakters (BP_ADD/REMOVE_ENCHANTMENT, Typ 1).</summary>
+    public sealed record EnchantmentsChanged(IReadOnlyList<ClientObject> Enchantments) : ClientEvent;
     /// <summary>Ausdauer (BP_STAT Gruppe 1, Nr. 3).</summary>
     public sealed record VigorChanged(int Vigor, int MaxVigor) : ClientEvent;
     /// <summary>Einmalige Animation eines Objekts (BP_CHANGE): Angriff oder Sterben.</summary>
@@ -111,6 +113,7 @@ public sealed class ClientSession : IDisposable
     private readonly Dictionary<uint, ClientObject> _objects = new();
     private readonly List<ClientObject> _inventory = new();
     private readonly List<ClientSpell> _spells = new();
+    private readonly List<ClientObject> _enchantments = new();
 
     /// <summary>Bekannte Sprüche.</summary>
     public IReadOnlyList<ClientSpell> KnownSpells
@@ -223,6 +226,9 @@ public sealed class ClientSession : IDisposable
 
     /// <summary>Spruchliste anfordern (BP_SEND_SPELLS); Antwort BP_SPELLS und Stat-Gruppe 3.</summary>
     public Task RequestSpellsAsync() => SendGameAsync([(byte)GameMessage.SendSpells]);
+
+    /// <summary>Eigene Verzauberungen anfordern (BP_SEND_ENCHANTMENTS, Typ 1), wie der Original-Client nach dem Betreten.</summary>
+    public Task RequestEnchantmentsAsync() => SendGameAsync([(byte)GameMessage.SendEnchantments, 1]);
 
     /// <summary>Zaubern (BP_REQ_CAST): Spruch und Ziele (Spruch mit einem Ziel braucht genau eins).</summary>
     public Task CastAsync(uint spellId, IReadOnlyCollection<uint> targets) =>
@@ -545,6 +551,18 @@ public sealed class ClientSession : IDisposable
                 UpdateSpells(s => { s.Clear(); s.AddRange(list); });
                 break;
             }
+            case GameMessage.AddEnchantment when r.U8() == 1:
+            {
+                var o = ReadObjectDesc(ref r);
+                UpdateEnchantments(list => { list.RemoveAll(x => x.Id == o.Id); list.Add(o); });
+                break;
+            }
+            case GameMessage.RemoveEnchantment when r.U8() == 1:
+            {
+                uint id = r.U32() & ObjectId.Mask;
+                UpdateEnchantments(list => list.RemoveAll(x => x.Id == id));
+                break;
+            }
             case GameMessage.SpellAdd:
             {
                 var o = ReadObjectDesc(ref r);
@@ -691,6 +709,17 @@ public sealed class ClientSession : IDisposable
         for (int i = 0; i < n; i++)
             list.Add(ReadObjectDesc(ref r));
         return list;
+    }
+
+    private void UpdateEnchantments(Action<List<ClientObject>> change)
+    {
+        List<ClientObject> snapshot;
+        lock (_enchantments)
+        {
+            change(_enchantments);
+            snapshot = _enchantments.ToList();
+        }
+        Enqueue(new ClientEvent.EnchantmentsChanged(snapshot));
     }
 
     private void UpdateSpells(Action<List<ClientSpell>> change)

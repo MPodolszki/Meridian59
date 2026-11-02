@@ -58,7 +58,32 @@ Preis 250·2^Stufe. Hospiz (Stufe 3) braucht geübte Stufe-2-Sprüche der Shal'i
 `BP_SPELLS`/`BP_SPELL_ADD` (object_desc, Ziele, Schule), Stat-Gruppe 3 als Liste (Fähigkeit in %),
 `BP_REQ_CAST`. Godot-Client: Taste **Z** öffnet die Sprüche, Mana-Balken unter Lebenspunkten/Ausdauer.
 
+## Persönliche Verzauberungen (`WorldEnchant.cs`, persench.kod)
+Ein Ziel (sich selbst oder einen Spieler im Raum). Auf sich selbst darf man neu wirken – die alte Verzauberung
+endet still (`CanRecastSelfEnchantment` = TRUE); auf andere nicht, solange sie wirkt. Dauer jeweils
+`Random(d/2, d)`, Stärke = Spruchstärke.
+
+| Spruch | Schule/Stufe | Mana | Reagenzien | Wirkung | d |
+|---|---|---|---|---|---|
+| Segen (bless, SID 11) | Kraanan 2 | 6 | 2 Pilze, 2 Saphire | Angriff + Stärke, Schaden + Random(0, Stärke/33) | 40 s + 6 s·Stärke |
+| Superstärke (SID 17) | Kraanan 2 | 10 | 2 Pilze, 1 Orkzahn | Stärke-Attribut + Stärke/5 + 1 (Schadensbonus) | 300 s + 6 s·Stärke |
+| Eile (haste, SID 116) | Kraanan 2 | 10, Trance 2 s, keine Anstrengung | 5 Snacks | Lauf-Anstrengung × (100 − Stärke) % | (5 + 15·Stärke/100) min |
+| Feuer widerstehen (SID 29) | Faren 2 | 4 | 3 Pilze, 1 roter Pilz | Widerstand Stärke/2 + 25 % gegen Feuer | 180 s + 6 s·Stärke |
+| Kälte widerstehen (SID 36) | Faren 2 | 9 | 3 Pilze, 1 roter Pilz | Stärke/2 + 5 % gegen Kälte | 300 s + 6 s·Stärke |
+| Blitzen widerstehen (SID 28) | Faren 3 | 6 | 3 Pilze, 1 blauer Pilz | Stärke/2 + 25 % gegen Blitz | 180 s + 3 s·Stärke |
+| Säure widerstehen (SID 149) | Shal'ille 2 | 9 | 2 Kräuter, 1 Entwurzelbeere | Stärke/2 + 15 % gegen Säure | 300 s + 6 s·Stärke |
+
+Protokoll: `BP_ADD_ENCHANTMENT` (147: u8 Typ 1, object_desc des Spruchs) und `BP_REMOVE_ENCHANTMENT` (148: u8 Typ,
+u32 ID); auf `BP_SEND_ENCHANTMENTS` (Typ 1) schickt der Server alle aktiven. Der Godot-Client zeigt sie als
+„Verzaubert: …“ unter dem Mana-Balken. Gespeichert wird die Restdauer (`characters.magic`).
+
+Abweichungen: Die Restdauer läuft offline nicht weiter (im Original laufen die Timer des Spielerobjekts).
+Widerstände wirken nur gegen Monster mit magischer Angriffsart (`MonsterKind.AttackType`) – Zombies und Skelette
+in Tos schlagen körperlich zu, dort bringen sie also noch nichts. Lehrer sind im Original die Tempelpriester
+(kranprst, farnprst, shalprst) außerhalb von Tos; bis diese Gebiete existieren, gibt es die Stufe-2-Sprüche nur
+bei der Charaktererstellung (OfferToNewCharacters). Das Verbot, in Sicherheitszonen andere zu verzaubern
+(ROOM_NO_COMBAT), fehlt noch.
+
 ## Noch nicht umgesetzt
-Persönliche Verzauberungen (Segen, Superstärke, Eile, Widerstände, Entdecken) – sie setzen Kampfwerte voraus,
-die der vereinfachte Kampf noch nicht nutzt; Raumzauber (Licht, Dunkelheit, Nebel), Wände, Riija/Jala,
+Weitere Verzauberungen (Entdecken, Unsichtbarkeit, Nachtsicht …), Raumzauber (Licht, Dunkelheit, Nebel), Wände, Riija/Jala,
 Spruch-Murmeln für Umstehende, Karma-Änderung durch Heilen, Raumboni nach Gelände.
