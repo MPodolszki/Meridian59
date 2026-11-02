@@ -21,7 +21,7 @@ godot --path game/client -- --login Thorin bart --port 5959 [--host 127.0.0.1] [
 
 `--delay s` wartet vor dem Bild (Standard 1,5 s), `--fight 1` greift automatisch das nächste Monster an,
 `--create show` fotografiert den Erstellungsdialog eines neuen Accounts, `--create auto` erstellt mit Vorgaben
-und betritt die Welt. `--inventory 1` öffnet das Inventar, `--shop 1` die Ladenliste des nächsten Händlers.
+und betritt die Welt. `--jump 1` springt kurz vor dem Bildschirmfoto. `--inventory 1` öffnet das Inventar, `--shop 1` die Ladenliste des nächsten Händlers.
 `--login` meldet sich sofort an. Mit `--screenshot` wird nach dem Betreten des Raums ein Bild gespeichert
 und der Client beendet; `--walk` läuft vorher n Sekunden, `--camera front` zeigt die Figur von vorne.
 
@@ -32,7 +32,8 @@ und der Client beendet; `--walk` läuft vorher n Sekunden, `--camera front` zeig
 | W/A/S/D | laufen |
 | Shift | rennen |
 | Q/E oder rechte Maustaste + Maus | drehen |
-| Leertaste | Tür/Ausgang benutzen (wie im Original) |
+| Linksklick auf Tür | Tür/Ausgang benutzen (bis 4 m) |
+| Leertaste | springen (nur im Client, siehe unten) |
 | E | NPC in der Nähe anschauen |
 | F | nächstes Monster angreifen (Nahkampf) |
 | Enter | Chat (NPCs antworten auf Begrüßung, ihren Namen und Stichwörter) |
@@ -80,3 +81,11 @@ unsere Modelle:
     blender -b -P game/tools/blender/retarget_animations.py -- AnimationLibrary_Godot_Standard.gltf game/client/models/dwarf.glb
 
 Clips: Idle, Walk, Run, Sprint, Attack, Punch, Die, Hit, Cast, Jump_Start/Loop/Land, Interact, Idle_Torch.
+
+## Springen (`scripts/JumpControl.cs`)
+
+Leertaste: Sprung mit ca. 0,9 m Höhe (4,2 m/s Absprung, 9,8 m/s² Schwerkraft), Animationen Jump_Start/Loop/Land.
+**Abweichung vom Original:** Meridian 59 kennt kein Springen und das Protokoll keine Höhe – der Sprung ist rein
+optisch, andere Spieler sehen ihn nicht, über Wände oder auf Dächer springt man nicht. Die Kamera bleibt auf
+Fußhöhe. Die Leertaste wird vor der GUI abgefangen (sonst löst sie den zuletzt geklickten Button aus); in
+Textfeldern bleibt sie ein Leerzeichen.

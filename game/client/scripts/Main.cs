@@ -74,7 +74,7 @@ public partial class Main : Node3D
 
     /// <summary>
     /// Für Tests/Entwicklung: godot --path game/client -- --login NAME PASSWORT [--host H] [--port P]
-    /// [--screenshot DATEI] [--walk SEKUNDEN] [--create show|auto]. Mit --screenshot wird nach dem Betreten des Raums
+    /// [--screenshot DATEI] [--walk SEKUNDEN] [--create show|auto] [--jump 1]. Mit --screenshot wird nach dem Betreten des Raums
     /// (und optionalem Laufen) ein Bild gespeichert und der Client beendet.
     /// </summary>
     private void ApplyCommandLine()
@@ -93,6 +93,7 @@ public partial class Main : Node3D
                 case "--inventory": _autoInventory = args[++i] == "1"; break;
                 case "--shop": _autoShop = args[++i] == "1"; break;
                 case "--create": _autoCreate = args[++i]; break;
+                case "--jump": _autoJump = args[++i] == "1"; break;
                 case "--walk": _autoWalkSeconds = float.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture); break;
                 case "--login" when i + 2 < args.Length:
                     _user.Text = args[++i];
@@ -316,6 +317,7 @@ public partial class Main : Node3D
                     _monsters.Remove(anim.Id);   // tote Monster nicht mehr als Ziel wählen
                 break;
             case ClientEvent.EnteredRoom room:
+                ResetJump();
                 _loginPanel.Visible = false;
                 _status.Text = $"Im Raum: {room.RoomName}";
                 LoadRoomGeometry(room.RoomFile);
@@ -585,8 +587,14 @@ public partial class Main : Node3D
 
     private void UpdateOwnAvatar(Node3D self, float delta)
     {
+        // Fußhöhe ohne Sprung; der Sprung kommt als Versatz obendrauf (JumpControl.cs).
+        float foot = self.Position.Y - _jumpOffset;
+        UpdateJump(self, delta);
         if (_chatInput.HasFocus())
+        {
+            self.Position = self.Position with { Y = foot + _jumpOffset };
             return;
+        }
 
         var input = Vector2.Zero;
         if (_autoWalkSeconds > 0 && _screenshotTimer > _screenshotDelay)
@@ -610,8 +618,9 @@ public partial class Main : Node3D
         if (_velocity.LengthSquared() < 1e-4f)
         {
             _velocity = Vector3.Zero;
-            self.Position = self.Position with { Y = Mathf.Lerp(self.Position.Y, GroundHeightAt(self.Position), 1f - Mathf.Exp(-15f * delta)) };
-            CharacterModel.Animate(self, 0);
+            self.Position = self.Position with { Y = Mathf.Lerp(foot, GroundHeightAt(self.Position), 1f - Mathf.Exp(-15f * delta)) + _jumpOffset };
+            if (!_airborne)
+                CharacterModel.Animate(self, 0);
             return;
         }
 
@@ -628,10 +637,11 @@ public partial class Main : Node3D
         if (_layout is not null && (cellRow < 0 || cellCol < 0 || cellRow >= _layout.Rows || cellCol >= _layout.Cols))
             _lastMoveSent = DateTime.MinValue;
         // Höhe (Stufen, Bordsteine) weich nachführen statt zu springen.
-        pos.Y = Mathf.Lerp(self.Position.Y, GroundHeightAt(pos), 1f - Mathf.Exp(-15f * delta));
+        pos.Y = Mathf.Lerp(foot, GroundHeightAt(pos), 1f - Mathf.Exp(-15f * delta)) + _jumpOffset;
         var moved = new Vector2(pos.X - self.Position.X, pos.Z - self.Position.Z).Length();
         self.Position = pos;
-        CharacterModel.Animate(self, moved / Mathf.Max(delta, 1e-4f));
+        if (!_airborne)
+            CharacterModel.Animate(self, moved / Mathf.Max(delta, 1e-4f));
     }
 
     private string? _exitHint;
@@ -760,12 +770,14 @@ public partial class Main : Node3D
         var offset = _cameraMode == "front"
             ? new Vector3(0, 1.6f, -3.2f).Rotated(Vector3.Up, _yaw)
             : new Vector3(0, 3, 5.5f).Rotated(Vector3.Up, _yaw);
-        var head = self.Position + new Vector3(0, 1.1f, 0);
+        // Beim Springen auf Fußhöhe bleiben, damit der Sprung sichtbar ist und die Kamera nicht hüpft.
+        var feet = self.Position with { Y = self.Position.Y - _jumpOffset };
+        var head = feet + new Vector3(0, 1.1f, 0);
         // Einfache Kamera-Kollision: entlang des Kamerastrahls bis zum ersten Gebäude, das höher ist.
         float allowed = 1f;
         for (float t = 0.05f; t <= 1f; t += 0.05f)
         {
-            var probe = self.Position + offset * t;
+            var probe = feet + offset * t;
             if (_layout is not null && probe.Y < BlockTopAt(probe))
             {
                 allowed = Mathf.Max(0.15f, t - 0.1f);
@@ -775,7 +787,7 @@ public partial class Main : Node3D
         // Bei Hindernissen nur den Abstand verkürzen, nicht die Höhe – sonst schaut die Kamera von unten.
         var shortened = new Vector3(offset.X * allowed, Mathf.Max(offset.Y * allowed, Mathf.Min(offset.Y, 2.2f)), offset.Z * allowed);
         // Kamera weich nachführen; nur bei großen Sprüngen (Raumwechsel, Teleport) sofort setzen.
-        var wantedCamera = self.Position + shortened;
+        var wantedCamera = feet + shortened;
         _camera.Position = _camera.Position.DistanceTo(wantedCamera) > 8f
             ? wantedCamera
             : _camera.Position.Lerp(wantedCamera, 1f - Mathf.Exp(-12f * (float)GetProcessDeltaTime()));

@@ -66,5 +66,6 @@ Charaktererstellung wie im Original, im Original-Client getestet (docs/character
 Kampf nach Original-Formeln mit Fertigkeiten (docs/combat.md, combat-original.md).
 Godot-Client: echte Animationen (Quaternius CC0, retargetet), Türen per Linksklick, flüssige Bewegung.
 Charaktererstellung auch im Godot-Client (Dialog, `--create show|auto`).
+Springen mit der Leertaste (nur Client-Optik, docs: client/README.md).
 
-Offen: Springen (Leertaste), persönliche Verzauberungen, weitere Gebiete außer Tos.
+Offen: persönliche Verzauberungen, weitere Gebiete außer Tos.

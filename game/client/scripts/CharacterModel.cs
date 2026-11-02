@@ -65,15 +65,25 @@ public static class CharacterModel
         };
     }
 
-    /// <summary>Einmalige Animation; „Die“ bleibt in der letzten Pose liegen.</summary>
-    public static void PlayOnce(Node3D figure, string name)
+    /// <summary>Einmalige Animation; „Die“ bleibt in der letzten Pose liegen. <paramref name="lockSeconds"/> gibt die
+    /// Bewegungsanimation früher wieder frei (z. B. Landung beim Weiterlaufen).</summary>
+    public static void PlayOnce(Node3D figure, string name, double? lockSeconds = null)
     {
         if (Player(figure) is not { } player || !player.HasAnimation(name))
             return;
         player.SpeedScale = 1f;
         player.Play(name, customBlend: 0.15);
-        double until = name == "Die" ? double.MaxValue : Time.GetTicksMsec() / 1000.0 + player.GetAnimation(name).Length;
+        double until = name == "Die" ? double.MaxValue : Time.GetTicksMsec() / 1000.0 + (lockSeconds ?? player.GetAnimation(name).Length);
         figure.SetMeta(LockMeta, until);
+    }
+
+    /// <summary>Schleife (z. B. „Jump_Loop“) spielen, sobald keine einmalige Animation mehr läuft.</summary>
+    public static void Hold(Node3D figure, string name)
+    {
+        if (Player(figure) is not { } player || IsLocked(figure) || player.CurrentAnimation == name || !player.HasAnimation(name))
+            return;
+        player.SpeedScale = 1f;
+        player.Play(name, customBlend: 0.2);
     }
 
     /// <summary>Hebt eine liegende Pose auf (z. B. nach Wiederbelebung).</summary>
