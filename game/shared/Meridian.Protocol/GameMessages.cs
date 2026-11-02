@@ -100,6 +100,18 @@ public static class GameReplies
 
     public static byte[] Quit() => new PacketWriter((byte)GameMessage.Quit).ToArray();
 
+    /// <summary>BP_MESSAGE mit Format „%q“ und dem Text als Parameter: kein Längenlimit für Ressourcen (256 Zeichen im
+    /// Original-Client) und keine neue Ressource je Text.</summary>
+    public static byte[] Text(uint percentQRsc, string text) =>
+        new PacketWriter((byte)GameMessage.Message).U32(percentQRsc).Str(text).ToArray();
+
+    /// <summary>BP_LOOK: Beschreibungsfenster zu einem Objekt (object_desc, Flags 0, Text als „%q“-Parameter).</summary>
+    public static byte[] Look(RoomObject o, uint percentQRsc, string text)
+    {
+        var w = WriteObjectDesc(new PacketWriter((byte)GameMessage.Look), o);
+        return w.U8(0).U32(percentQRsc).Str(text).ToArray();
+    }
+
     /// <summary>BP_MESSAGE ohne Parameter; der Format-String darf keine Platzhalter enthalten.</summary>
     public static byte[] Message(uint formatRsc) =>
         new PacketWriter((byte)GameMessage.Message).U32(formatRsc).ToArray();
@@ -196,6 +208,21 @@ public static class GameReplies
         WriteObjectList(new PacketWriter((byte)GameMessage.Inventory), items).ToArray();
 
     public static byte[] InventoryAdd(RoomObject o) => WriteObjectDesc(new PacketWriter((byte)GameMessage.InventoryAdd), o).ToArray();
+
+    /// <summary>
+    /// BP_PLAYER_OVERLAY: Grafik in der Ego-Ansicht (player.kod ChangeWindowOverlay). Hotspot 5 (HS_SE) zeigt sie,
+    /// 0 entfernt sie. ID = PWO_RIGHT_HAND (2). Ohne Angriff steht Bild 5, beim Angriff laufen Bilder 1–4 (150 ms).
+    /// </summary>
+    public static byte[] PlayerOverlay(bool visible, uint iconRsc, uint nameRsc, bool attack = false)
+    {
+        var w = new PacketWriter((byte)GameMessage.PlayerOverlay).U8(visible ? (byte)5 : (byte)0)
+            .U32(2).U32(iconRsc).U32(nameRsc).U32(0).U32(0);
+        if (attack)
+            w.U8((byte)AnimationType.Once).U32(150).U16(1).U16(4).U16(5);
+        else
+            w.U8((byte)AnimationType.None).U16(5);
+        return w.U8(0).ToArray();
+    }
 
     /// <summary>BP_USE / BP_UNUSE: Gegenstand wird benutzt (ausgerüstet) bzw. abgelegt.</summary>
     public static byte[] Use(uint id) => new PacketWriter((byte)GameMessage.Use).U32(id).ToArray();

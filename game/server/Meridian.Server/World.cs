@@ -167,18 +167,37 @@ public sealed partial class World
     }
 
     /// <summary>Beschreibung eines Objekts im Raum des Spielers (BP_REQ_LOOK), oder null.</summary>
-    public string? Look(Avatar avatar, uint id)
+    public string? Look(Avatar avatar, uint id) => LookAt(avatar, id)?.Text;
+
+    /// <summary>Objekt und Beschreibung für BP_LOOK (Ressourcen für Name/Icon sind beim Anschauenden sichergestellt).</summary>
+    public (RoomObject Object, string Text)? LookAt(Avatar avatar, uint id)
     {
         lock (_gate)
         {
+            var s = avatar.Session;
             if (avatar.Room.Npcs.FirstOrDefault(n => n.Id == id) is { } npc)
-                return npc.Describe();
+            {
+                s.EnsureResource(npc.DisplayName);
+                s.EnsureResource(NpcIcon(npc));
+                return (ToRoomObject(npc), npc.Describe());
+            }
             if (avatar.Room.Avatars.TryGetValue(id, out var other))
-                return other == avatar ? "Das bist du selbst, ein stämmiger Zwerg." : $"Du siehst {other.Name}, einen Zwerg.";
+            {
+                s.EnsureResource(other.Name);
+                s.EnsureResource(PlayerIcon);
+                return (ToRoomObject(other), other == avatar ? "Das bist du selbst, ein stämmiger Zwerg." : $"Du siehst {other.Name}, einen Zwerg.");
+            }
+            if (avatar.Room.Monsters.FirstOrDefault(m => m.Id == id) is { } monster)
+            {
+                s.EnsureResource(monster.Kind.Name);
+                s.EnsureResource(monster.Kind.Icon);
+                return (ToRoomObject(monster), $"Ein {monster.Kind.Name}. Er sieht nicht freundlich aus.");
+            }
             var item = avatar.Room.Items.FirstOrDefault(f => f.Item.Id == id)?.Item ?? avatar.State.Find(id);
-            if (item is not null)
-                return item.Kind.Description is { } d ? $"{item.Describe()}: {d}" : $"Du siehst {item.Describe()}.";
-            return null;
+            if (item is null)
+                return null;
+            EnsureItemResources(s, item);
+            return (ToRoomObject(item), item.Kind.Description is { } d ? $"{item.Describe()}: {d}" : $"Du siehst {item.Describe()}.");
         }
     }
 
@@ -604,6 +623,8 @@ public sealed partial class World
             }
             avatar.NextAttack = now + CombatRules.PlayerAttackCooldown;
             AddExertion(avatar, CombatRules.ExertionPerAttack);
+            if (Weapon(avatar) is { } swung)
+                SendWindowOverlay(avatar, swung, visible: true, attack: true);
             avatar.LastCombat = now;
             avatar.Angle = AngleTowards(m.Row - avatar.Row, m.Col - avatar.Col);
             BroadcastRoom(avatar.Room, GameReplies.Animate(ToRoomObject(avatar), GameReplies.AttackGroup, 4, 500));

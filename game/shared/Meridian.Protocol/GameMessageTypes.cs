@@ -65,6 +65,7 @@ public enum GameMessage : byte
     Skills = 144,
     Quit = 149,
     Background = 150,
+    PlayerOverlay = 151,
     UserCommand = 155,          // beide
     Admin = 162,
     PlayWave = 170,

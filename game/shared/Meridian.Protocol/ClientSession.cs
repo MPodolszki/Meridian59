@@ -465,6 +465,14 @@ public sealed class ClientSession : IDisposable
                 Enqueue(new ClientEvent.Chat(FormatMessage(ref r)));
                 break;
             }
+            case GameMessage.Look:
+            {
+                ReadObjectDesc(ref r);
+                byte flags = r.U8();
+                Enqueue(new ClientEvent.Chat(FormatMessage(ref r)));
+                _ = flags;   // Inschriften (DF_INSCRIBED) schickt der Server nicht
+                break;
+            }
             case GameMessage.Message:
             case GameMessage.SysMessage:
                 Enqueue(new ClientEvent.Chat(FormatMessage(ref r)));

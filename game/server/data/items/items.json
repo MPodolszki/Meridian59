@@ -372,7 +372,8 @@
       "description": "Eine schwere Kampfaxt.",
       "slot": "weapon",
       "weaponType": "slash",
-      "weaponQuality": "normal"
+      "weaponQuality": "normal",
+      "windowOverlay": "povaxe.bgf"
     },
     {
       "key": "hammer",
@@ -387,7 +388,8 @@
       "description": "Ein wuchtiger Kriegshammer.",
       "slot": "weapon",
       "weaponType": "bludgeon",
-      "weaponQuality": "normal"
+      "weaponQuality": "normal",
+      "windowOverlay": "povhamr.bgf"
     },
     {
       "key": "mace",
@@ -402,7 +404,8 @@
       "description": "Ein einfacher Streitkolben mit eisernem Kopf.",
       "slot": "weapon",
       "weaponType": "bludgeon",
-      "weaponQuality": "low"
+      "weaponQuality": "low",
+      "windowOverlay": "povmace.bgf"
     },
     {
       "key": "longsword",
@@ -417,7 +420,8 @@
       "description": "Eine lange, zweischneidige Klinge.",
       "slot": "weapon",
       "weaponType": "thrust",
-      "weaponQuality": "normal"
+      "weaponQuality": "normal",
+      "windowOverlay": "povsword.bgf"
     },
     {
       "key": "martyrscroll",

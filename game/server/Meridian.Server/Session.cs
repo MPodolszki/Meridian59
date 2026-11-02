@@ -34,6 +34,9 @@ public sealed class Session(int id, TcpClient client, GameServer server)
     /// <summary>Ausgehende Nachricht. Epoch: 0 im Login-Modus, <see cref="Epoch"/> im Game-Modus.</summary>
     private sealed record Outgoing(byte[] Payload, byte Epoch, byte? NewToken = null);
 
+    /// <summary>Jede ankommende Game-Nachricht protokollieren (Umgebungsvariable MERIDIAN_TRACE=1).</summary>
+    private static readonly bool Trace = Environment.GetEnvironmentVariable("MERIDIAN_TRACE") == "1";
+
     public int Id => id;
     public string? AccountName => _account?.Name;
 
@@ -174,6 +177,8 @@ public sealed class Session(int id, TcpClient client, GameServer server)
             Log.Warn($"Session {id}: Security-Hash falsch (Nachricht {frame.Type}) – trenne");
             return false;
         }
+        if (Trace && frame.Type != (byte)GameMessage.Ping)
+            Log.Info($"Session {id}: ← {(GameMessage)frame.Type} ({frame.Type}), Epoche {frame.Header.Epoch}, {frame.Payload.Length} Byte");
         if (frame.Header.Epoch != Epoch)
             return true;   // veraltete Epoche: still verwerfen (game.c)
 
@@ -335,8 +340,11 @@ public sealed class Session(int id, TcpClient client, GameServer server)
                 break;
 
             case GameMessage.ReqLook when _avatar is not null:
-                if (server.World.Look(_avatar, r.U32() & 0x0FFFFFFF) is { } description)
-                    SendText(description);
+                if (server.World.LookAt(_avatar, r.U32() & 0x0FFFFFFF) is { } look)
+                {
+                    EnsureResource("%q");
+                    PostGame(GameReplies.Look(look.Object, server.Resources["%q"], look.Text));
+                }
                 break;
 
             case GameMessage.ReqTurn when _avatar is not null:
@@ -494,13 +502,14 @@ public sealed class Session(int id, TcpClient client, GameServer server)
     {
         PostGame(GameReplies.Inventory(server.World.InventoryOf(_avatar!)));
         PostGame(GameReplies.UseList(server.World.UsedItems(_avatar!)));
+        server.World.SendWindowOverlays(_avatar!);
     }
 
     /// <summary>Systemtext im Chatfenster (BP_MESSAGE mit dynamischer Format-Ressource).</summary>
     public void SendText(string text)
     {
-        EnsureResource(text);
-        PostGame(GameReplies.Message(server.Resources[text]));
+        EnsureResource("%q");
+        PostGame(GameReplies.Text(server.Resources["%q"], text));
     }
 
     private void SendEchoPing()

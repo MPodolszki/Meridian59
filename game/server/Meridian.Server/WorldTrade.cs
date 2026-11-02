@@ -146,6 +146,24 @@ public sealed partial class World
             return avatar.State.Inventory.Where(i => i.Used).Select(i => i.Id).ToList();
     }
 
+    /// <summary>Waffe in der Ego-Ansicht des Original-Clients (weapon.kod SetWindowOverlay/RemoveWindowOverlay).</summary>
+    private void SendWindowOverlay(Avatar a, Item item, bool visible, bool attack = false)
+    {
+        if (item.Kind.WindowOverlay is not { } overlay)
+            return;
+        a.Session.EnsureResource(overlay);
+        a.Session.EnsureResource(item.DisplayName);
+        a.Session.Post(GameReplies.PlayerOverlay(visible, _resources[overlay], _resources[item.DisplayName], attack));
+    }
+
+    /// <summary>Nach dem Betreten: Ego-Ansicht der benutzten Waffe.</summary>
+    public void SendWindowOverlays(Avatar a)
+    {
+        lock (_gate)
+            foreach (var item in a.State.Inventory.Where(i => i.Used))
+                SendWindowOverlay(a, item, visible: true);
+    }
+
     private static Item? Weapon(Avatar a) => a.State.Inventory.FirstOrDefault(i => i.Used && i.Kind.Slot == "weapon");
 
     /// <summary>Rüstung und Schild mindern Schaden: je Teil Random(r/3, r), insgesamt höchstens Schaden − 1 (defmod.kod).</summary>
@@ -183,6 +201,7 @@ public sealed partial class World
                 UnuseLocked(avatar, other, quiet: false);
             item.Used = true;
             avatar.Session.Post(GameReplies.Use(item.Id));
+            SendWindowOverlay(avatar, item, visible: true);
             Tell(avatar, slot switch
             {
                 "weapon" => $"Du nimmst {item.Describe()} in die Hand.",
@@ -205,6 +224,7 @@ public sealed partial class World
     {
         item.Used = false;
         avatar.Session.Post(GameReplies.Unuse(item.Id));
+        SendWindowOverlay(avatar, item, visible: false);
         if (!quiet)
             Tell(avatar, item.Kind.Slot == "armor" ? $"Du ziehst {item.Describe()} aus." : $"Du legst {item.Describe()} weg.");
     }
