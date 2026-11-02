@@ -933,6 +933,14 @@
           "fineRow": 32,
           "fineCol": 0,
           "angle": 0
+        },
+        {
+          "type": "Fountain",
+          "row": 34,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 16,
+          "angle": 0
         }
       ],
       "rows": 54,
@@ -976,7 +984,225 @@
         }
       ],
       "rows": 22,
-      "cols": 21
+      "cols": 21,
+      "objects": [
+        {
+          "type": "Table",
+          "row": 3,
+          "col": 3,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 3,
+          "col": 6,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 3,
+          "col": 17,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 3,
+          "col": 20,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 6,
+          "col": 3,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 6,
+          "col": 20,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 9,
+          "col": 18,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 9,
+          "col": 5,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 12,
+          "col": 20,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 15,
+          "col": 5,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 15,
+          "col": 18,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 21,
+          "col": 3,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 21,
+          "col": 6,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 21,
+          "col": 17,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 21,
+          "col": 20,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 5,
+          "col": 10,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 5,
+          "col": 13,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 7,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 9,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 11,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 13,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 7,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 9,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 11,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 13,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 15,
+          "col": 10,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 15,
+          "col": 13,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ]
     },
     {
       "id": 104,
@@ -1024,7 +1250,33 @@
         }
       ],
       "rows": 10,
-      "cols": 10
+      "cols": 10,
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 6,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 6,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 3,
+          "fineRow": 20,
+          "fineCol": 15,
+          "angle": 0
+        }
+      ]
     },
     {
       "id": 105,
@@ -1051,7 +1303,89 @@
       ],
       "music": "main.mid",
       "rows": 26,
-      "cols": 14
+      "cols": 14,
+      "objects": [
+        {
+          "type": "Table",
+          "row": 5,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 15,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 24,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 20,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 25,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 24,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 15,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 17,
+          "col": 9,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 13,
+          "col": 14,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 17,
+          "col": 14,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ]
     },
     {
       "id": 106,
@@ -1400,7 +1734,33 @@
         }
       ],
       "rows": 13,
-      "cols": 8
+      "cols": 8,
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 12,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 12,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ]
     },
     {
       "id": 113,
@@ -1440,7 +1800,17 @@
         }
       ],
       "rows": 7,
-      "cols": 12
+      "cols": 12,
+      "objects": [
+        {
+          "type": "Firepit",
+          "row": 4,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ]
     },
     {
       "id": 114,
@@ -1499,7 +1869,42 @@
         }
       ],
       "rows": 9,
-      "cols": 13
+      "cols": 13,
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 5,
+          "col": 10,
+          "fineRow": 40,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 5,
+          "col": 13,
+          "fineRow": 40,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Quill",
+          "row": 5,
+          "col": 11,
+          "fineRow": 40,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Light",
+          "row": 1,
+          "col": 8,
+          "fineRow": 56,
+          "fineCol": 8,
+          "angle": 0,
+          "intensity": 25
+        }
+      ]
     },
     {
       "id": 970,
@@ -1584,7 +1989,41 @@
         }
       ],
       "rows": 14,
-      "cols": 12
+      "cols": 12,
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 1,
+          "col": 6,
+          "fineRow": 28,
+          "fineCol": 60,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 13,
+          "col": 1,
+          "fineRow": 39,
+          "fineCol": 44,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 2,
+          "col": 9,
+          "fineRow": 28,
+          "fineCol": 28,
+          "angle": 0
+        },
+        {
+          "type": "Candelabra",
+          "row": 12,
+          "col": 11,
+          "fineRow": 60,
+          "fineCol": 52,
+          "angle": 0
+        }
+      ]
     },
     {
       "id": 971,
@@ -1652,7 +2091,17 @@
         }
       ],
       "rows": 16,
-      "cols": 14
+      "cols": 14,
+      "objects": [
+        {
+          "type": "Table",
+          "row": 4,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ]
     },
     {
       "id": 700,
@@ -1700,7 +2149,105 @@
         }
       ],
       "rows": 19,
-      "cols": 12
+      "cols": 12,
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 3,
+          "fineRow": 40,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 11,
+          "fineRow": 40,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 9,
+          "col": 1,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 12,
+          "col": 1,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 15,
+          "col": 1,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 9,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 12,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 15,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 4,
+          "col": 4,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 6,
+          "col": 6,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 6,
+          "col": 8,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 4,
+          "col": 9,
+          "fineRow": 48,
+          "fineCol": 16,
+          "angle": 0
+        }
+      ]
     }
   ]
 }

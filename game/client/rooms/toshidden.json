@@ -1,4 +1,4 @@
-{"source": "toshidden.roo", "rows": 4, "cols": 10, "ceiling": 136, "exits": [[4, 10, "The Cellar"], [4, 1, "Abandoned Fountain Tavern"]], "locked": [], "outdoors": false, "floor": [
+{"source": "toshidden.roo", "rows": 4, "cols": 10, "ceiling": 136, "exits": [[4, 10, "The Cellar"], [4, 1, "Abandoned Fountain Tavern"]], "locked": [], "outdoors": false, "props": [["Brazier", 3, 5, 32, 32, 0, 0], ["Brazier", 3, 9, 32, 32, 0, 0]], "floor": [
     [-1,-1,-1,-1,-1,-1,0,-1,-1,-1],
     [-1,-1,-1,-1,-1,-1,0,0,-1,-1],
     [40,20,0,0,0,0,0,0,0,0],

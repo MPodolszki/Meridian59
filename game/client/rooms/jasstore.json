@@ -1,4 +1,4 @@
-{"source": "jasstore.roo", "rows": 25, "cols": 18, "ceiling": 170, "exits": [[19, 1, "East Jasper"], [19, 2, "East Jasper"]], "locked": [], "outdoors": false, "floor": [
+{"source": "jasstore.roo", "rows": 25, "cols": 18, "ceiling": 170, "exits": [[19, 1, "East Jasper"], [19, 2, "East Jasper"]], "locked": [], "outdoors": false, "props": [["Brazier", 3, 3, 32, 32, 0, 0], ["Brazier", 3, 9, 32, 32, 0, 0], ["Brazier", 9, 3, 32, 32, 0, 0], ["Brazier", 9, 9, 32, 32, 0, 0], ["Brazier", 3, 12, 32, 32, 0, 0], ["Brazier", 3, 16, 32, 32, 0, 0], ["Brazier", 11, 12, 32, 32, 0, 0], ["Brazier", 11, 16, 32, 32, 0, 0], ["Brazier", 12, 3, 32, 32, 0, 0], ["Brazier", 12, 9, 32, 32, 0, 0], ["Brazier", 23, 3, 32, 32, 0, 0], ["Brazier", 23, 9, 32, 32, 0, 0], ["Table", 5, 4, 32, 32, 0, 0], ["Table", 5, 7, 32, 32, 0, 0], ["Table", 5, 15, 32, 32, 0, 0], ["Table", 9, 15, 32, 32, 0, 0]], "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1],
     [-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1],

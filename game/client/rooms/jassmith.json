@@ -1,4 +1,4 @@
-{"source": "jassmith.roo", "rows": 18, "cols": 18, "ceiling": 80, "exits": [[5, 5, "East Jasper"]], "locked": [], "outdoors": false, "floor": [
+{"source": "jassmith.roo", "rows": 18, "cols": 18, "ceiling": 80, "exits": [[5, 5, "East Jasper"]], "locked": [], "outdoors": false, "props": [["Brazier", 14, 6, 0, 0, 0, 0], ["Brazier", 6, 14, 0, 0, 0, 0]], "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,-1,-1,-1,-1,-1,-1,0,0,-1,-1,0,-1,-1,-1,-1,-1,-1],
     [-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,-1,-1,-1,-1,-1],

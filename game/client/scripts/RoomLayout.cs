@@ -22,6 +22,8 @@ public sealed class RoomLayout
     /// besser per <see cref="SetGroundAt"/> auf die Höhe am Standort des Spielers setzen.</summary>
     public int Ground { get; private set; }
     public int Ceiling { get; }
+    /// <summary>Name der Raumdatei ohne Endung (z. B. "guest1"), für die Ausstattung je Raumart.</summary>
+    public string Source { get; private set; } = "";
     private readonly int[,] _floor;
 
     /// <summary>Ausgänge (0-basiertes Feld, Zielraum) und verschlossene Türen aus tools/export_exits.py.</summary>
@@ -35,6 +37,8 @@ public sealed class RoomLayout
     public HashSet<string> Edges { get; } = new();
     private string[]? _depth;
     public List<(int Row, int Col, int FineRow, int FineCol, bool Shrub)> Trees { get; } = new();
+    /// <summary>Einrichtung (KOD-Feld 1-basiert, Feinkoordinate, Winkel, Lichtstärke), siehe <see cref="Furniture"/>.</summary>
+    public List<(string Type, int Row, int Col, int FineRow, int FineCol, int Angle, int Intensity)> Props { get; } = new();
     /// <summary>Sektoren mit ID (rooms/*.json "tags"): Felder (0-basiert) und aktuelle Deckenhöhe; der Server bewegt
     /// sie per BP_SECTOR_MOVE (Tür des Mausoleums).</summary>
     private readonly Dictionary<int, List<(int Row, int Col)>> _tagCells = new();
@@ -74,6 +78,7 @@ public sealed class RoomLayout
             r++;
         }
         var layout = new RoomLayout(rows, cols, root.GetProperty("ceiling").GetInt32(), floor);
+        layout.Source = System.IO.Path.GetFileNameWithoutExtension(rooFile).ToLowerInvariant();
         if (root.TryGetProperty("exits", out var exits))
             foreach (var e in exits.EnumerateArray())
                 layout.Exits.Add((e[0].GetInt32() - 1, e[1].GetInt32() - 1, e.GetArrayLength() > 2 ? e[2].GetString() ?? "" : ""));
@@ -86,6 +91,10 @@ public sealed class RoomLayout
             layout.Terrain = terrain.GetString();
         if (root.TryGetProperty("depth", out var depth))
             layout._depth = depth.EnumerateArray().Select(d => d.GetString() ?? "").ToArray();
+        if (root.TryGetProperty("props", out var props))
+            foreach (var p in props.EnumerateArray())
+                layout.Props.Add((p[0].GetString() ?? "", p[1].GetInt32(), p[2].GetInt32(), p[3].GetInt32(), p[4].GetInt32(),
+                    p[5].GetInt32(), p.GetArrayLength() > 6 ? p[6].GetInt32() : 0));
         if (root.TryGetProperty("trees", out var trees))
             foreach (var t in trees.EnumerateArray())
                 layout.Trees.Add((t[0].GetInt32() - 1, t[1].GetInt32() - 1, t[2].GetInt32(), t[3].GetInt32(), t[4].GetString() == "shrub"));
@@ -192,6 +201,7 @@ public sealed class RoomLayout
         else if (IsGreen(Terrain))
             root.AddChild(ForestEdge(cellSize));
         root.AddChild(RoomDecor.Build(this, cellSize, outdoors, wallHeight));
+        root.AddChild(Furniture.Build(this, cellSize, outdoors ? 0 : wallHeight));
         foreach (var t in Trees)
             root.AddChild(Tree(t.Shrub, new Vector3((t.Col + 1 + t.FineCol / 64f) * cellSize,
                 HeightMeters(Math.Max(FloorAt(t.Row, t.Col), 0), cellSize), (t.Row + 1 + t.FineRow / 64f) * cellSize)));

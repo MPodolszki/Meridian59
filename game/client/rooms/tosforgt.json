@@ -1,4 +1,4 @@
-{"source": "tosforgt.roo", "rows": 8, "cols": 8, "ceiling": 85, "exits": [[2, 2, "The Streets of Tos"], [2, 3, "The Streets of Tos"]], "locked": [], "outdoors": false, "floor": [
+{"source": "tosforgt.roo", "rows": 8, "cols": 8, "ceiling": 85, "exits": [[2, 2, "The Streets of Tos"], [2, 3, "The Streets of Tos"]], "locked": [], "outdoors": false, "props": [["Candelabra", 6, 2, 47, 38, 0, 0], ["OO_BIGURN2", 8, 5, 16, 24, 0, 0], ["OO_JUG", 2, 7, 24, 40, 0, 0]], "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,0,0,0,0,0,0,-1],
     [-1,0,0,0,0,0,0,-1],

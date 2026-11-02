@@ -1,4 +1,4 @@
-{"source": "guest5.roo", "rows": 5, "cols": 5, "ceiling": 80, "exits": [[1, 2, "Raza"], [1, 3, "Raza"], [1, 4, "Raza"]], "locked": [], "outdoors": false, "floor": [
+{"source": "guest5.roo", "rows": 5, "cols": 5, "ceiling": 80, "exits": [[1, 2, "Raza"], [1, 3, "Raza"], [1, 4, "Raza"]], "locked": [], "outdoors": false, "props": [["OO_JUG", 2, 4, 32, 32, 0, 0], ["OO_URN", 4, 4, 32, 32, 0, 0], ["OO_SKULL7", 4, 2, 48, 48, 0, 0], ["OO_FIXINS", 4, 1, 48, 48, 0, 0], ["Light", 1, 3, 45, 27, 0, 30]], "floor": [
     [0,0,0,0,-1],
     [0,0,0,0,-1],
     [0,0,0,0,-1],

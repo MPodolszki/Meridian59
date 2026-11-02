@@ -76,7 +76,7 @@ Neu erzeugen (im Repo-Root):
 ```bash
 python -I game/tools/roo2layout.py game/server/data/world/tos.json resource/rooms game/client/rooms
 python -I game/tools/roo2layout.py game/server/data/world/raza.json resource/rooms game/client/rooms
-cd game && python3 tools/export_exits.py
+cd game && python3 tools/add_furniture.py && python3 tools/export_exits.py
 ```
 
 `roo2layout.py` schreibt zusätzlich die Wassertiefe der Sektoren (`depth`, SF_DEPTH1–3) und Sektoren mit ID
@@ -91,7 +91,21 @@ Noch nicht gegen den Original-Server getestet.
 
 Prozedural über dem Höhenraster, ohne fremde Assets: Fassaden an der Straße mit Putzfeldern in wechselnden
 Farben, Fachwerk, Steinsockel, Fenstern (nachts warm leuchtend), Türen und Dachüberständen. Innenräume mit
-Holzdecke und Balken, Vertäfelung an Wänden und Einbauten und Lampen alle vier Felder. Die Kamera bleibt innen
+Holzdecke und Balken, Vertäfelung an Wänden und Einbauten und Lampen alle vier Felder.
+
+## Einrichtung (`scripts/Furniture.cs`)
+
+`tools/add_furniture.py` liest aus den KOD-Raumklassen (samt Elternklassen) alle fest platzierten Möbel, Lichter
+und Zierobjekte (`#what=Create(&Table…)`, `OrnamentalObject #type=OO_…`) und schreibt sie als `objects` in
+`server/data/world/*.json`; `export_exits.py` gibt sie als `props` an die Client-Räume weiter. Der Client zeichnet
+Tische, Hocker, Kohlebecken, Feuerstellen, Kerzen, Truhen, Säulen, Laternen, Grabsteine, Brunnen, Fässer, Urnen,
+Heu, Mais, Museumsstücke usw. als einfache eigene Modelle; Feuer und `DynamicLight` leuchten.
+
+**Abweichung (nur Optik):** Die Original-Räume sind fast leer (Raza Inn: 3 Tische, 3 Hocker); Regale und Fässer
+waren dort auf die Wandtexturen gemalt. Der Client stellt deshalb in Innenräumen an etwa drei von vier Wandstücken
+Ausstattung je Raumart (Name der `.roo`): Gasthaus Fässer, Flaschenregale und einen Kamin, Schmiede Amboss und
+Waffenständer, Laden Warenregale und Kisten, Bank/Halle Bücherregale, Banner, Truhen und Teppich, verlassene
+Häuser Bruchholz, Grüfte Urnen und Knochen. Felder an Ausgängen bleiben frei. Keine Kollision. Die Kamera bleibt innen
 unter der Decke. Das Licht (Sonne, Himmel, Umgebung) folgt dem Raumlicht des Servers (`docs/daynight.md`).
 
 ## Animationen

@@ -361,7 +361,25 @@
         }
       ],
       "rows": 10,
-      "cols": 10
+      "cols": 10,
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 9,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 9,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ]
     },
     {
       "id": 152,
@@ -428,7 +446,25 @@
         }
       ],
       "rows": 11,
-      "cols": 13
+      "cols": 13,
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 5,
+          "col": 11,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 2,
+          "fineRow": 56,
+          "fineCol": 16,
+          "angle": 0
+        }
+      ]
     },
     {
       "id": 153,
@@ -480,7 +516,33 @@
         }
       ],
       "rows": 10,
-      "cols": 13
+      "cols": 13,
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 7,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 7,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 4,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ]
     },
     {
       "id": 154,
@@ -543,7 +605,49 @@
         }
       ],
       "rows": 8,
-      "cols": 10
+      "cols": 10,
+      "objects": [
+        {
+          "type": "Firepit",
+          "row": 3,
+          "col": 6,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 6,
+          "col": 10,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 6,
+          "col": 6,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 1,
+          "col": 10,
+          "fineRow": 8,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 3,
+          "col": 10,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        }
+      ]
     },
     {
       "id": 155,
@@ -595,7 +699,49 @@
         }
       ],
       "rows": 29,
-      "cols": 41
+      "cols": 41,
+      "objects": [
+        {
+          "type": "Candelabra",
+          "row": 4,
+          "col": 1,
+          "fineRow": 0,
+          "fineCol": 20,
+          "angle": 0
+        },
+        {
+          "type": "Candelabra",
+          "row": 9,
+          "col": 3,
+          "fineRow": 28,
+          "fineCol": 28,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 3,
+          "col": 11,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 5,
+          "col": 13,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 9,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ]
     },
     {
       "id": 156,
@@ -622,7 +768,33 @@
         }
       ],
       "rows": 60,
-      "cols": 60
+      "cols": 60,
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 11,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 2,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 6,
+          "col": 23,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ]
     }
   ]
 }

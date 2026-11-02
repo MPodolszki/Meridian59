@@ -523,54 +523,6 @@
           "angle": 0
         },
         {
-          "type": "OO_RAZA_SHRUB",
-          "row": 59,
-          "col": 29,
-          "fineRow": 32,
-          "fineCol": 32,
-          "angle": 0
-        },
-        {
-          "type": "OO_RAZA_SHRUB",
-          "row": 49,
-          "col": 12,
-          "fineRow": 32,
-          "fineCol": 32,
-          "angle": 0
-        },
-        {
-          "type": "OO_RAZA_SHRUB",
-          "row": 46,
-          "col": 15,
-          "fineRow": 32,
-          "fineCol": 32,
-          "angle": 0
-        },
-        {
-          "type": "OO_RAZA_SHRUB",
-          "row": 32,
-          "col": 16,
-          "fineRow": 32,
-          "fineCol": 32,
-          "angle": 0
-        },
-        {
-          "type": "OO_RAZA_SHRUB",
-          "row": 28,
-          "col": 22,
-          "fineRow": 32,
-          "fineCol": 32,
-          "angle": 0
-        },
-        {
-          "type": "OO_RAZA_SHRUB",
-          "row": 21,
-          "col": 16,
-          "fineRow": 0,
-          "fineCol": 0,
-          "angle": 0
-        },
-        {
           "type": "OO_BARREL",
           "row": 3,
           "col": 46,
@@ -693,44 +645,49 @@
           "angle": 0
         },
         {
-          "type": "DynamicLight",
+          "type": "Light",
           "row": 2,
           "col": 6,
           "fineRow": 16,
           "fineCol": 0,
-          "angle": 0
+          "angle": 0,
+          "intensity": 15
         },
         {
-          "type": "DynamicLight",
+          "type": "Light",
           "row": 3,
           "col": 2,
           "fineRow": 55,
           "fineCol": 16,
-          "angle": 0
+          "angle": 0,
+          "intensity": 15
         },
         {
-          "type": "DynamicLight",
+          "type": "Light",
           "row": 6,
           "col": 2,
           "fineRow": 16,
           "fineCol": 16,
-          "angle": 0
+          "angle": 0,
+          "intensity": 15
         },
         {
-          "type": "DynamicLight",
+          "type": "Light",
           "row": 5,
           "col": 7,
           "fineRow": 48,
           "fineCol": 48,
-          "angle": 0
+          "angle": 0,
+          "intensity": 15
         },
         {
-          "type": "DynamicLight",
+          "type": "Light",
           "row": 6,
           "col": 6,
           "fineRow": 32,
           "fineCol": 16,
-          "angle": 0
+          "angle": 0,
+          "intensity": 50
         }
       ],
       "npcs": []
@@ -900,14 +857,6 @@
           "fineRow": 48,
           "fineCol": 32,
           "angle": 0
-        },
-        {
-          "type": "NewsAnnouncement",
-          "row": 5,
-          "col": 11,
-          "fineRow": 56,
-          "fineCol": 16,
-          "angle": 0
         }
       ],
       "npcs": [
@@ -1019,22 +968,6 @@
           "angle": 0
         },
         {
-          "type": "OO_GOOSE",
-          "row": 5,
-          "col": 6,
-          "fineRow": 16,
-          "fineCol": 48,
-          "angle": 0
-        },
-        {
-          "type": "OO_FIXINS",
-          "row": 8,
-          "col": 6,
-          "fineRow": 0,
-          "fineCol": 48,
-          "angle": 0
-        },
-        {
           "type": "OO_FIXINS",
           "row": 8,
           "col": 6,
@@ -1051,36 +984,31 @@
           "angle": 0
         },
         {
-          "type": "DynamicLight",
+          "type": "Light",
           "row": 8,
           "col": 4,
           "fineRow": 16,
           "fineCol": 32,
-          "angle": 0
+          "angle": 0,
+          "intensity": 25
         },
         {
-          "type": "DynamicLight",
+          "type": "Light",
           "row": 5,
           "col": 3,
           "fineRow": 64,
           "fineCol": 32,
-          "angle": 0
+          "angle": 0,
+          "intensity": 25
         },
         {
-          "type": "DynamicLight",
+          "type": "Light",
           "row": 2,
           "col": 4,
           "fineRow": 16,
           "fineCol": 32,
-          "angle": 0
-        },
-        {
-          "type": "BookPedestal",
-          "row": 2,
-          "col": 2,
-          "fineRow": 32,
-          "fineCol": 32,
-          "angle": 512
+          "angle": 0,
+          "intensity": 25
         }
       ],
       "npcs": [
@@ -1127,14 +1055,6 @@
       "lockedDoors": [],
       "edgeExits": [],
       "objects": [
-        {
-          "type": "Sign",
-          "row": 4,
-          "col": 6,
-          "fineRow": 32,
-          "fineCol": 32,
-          "angle": 0
-        },
         {
           "type": "Brazier",
           "row": 8,
@@ -2255,7 +2175,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 25,
           "col": 13,
           "fineRow": 32,
@@ -2263,7 +2183,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 29,
           "col": 13,
           "fineRow": 32,
@@ -2271,7 +2191,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 18,
           "col": 21,
           "fineRow": 32,
@@ -2279,7 +2199,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 34,
           "col": 21,
           "fineRow": 32,
@@ -2287,7 +2207,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 10,
           "col": 31,
           "fineRow": 32,
@@ -2295,7 +2215,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 10,
           "col": 43,
           "fineRow": 32,
@@ -2303,7 +2223,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 44,
           "col": 31,
           "fineRow": 32,
@@ -2311,7 +2231,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 44,
           "col": 43,
           "fineRow": 32,
@@ -2319,7 +2239,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 7,
           "col": 10,
           "fineRow": 32,
@@ -2327,7 +2247,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 10,
           "col": 13,
           "fineRow": 32,
@@ -2335,7 +2255,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 9,
           "col": 16,
           "fineRow": 32,
@@ -2343,7 +2263,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 14,
           "col": 19,
           "fineRow": 32,
@@ -2351,7 +2271,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 14,
           "col": 13,
           "fineRow": 32,
@@ -2359,7 +2279,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 19,
           "col": 11,
           "fineRow": 32,
@@ -2367,7 +2287,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 17,
           "col": 16,
           "fineRow": 32,
@@ -2375,7 +2295,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 37,
           "col": 10,
           "fineRow": 32,
@@ -2383,7 +2303,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 36,
           "col": 17,
           "fineRow": 32,
@@ -2391,7 +2311,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 38,
           "col": 13,
           "fineRow": 32,
@@ -2399,7 +2319,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 41,
           "col": 10,
           "fineRow": 32,
@@ -2407,7 +2327,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 40,
           "col": 18,
           "fineRow": 32,
@@ -2415,7 +2335,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 44,
           "col": 22,
           "fineRow": 32,
@@ -2423,7 +2343,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 44,
           "col": 17,
           "fineRow": 32,
@@ -2431,7 +2351,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 43,
           "col": 12,
           "fineRow": 32,
@@ -2439,7 +2359,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 8,
           "col": 51,
           "fineRow": 32,
@@ -2447,7 +2367,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 11,
           "col": 49,
           "fineRow": 32,
@@ -2455,7 +2375,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 46,
           "col": 45,
           "fineRow": 32,
@@ -2463,7 +2383,7 @@
           "angle": 0
         },
         {
-          "type": "Tree",
+          "type": "TREE",
           "row": 42,
           "col": 50,
           "fineRow": 32,
@@ -2471,7 +2391,7 @@
           "angle": 0
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 25,
           "col": 10,
           "fineRow": 32,
@@ -2479,7 +2399,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 25,
           "col": 16,
           "fineRow": 32,
@@ -2487,7 +2407,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 29,
           "col": 10,
           "fineRow": 32,
@@ -2495,7 +2415,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 29,
           "col": 16,
           "fineRow": 32,
@@ -2503,7 +2423,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 35,
           "col": 8,
           "fineRow": 32,
@@ -2511,7 +2431,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 40,
           "col": 8,
           "fineRow": 32,
@@ -2519,7 +2439,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 47,
           "col": 8,
           "fineRow": 32,
@@ -2527,7 +2447,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 47,
           "col": 14,
           "fineRow": 32,
@@ -2535,7 +2455,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 47,
           "col": 19,
           "fineRow": 32,
@@ -2543,7 +2463,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 47,
           "col": 25,
           "fineRow": 32,
@@ -2551,7 +2471,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 47,
           "col": 34,
           "fineRow": 32,
@@ -2559,7 +2479,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 17,
           "col": 8,
           "fineRow": 32,
@@ -2567,7 +2487,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 12,
           "col": 8,
           "fineRow": 32,
@@ -2575,7 +2495,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 7,
           "col": 8,
           "fineRow": 32,
@@ -2583,7 +2503,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 7,
           "col": 14,
           "fineRow": 32,
@@ -2591,7 +2511,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 7,
           "col": 19,
           "fineRow": 32,
@@ -2599,7 +2519,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 7,
           "col": 25,
           "fineRow": 32,
@@ -2607,7 +2527,7 @@
           "angle": 1024
         },
         {
-          "type": "Shrub",
+          "type": "SHRUB",
           "row": 7,
           "col": 34,
           "fineRow": 32,
@@ -2872,14 +2792,6 @@
           "col": 20,
           "fineRow": 32,
           "fineCol": 32,
-          "angle": 0
-        },
-        {
-          "type": "News",
-          "row": 14,
-          "col": 13,
-          "fineRow": 16,
-          "fineCol": 48,
           "angle": 0
         }
       ],

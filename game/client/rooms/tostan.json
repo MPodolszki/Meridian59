@@ -1,4 +1,4 @@
-{"source": "tostan.roo", "rows": 8, "cols": 8, "ceiling": 96, "exits": [[6, 3, "The Streets of Tos"]], "locked": [], "outdoors": false, "floor": [
+{"source": "tostan.roo", "rows": 8, "cols": 8, "ceiling": 96, "exits": [[6, 3, "The Streets of Tos"]], "locked": [], "outdoors": false, "props": [["OO_DUNG", 4, 7, 59, 8, 0, 0], ["Brazier", 2, 8, 56, 26, 0, 0], ["Brazier", 6, 7, 44, 29, 0, 0], ["OO_STONECHAIR", 4, 8, 21, 4, 0, 0], ["Brazier", 2, 3, 55, 34, 0, 0], ["OO_NESTOBJ2", 2, 6, 57, 17, 0, 0], ["OO_NESTOBJ1", 6, 5, 11, 33, 0, 0]], "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,-1,0,0,0,0,0,0],
     [-1,-1,0,0,0,0,0,0],

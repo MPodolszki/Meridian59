@@ -1,4 +1,4 @@
-{"source": "tosapoth.roo", "rows": 9, "cols": 7, "ceiling": 96, "exits": [[6, 2, "The Streets of Tos"]], "locked": [], "outdoors": false, "floor": [
+{"source": "tosapoth.roo", "rows": 9, "cols": 7, "ceiling": 96, "exits": [[6, 2, "The Streets of Tos"]], "locked": [], "outdoors": false, "props": [["OO_MORTARANDPESTLE", 5, 5, 8, 32, 0, 0], ["OO_FLASK_GREEN", 4, 5, 40, 32, 0, 0], ["OO_FLASK_GREEN", 6, 6, 8, 48, 0, 0], ["OO_FLASK_GREEN", 7, 6, 0, 48, 0, 0], ["OO_JUG", 2, 2, 24, 24, 0, 0], ["OO_FLASK_STAND", 6, 6, 40, 48, 0, 0], ["OO_NECBOTTLE", 6, 5, 24, 24, 0, 0], ["OO_GOOSE", 5, 6, 16, 48, 0, 0], ["OO_FIXINS", 8, 6, 0, 48, 0, 0], ["OO_GOLD_BOTTLE", 3, 5, 40, 32, 0, 0], ["Light", 8, 4, 16, 32, 0, 25], ["Light", 5, 3, 64, 32, 0, 25], ["Light", 2, 4, 16, 32, 0, 25]], "floor": [
     [-1,-1,-1,-1,-1,-1,-1],
     [-1,0,0,0,0,0,-1],
     [-1,0,0,0,32,0,-1],

@@ -1,4 +1,4 @@
-{"source": "guest4.roo", "rows": 7, "cols": 8, "ceiling": 100, "exits": [[2, 5, "Raza"], [2, 6, "Raza"], [3, 6, "Raza"]], "locked": [], "outdoors": false, "floor": [
+{"source": "guest4.roo", "rows": 7, "cols": 8, "ceiling": 100, "exits": [[2, 5, "Raza"], [2, 6, "Raza"], [3, 6, "Raza"]], "locked": [], "outdoors": false, "props": [["OO_TALLURN", 2, 5, 32, 32, 0, 0], ["OO_POTION", 5, 5, 0, 0, 0, 0], ["OO_TALLURN", 4, 7, 0, 0, 0, 0], ["OO_FLASK_GREEN", 5, 5, 32, 32, 0, 0], ["OO_FLASK_STAND", 5, 4, 24, 24, 0, 0], ["Light", 2, 3, 59, 51, 0, 30]], "floor": [
     [-1,20,20,20,20,20,20,-1],
     [-1,20,20,20,20,20,20,-1],
     [-1,20,20,20,20,20,20,-1],

@@ -1,4 +1,4 @@
-{"source": "barmerch.roo", "rows": 13, "cols": 8, "ceiling": 100, "exits": [[12, 3, "South Barloque"], [12, 4, "South Barloque"], [13, 3, "South Barloque"], [13, 4, "South Barloque"]], "locked": [], "outdoors": false, "floor": [
+{"source": "barmerch.roo", "rows": 13, "cols": 8, "ceiling": 100, "exits": [[12, 3, "South Barloque"], [12, 4, "South Barloque"], [13, 3, "South Barloque"], [13, 4, "South Barloque"]], "locked": [], "outdoors": false, "props": [["Brazier", 12, 6, 32, 0, 0, 0], ["Brazier", 12, 2, 32, 0, 0, 0], ["Brazier", 3, 3, 32, 32, 0, 0]], "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1],
     [0,0,0,0,0,-1,-1,-1],
     [0,0,0,0,0,-1,-1,-1],

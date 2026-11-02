@@ -1,4 +1,4 @@
-{"source": "corinn.roo", "rows": 10, "cols": 13, "ceiling": 256, "exits": [[3, 1, "Cor Noth"]], "locked": [[10, 7], [10, 4]], "outdoors": false, "floor": [
+{"source": "corinn.roo", "rows": 10, "cols": 13, "ceiling": 256, "exits": [[3, 1, "Cor Noth"]], "locked": [[10, 7], [10, 4]], "outdoors": false, "props": [["Brazier", 7, 3, 32, 32, 0, 0], ["Brazier", 7, 10, 32, 32, 0, 0], ["Brazier", 4, 12, 32, 32, 0, 0]], "floor": [
     [-1,-1,-1,160,-1,-1,160,-1,-1,-1,-1,-1,-1],
     [-1,128,128,128,128,128,128,128,128,160,128,128,-1],
     [128,128,128,128,128,128,128,128,128,160,128,128,-1],

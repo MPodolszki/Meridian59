@@ -36,6 +36,13 @@ for room in rooms:
              for o in room.get("objects", []) if "TREE" in o["type"] or "SHRUB" in o["type"]]
     if trees:
         layout["trees"] = trees
+    # Einrichtung (tools/add_furniture.py): Möbel, Lichter, Zierobjekte – alles außer Bäumen/Sträuchern
+    props = [[o["type"], o["row"], o["col"], o["fineRow"], o["fineCol"], o["angle"], o.get("intensity", 0)]
+             for o in room.get("objects", []) if "TREE" not in o["type"] and "SHRUB" not in o["type"]]
+    if props:
+        layout["props"] = props
+    else:
+        layout.pop("props", None)
     # Kompakt wie die übrigen Layoutdateien: eine Zeile je Rasterzeile.
     floor = layout.pop("floor")
     head = json.dumps(layout, ensure_ascii=False)[:-1]

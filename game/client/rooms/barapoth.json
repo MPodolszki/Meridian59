@@ -1,4 +1,4 @@
-{"source": "barapoth.roo", "rows": 10, "cols": 10, "ceiling": 224, "tags": [{"id": 1, "floor": 128, "ceiling": 200, "cells": [[5, 5], [5, 6], [5, 7], [6, 5], [6, 6], [6, 7]]}], "exits": [[6, 4, "North Barloque"], [7, 4, "North Barloque"]], "locked": [], "outdoors": false, "floor": [
+{"source": "barapoth.roo", "rows": 10, "cols": 10, "ceiling": 224, "tags": [{"id": 1, "floor": 128, "ceiling": 200, "cells": [[5, 5], [5, 6], [5, 7], [6, 5], [6, 6], [6, 7]]}], "exits": [[6, 4, "North Barloque"], [7, 4, "North Barloque"]], "locked": [], "outdoors": false, "props": [["Brazier", 6, 3, 32, 32, 0, 0], ["Brazier", 6, 7, 32, 32, 0, 0], ["Brazier", 3, 3, 20, 15, 0, 0]], "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,-1,-1,160,-1,-1,128,-1,-1,-1],
     [-1,-1,128,128,128,128,128,-1,-1,-1],

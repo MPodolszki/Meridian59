@@ -1,4 +1,4 @@
-{"source": "barjail.roo", "rows": 16, "cols": 14, "ceiling": 384, "exits": [[2, 7, "North Barloque"]], "locked": [[6, 2]], "outdoors": false, "floor": [
+{"source": "barjail.roo", "rows": 16, "cols": 14, "ceiling": 384, "exits": [[2, 7, "North Barloque"]], "locked": [[6, 2]], "outdoors": false, "props": [["Table", 4, 11, 32, 32, 0, 0]], "floor": [
     [128,128,128,128,128,128,128,128,128,128,128,128,218,-1],
     [128,128,128,128,128,128,128,128,128,128,128,128,218,-1],
     [128,128,128,128,128,128,128,128,128,128,128,128,218,-1],

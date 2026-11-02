@@ -1,4 +1,4 @@
-{"source": "tosbank.roo", "rows": 9, "cols": 9, "ceiling": 96, "exits": [[6, 9, "East Ende"]], "locked": [], "outdoors": false, "floor": [
+{"source": "tosbank.roo", "rows": 9, "cols": 9, "ceiling": 96, "exits": [[6, 9, "East Ende"]], "locked": [], "outdoors": false, "props": [["Brazier", 8, 2, 32, 32, 0, 0], ["Brazier", 6, 6, 0, 0, 0, 0], ["Brazier", 9, 6, 0, 0, 0, 0], ["Brazier", 2, 8, 32, 32, 0, 0], ["Table", 3, 3, 32, 32, 1024, 0]], "floor": [
     [-1,-1,-1,-1,32,-1,-1,-1,-1],
     [-1,0,0,0,0,0,0,0,-1],
     [32,0,0,0,0,0,0,0,-1],

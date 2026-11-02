@@ -1,4 +1,4 @@
-{"source": "toscellar.roo", "rows": 9, "cols": 10, "ceiling": 288, "exits": [[1, 4, "Familiars"], [2, 4, "Familiars"], [4, 1, "Secret Passage"]], "locked": [], "outdoors": false, "floor": [
+{"source": "toscellar.roo", "rows": 9, "cols": 10, "ceiling": 288, "exits": [[1, 4, "Familiars"], [2, 4, "Familiars"], [4, 1, "Secret Passage"]], "locked": [], "outdoors": false, "props": [["Brazier", 3, 5, 32, 32, 0, 0]], "floor": [
     [-1,-1,-1,-1,188,168,-1,108,108,-1],
     [-1,-1,-1,188,188,168,148,108,108,108],
     [-1,-1,-1,100,100,100,100,100,100,100],

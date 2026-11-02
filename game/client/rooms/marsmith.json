@@ -1,4 +1,4 @@
-{"source": "marsmith.roo", "rows": 12, "cols": 6, "ceiling": 296, "tags": [{"id": 1, "floor": 208, "ceiling": 296, "cells": [[2, 4], [2, 5], [3, 5]]}], "exits": [[11, 4, "Marion"], [12, 4, "Marion"]], "locked": [], "outdoors": false, "floor": [
+{"source": "marsmith.roo", "rows": 12, "cols": 6, "ceiling": 296, "tags": [{"id": 1, "floor": 208, "ceiling": 296, "cells": [[2, 4], [2, 5], [3, 5]]}], "exits": [[11, 4, "Marion"], [12, 4, "Marion"]], "locked": [], "outdoors": false, "props": [["Firepit", 2, 6, 32, 0, 0, 0]], "floor": [
     [-1,-1,-1,-1,-1,-1],
     [-1,-1,200,208,208,-1],
     [-1,-1,200,200,208,-1],

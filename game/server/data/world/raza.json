@@ -61,7 +61,93 @@
         }
       ],
       "rows": 8,
-      "cols": 11
+      "cols": 11,
+      "objects": [
+        {
+          "type": "Table",
+          "row": 3,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 8,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 7,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 3,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 5,
+          "col": 10,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "BarStool",
+          "row": 8,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Light",
+          "row": 8,
+          "col": 4,
+          "fineRow": 63,
+          "fineCol": 54,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 2,
+          "col": 11,
+          "fineRow": 55,
+          "fineCol": 40,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 2,
+          "col": 4,
+          "fineRow": 2,
+          "fineCol": 15,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 5,
+          "col": 2,
+          "fineRow": 48,
+          "fineCol": 58,
+          "angle": 0,
+          "intensity": 30
+        }
+      ]
     },
     {
       "id": 1012,
@@ -735,14 +821,6 @@
           "angle": 0
         },
         {
-          "type": "OO_CORN",
-          "row": 7,
-          "col": 16,
-          "fineRow": 48,
-          "fineCol": 48,
-          "angle": 0
-        },
-        {
           "type": "OO_ROCKB",
           "row": 6,
           "col": 24,
@@ -828,14 +906,6 @@
           "col": 9,
           "fineRow": 56,
           "fineCol": 56,
-          "angle": 0
-        },
-        {
-          "type": "OO_CORN",
-          "row": 11,
-          "col": 4,
-          "fineRow": 24,
-          "fineCol": 32,
           "angle": 0
         },
         {
@@ -957,7 +1027,36 @@
         }
       ],
       "rows": 10,
-      "cols": 10
+      "cols": 10,
+      "objects": [
+        {
+          "type": "Light",
+          "row": 2,
+          "col": 6,
+          "fineRow": 40,
+          "fineCol": 32,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 4,
+          "col": 8,
+          "fineRow": 3,
+          "fineCol": 21,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 7,
+          "col": 4,
+          "fineRow": 50,
+          "fineCol": 18,
+          "angle": 0,
+          "intensity": 30
+        }
+      ]
     },
     {
       "id": 1014,
@@ -1026,7 +1125,58 @@
         }
       ],
       "rows": 7,
-      "cols": 8
+      "cols": 8,
+      "objects": [
+        {
+          "type": "OO_TALLURN",
+          "row": 2,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_POTION",
+          "row": 5,
+          "col": 5,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_TALLURN",
+          "row": 4,
+          "col": 7,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_FLASK_GREEN",
+          "row": 5,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_FLASK_STAND",
+          "row": 5,
+          "col": 4,
+          "fineRow": 24,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "Light",
+          "row": 2,
+          "col": 3,
+          "fineRow": 59,
+          "fineCol": 51,
+          "angle": 0,
+          "intensity": 30
+        }
+      ]
     },
     {
       "id": 1015,
@@ -1095,7 +1245,50 @@
         }
       ],
       "rows": 5,
-      "cols": 5
+      "cols": 5,
+      "objects": [
+        {
+          "type": "OO_JUG",
+          "row": 2,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_URN",
+          "row": 4,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_SKULL7",
+          "row": 4,
+          "col": 2,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_FIXINS",
+          "row": 4,
+          "col": 1,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Light",
+          "row": 1,
+          "col": 3,
+          "fineRow": 45,
+          "fineCol": 27,
+          "angle": 0,
+          "intensity": 30
+        }
+      ]
     },
     {
       "id": 1016,
@@ -1423,7 +1616,34 @@
         }
       ],
       "rows": 39,
-      "cols": 40
+      "cols": 40,
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 9,
+          "col": 18,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 14,
+          "col": 18,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Light",
+          "row": 11,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 48,
+          "angle": 0,
+          "intensity": 45
+        }
+      ]
     },
     {
       "id": 1017,
@@ -1476,7 +1696,124 @@
         }
       ],
       "rows": 9,
-      "cols": 8
+      "cols": 8,
+      "objects": [
+        {
+          "type": "Stool",
+          "row": 6,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 7,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 5,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 5,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 4,
+          "col": 3,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 4,
+          "col": 4,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_TALLURN",
+          "row": 2,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_BUCkET",
+          "row": 8,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_BUCkET",
+          "row": 7,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_BUCkET",
+          "row": 6,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Candle",
+          "row": 3,
+          "col": 6,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Light",
+          "row": 2,
+          "col": 4,
+          "fineRow": 16,
+          "fineCol": 63,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 8,
+          "col": 2,
+          "fineRow": 54,
+          "fineCol": 40,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 8,
+          "col": 6,
+          "fineRow": 55,
+          "fineCol": 56,
+          "angle": 0,
+          "intensity": 30
+        }
+      ]
     },
     {
       "id": 1018,
@@ -1650,7 +1987,333 @@
         }
       ],
       "rows": 15,
-      "cols": 21
+      "cols": 21,
+      "objects": [
+        {
+          "type": "OO_MUSEUM_WAND",
+          "row": 9,
+          "col": 4,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 3072
+        },
+        {
+          "type": "OO_MUSEUM_THRONE",
+          "row": 10,
+          "col": 3,
+          "fineRow": 16,
+          "fineCol": 40,
+          "angle": 1024
+        },
+        {
+          "type": "OO_MUSEUM_SPIDER",
+          "row": 9,
+          "col": 19,
+          "fineRow": 16,
+          "fineCol": 24,
+          "angle": 3072
+        },
+        {
+          "type": "OO_MUSEUM_FEY",
+          "row": 3,
+          "col": 20,
+          "fineRow": 56,
+          "fineCol": 32,
+          "angle": 2048
+        },
+        {
+          "type": "OO_MUSEUM_LUPOGG",
+          "row": 2,
+          "col": 17,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "OO_MUSEUM_LUTE",
+          "row": 2,
+          "col": 7,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 1024
+        },
+        {
+          "type": "OO_MUSEUM_PLATEARMOR",
+          "row": 13,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "OO_MUSEUM_SIGNETRING",
+          "row": 4,
+          "col": 2,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_MUSEUM_SCIMITAR",
+          "row": 10,
+          "col": 19,
+          "fineRow": 16,
+          "fineCol": 24,
+          "angle": 1024
+        },
+        {
+          "type": "OO_MUSEUM_FUNGUSBEAST",
+          "row": 2,
+          "col": 16,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 1024
+        },
+        {
+          "type": "OO_MUSEUM_AVAR",
+          "row": 2,
+          "col": 19,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 1024
+        },
+        {
+          "type": "OO_MUSEUM_ORC",
+          "row": 2,
+          "col": 20,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 1536
+        },
+        {
+          "type": "OO_MUSEUM_CENTIPEDE",
+          "row": 9,
+          "col": 20,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 3072
+        },
+        {
+          "type": "OO_MUSEUM_ANT",
+          "row": 9,
+          "col": 18,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 3072
+        },
+        {
+          "type": "OO_MUSEUM_HAMMER",
+          "row": 10,
+          "col": 18,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "OO_MUSEUM_SHORTSWORD",
+          "row": 10,
+          "col": 20,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 1024
+        },
+        {
+          "type": "OO_MUSEUM_HELM",
+          "row": 12,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "OO_MUSEUM_GAUNTLETS",
+          "row": 14,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "OO_MUSEUM_INKYCAP",
+          "row": 2,
+          "col": 5,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "OO_MUSEUM_TOKEN",
+          "row": 2,
+          "col": 4,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 1024
+        },
+        {
+          "type": "OO_MUSEUM_PRISM",
+          "row": 2,
+          "col": 2,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 512
+        },
+        {
+          "type": "OO_MUSEUM_POTION",
+          "row": 9,
+          "col": 3,
+          "fineRow": 16,
+          "fineCol": 40,
+          "angle": 3072
+        },
+        {
+          "type": "OO_MUSEUM_SCROLL",
+          "row": 9,
+          "col": 2,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 3072
+        },
+        {
+          "type": "OO_MUSEUM_SHRINE",
+          "row": 10,
+          "col": 4,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "OO_MUSEUM_ALTAR",
+          "row": 10,
+          "col": 2,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 1024
+        },
+        {
+          "type": "OO_MUSEUM_CHALICE",
+          "row": 14,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 48,
+          "angle": 2048
+        },
+        {
+          "type": "OO_MUSEUM_NEWS",
+          "row": 12,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 48,
+          "angle": 2048
+        },
+        {
+          "type": "Light",
+          "row": 6,
+          "col": 8,
+          "fineRow": 47,
+          "fineCol": 47,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 12,
+          "col": 9,
+          "fineRow": 56,
+          "fineCol": 49,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 12,
+          "col": 13,
+          "fineRow": 53,
+          "fineCol": 16,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 6,
+          "col": 14,
+          "fineRow": 46,
+          "fineCol": 13,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 6,
+          "col": 7,
+          "fineRow": 48,
+          "fineCol": 46,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 11,
+          "col": 4,
+          "fineRow": 7,
+          "fineCol": 46,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 8,
+          "col": 4,
+          "fineRow": 22,
+          "fineCol": 46,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 4,
+          "col": 6,
+          "fineRow": 48,
+          "fineCol": 16,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 6,
+          "col": 15,
+          "fineRow": 48,
+          "fineCol": 16,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 4,
+          "col": 16,
+          "fineRow": 48,
+          "fineCol": 39,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 8,
+          "col": 18,
+          "fineRow": 24,
+          "fineCol": 16,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 11,
+          "col": 18,
+          "fineRow": 8,
+          "fineCol": 15,
+          "angle": 0,
+          "intensity": 30
+        }
+      ]
     }
   ]
 }
