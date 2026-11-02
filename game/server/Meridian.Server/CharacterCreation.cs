@@ -59,7 +59,7 @@ public static class CharacterCreation
     public static bool Offered(SpellDefinition s) => s.Level <= 2 && s.School is >= 1 and <= 4;
 
     /// <summary>BP_CHARINFO.</summary>
-    public static byte[] CharInfo(Func<string, uint> rsc, IReadOnlyList<SpellDefinition> spells)
+    public static byte[] CharInfo(Func<string, uint> rsc, IReadOnlyList<SpellDefinition> spells, IReadOnlyList<SkillDefinition>? skills = null)
     {
         var w = new PacketWriter((byte)GameMessage.CharInfo).U8((byte)HairXlats.Length);
         foreach (byte x in HairXlats)
@@ -80,7 +80,11 @@ public static class CharacterCreation
         w.U32((uint)offered.Count);
         foreach (var s in offered)
             w.U32((uint)s.Sid).U32(rsc(s.Name)).U32(rsc(s.Description ?? s.Name)).U32((uint)SpellCost(s)).U8((byte)s.School);
-        return w.U32(0).ToArray();   // noch keine Fertigkeiten
+        skills ??= [];
+        w.U32((uint)skills.Count);
+        foreach (var s in skills)
+            w.U32((uint)s.Skid).U32(rsc(s.Name)).U32(rsc(s.Description ?? s.Name)).U32(s.Level >= 2 ? 25u : 10u);
+        return w.ToArray();
 
         void WriteIcons(string[] icons)
         {
@@ -97,7 +101,7 @@ public static class CharacterCreation
 
     /// <summary>Daten aus BP_NEW_CHARINFO.</summary>
     public sealed record Request(uint CharacterId, string Name, string Description, int Gender, uint[] Parts,
-        byte HairXlat, byte SkinXlat, int[] Stats, uint[] Spells);
+        byte HairXlat, byte SkinXlat, int[] Stats, uint[] Spells, uint[]? Skills = null);
 
     public static Request Parse(ref PacketReader r)
     {
@@ -114,10 +118,10 @@ public static class CharacterCreation
         var spells = new uint[r.U16()];
         for (int i = 0; i < spells.Length; i++)
             spells[i] = r.U32();
-        int skills = r.U16();
-        for (int i = 0; i < skills; i++)
-            r.U32();
-        return new(id, name, desc, gender, parts, hair, skin, stats, spells);
+        var skills = new uint[r.U16()];
+        for (int i = 0; i < skills.Length; i++)
+            skills[i] = r.U32();
+        return new(id, name, desc, gender, parts, hair, skin, stats, spells, skills);
     }
 
     private const string NameChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890_ '!@$^&*()+=:[]{};/?|<>";

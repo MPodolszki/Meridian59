@@ -28,17 +28,31 @@ public sealed partial class World
     private void InitMagic(Avatar a)
     {
         var s = a.State;
+        // Charaktere ohne Erstellung, die noch keine Fertigkeiten haben (ältere Spielstände), bekommen die Startfertigkeiten.
+        if (s.MagicInitialized && !s.Created && s.Skills.Count == 0)
+            GrantStartingSkills(s);
         if (s.MagicInitialized)
             return;
         s.MagicInitialized = true;
         s.MaxMana = MagicRules.InitialMaxMana(s.Attributes);
         s.Mana = s.MaxMana;
+        GrantStartingSkills(s);
         foreach (var spell in _spells.Starting)
         {
             s.Spells[spell.Sid] = MagicRules.InitialAbility(spell, s.Attributes, _random);
             foreach (var r in spell.Reagents)
                 if (_items.TryGet(r.Item, out var kind))
                     GiveSilently(s, kind, r.Number * 10);
+        }
+    }
+
+    /// <summary>Ohne Charaktererstellung: Startfertigkeiten (Faustschlag, Hieb) mit InitialAbility (skill.kod).</summary>
+    private void GrantStartingSkills(CharacterState s)
+    {
+        foreach (var skill in _skills.Starting)
+        {
+            int req = skill.RequisiteStat(s.Attributes);
+            s.Skills[skill.Skid] = Math.Clamp(_random.Next(req / 2, req + 1) / 2, 1, 25);
         }
     }
 
@@ -102,8 +116,16 @@ public sealed partial class World
             // Sprüche: nur angebotene, Budget 45 Punkte (sonst keine), Reagenzien für je 10 Zauber.
             var chosen = req.Spells.Select(id => _spells.BySid((int)id)).OfType<SpellDefinition>()
                 .Where(CharacterCreation.Offered).Distinct().ToList();
-            if (chosen.Sum(CharacterCreation.SpellCost) > CharacterCreation.SpellBudget)
+            var chosenSkills = (req.Skills ?? []).Select(id => _skills.BySkid((int)id)).OfType<SkillDefinition>()
+                .Where(sk => sk.Level <= 2).Distinct().ToList();
+            // Gemeinsames Budget von 45 Punkten für Sprüche und Fertigkeiten, sonst gar nichts (player.kod).
+            if (chosen.Sum(CharacterCreation.SpellCost) + chosenSkills.Sum(sk => sk.Level >= 2 ? 25 : 10) > CharacterCreation.SpellBudget)
+            {
                 chosen.Clear();
+                chosenSkills.Clear();
+            }
+            foreach (var sk in chosenSkills)
+                s.Skills[sk.Skid] = Math.Clamp(_random.Next(sk.RequisiteStat(s.Attributes) / 2, sk.RequisiteStat(s.Attributes) + 1) / 2, 1, 25);
             s.MagicInitialized = true;
             s.MaxMana = MagicRules.InitialMaxMana(s.Attributes);
             s.Mana = s.MaxMana;

@@ -41,6 +41,9 @@ public sealed class Avatar(uint id, string name, Session session)
     public PendingCast? Casting { get; set; }
     public TouchAttack? Touch { get; set; }
     public DateTime NextMana { get; set; }
+    /// <summary>Aktuelles Kampfziel (poKill_target) und ob man seitdem verfehlt wurde (PFLAG_DODGED).</summary>
+    public Monster? KillTarget { get; set; }
+    public bool Dodged { get; set; }
 }
 
 /// <summary>Laufzeitzustand eines Raums.</summary>
@@ -494,7 +497,8 @@ public sealed partial class World
 
     private Monster SpawnMonsterLocked(Room room, MonsterKind kind, GridPos home)
     {
-        var monster = new Monster(++_nextMonsterId, kind, room, home) { Angle = (ushort)_random.Next(4096) };
+        int hp = kind.RollHitPoints(_random);
+        var monster = new Monster(++_nextMonsterId, kind, room, home) { Angle = (ushort)_random.Next(4096), Hp = hp, MaxHp = hp };
         room.Monsters.Add(monster);
         foreach (var a in room.Avatars.Values)
         {
@@ -553,17 +557,18 @@ public sealed partial class World
 
         if (inRange && now >= m.NextAttack && m.Target is { } victim)
         {
-            m.NextAttack = now + m.Kind.AttackCooldown;
+            m.NextAttack = now + m.Kind.RollAttackTime(_random);
             m.Angle = AngleTowards(victim.Row - m.Row, victim.Col - m.Col);
             BroadcastRoom(room, GameReplies.Turn(m.Id, m.Angle));
             BroadcastRoom(room, GameReplies.Animate(ToRoomObject(m), GameReplies.AttackGroup, 4, 600));
             victim.LastCombat = now;
-            if (_random.NextDouble() > m.Kind.HitChance)
+            if (CombatRules.HitChance(m.Kind.Offense, PlayerDefense(victim)) < _random.Next(1, 101))
             {
+                victim.Dodged = true;
                 Tell(victim, $"{Article(m.Kind)} verfehlt dich.");
                 return;
             }
-            int damage = ReduceByArmor(victim, _random.Next(m.Kind.MinDamage, m.Kind.MaxDamage + 1));
+            int damage = AssessPlayerDamage(victim, m.Kind.RollDamage(_random));
             victim.Hp = Math.Max(0, victim.Hp - damage);
             Tell(victim, $"{Article(m.Kind)} trifft dich für {damage} Schaden.");
             victim.Session.SendHealth();
@@ -667,7 +672,9 @@ public sealed partial class World
                 return;
             }
             avatar.NextAttack = now + CombatRules.PlayerAttackCooldown;
-            AddExertion(avatar, CombatRules.ExertionPerAttack);
+            // PayCosts der Technik: 1000 × viSkillExertion (Hieb 2, Faustschlag 5).
+            var strokeSkill = _skills.BySkid(Weapon(avatar) is null || avatar.Touch is not null ? Skill.Punch : Skill.Slash);
+            AddExertion(avatar, 1000 * (strokeSkill?.Exertion ?? 2));
             if (Weapon(avatar) is { } swung)
                 SendWindowOverlay(avatar, swung, visible: true, attack: true);
             avatar.LastCombat = now;
@@ -675,35 +682,40 @@ public sealed partial class World
             BroadcastRoom(avatar.Room, GameReplies.Animate(ToRoomObject(avatar), GameReplies.AttackGroup, 4, 500));
             m.Target ??= avatar;   // angegriffene Monster wehren sich
 
-            var touch = TouchStrike(avatar, now);
-            if (_random.NextDouble() > CombatRules.PlayerHitChance)
+            if (avatar.KillTarget != m)
             {
-                Tell(avatar, $"Du verfehlst {Article(m.Kind, accusative: true)}.");
+                avatar.KillTarget = m;      // ResetGainFlags
+                avatar.Dodged = false;
+            }
+
+            // battler.kod TryAttack: Offensive gegen Defensive des Monsters.
+            bool hit = CombatRules.HitChance(PlayerOffense(avatar), m.Kind.Defense) >= _random.Next(1, 101);
+            PracticeStrike(avatar, m, hit);
+            if (!hit)
+            {
+                Tell(avatar, $"{Article(m.Kind)} weicht deinem Schlag aus.");
                 return;
             }
-            int damage;
-            if (touch is { } t)
+            var touchSpell = avatar.Touch?.Spell;
+            int damage = PlayerDamage(avatar, m, out _);
+            if (touchSpell is not null && avatar.Touch is not null)
             {
-                damage = t.Damage;
-                if (t.Spell.HitText is { } hit)
-                    Tell(avatar, string.Format(hit, Article(m.Kind, capital: false, accusative: true)));
-                ImproveAbility(avatar, t.Spell, m.Kind.Level);   // ImproveStroke
-            }
-            else
-            {
-                var (min, max) = Weapon(avatar) is { } weapon ? CombatRules.WeaponDamage(weapon.Kind) : (CombatRules.PlayerMinDamage, CombatRules.PlayerMaxDamage);
-                damage = Math.Max(1, _random.Next(min, max + 1));
+                if (touchSpell.HitText is { } hitText)
+                    Tell(avatar, string.Format(hitText, Article(m.Kind, capital: false, accusative: true)));
+                ImproveAbility(avatar, touchSpell, m.Kind.Level);   // ImproveStroke des Berührungszaubers
             }
             m.Hp -= damage;
             if (m.Hp > 0)
             {
-                Tell(avatar, $"Du triffst {Article(m.Kind, accusative: true)} für {damage} Schaden ({m.Hp}/{m.Kind.MaxHp}).");
+                Tell(avatar, $"Du triffst {Article(m.Kind, accusative: true)} für {damage} Schaden ({m.Hp}/{m.MaxHp}).");
                 return;
             }
             m.DiedAt = now;
             m.Target = null;
             Tell(avatar, $"Du hast {Article(m.Kind, accusative: true)} besiegt!");
             BroadcastRoom(m.Room, GameReplies.Animate(ToRoomObject(m), GameReplies.DeathGroup, 9, 1500));
+            PracticeDefense(avatar, m);
+            avatar.KillTarget = null;
             CreateTreasure(m);
         }
     }

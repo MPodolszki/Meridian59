@@ -174,17 +174,6 @@ public sealed partial class World
 
     private static Item? Weapon(Avatar a) => a.State.Inventory.FirstOrDefault(i => i.Used && i.Kind.Slot == "weapon");
 
-    /// <summary>Rüstung und Schild mindern Schaden: je Teil Random(r/3, r), insgesamt höchstens Schaden − 1 (defmod.kod).</summary>
-    private int ReduceByArmor(Avatar a, int damage)
-    {
-        foreach (var piece in a.State.Inventory.Where(i => i.Used && i.Kind.DamageReduce > 0))
-        {
-            int r = piece.Kind.DamageReduce;
-            damage -= Math.Clamp(_random.Next(r / 3, r + 1), 0, Math.Max(0, damage - 1));
-        }
-        return damage;
-    }
-
     /// <summary>Gegenstand benutzen: Essen wird gegessen, Waffen/Schilde/Rüstungen werden angelegt
     /// (ein Gegenstand je Platz; ein bereits angelegter wird dabei abgelegt).</summary>
     public void Use(Avatar avatar, uint id)
@@ -1025,7 +1014,7 @@ public sealed partial class World
         Stomach = (int)c.Stomach,
         Profile = new SavedProfile(c.Name, c.Description, c.Appearance, c.Created),
         Magic = c.MagicInitialized
-            ? new SavedMagic(c.Attributes, c.Karma, c.Mana, c.MaxMana, new(c.Spells), new(c.SchoolCasts))
+            ? new SavedMagic(c.Attributes, c.Karma, c.Mana, c.MaxMana, new(c.Spells), new(c.SchoolCasts)) { Skills = new(c.Skills) }
             : null,
         Bank = new Dictionary<int, int>(c.Bank),
     };
@@ -1075,6 +1064,8 @@ public sealed partial class World
                         state.Spells[sid] = ability;
                     foreach (var (school, casts) in magic.SchoolCasts)
                         state.SchoolCasts[school] = casts;
+                    foreach (var (skid, ability) in magic.Skills)
+                        state.Skills[skid] = ability;
                 }
                 _characters[id] = state;
             }

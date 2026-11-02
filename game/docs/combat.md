@@ -1,4 +1,23 @@
-# Kampf (Stand 2026-11-01, vereinfacht)
+# Kampf (Stand 2026-11-02, nach den Original-Formeln)
+
+Seit dem Umbau rechnet der Kampf wie das Original (Formeln und Quellen: combat-original.md). Code:
+`server/Meridian.Server/WorldCombat.cs`, `Combat.cs`; Fertigkeiten `server/data/skills/skills.json`.
+
+- Treffer: bound(Offensive × 55 / Defensive, 10, 95) %. Spieler-Offensive aus Technik (Faustschlag bzw. Hieb),
+  Waffenfertigkeit (bzw. Raufen), Zielen, Grund-LP und Waffenart/-qualität; Monster-Defensive 3×Stufe + 60×Schwierigkeit.
+- Schaden: Waffe × 80 % (Hieb) bzw. Faust 1–4, plus Fertigkeitsbonus und Stärkebonus; Resistenzen der Monster
+  (Skelett: Stich −70 %, Wucht +20 %; Zombie: heilig +25 %).
+- Monster: LP aus der Stufe (Zombie ~66, Skelett ~90), Schaden Fuzzy(Stufe/10..15), Takt ~3,1–3,6 s bzw. ~2,4–2,9 s.
+- Spieler-Defensive aus Parieren (mit Waffe), Blocken (mit Schild), Ausweichen, Geschick, Grund-LP und Rüstung
+  (Kettenrüstung −50). Treffer am Spieler: Rüstung/Schild mindern, höchstens (Grund-LP+2)/3 = 7 pro Treffer.
+- Fertigkeiten üben: alle 75 Schläge derselben Waffenart ein Bonus, dann beim nächsten Treffer Technik oder
+  Waffenfertigkeit (unter Monsterstufe); Ausweichen/Parieren/Blocken nach einem Sieg, wenn man verfehlt wurde;
+  höchstens 10 Verbesserungen je 15–22 Minuten.
+- Charaktere ohne Erstellung bekommen Faustschlag und Hieb; bei der Erstellung sind die Stufe-1/2-Fertigkeiten
+  wählbar (gemeinsames Budget mit den Sprüchen).
+- Protokoll: `BP_SKILLS`, Stat-Gruppe 4 (Fähigkeiten in %).
+
+## Frühere vereinfachte Regeln (bis 2026-11-02)
 
 Grob am Original orientiert (`kod/.../monster.kod`, `player.kod`, `monster/zombie.kod`, `monster/skel.kod`),
 aber stark vereinfacht. Werte in `server/Meridian.Server/Combat.cs`.

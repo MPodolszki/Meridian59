@@ -24,6 +24,10 @@ public sealed record ItemKind(string Key, string Name, string Icon, int Value)
     /// <summary>Waffen (weapon.kod): "bludgeon", "thrust", "slash"; Qualität "low", "normal", "high".</summary>
     public string? WeaponType { get; init; }
     public string WeaponQuality { get; init; } = "normal";
+    /// <summary>Waffenfertigkeit (viProficiency_needed, SKID), z. B. 452 Streitkolbenkampf.</summary>
+    public int Proficiency { get; init; }
+    /// <summary>viDefense_base: Rüstung verändert die Defensive (Kette −50), Schilde erhöhen das Blocken.</summary>
+    public int DefenseBonus { get; init; }
     /// <summary>Höchste Schadensminderung (defmod viDamage_base).</summary>
     public int DamageReduce { get; init; }
     /// <summary>Waffe in der Hand der Spielerfigur (KOD player_*_overlay_icon_rsc, z. B. maceov.bgf).</summary>
@@ -127,6 +131,12 @@ public sealed class CharacterState
     public int MaxMana { get; set; }
     public Dictionary<int, int> Spells { get; } = new();
     public Dictionary<int, int> SchoolCasts { get; } = new();
+    /// <summary>Fertigkeiten (SKID → Fähigkeit %), Schläge je Waffenfertigkeit (Übungszähler), Verbesserungen
+    /// im laufenden Zeitfenster (Advancement Points) und dessen Ende.</summary>
+    public Dictionary<int, int> Skills { get; } = new();
+    public Dictionary<int, int> Swings { get; } = new();
+    public int AdvancementPoints { get; set; }
+    public DateTime AdvancementReset { get; set; }
     public bool MagicInitialized { get; set; }
     /// <summary>Charaktererstellung: gewählter Name, Beschreibung, Aussehen; Created = Erstellung abgeschlossen.</summary>
     public string? Name { get; set; }

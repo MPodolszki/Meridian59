@@ -343,7 +343,8 @@
       "article": "einen",
       "description": "Ein runder, vergoldeter Schild.",
       "slot": "shield",
-      "damageReduce": 1
+      "damageReduce": 1,
+      "defenseBonus": 10
     },
     {
       "key": "chainarmor",
@@ -357,7 +358,8 @@
       "article": "eine",
       "description": "Eine Rüstung aus vernieteten Eisenringen.",
       "slot": "armor",
-      "damageReduce": 2
+      "damageReduce": 2,
+      "defenseBonus": -50
     },
     {
       "key": "axe",
@@ -374,7 +376,8 @@
       "weaponType": "slash",
       "weaponQuality": "normal",
       "windowOverlay": "povaxe.bgf",
-      "overlay": "axeov.bgf"
+      "overlay": "axeov.bgf",
+      "proficiency": 455
     },
     {
       "key": "hammer",
@@ -391,7 +394,8 @@
       "weaponType": "bludgeon",
       "weaponQuality": "normal",
       "windowOverlay": "povhamr.bgf",
-      "overlay": "hamrov.bgf"
+      "overlay": "hamrov.bgf",
+      "proficiency": 454
     },
     {
       "key": "mace",
@@ -408,7 +412,8 @@
       "weaponType": "bludgeon",
       "weaponQuality": "low",
       "windowOverlay": "povmace.bgf",
-      "overlay": "maceov.bgf"
+      "overlay": "maceov.bgf",
+      "proficiency": 452
     },
     {
       "key": "longsword",
@@ -425,7 +430,8 @@
       "weaponType": "thrust",
       "weaponQuality": "normal",
       "windowOverlay": "povsword.bgf",
-      "overlay": "swordov.bgf"
+      "overlay": "swordov.bgf",
+      "proficiency": 451
     },
     {
       "key": "martyrscroll",
@@ -514,7 +520,8 @@
       "weaponType": "thrust",
       "weaponQuality": "low",
       "overlay": "shswdov.bgf",
-      "windowOverlay": "povshswd.bgf"
+      "windowOverlay": "povshswd.bgf",
+      "proficiency": 457
     },
     {
       "key": "scimitar",
@@ -531,7 +538,8 @@
       "weaponType": "slash",
       "weaponQuality": "high",
       "overlay": "scimov.bgf",
-      "windowOverlay": "povscim.bgf"
+      "windowOverlay": "povscim.bgf",
+      "proficiency": 453
     },
     {
       "key": "mysticsword",
@@ -548,7 +556,8 @@
       "weaponType": "thrust",
       "weaponQuality": "high",
       "overlay": "mystwdov.bgf",
-      "windowOverlay": "povmystsw.bgf"
+      "windowOverlay": "povmystsw.bgf",
+      "proficiency": 451
     },
     {
       "key": "entrootberry",

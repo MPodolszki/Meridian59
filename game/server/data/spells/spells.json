@@ -65,7 +65,8 @@
       "description": "Funken springen von den Fingerspitzen und versengen, was man berührt.",
       "castText": "Funken springen und knistern an deinen Fingerspitzen.",
       "offText": "Die Funken an deinen Fingerspitzen erlöschen.",
-      "hitText": "Der Geruch verbrannten Fleisches steigt dir in die Nase, als deine Berührung {0} versengt!"
+      "hitText": "Der Geruch verbrannten Fleisches steigt dir in die Nase, als deine Berührung {0} versengt!",
+      "attackType": "shock"
     },
     {
       "key": "createfood",
@@ -114,7 +115,8 @@
       "maxDamage": 6,
       "castText": "Deine Hände baden in Shal'illes Liebe.",
       "offText": "Deine Hände baden nicht mehr in Shal'illes Liebe.",
-      "hitText": "Shal'illes Licht brennt {0}!"
+      "hitText": "Shal'illes Licht brennt {0}!",
+      "attackType": "holy"
     },
     {
       "key": "acidtouch",
@@ -137,7 +139,8 @@
       "maxDamage": 8,
       "castText": "Qors ätzender Geifer quillt aus den Poren deiner Hand.",
       "offText": "Deine Hände triefen nicht mehr vor Säure.",
-      "hitText": "Du siehst {0} unter deiner Berührung vor Qual aufschreien."
+      "hitText": "Du siehst {0} unter deiner Berührung vor Qual aufschreien.",
+      "attackType": "acid"
     },
     {
       "key": "icyfingers",
@@ -160,7 +163,8 @@
       "maxDamage": 8,
       "castText": "Ein Hauch absoluter Kälte umhüllt deine Hände.",
       "offText": "Deine Hände sind nicht mehr von Frost umhüllt.",
-      "hitText": "Deine eisige Berührung lässt Fleisch von {0} schwarz erfrieren."
+      "hitText": "Deine eisige Berührung lässt Fleisch von {0} schwarz erfrieren.",
+      "attackType": "cold"
     },
     {
       "key": "touchofflame",
@@ -183,7 +187,8 @@
       "maxDamage": 9,
       "castText": "Flammenstöße brechen aus deinen Fingern hervor.",
       "offText": "Deine Hände sind nicht mehr von Flammen umhüllt.",
-      "hitText": "Deine Flammen versengen {0}!"
+      "hitText": "Deine Flammen versengen {0}!",
+      "attackType": "fire"
     },
     {
       "key": "mystictouch",

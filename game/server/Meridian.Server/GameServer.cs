@@ -21,6 +21,8 @@ public sealed record ServerOptions
     public string? RoomLayoutDirectory { get; init; } = Path.Combine(AppContext.BaseDirectory, "data", "rooms");
     /// <summary>Feste Spielstunde statt der Uhr (Tests, Entwicklung); null = Originaluhr.</summary>
     public int? FixedHour { get; init; }
+    /// <summary>Fertigkeiten (data/skills/skills.json).</summary>
+    public SkillBook Skills { get; init; } = SkillBook.Empty;
     /// <summary>Sprüche (data/spells/spells.json).</summary>
     public SpellBook Spells { get; init; } = SpellBook.Empty;
     /// <summary>Gegenstandskatalog und Beutetabellen.</summary>
@@ -58,6 +60,7 @@ public sealed class GameServer
         {
             FixedHour = options.FixedHour,
             Spells = options.Spells,
+            Skills = options.Skills,
         };
         if (options.RoomLayoutDirectory is { } layouts)
             World.LoadGrids(layouts);

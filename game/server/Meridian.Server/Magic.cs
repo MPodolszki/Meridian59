@@ -18,6 +18,8 @@ public sealed record SpellDefinition(string Key, int Sid, string Name, string Ic
     public string Effect { get; init; } = "";
     public int MinDamage { get; init; } = 3;
     public int MaxDamage { get; init; } = 6;
+    /// <summary>Angriffsart der Berührungszauber für Resistenzen ("shock", "holy", "acid", "cold", "fire").</summary>
+    public string? AttackType { get; init; }
     public string? Description { get; init; }
     public string? CastText { get; init; }
     public string? Unnecessary { get; init; }

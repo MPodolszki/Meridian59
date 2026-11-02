@@ -245,7 +245,8 @@ public sealed class Session(int id, TcpClient client, GameServer server)
             }
 
             case GameMessage.SendSkills when _avatar is not null:
-                PostGame(GameReplies.EmptySkills());
+                PostGame(GameReplies.Skills(server.World.KnownSkills(_avatar).Select(k => server.World.ToSkillObject(this, k.Skill)).ToList()));
+                SendSkillStats();
                 break;
 
             case GameMessage.SendEnchantments when _avatar is not null:
@@ -407,7 +408,8 @@ public sealed class Session(int id, TcpClient client, GameServer server)
                 EnsureResource(s);
                 return server.Resources[s];
             }
-            PostGame(CharacterCreation.CharInfo(Rsc, server.World.Spells.All.OrderBy(s => s.School).ThenBy(s => s.Level).ToList()));
+            PostGame(CharacterCreation.CharInfo(Rsc, server.World.Spells.All.OrderBy(s => s.School).ThenBy(s => s.Level).ToList(),
+                server.World.Skills.All.Where(s => s.Level <= 2).OrderBy(s => s.Skid).ToList()));
             return;
         }
         if (sub != CharacterCreation.NewCharInfo)
@@ -535,6 +537,11 @@ public sealed class Session(int id, TcpClient client, GameServer server)
             SendSpellStats();
             return;
         }
+        if (group == 4)
+        {
+            SendSkillStats();
+            return;
+        }
         if (group != 1)
         {
             PostGame(GameReplies.StatGroup(group, []));
@@ -587,6 +594,19 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         PostGame(GameReplies.StatGroupList(3, known.Select((k, i) =>
         {
             var o = server.World.ToSpellObject(this, k.Spell);
+            return ((byte)(i + 1), o.NameRsc, o.Id, k.Ability, o.Appearance.IconRsc);
+        }).ToList()));
+    }
+
+    /// <summary>Gruppe 4: je Fertigkeit Name, Objekt, Fähigkeit in %, Icon (SendStatSkill).</summary>
+    public void SendSkillStats()
+    {
+        if (_avatar is null)
+            return;
+        var known = server.World.KnownSkills(_avatar);
+        PostGame(GameReplies.StatGroupList(4, known.Select((k, i) =>
+        {
+            var o = server.World.ToSkillObject(this, k.Skill);
             return ((byte)(i + 1), o.NameRsc, o.Id, k.Ability, o.Appearance.IconRsc);
         }).ToList()));
     }

@@ -22,7 +22,11 @@ public sealed record SavedCharacter
 
 /// <summary>Magie eines Charakters (als JSON in characters.magic).</summary>
 public sealed record SavedMagic(Attributes Attributes, int Karma, int Mana, int MaxMana,
-    Dictionary<int, int> Spells, Dictionary<int, int> SchoolCasts);
+    Dictionary<int, int> Spells, Dictionary<int, int> SchoolCasts)
+{
+    /// <summary>Fertigkeiten (SKID → Fähigkeit %); fehlt in älteren Ständen.</summary>
+    public Dictionary<int, int> Skills { get; init; } = new();
+}
 
 /// <summary>Charakterprofil (als JSON in characters.profile).</summary>
 public sealed record SavedProfile(string? Name, string Description, Appearance Appearance, bool Created);

@@ -1,0 +1,141 @@
+{
+  "_hinweis": "Fertigkeiten aus kod/object/passive/skill (SKID, Stufe, viChance_to_Increase, Bezugswert, Exertion); Texte eigene Übersetzung. Siehe docs/combat-original.md.",
+  "skills": [
+    {
+      "key": "dodge",
+      "skid": 401,
+      "name": "Ausweichen",
+      "icon": "dodgeico.bgf",
+      "level": 2,
+      "chanceToIncrease": 20,
+      "requisite": "agility",
+      "exertion": 0,
+      "description": "Waffenkunst Stufe 2: Hieben im Kampf ausweichen und so länger am Leben bleiben."
+    },
+    {
+      "key": "parry",
+      "skid": 402,
+      "name": "Parieren",
+      "icon": "parryico.bgf",
+      "level": 4,
+      "chanceToIncrease": 20,
+      "requisite": "agility",
+      "exertion": 0,
+      "description": "Waffenkunst Stufe 4: Schläge mit der eigenen Waffe abwehren."
+    },
+    {
+      "key": "block",
+      "skid": 404,
+      "name": "Blocken",
+      "icon": "iblock.bgf",
+      "level": 1,
+      "chanceToIncrease": 60,
+      "requisite": "agility",
+      "exertion": 0,
+      "description": "Waffenkunst Stufe 1: Schläge mit dem Schild abfangen."
+    },
+    {
+      "key": "slash",
+      "skid": 421,
+      "name": "Hieb",
+      "icon": "slashico.bgf",
+      "level": 1,
+      "chanceToIncrease": 20,
+      "requisite": "agility",
+      "exertion": 2,
+      "description": "Waffenkunst Stufe 1: Die Grundlage jedes bewaffneten Kampfes."
+    },
+    {
+      "key": "punch",
+      "skid": 430,
+      "name": "Faustschlag",
+      "icon": "punchico.bgf",
+      "level": 1,
+      "chanceToIncrease": 60,
+      "requisite": "agility",
+      "exertion": 5,
+      "description": "Waffenkunst Stufe 1: Kämpfen mit bloßen Fäusten."
+    },
+    {
+      "key": "brawling",
+      "skid": 450,
+      "name": "Raufen",
+      "icon": "brawlico.bgf",
+      "level": 2,
+      "chanceToIncrease": 25,
+      "requisite": "might",
+      "exertion": 0,
+      "description": "Waffenkunst Stufe 2: Wuchtige Schläge ohne Waffe."
+    },
+    {
+      "key": "sword",
+      "skid": 451,
+      "name": "Schwertkampf",
+      "icon": "fenceico.bgf",
+      "level": 3,
+      "chanceToIncrease": 20,
+      "requisite": "aim",
+      "exertion": 0,
+      "description": "Waffenkunst Stufe 3: Umgang mit dem Langschwert."
+    },
+    {
+      "key": "mace",
+      "skid": 452,
+      "name": "Streitkolbenkampf",
+      "icon": "maceico.bgf",
+      "level": 1,
+      "chanceToIncrease": 40,
+      "requisite": "might",
+      "exertion": 0,
+      "description": "Waffenkunst Stufe 1: Umgang mit dem Streitkolben."
+    },
+    {
+      "key": "scimitar",
+      "skid": 453,
+      "name": "Krummsäbelkampf",
+      "icon": "scimico.bgf",
+      "level": 4,
+      "chanceToIncrease": 20,
+      "requisite": "agility",
+      "exertion": 0,
+      "description": "Waffenkunst Stufe 4: Umgang mit dem Krummsäbel."
+    },
+    {
+      "key": "hammer",
+      "skid": 454,
+      "name": "Hammerkampf",
+      "icon": "hammrico.bgf",
+      "level": 3,
+      "chanceToIncrease": 20,
+      "requisite": "might",
+      "exertion": 0,
+      "description": "Waffenkunst Stufe 3: Umgang mit dem Kriegshammer."
+    },
+    {
+      "key": "axe",
+      "skid": 455,
+      "name": "Axtkampf",
+      "icon": "axeico.bgf",
+      "level": 3,
+      "chanceToIncrease": 20,
+      "requisite": "might",
+      "exertion": 0,
+      "description": "Waffenkunst Stufe 3: Umgang mit der Axt."
+    },
+    {
+      "key": "shortsword",
+      "skid": 457,
+      "name": "Kurzschwertkampf",
+      "icon": "shswdico.bgf",
+      "level": 2,
+      "chanceToIncrease": 60,
+      "requisite": "aim",
+      "exertion": 0,
+      "description": "Waffenkunst Stufe 2: Umgang mit dem Kurzschwert."
+    }
+  ],
+  "startingSkills": [
+    "punch",
+    "slash"
+  ]
+}

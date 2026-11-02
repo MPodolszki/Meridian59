@@ -81,12 +81,15 @@ string itemPath = Path.Combine(Path.GetDirectoryName(worldPath)!, "..", "items",
 var items = File.Exists(itemPath) ? ItemCatalog.Load(itemPath) : ItemCatalog.Empty;
 string spellPath = Path.Combine(Path.GetDirectoryName(worldPath)!, "..", "spells", "spells.json");
 var spells = File.Exists(spellPath) ? SpellBook.Load(spellPath) : SpellBook.Empty;
+string skillPath = Path.Combine(Path.GetDirectoryName(worldPath)!, "..", "skills", "skills.json");
+var skills = File.Exists(skillPath) ? SkillBook.Load(skillPath) : SkillBook.Empty;
 
 var server = new GameServer(new ServerOptions
 {
     Dialogs = dialogs,
     Items = items,
     Spells = spells,
+    Skills = skills,
     Shops = shops,
     Port = port,
     World = world,

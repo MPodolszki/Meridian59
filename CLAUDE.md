@@ -63,4 +63,5 @@ Häuser mit Fachwerkfassaden und Innenräume mit Decke/Lampen im Client (client/
 Original-Client (Steam, Wine) getestet: Login, Welt, Chat, Anschauen, Kaufen, Anbieten, Bank, Türen, Kampf, Beute gehen (original-client-test.md).
 Magie erster Umfang: Charakterwerte, Mana, Zaubern, 4 Sprüche, Lernen (docs/magic.md).
 Charaktererstellung wie im Original, im Original-Client getestet (docs/character.md).
-Offen: Charaktererstellung im Godot-Client, weitere Sprüche, Fertigkeiten, weitere Gebiete außer Tos.
+Kampf nach Original-Formeln mit Fertigkeiten (docs/combat.md, combat-original.md).
+Offen: Animationen (realistischer), Charaktererstellung im Godot-Client, persönliche Verzauberungen, weitere Gebiete außer Tos.

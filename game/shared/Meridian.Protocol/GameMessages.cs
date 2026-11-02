@@ -183,6 +183,10 @@ public static class GameReplies
         return w.ToArray();
     }
 
+    /// <summary>BP_SKILLS: u16 n, object_desc[n] (user.kod ToCliSkills).</summary>
+    public static byte[] Skills(IReadOnlyCollection<RoomObject> skills) =>
+        WriteObjectList(new PacketWriter((byte)GameMessage.Skills), skills).ToArray();
+
     /// <summary>BP_SPELL_ADD: neu gelernter Spruch.</summary>
     public static byte[] SpellAdd(RoomObject spell, byte targets, byte school) =>
         WriteObjectDesc(new PacketWriter((byte)GameMessage.SpellAdd), spell).U8(targets).U8(school).ToArray();
