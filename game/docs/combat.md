@@ -31,7 +31,11 @@ aber stark vereinfacht. Werte in `server/Meridian.Server/Combat.cs`.
   Server unter `data/rooms`) und sucht per A* (8 Richtungen, keine Ecken schneiden) einen Weg über begehbare
   Felder (höchstens eine Stufe über dem Boden am Ankunftspunkt). Unerreichbare Ziele: Monster bleibt stehen.
   **Abweichung:** Das Original hat kein A*; Monster gehen dort feldweise in Zielrichtung, und der Server
-  verwirft Schritte durch Wände (blakserv roomdata.c). Spielerbewegungen prüft der Server noch nicht.
+  verwirft Schritte durch Wände (blakserv roomdata.c). 
+- **Spielerbewegung:** wie im Original nicht gegen Wände geprüft (room.kod: „already checked by client“).
+  Teleport-Erkennung wie user.kod: höchstens einmal pro Sekunde verglichen; ≥ 200 Felder² im selben Raum in
+  weniger als 3 s (außer am Ankunftspunkt) → Warnung im Log (max. 25 je Spieler) und Anstrengung
+  Felder² × 2.
 
 Protokoll:
 - Lebenspunkte: `BP_STAT` Gruppe 1, Nr. 1 (wie `user_stat_health`).

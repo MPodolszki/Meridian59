@@ -18,6 +18,12 @@ public sealed class Avatar(uint id, string name, Session session)
     public DateTime LastCombat { get; set; }
     public DateTime NextRegen { get; set; }
     public DateTime NextRest { get; set; }
+    /// <summary>Teleport-Erkennung wie user.kod (piMoveOldRow/Col/Room, piLastMoveUpdateTime, piCheaterLogs).</summary>
+    public int MoveOldRoom { get; set; }
+    public int MoveOldRow { get; set; }
+    public int MoveOldCol { get; set; }
+    public long LastMoveSecond { get; set; }
+    public int CheaterLogs { get; set; }
 
     /// <summary>Besitz (Inventar, Bankkonten) des Charakters.</summary>
     public CharacterState State { get; set; } = new();
@@ -231,6 +237,7 @@ public sealed partial class World
             }
             avatar.Row = row;
             avatar.Col = col;
+            DetectTeleport(avatar);
             // user.kod: Anstrengung pro Bewegung = EXERTION_PER_MOVE × (Tempo·5/6)²
             int s56 = speed * 5 / 6;
             AddExertion(avatar, CombatRules.ExertionPerMove * s56 * s56);
@@ -238,6 +245,36 @@ public sealed partial class World
             Broadcast(avatar, GameReplies.Move(avatar.Id, row, col, (byte)(speed | 0x80)));
             return null;
         }
+    }
+
+    /// <summary>MAX_LOGGED_THRESHOLD: so oft wird ein Spieler höchstens protokolliert.</summary>
+    public const int MaxCheaterLogs = 25;
+
+    /// <summary>
+    /// Teleport-Erkennung wie user.kod UserMove: Bewegungen werden wie im Original nicht gegen Wände geprüft
+    /// („already checked by client“). Höchstens einmal pro Sekunde wird verglichen; liegen ≥ 200 Felder² zwischen
+    /// zwei Prüfungen im selben Raum bei weniger als 3 s Abstand, wird das protokolliert und kostet Ausdauer.
+    /// </summary>
+    private void DetectTeleport(Avatar a)
+    {
+        long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        long delta = now - a.LastMoveSecond;
+        if (a.CheaterLogs < MaxCheaterLogs && a.LastMoveSecond != now)
+        {
+            int row = a.Row / 64, col = a.Col / 64, room = a.Room.Definition.Id;
+            int squared = (a.MoveOldRow - row) * (a.MoveOldRow - row) + (a.MoveOldCol - col) * (a.MoveOldCol - col);
+            var tp = a.Room.Definition.Teleport;
+            if (room == a.MoveOldRoom && (tp is null || row != tp.Row && col != tp.Col) && squared >= 200 && delta < 3)
+            {
+                Log.Warn($"ALERT! {a.Name} bewegte sich {squared} Felder² in {delta} s ({a.MoveOldRow},{a.MoveOldCol}) → ({row},{col}) in Raum {room}. Möglicher Speedhacker.");
+                a.CheaterLogs++;
+                AddExertion(a, squared * CombatRules.ExertionPerMove);
+            }
+            a.MoveOldRow = row;
+            a.MoveOldCol = col;
+            a.MoveOldRoom = room;
+        }
+        a.LastMoveSecond = now;
     }
 
     /// <summary>Rand-Ausgang wie KOD: Zeile &gt; Zeilenzahl → SOUTH, &lt; 1 → NORTH, Spalte &gt; Spaltenzahl → EAST, &lt; 1 → WEST.</summary>
@@ -634,6 +671,10 @@ public sealed partial class World
         avatar.Room = room;
         avatar.Row = row;
         avatar.Col = col;
+        // Raumwechsel/Teleport ist kein Speedhack.
+        avatar.MoveOldRoom = room.Definition.Id;
+        avatar.MoveOldRow = row / 64;
+        avatar.MoveOldCol = col / 64;
         foreach (var other in room.Avatars.Values)
         {
             other.Session.EnsureResource(avatar.Name);

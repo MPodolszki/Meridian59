@@ -58,5 +58,5 @@ Gegenstände benutzen/ausrüsten mit Waffenschaden, Rüstung, Essen und Ausdauer
 Handel zwischen Spielern (trade.md).
 Tag-Nacht-Wechsel mit Originaluhr und Raumlicht (daynight.md).
 Monster-Wegfindung per A* auf den Raum-Höhenrastern (combat.md).
-Offen: Spielerbewegung serverseitig prüfen,
-schönere Häuser/Innenräume, Original-Client-Test.
+Teleport-Erkennung für Spielerbewegungen wie im Original (combat.md).
+Offen: schönere Häuser/Innenräume, Original-Client-Test.
