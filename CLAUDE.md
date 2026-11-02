@@ -64,4 +64,5 @@ Original-Client (Steam, Wine) getestet: Login, Welt, Chat, Anschauen, Kaufen, An
 Magie erster Umfang: Charakterwerte, Mana, Zaubern, 4 Sprüche, Lernen (docs/magic.md).
 Charaktererstellung wie im Original, im Original-Client getestet (docs/character.md).
 Kampf nach Original-Formeln mit Fertigkeiten (docs/combat.md, combat-original.md).
-Offen: Animationen (realistischer), Charaktererstellung im Godot-Client, persönliche Verzauberungen, weitere Gebiete außer Tos.
+Godot-Client: echte Animationen (Quaternius CC0, retargetet), Türen per Linksklick, flüssige Bewegung.
+Offen: Charaktererstellung im Godot-Client, Springen (Leertaste), persönliche Verzauberungen, weitere Gebiete außer Tos.
