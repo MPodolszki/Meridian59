@@ -563,6 +563,7 @@ public partial class Main : Node3D
             return;
 
         UpdateOwnAvatar(self, (float)delta);
+        UpdateExitHint(self);
         UpdateCamera(self);
         SendPositionIfNeeded(self);
     }
@@ -616,6 +617,26 @@ public partial class Main : Node3D
         var moved = new Vector2(pos.X - self.Position.X, pos.Z - self.Position.Z).Length();
         self.Position = pos;
         CharacterModel.Animate(self, moved / Mathf.Max(delta, 1e-4f));
+    }
+
+    private string? _exitHint;
+
+    /// <summary>Hinweis, wenn man auf einem Ausgangsfeld steht.</summary>
+    private void UpdateExitHint(Node3D self)
+    {
+        if (_layout is null)
+            return;
+        var (row, col) = CellAt(self.Position);
+        string? target = null;
+        foreach (var e in _layout.Exits)
+            if (e.Row == row && e.Col == col)
+                target = e.Target;
+        string? hint = target is null ? null : $"Leertaste: hinausgehen{(target.Length > 0 ? " → " + target : "")}";
+        if (hint == _exitHint)
+            return;
+        _exitHint = hint;
+        if (hint is not null)
+            _status.Text = hint;
     }
 
     /// <summary>Leertaste wie im Original: Tür/Ausgang auf dem aktuellen Feld benutzen.

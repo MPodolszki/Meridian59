@@ -1,4 +1,4 @@
-{"source": "tosgrey.roo", "rows": 7, "cols": 7, "ceiling": 0, "floor": [
+{"source": "tosgrey.roo", "rows": 7, "cols": 7, "ceiling": 0, "exits": [[4, 7, "The Streets of Tos"], [5, 7, "The Streets of Tos"]], "locked": [], "floor": [
     [-1,-1,-1,-1,-1,-1,-1],
     [-1,-1,-1,-1,-1,-1,-1],
     [-1,-1,-1,-1,-1,-1,-1],

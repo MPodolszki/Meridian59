@@ -1,4 +1,4 @@
-{"source": "tosarena.roo", "rows": 24, "cols": 24, "ceiling": 546, "floor": [
+{"source": "tosarena.roo", "rows": 24, "cols": 24, "ceiling": 546, "exits": [[4, 6, "The Arena of Kraanan"], [4, 7, "The Arena of Kraanan"], [5, 7, "The Arena of Kraanan"], [6, 4, "The Arena of Kraanan"], [7, 4, "The Arena of Kraanan"], [7, 5, "The Arena of Kraanan"], [18, 4, "The Arena of Kraanan"], [18, 5, "The Arena of Kraanan"], [19, 4, "The Arena of Kraanan"], [20, 7, "The Arena of Kraanan"], [21, 6, "The Arena of Kraanan"], [21, 7, "The Arena of Kraanan"]], "locked": [], "floor": [
     [128,128,128,128,128,128,440,440,440,440,440,440,440,440,440,440,440,440,128,128,128,128,128,128],
     [128,128,128,128,128,440,392,392,392,392,392,392,392,392,392,392,392,392,440,128,128,128,128,128],
     [128,128,128,128,440,392,344,344,344,344,344,344,344,344,344,344,344,344,392,440,128,128,128,128],

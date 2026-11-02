@@ -1,4 +1,4 @@
-{"source": "tossmith.roo", "rows": 9, "cols": 8, "ceiling": 80, "floor": [
+{"source": "tossmith.roo", "rows": 9, "cols": 8, "ceiling": 80, "exits": [[2, 2, "The Streets of Tos"], [2, 3, "The Streets of Tos"]], "locked": [], "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,20,20,20,0,0,20,-1],
     [-1,0,20,20,20,20,20,-1],

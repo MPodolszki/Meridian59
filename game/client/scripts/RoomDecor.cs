@@ -71,6 +71,7 @@ public static class RoomDecor
             BuildFacades(root, layout, cell);
         else
             BuildInterior(root, layout, cell, wallHeight);
+        BuildDoors(root, layout, cell);
         return root;
     }
 
@@ -256,6 +257,78 @@ public static class RoomDecor
         }
 
         foreach (var b in new[] { wainscot, beams })
+            if (b.Build() is { } node)
+                root.AddChild(node);
+    }
+
+    // ---------------------------------------------------------------- Türen
+
+    /// <summary>Türen an den Ausgängen (auf der Wand neben dem Ausgangsfeld) mit leuchtender Schwelle und dem Ziel
+    /// als Schrift; verschlossene Türen ohne Leuchten.</summary>
+    private static void BuildDoors(Node3D root, RoomLayout layout, float cell)
+    {
+        var wood = Textured("planks", 1.5f, new Color(0.38f, 0.24f, 0.13f));
+        var frame = Textured("planks", 1.5f, new Color(0.22f, 0.14f, 0.08f));
+        var glow = new StandardMaterial3D
+        {
+            AlbedoColor = new Color(1f, 0.8f, 0.4f, 0.55f),
+            Transparency = BaseMaterial3D.TransparencyEnum.Alpha,
+            EmissionEnabled = true,
+            Emission = new Color(1f, 0.75f, 0.35f),
+            EmissionEnergyMultiplier = 1.5f,
+            ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded,
+        };
+        var doors = new Batch(new BoxMesh { Size = Vector3.One }, wood);
+        var frames = new Batch(new BoxMesh { Size = Vector3.One }, frame);
+        var marks = new Batch(new CylinderMesh { TopRadius = 0.5f, BottomRadius = 0.5f, Height = 1f }, glow);
+
+        void Place(int r, int c, bool open, string target)
+        {
+            float floor = Mathf.Max(layout.HeightMeters(Math.Max(layout.FloorAt(r, c), 0), cell), 0f);
+            var center = new Vector3((c + 1.5f) * cell, floor, (r + 1.5f) * cell);
+            // Wand suchen: Nachbar, der nicht begehbar ist (bevorzugt massive Wand).
+            (int Dr, int Dc)? wall = null;
+            foreach (var (dr, dc) in new[] { (0, 1), (0, -1), (1, 0), (-1, 0) })
+            {
+                int nr = r + dr, nc = c + dc;
+                bool outside = nr < 0 || nc < 0 || nr >= layout.Rows || nc >= layout.Cols;
+                if (outside || !layout.IsWalkable(nr, nc))
+                {
+                    wall = (dr, dc);
+                    if (outside || layout.FloorAt(nr, nc) < 0)
+                        break;
+                }
+            }
+            if (wall is { } w)
+            {
+                var normal = new Vector3(-w.Dc, 0, -w.Dr);          // zeigt vom Wandstück ins Feld
+                var tangent = Vector3.Up.Cross(normal);
+                var basis = new Basis(tangent, Vector3.Up, normal);
+                var face = center - normal * (cell / 2f - 0.06f);
+                doors.Add(new Transform3D(Local(basis, new Vector3(1.3f, 2.3f, 0.12f)), face + Vector3.Up * 1.15f));
+                frames.Add(new Transform3D(Local(basis, new Vector3(1.6f, 0.18f, 0.18f)), face + Vector3.Up * 2.38f));
+                frames.Add(new Transform3D(Local(basis, new Vector3(0.15f, 2.4f, 0.18f)), face + tangent * 0.72f + Vector3.Up * 1.2f));
+                frames.Add(new Transform3D(Local(basis, new Vector3(0.15f, 2.4f, 0.18f)), face - tangent * 0.72f + Vector3.Up * 1.2f));
+            }
+            if (!open)
+                return;
+            marks.Add(new Transform3D(Basis.FromScale(new Vector3(1.4f, 0.03f, 1.4f)), center + Vector3.Up * 0.03f));
+            if (target.Length > 0)
+                root.AddChild(new Label3D
+                {
+                    Text = "→ " + target,
+                    Position = center + Vector3.Up * 2.8f,
+                    Modulate = new Color(1f, 0.85f, 0.5f),
+                    FontSize = 28,
+                    Billboard = BaseMaterial3D.BillboardModeEnum.Enabled,
+                });
+        }
+
+        foreach (var (r, c, target) in layout.Exits)
+            Place(r, c, open: true, target);
+        foreach (var (r, c) in layout.Locked)
+            Place(r, c, open: false, "");
+        foreach (var b in new[] { doors, frames, marks })
             if (b.Build() is { } node)
                 root.AddChild(node);
     }

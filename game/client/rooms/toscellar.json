@@ -1,4 +1,4 @@
-{"source": "toscellar.roo", "rows": 9, "cols": 10, "ceiling": 288, "floor": [
+{"source": "toscellar.roo", "rows": 9, "cols": 10, "ceiling": 288, "exits": [[1, 4, "Familiars"], [2, 4, "Familiars"], [4, 1, "Secret Passage"]], "locked": [], "floor": [
     [-1,-1,-1,158,158,188,128,100,138,-1],
     [-1,-1,-1,158,158,188,128,100,138,138],
     [-1,-1,-1,-1,178,178,178,178,178,178],

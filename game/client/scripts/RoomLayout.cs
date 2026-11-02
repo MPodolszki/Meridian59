@@ -23,6 +23,10 @@ public sealed class RoomLayout
     public int Ceiling { get; }
     private readonly int[,] _floor;
 
+    /// <summary>Ausgänge (0-basiertes Feld, Zielraum) und verschlossene Türen aus tools/export_exits.py.</summary>
+    public List<(int Row, int Col, string Target)> Exits { get; } = new();
+    public List<(int Row, int Col)> Locked { get; } = new();
+
     private RoomLayout(int rows, int cols, int ceiling, int[,] floor)
     {
         Rows = rows;
@@ -55,7 +59,14 @@ public sealed class RoomLayout
                 floor[r, c++] = v.GetInt32();
             r++;
         }
-        return new RoomLayout(rows, cols, root.GetProperty("ceiling").GetInt32(), floor);
+        var layout = new RoomLayout(rows, cols, root.GetProperty("ceiling").GetInt32(), floor);
+        if (root.TryGetProperty("exits", out var exits))
+            foreach (var e in exits.EnumerateArray())
+                layout.Exits.Add((e[0].GetInt32() - 1, e[1].GetInt32() - 1, e.GetArrayLength() > 2 ? e[2].GetString() ?? "" : ""));
+        if (root.TryGetProperty("locked", out var locked))
+            foreach (var e in locked.EnumerateArray())
+                layout.Locked.Add((e[0].GetInt32() - 1, e[1].GetInt32() - 1));
+        return layout;
     }
 
     /// <summary>Setzt die Bezugshöhe auf den Boden des Felds, auf dem der Spieler steht.</summary>

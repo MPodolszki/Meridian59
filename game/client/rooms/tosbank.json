@@ -1,4 +1,4 @@
-{"source": "tosbank.roo", "rows": 9, "cols": 9, "ceiling": 96, "floor": [
+{"source": "tosbank.roo", "rows": 9, "cols": 9, "ceiling": 96, "exits": [[6, 9, "East Ende"]], "locked": [], "floor": [
     [-1,-1,-1,0,0,-1,-1,-1,-1],
     [-1,32,32,32,32,32,0,0,-1],
     [0,32,32,32,32,32,0,0,-1],
