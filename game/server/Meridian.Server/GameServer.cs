@@ -17,6 +17,8 @@ public sealed record ServerOptions
     public int? RandomSeed { get; init; }
     /// <summary>Dialogtexte der NPCs.</summary>
     public DialogFile Dialogs { get; init; } = DialogFile.Empty;
+    /// <summary>Feste Spielstunde statt der Uhr (Tests, Entwicklung); null = Originaluhr.</summary>
+    public int? FixedHour { get; init; }
     /// <summary>Gegenstandskatalog und Beutetabellen.</summary>
     public ItemCatalog Items { get; init; } = ItemCatalog.Empty;
     /// <summary>Händler (Läden, Ankauf, Bank) je NPC-Klasse.</summary>
@@ -48,7 +50,10 @@ public sealed class GameServer
         var world = options.World;
         if (options.ClientResourceDir is { } dir)
             world = world with { Rooms = world.Rooms.Select(r => WithSecurityFromClient(r, dir)).ToList() };
-        World = new World(world, Resources, options.PlayerIcon, options.Dialogs, options.RandomSeed, options.Items, options.Shops);
+        World = new World(world, Resources, options.PlayerIcon, options.Dialogs, options.RandomSeed, options.Items, options.Shops)
+        {
+            FixedHour = options.FixedHour,
+        };
         if (options.Database is { } database)
         {
             Store = new GameStore(database);

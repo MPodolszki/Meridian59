@@ -33,6 +33,8 @@ public sealed record RoomDefinition(int Id, string Name, string Roo)
     public int? Rows { get; init; }
     public int? Cols { get; init; }
     public int? BaseLight { get; init; }
+    /// <summary>Außenanteil 0..10 (KOD piOutside_factor, Standard OUTDOORS_COMPLETE): wie stark das Tageslicht wirkt.</summary>
+    public int OutsideFactor { get; init; } = 10;
     public bool Outdoors { get; init; }
     /// <summary>Ankunftspunkt (KOD viTeleport_Row/Col).</summary>
     public GridPos? Teleport { get; init; }

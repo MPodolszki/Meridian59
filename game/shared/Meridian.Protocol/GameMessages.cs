@@ -151,6 +151,9 @@ public static class GameReplies
     public const ushort AttackGroup = 2;
     public const ushort DeathGroup = 9;
 
+    /// <summary>BP_LIGHT_AMBIENT: neues Umgebungslicht des Raums (0..255).</summary>
+    public static byte[] LightAmbient(byte light) => new PacketWriter((byte)GameMessage.LightAmbient).U8(light).ToArray();
+
     public static byte[] Remove(uint id) => new PacketWriter((byte)GameMessage.Remove).U32(id).ToArray();
 
     /// <summary>BP_MOVE; speed 0 = Teleport, Bit 7 = in Laufrichtung drehen.</summary>

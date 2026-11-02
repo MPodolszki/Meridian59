@@ -49,6 +49,8 @@ public abstract record ClientEvent
     public sealed record ObjectRemoved(uint Id) : ClientEvent;
     public sealed record Chat(string Text) : ClientEvent;
     public sealed record HealthChanged(int Hp, int MaxHp) : ClientEvent;
+    /// <summary>Umgebungslicht des Raums 0..255 (BP_PLAYER, BP_LIGHT_AMBIENT; Tageszeit).</summary>
+    public sealed record AmbientLight(byte Light) : ClientEvent;
     /// <summary>Ausdauer (BP_STAT Gruppe 1, Nr. 3).</summary>
     public sealed record VigorChanged(int Vigor, int MaxVigor) : ClientEvent;
     /// <summary>Einmalige Animation eines Objekts (BP_CHANGE): Angriff oder Sterben.</summary>
@@ -320,8 +322,11 @@ public sealed class ClientSession : IDisposable
                 RoomId = r.U32();
                 uint roomFile = r.U32();
                 uint roomName = r.U32();
+                r.U32();                        // Security
+                byte ambient = r.U8();
                 ClearRoom();
                 Enqueue(new ClientEvent.EnteredRoom(PlayerId, Resolve(roomName), Resolve(roomFile)));
+                Enqueue(new ClientEvent.AmbientLight(ambient));
                 break;
             }
             case GameMessage.RoomContents:
@@ -397,6 +402,9 @@ public sealed class ClientSession : IDisposable
                 UpdateInventory(list => { list.RemoveAll(x => x.Id == o.Id); list.Add(o); });
                 break;
             }
+            case GameMessage.LightAmbient:
+                Enqueue(new ClientEvent.AmbientLight(r.U8()));
+                break;
             case GameMessage.Use:
             case GameMessage.Unuse:
             {

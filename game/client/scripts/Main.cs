@@ -30,6 +30,8 @@ public partial class Main : Node3D
     private Label _vigorText = null!;
 
     private Camera3D _camera = null!;
+    private DirectionalLight3D _sun = null!;
+    private Godot.Environment _environment = null!;
     private MeshInstance3D _grass = null!;
     private Node3D? _roomGeometry;
     private RoomLayout? _layout;
@@ -133,7 +135,9 @@ public partial class Main : Node3D
             AmbientLightSource = Godot.Environment.AmbientSource.Sky,
         };
         AddChild(new WorldEnvironment { Environment = env });
-        AddChild(new DirectionalLight3D { RotationDegrees = new Vector3(-50, 30, 0), ShadowEnabled = true });
+        _environment = env;
+        _sun = new DirectionalLight3D { RotationDegrees = new Vector3(-50, 30, 0), ShadowEnabled = true };
+        AddChild(_sun);
 
         // Boden über die ganze Raumfläche (Räume sind bis ca. 100 Felder = 250 m groß), Gitter alle 1 Feld.
         var ground = new MeshInstance3D
@@ -263,6 +267,9 @@ public partial class Main : Node3D
                 _health.Value = hp.Hp;
                 _healthText.Text = $"Lebenspunkte {hp.Hp} / {hp.MaxHp}";
                 break;
+            case ClientEvent.AmbientLight light:
+                ApplyAmbientLight(light.Light);
+                break;
             case ClientEvent.VigorChanged v:
                 _vigor.Visible = _vigorText.Visible = true;
                 _vigor.MaxValue = v.MaxVigor;
@@ -323,6 +330,23 @@ public partial class Main : Node3D
                 _floorItems.Clear();
                 _inventoryPanel.Visible = _shopPanel.Visible = _offerPanel.Visible = _incomingPanel.Visible = false;
                 break;
+        }
+    }
+
+    /// <summary>Umgebungslicht des Servers (0..255, abhängig von Tageszeit und Raum) auf Sonne und Himmel anwenden.
+    /// Unter ca. 100 wird es Nacht: Sonne flach und schwach, Himmel dunkelblau.</summary>
+    private void ApplyAmbientLight(byte light)
+    {
+        // Straßen von Tos: nachts ca. 120, mittags 255 → Bereich 0,45..0,95 auf Nacht..Tag abbilden.
+        float t = Mathf.SmoothStep(0.45f, 0.95f, Mathf.Clamp(light / 255f, 0f, 1f));
+        _sun.LightEnergy = Mathf.Lerp(0.04f, 1.2f, t);
+        _sun.RotationDegrees = new Vector3(Mathf.Lerp(-8f, -55f, t), 30, 0);
+        _environment.AmbientLightEnergy = Mathf.Lerp(0.3f, 1f, t);
+        if (_environment.Sky?.SkyMaterial is ProceduralSkyMaterial sky)
+        {
+            sky.SkyTopColor = new Color(0.02f, 0.03f, 0.08f).Lerp(new Color(0.38f, 0.45f, 0.55f), t);
+            sky.SkyHorizonColor = new Color(0.05f, 0.06f, 0.12f).Lerp(new Color(0.65f, 0.67f, 0.7f), t);
+            sky.GroundHorizonColor = sky.SkyHorizonColor;
         }
     }
 

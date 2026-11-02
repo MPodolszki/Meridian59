@@ -13,6 +13,7 @@
       "music": "tos.mid",
       "baseLight": 209,
       "outdoors": true,
+      "outsideFactor": 10,
       "teleport": {
         "row": 60,
         "col": 18
@@ -638,6 +639,7 @@
       "music": "smithy.mid",
       "baseLight": 100,
       "outdoors": false,
+      "outsideFactor": 0,
       "teleport": {
         "row": 3,
         "col": 3
@@ -743,6 +745,7 @@
       "music": "bar.mid",
       "baseLight": 164,
       "outdoors": false,
+      "outsideFactor": 5,
       "teleport": {
         "row": 7,
         "col": 8
@@ -930,6 +933,7 @@
       "music": "song02.mid",
       "baseLight": 164,
       "outdoors": false,
+      "outsideFactor": 3,
       "teleport": {
         "row": 7,
         "col": 3
@@ -1101,6 +1105,7 @@
       "music": "bank.mid",
       "baseLight": 164,
       "outdoors": false,
+      "outsideFactor": 3,
       "teleport": {
         "row": 3,
         "col": 6
@@ -1192,6 +1197,7 @@
       "music": "tos.mid",
       "baseLight": 164,
       "outdoors": false,
+      "outsideFactor": 0,
       "teleport": {
         "row": 6,
         "col": 4
@@ -1280,6 +1286,7 @@
       "music": "tos.mid",
       "baseLight": 164,
       "outdoors": false,
+      "outsideFactor": 0,
       "teleport": {
         "row": 4,
         "col": 4
@@ -1449,6 +1456,7 @@
       "music": "goodfor.mid",
       "baseLight": 164,
       "outdoors": false,
+      "outsideFactor": 10,
       "teleport": {
         "row": 3,
         "col": 3
@@ -1514,6 +1522,7 @@
       "music": "extra01.mid",
       "baseLight": 164,
       "outdoors": false,
+      "outsideFactor": 0,
       "teleport": {
         "row": 13,
         "col": 7
@@ -1590,6 +1599,7 @@
       "music": "pk_fm.mid",
       "baseLight": 164,
       "outdoors": true,
+      "outsideFactor": 5,
       "teleport": {
         "row": 22,
         "col": 13
@@ -1772,6 +1782,7 @@
       "music": "tos.mid",
       "baseLight": 164,
       "outdoors": true,
+      "outsideFactor": 10,
       "teleport": {
         "row": 27,
         "col": 16
@@ -2612,6 +2623,7 @@
       "music": "marion.mid",
       "baseLight": 124,
       "outdoors": true,
+      "outsideFactor": 8,
       "teleport": {
         "row": 14,
         "col": 18
@@ -2741,6 +2753,7 @@
       "music": "ksong.mid",
       "baseLight": 84,
       "outdoors": false,
+      "outsideFactor": 10,
       "teleport": {
         "row": 13,
         "col": 7
@@ -2805,6 +2818,7 @@
       "music": "main.mid",
       "baseLight": 164,
       "outdoors": false,
+      "outsideFactor": 3,
       "teleport": {
         "row": 5,
         "col": 5
@@ -2877,6 +2891,7 @@
       "music": "tos.mid",
       "baseLight": 164,
       "outdoors": true,
+      "outsideFactor": 10,
       "teleport": {
         "row": 26,
         "col": 30
@@ -3130,6 +3145,7 @@
       "music": "bar.mid",
       "baseLight": 164,
       "outdoors": false,
+      "outsideFactor": 10,
       "teleport": {
         "row": 9,
         "col": 9
@@ -3188,6 +3204,7 @@
       "music": "ksong.mid",
       "baseLight": 164,
       "outdoors": false,
+      "outsideFactor": 10,
       "teleport": {
         "row": 2,
         "col": 7
@@ -3245,6 +3262,7 @@
       "music": "tos.mid",
       "baseLight": 164,
       "outdoors": false,
+      "outsideFactor": 0,
       "teleport": {
         "row": 6,
         "col": 4

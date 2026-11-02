@@ -373,7 +373,7 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         EnsureResource(icon);
         EnsureResource(_avatar.Name);
         var res = server.Resources;
-        byte light = (byte)Math.Clamp(room.BaseLight ?? 200, 0, 255);
+        byte light = server.World.RoomLight(_avatar.Room);
         PostGame(GameReplies.Player(new PlayerInfo(
             _avatar.Id, res[icon], res[_avatar.Name],
             _avatar.Room.ObjectId, res[room.Roo], res[room.Name], room.Security,

@@ -55,5 +55,7 @@ Figuren aus Blender (Zwerg, Zombie, Skelett via game/tools/blender/make_characte
 Inventar (I), Laden (B), Aufheben (G). Nichts davon gegen das Original getestet.
 Accounts und Spielstand der Charaktere in SQLite (meridian.db, decisions.md).
 Gegenstände benutzen/ausrüsten mit Waffenschaden, Rüstung, Essen und Ausdauer (combat.md, trade.md).
-Offen: Handel zwischen Spielern, Tag-Nacht-Wechsel, Wegfindung für Monster,
+Handel zwischen Spielern (trade.md).
+Tag-Nacht-Wechsel mit Originaluhr und Raumlicht (daynight.md).
+Offen: Wegfindung für Monster,
 schönere Häuser/Innenräume, Original-Client-Test.

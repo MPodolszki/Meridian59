@@ -24,8 +24,8 @@ aber stark vereinfacht. Werte in `server/Meridian.Server/Combat.cs`.
   100/max(40, min(100, MaxLP)) ms ein Punkt, auch im Kampf. Stamina gibt es noch nicht, angenommen 25.
 - Tod: Wiederbelebung am Ankunftspunkt von Tos mit vollen Lebenspunkten (kein Verlust).
 - Monster: Friedhof (70) und Krypta (71) mit den Spawn-Punkten und Anteilen aus KOD
-  (85/15 bzw. 80/20 Zombie/Skelett), max. 6 bzw. 5; bis zur Hälfte alle 2 s, danach alle 20 s ein neues. **Abweichung:** im Original nur nachts
-  (Stunde < 5 oder > 21); ohne Tag-Nacht-Wechsel vorerst immer.
+  (85/15 bzw. 80/20 Zombie/Skelett), max. 6 bzw. 5; bis zur Hälfte alle 2 s, danach alle 20 s ein neues.
+  Neue Monster nur nachts (Spielstunde < 5 oder > 21, siehe daynight.md); vorhandene bleiben tagsüber.
 - Monster laufen geradlinig (noch keine Wegfindung/Wände auf dem Server), verfolgen Ziele bis zur doppelten
   Aggro-Reichweite und kehren sonst zum Spawn-Punkt zurück.
 

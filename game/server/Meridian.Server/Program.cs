@@ -4,7 +4,7 @@ using Meridian.Server;
 // Aufruf:
 //   Meridian.Server [--port 5959] [--database meridian.db] [--world data/world/tos.json]
 //                   [--client-dir <resource-ordner>] [--player-icon blank.bgf] [--start-room 52]
-//                   [--save-period 5] [--accounts accounts.json]
+//                   [--save-period 5] [--accounts accounts.json] [--hour 23]
 //   Meridian.Server add-account <name> <passwort> [--admin] [--database meridian.db]
 // --accounts: alte Account-Datei, wird beim ersten Start in die Datenbank übernommen. Ohne --database liegt
 // die Datenbank neben dieser Datei.
@@ -17,6 +17,7 @@ string playerIcon = "blank.bgf";
 int? startRoom = null;
 string? database = null;
 int savePeriodMinutes = 5;
+int? fixedHour = null;   // feste Spielstunde zum Testen (z. B. 23 = Nacht)
 var positional = new List<string>();
 bool admin = false;
 
@@ -33,6 +34,7 @@ for (int i = 0; i < args.Length; i++)
         case "--start-room": startRoom = int.Parse(args[++i]); break;
         case "--database": database = args[++i]; break;
         case "--save-period": savePeriodMinutes = int.Parse(args[++i]); break;
+        case "--hour": fixedHour = int.Parse(args[++i]) % 24; break;
         default: positional.Add(args[i]); break;
     }
 }
@@ -88,6 +90,7 @@ var server = new GameServer(new ServerOptions
     PlayerIcon = playerIcon,
     ClientResourceDir = clientDir,
     Database = database,
+    FixedHour = fixedHour,
     SavePeriod = TimeSpan.FromMinutes(savePeriodMinutes),
 }, accounts);
 server.Start();

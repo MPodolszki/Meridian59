@@ -51,6 +51,7 @@ public sealed class Room(RoomDefinition definition)
     public List<GridPos> Generators { get; } = new();
     public List<(MonsterKind Kind, int Weight)> MonsterTable { get; } = new();
     public int MaxMonsters { get; set; }
+    public bool NightOnly { get; set; }
     public DateTime NextSpawn { get; set; }
 
     /// <summary>KOD-Feinkoordinate für die Mitte eines Grid-Felds.</summary>
@@ -103,6 +104,34 @@ public sealed partial class World
     }
 
     public Room StartRoom { get; }
+
+    /// <summary>Feste Spielstunde (Tests/Entwicklung), sonst die Uhr des Originals.</summary>
+    public int? FixedHour { get; init; }
+    private int _hour = -1;
+
+    public int Hour(DateTime now) => FixedHour ?? GameClock.Hour(now);
+
+    /// <summary>Aktuelles Umgebungslicht eines Raums (für BP_PLAYER).</summary>
+    public byte RoomLight(Room room) => GameClock.RoomLight(room.Definition, Hour(DateTime.UtcNow));
+
+    /// <summary>Neue Spielstunde: Räume mit geändertem Licht melden BP_LIGHT_AMBIENT (room.kod AmbientLightChanged).</summary>
+    private void TickHour(DateTime now)
+    {
+        int hour = Hour(now);
+        if (hour == _hour)
+            return;
+        int old = _hour;
+        _hour = hour;
+        if (old < 0)
+            return;
+        Log.Info($"Spielstunde {hour} (Helligkeit {GameClock.Brightness(hour)} %)");
+        foreach (var room in _rooms.Values)
+        {
+            byte light = GameClock.RoomLight(room.Definition, hour);
+            if (room.Avatars.Count > 0 && light != GameClock.RoomLight(room.Definition, old))
+                BroadcastRoom(room, GameReplies.LightAmbient(light));
+        }
+    }
     public string PlayerIcon { get; }
     public IReadOnlyCollection<Room> Rooms => _rooms.Values;
 
@@ -303,12 +332,14 @@ public sealed partial class World
             graveyard.Generators.AddRange([new(9, 31), new(7, 24), new(6, 7), new(12, 6), new(20, 27), new(23, 16), new(23, 7), new(16, 14)]);
             graveyard.MonsterTable.AddRange([(MonsterKind.Zombie, 85), (MonsterKind.Skeleton, 15)]);
             graveyard.MaxMonsters = 6;
+            graveyard.NightOnly = true;
         }
         if (_rooms.TryGetValue(71, out var crypt))
         {
             crypt.Generators.AddRange([new(11, 7), new(11, 11), new(15, 7), new(15, 11), new(19, 7), new(19, 11)]);
             crypt.MonsterTable.AddRange([(MonsterKind.Zombie, 80), (MonsterKind.Skeleton, 20)]);
             crypt.MaxMonsters = 5;
+            crypt.NightOnly = true;
         }
     }
 
@@ -319,6 +350,7 @@ public sealed partial class World
     {
         lock (_gate)
         {
+            TickHour(now);
             foreach (var room in _rooms.Values)
             {
                 TickSpawns(room, now);
@@ -334,6 +366,9 @@ public sealed partial class World
     private void TickSpawns(Room room, DateTime now)
     {
         if (room.MonsterTable.Count == 0 || now < room.NextSpawn)
+            return;
+        // Friedhof und Krypta: neue Monster nur nachts (TryCreateMonster), vorhandene bleiben.
+        if (room.NightOnly && !GameClock.IsNight(Hour(now)))
             return;
         // Leerer Raum füllt sich schnell bis zur Hälfte, danach ein neues Monster alle 20 s.
         room.NextSpawn = now.AddSeconds(room.Monsters.Count < room.MaxMonsters / 2 ? 2 : 20);
