@@ -3,15 +3,67 @@ namespace Meridian.Protocol;
 /// <summary>Grafische Darstellung eines Objekts: Icon-Ressource und Animation (protocol.md 4.2/4.5).</summary>
 public sealed record ObjectAppearance(uint IconRsc, ushort Group = 1);
 
-/// <summary>Objekt in einem Raum (protocol.md 4.6). Koordinaten in KOD-Feinkoordinaten (Feld*64 + fein).</summary>
+/// <summary>Objekt in einem Raum (protocol.md 4.6). Koordinaten in KOD-Feinkoordinaten (Feld*64 + fein).
+/// Amount != null kennzeichnet Mengen-Gegenstände (KOD NumberItem): Tag 1 in der ID, danach die Menge.</summary>
 public sealed record RoomObject(
     uint Id,
     uint NameRsc,
     ObjectAppearance Appearance,
-    ushort Row,
-    ushort Col,
-    ushort Angle,
-    uint Flags = 0);
+    ushort Row = 0,
+    ushort Col = 0,
+    ushort Angle = 0,
+    uint Flags = 0,
+    uint? Amount = null);
+
+/// <summary>Eintrag einer Ladenliste (BP_BUY_LIST): Gegenstand und Preis pro Stück.</summary>
+public sealed record BuyListEntry(RoomObject Item, uint Price);
+
+/// <summary>Objekt-Flags (OF_* aus include/proto.h).</summary>
+public static class ObjectFlags
+{
+    public const uint Player = 0x00000004;
+    public const uint Attackable = 0x00000008;
+    public const uint Gettable = 0x00000010;
+    public const uint Offerable = 0x00000200;
+    public const uint Buyable = 0x00000400;
+}
+
+/// <summary>Tag in den oberen 4 Bit einer Objekt-ID (CLIENT_TAG_NUMBER): Mengen-Gegenstand, es folgt u32 amount.</summary>
+public static class ObjectId
+{
+    public const uint NumberTag = 0x10000000;
+    public const uint Mask = 0x0FFFFFFF;
+}
+
+/// <summary>Eintrag einer object_list vom Client (C→S): ID und bei Mengen-Gegenständen die gewünschte Menge.</summary>
+public readonly record struct ObjectRef(uint Id, uint? Amount)
+{
+    /// <summary>Liest eine object_list (u16 n, n × {id [, u32 amount]}) wie clientd3d/protocol.c sie sendet.</summary>
+    public static List<ObjectRef> ReadList(ref PacketReader r)
+    {
+        int n = r.U16();
+        var list = new List<ObjectRef>(n);
+        for (int i = 0; i < n; i++)
+        {
+            uint raw = r.U32();
+            list.Add(new ObjectRef(raw & ObjectId.Mask, raw >> 28 == 1 ? r.U32() : null));
+        }
+        return list;
+    }
+
+    public static PacketWriter WriteList(PacketWriter w, IReadOnlyCollection<ObjectRef> list)
+    {
+        w.U16((ushort)list.Count);
+        foreach (var o in list)
+        {
+            if (o.Amount is { } amount)
+                w.U32(o.Id | ObjectId.NumberTag).U32(amount);
+            else
+                w.U32(o.Id);
+        }
+        return w;
+    }
+}
 
 /// <summary>Daten für BP_PLAYER (protocol.md 5.5, exakt 61 Byte Payload).</summary>
 public sealed record PlayerInfo(
@@ -113,17 +165,55 @@ public static class GameReplies
         new PacketWriter((byte)GameMessage.Said)
             .U32(senderId).U32(senderNameRsc).U8((byte)type).U32(formatRsc).Str(text).ToArray();
 
-    public static byte[] Inventory(IReadOnlyCollection<RoomObject> items)
+    public static byte[] Inventory(IReadOnlyCollection<RoomObject> items) =>
+        WriteObjectList(new PacketWriter((byte)GameMessage.Inventory), items).ToArray();
+
+    public static byte[] InventoryAdd(RoomObject o) => WriteObjectDesc(new PacketWriter((byte)GameMessage.InventoryAdd), o).ToArray();
+
+    public static byte[] InventoryRemove(uint id) => new PacketWriter((byte)GameMessage.InventoryRemove).U32(id).ToArray();
+
+    /// <summary>BP_CHANGE ohne Animation, z. B. geänderte Menge eines Gegenstands (KOD SomethingChanged).</summary>
+    public static byte[] Change(RoomObject o)
     {
-        var w = new PacketWriter((byte)GameMessage.Inventory).U16((ushort)items.Count);
+        var w = WriteObjectDesc(new PacketWriter((byte)GameMessage.Change), o);
+        WriteAnimation(w, o.Appearance.Group);
+        return w.U8(0).ToArray();
+    }
+
+    /// <summary>BP_BUY_LIST: Verkäufer, dann je Ware object_desc und Preis (KOD user.kod UserBuy).</summary>
+    public static byte[] BuyList(RoomObject seller, IReadOnlyCollection<BuyListEntry> items)
+    {
+        var w = WriteObjectDesc(new PacketWriter((byte)GameMessage.BuyList), seller).U16((ushort)items.Count);
+        foreach (var e in items)
+            WriteObjectDesc(w, e.Item).U32(e.Price);
+        return w.ToArray();
+    }
+
+    /// <summary>BP_OFFERED: Bestätigung der eigenen angebotenen Gegenstände.</summary>
+    public static byte[] Offered(IReadOnlyCollection<RoomObject> items) =>
+        WriteObjectList(new PacketWriter((byte)GameMessage.Offered), items).ToArray();
+
+    /// <summary>BP_COUNTEROFFER: Gegenangebot des Handelspartners (bei NPCs: Geld).</summary>
+    public static byte[] CounterOffer(IReadOnlyCollection<RoomObject> items) =>
+        WriteObjectList(new PacketWriter((byte)GameMessage.CounterOffer), items).ToArray();
+
+    public static byte[] OfferCanceled() => new PacketWriter((byte)GameMessage.OfferCanceled).ToArray();
+
+    private static PacketWriter WriteObjectList(PacketWriter w, IReadOnlyCollection<RoomObject> items)
+    {
+        w.U16((ushort)items.Count);
         foreach (var o in items)
             WriteObjectDesc(w, o);
-        return w.ToArray();
+        return w;
     }
 
     private static PacketWriter WriteObjectDesc(PacketWriter w, RoomObject o)
     {
-        w.U32(o.Id).U32(o.Appearance.IconRsc).U32(o.NameRsc).U32(o.Flags)
+        if (o.Amount is { } amount)
+            w.U32(o.Id | ObjectId.NumberTag).U32(amount);
+        else
+            w.U32(o.Id);
+        w.U32(o.Appearance.IconRsc).U32(o.NameRsc).U32(o.Flags)
             .U32(0)    // rarity
             .U16(0);   // dlight: keine Lichtquelle
         WriteAnimation(w, o.Appearance.Group);

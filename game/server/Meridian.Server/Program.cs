@@ -64,10 +64,17 @@ Log.Info(File.Exists(worldPath)
 // Dialoge liegen neben der Weltdatei: data/world/tos.json → data/dialog/tos.json
 string dialogPath = Path.Combine(Path.GetDirectoryName(worldPath)!, "..", "dialog", Path.GetFileName(worldPath));
 var dialogs = File.Exists(dialogPath) ? DialogFile.Load(dialogPath) : DialogFile.Empty;
+// Läden: data/shops/tos.json, Gegenstände: data/items/items.json
+string shopPath = Path.Combine(Path.GetDirectoryName(worldPath)!, "..", "shops", Path.GetFileName(worldPath));
+var shops = File.Exists(shopPath) ? ShopFile.Load(shopPath) : ShopFile.Empty;
+string itemPath = Path.Combine(Path.GetDirectoryName(worldPath)!, "..", "items", "items.json");
+var items = File.Exists(itemPath) ? ItemCatalog.Load(itemPath) : ItemCatalog.Empty;
 
 var server = new GameServer(new ServerOptions
 {
     Dialogs = dialogs,
+    Items = items,
+    Shops = shops,
     Port = port,
     World = world,
     PlayerIcon = playerIcon,

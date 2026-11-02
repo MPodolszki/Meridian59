@@ -1,0 +1,509 @@
+{
+  "_hinweis": "Gegenstände mit Werten aus KOD (viValue_average, NumberItem, viItem_type, Icon). Namen/Beschreibungen eigener Text. treasure = plTreasure aus kod/object/passive/trestype (zombiet.kod, tought.kod).",
+  "items": [
+    {
+      "key": "money",
+      "kodClass": "Money",
+      "name": "Schilling",
+      "icon": "coin.bgf",
+      "value": 1,
+      "types": [
+        "money"
+      ],
+      "number": true,
+      "plural": "Schillinge",
+      "description": "Die Silbermünzen von Meridian. Mit ihnen bezahlt man überall."
+    },
+    {
+      "key": "mug",
+      "kodClass": "Mug",
+      "name": "Krug Starkbier",
+      "icon": "mug.bgf",
+      "value": 30,
+      "types": [
+        "food"
+      ],
+      "number": true,
+      "plural": "Krüge Starkbier",
+      "description": "Dunkles, schäumendes Bier aus Paddocks Fass."
+    },
+    {
+      "key": "cheese",
+      "kodClass": "Cheese",
+      "name": "Laib Käse",
+      "icon": "cheese.bgf",
+      "value": 80,
+      "types": [
+        "food"
+      ],
+      "number": true,
+      "plural": "Laibe Käse",
+      "description": "Ein fester, würziger Käse aus dem Umland von Tos."
+    },
+    {
+      "key": "bread",
+      "kodClass": "Bread",
+      "name": "Laib Brot",
+      "icon": "bread.bgf",
+      "value": 60,
+      "types": [
+        "food"
+      ],
+      "number": true,
+      "plural": "Laibe Brot",
+      "description": "Ein knuspriger Laib Brot."
+    },
+    {
+      "key": "waterskin",
+      "kodClass": "Waterskin",
+      "name": "Wasserschlauch",
+      "icon": "watrskin.bgf",
+      "value": 10,
+      "types": [
+        "food"
+      ],
+      "number": true,
+      "plural": "Wasserschläuche",
+      "description": "Ein lederner Schlauch mit frischem Wasser."
+    },
+    {
+      "key": "snack",
+      "kodClass": "Snack",
+      "name": "essbarer Pilz",
+      "icon": "mushroom.bgf",
+      "value": 20,
+      "types": [
+        "food",
+        "reagent"
+      ],
+      "number": true,
+      "plural": "essbare Pilze",
+      "description": "Ein kleiner Pilz, den man bedenkenlos essen kann."
+    },
+    {
+      "key": "inkycap",
+      "kodClass": "InkyCap",
+      "name": "Tintling",
+      "icon": "mushroom.bgf",
+      "value": 250,
+      "types": [
+        "food"
+      ],
+      "number": true,
+      "plural": "Tintlinge",
+      "description": "Ein seltener, dunkel verfärbter Pilz."
+    },
+    {
+      "key": "herbs",
+      "kodClass": "Herbs",
+      "name": "Kraut",
+      "icon": "herb.bgf",
+      "value": 10,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Kräuter",
+      "description": "Getrocknete Heilkräuter, ein häufiges Reagenz."
+    },
+    {
+      "key": "mushroom",
+      "kodClass": "Mushroom",
+      "name": "Pilz",
+      "icon": "mushroom.bgf",
+      "value": 10,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Pilze",
+      "description": "Ein gewöhnlicher Waldpilz, als Reagenz gefragt."
+    },
+    {
+      "key": "elderberry",
+      "kodClass": "ElderBerry",
+      "name": "Holunderbeere",
+      "icon": "shrubbry.bgf",
+      "value": 20,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Holunderbeeren",
+      "description": "Dunkle Beeren vom Holunderstrauch."
+    },
+    {
+      "key": "bluemushroom",
+      "kodClass": "BlueMushroom",
+      "name": "blauer Pilz",
+      "icon": "mushroom.bgf",
+      "value": 50,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "blaue Pilze",
+      "description": "Ein blau schimmernder Pilz."
+    },
+    {
+      "key": "redmushroom",
+      "kodClass": "RedMushroom",
+      "name": "roter Pilz",
+      "icon": "mushroom.bgf",
+      "value": 40,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "rote Pilze",
+      "description": "Ein leuchtend roter Pilz."
+    },
+    {
+      "key": "purplemushroom",
+      "kodClass": "PurpleMushroom",
+      "name": "Purpurpilz",
+      "icon": "mushroom.bgf",
+      "value": 80,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Purpurpilze",
+      "description": "Ein seltener purpurfarbener Pilz."
+    },
+    {
+      "key": "orctooth",
+      "kodClass": "OrcTooth",
+      "name": "Orkzahn",
+      "icon": "orctooth.bgf",
+      "value": 40,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Orkzähne",
+      "description": "Ein gelblicher, scharfer Zahn."
+    },
+    {
+      "key": "solagh",
+      "kodClass": "Solagh",
+      "name": "Phiole Solagh",
+      "icon": "solagh.bgf",
+      "value": 60,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Phiolen Solagh",
+      "description": "Eine kleine Phiole mit einer zähen Flüssigkeit."
+    },
+    {
+      "key": "bluedragonscale",
+      "kodClass": "BlueDragonScale",
+      "name": "blaue Drachenschuppe",
+      "icon": "bdrgscal.bgf",
+      "value": 100,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "blaue Drachenschuppen",
+      "description": "Eine harte, bläulich glänzende Schuppe."
+    },
+    {
+      "key": "emerald",
+      "kodClass": "Emerald",
+      "name": "Smaragd",
+      "icon": "emerald.bgf",
+      "value": 30,
+      "types": [
+        "gem",
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Smaragde",
+      "description": "Ein grüner Edelstein."
+    },
+    {
+      "key": "sapphire",
+      "kodClass": "Sapphire",
+      "name": "Saphir",
+      "icon": "sapphire.bgf",
+      "value": 60,
+      "types": [
+        "gem",
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Saphire",
+      "description": "Ein tiefblauer Edelstein."
+    },
+    {
+      "key": "diamond",
+      "kodClass": "Diamond",
+      "name": "Diamant",
+      "icon": "diamond.bgf",
+      "value": 100,
+      "types": [
+        "gem",
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Diamanten",
+      "description": "Ein klarer, funkelnder Edelstein."
+    },
+    {
+      "key": "ruby",
+      "kodClass": "Ruby",
+      "name": "Rubin",
+      "icon": "ruby.bgf",
+      "value": 200,
+      "types": [
+        "gem",
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Rubine",
+      "description": "Ein blutroter Edelstein."
+    },
+    {
+      "key": "torch",
+      "kodClass": "Torch",
+      "name": "Fackel",
+      "icon": "torch.bgf",
+      "value": 30,
+      "types": [
+        "shield",
+        "light"
+      ],
+      "article": "eine",
+      "description": "Eine pechgetränkte Fackel."
+    },
+    {
+      "key": "flask",
+      "kodClass": "Flask",
+      "name": "Flasche",
+      "icon": "flask.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "article": "eine",
+      "description": "Eine kleine Glasflasche."
+    },
+    {
+      "key": "arsenic",
+      "kodClass": "Arsenic",
+      "name": "Flasche",
+      "icon": "flask.bgf",
+      "value": 40,
+      "types": [
+        "potion"
+      ],
+      "article": "eine",
+      "description": "Eine kleine Glasflasche."
+    },
+    {
+      "key": "shadowamulet",
+      "kodClass": "ShadowAmulet",
+      "name": "Amulett der Schatten",
+      "icon": "amulet.bgf",
+      "value": 100,
+      "types": [
+        "necklace"
+      ],
+      "article": "ein",
+      "description": "Ein dunkles Amulett, das das Licht zu schlucken scheint."
+    },
+    {
+      "key": "goldshield",
+      "kodClass": "GoldShield",
+      "name": "goldener Rundschild",
+      "icon": "rshield.bgf",
+      "value": 500,
+      "types": [
+        "shield"
+      ],
+      "article": "einen",
+      "description": "Ein runder, vergoldeter Schild."
+    },
+    {
+      "key": "chainarmor",
+      "kodClass": "ChainArmor",
+      "name": "Kettenrüstung",
+      "icon": "chainamr.bgf",
+      "value": 1000,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Eine Rüstung aus vernieteten Eisenringen."
+    },
+    {
+      "key": "axe",
+      "kodClass": "Axe",
+      "name": "Axt",
+      "icon": "axe.bgf",
+      "value": 600,
+      "types": [
+        "weapon"
+      ],
+      "article": "eine",
+      "description": "Eine schwere Kampfaxt."
+    },
+    {
+      "key": "hammer",
+      "kodClass": "Hammer",
+      "name": "Hammer",
+      "icon": "hammer.bgf",
+      "value": 450,
+      "types": [
+        "weapon"
+      ],
+      "article": "einen",
+      "description": "Ein wuchtiger Kriegshammer."
+    },
+    {
+      "key": "mace",
+      "kodClass": "Mace",
+      "name": "Streitkolben",
+      "icon": "mace.bgf",
+      "value": 50,
+      "types": [
+        "weapon"
+      ],
+      "article": "einen",
+      "description": "Ein einfacher Streitkolben mit eisernem Kopf."
+    },
+    {
+      "key": "longsword",
+      "kodClass": "LongSword",
+      "name": "Langschwert",
+      "icon": "sword.bgf",
+      "value": 800,
+      "types": [
+        "weapon"
+      ],
+      "article": "ein",
+      "description": "Eine lange, zweischneidige Klinge."
+    },
+    {
+      "key": "martyrscroll",
+      "kodClass": "MartyrScroll",
+      "name": "Schriftrolle des Märtyrer-Schlachtfelds",
+      "icon": "scr05.bgf",
+      "value": 120,
+      "types": [
+        "scroll"
+      ],
+      "article": "eine",
+      "description": "Eine versiegelte Schriftrolle."
+    }
+  ],
+  "treasure": {
+    "zombie": [
+      {
+        "item": "redmushroom",
+        "weight": 26
+      },
+      {
+        "item": "waterskin",
+        "weight": 14
+      },
+      {
+        "item": "flask",
+        "weight": 10
+      },
+      {
+        "item": "arsenic",
+        "weight": 8
+      },
+      {
+        "item": "money",
+        "weight": 8
+      },
+      {
+        "item": "purplemushroom",
+        "weight": 6
+      },
+      {
+        "item": "sapphire",
+        "weight": 6
+      },
+      {
+        "item": "bread",
+        "weight": 6
+      },
+      {
+        "item": "emerald",
+        "weight": 6
+      },
+      {
+        "item": "shadowamulet",
+        "weight": 5
+      },
+      {
+        "item": "bluemushroom",
+        "weight": 1
+      },
+      {
+        "item": "goldshield",
+        "weight": 1
+      },
+      {
+        "item": "chainarmor",
+        "weight": 1
+      },
+      {
+        "item": "axe",
+        "weight": 1
+      },
+      {
+        "item": "hammer",
+        "weight": 1
+      }
+    ],
+    "tough": [
+      {
+        "item": "redmushroom",
+        "weight": 25
+      },
+      {
+        "item": "bluemushroom",
+        "weight": 20
+      },
+      {
+        "item": "snack",
+        "weight": 16
+      },
+      {
+        "item": "emerald",
+        "weight": 10
+      },
+      {
+        "item": "sapphire",
+        "weight": 8
+      },
+      {
+        "item": "diamond",
+        "weight": 6
+      },
+      {
+        "item": "bluedragonscale",
+        "weight": 6
+      },
+      {
+        "item": "ruby",
+        "weight": 4
+      },
+      {
+        "item": "inkycap",
+        "weight": 4
+      },
+      {
+        "item": "martyrscroll",
+        "weight": 1
+      }
+    ]
+  }
+}

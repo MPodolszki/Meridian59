@@ -205,8 +205,61 @@ public sealed class Session(int id, TcpClient client, GameServer server)
 
             case GameMessage.ReqInventory:
                 if (_avatar is not null)
-                    PostGame(GameReplies.Inventory([]));
+                    PostGame(GameReplies.Inventory(server.World.InventoryOf(_avatar)));
                 break;
+
+            case GameMessage.ReqGet when _avatar is not null:
+                server.World.Get(_avatar, r.U32() & ObjectId.Mask);
+                break;
+
+            case GameMessage.ReqDrop when _avatar is not null:
+                server.World.Drop(_avatar, ObjectRef.ReadList(ref r));
+                break;
+
+            case GameMessage.ReqBuy when _avatar is not null:
+                server.World.RequestBuyList(_avatar, r.U32() & ObjectId.Mask);
+                break;
+
+            case GameMessage.ReqBuyItems when _avatar is not null:
+            {
+                uint seller = r.U32() & ObjectId.Mask;
+                server.World.BuyItems(_avatar, seller, ObjectRef.ReadList(ref r));
+                break;
+            }
+
+            case GameMessage.ReqOffer when _avatar is not null:
+            {
+                uint taker = r.U32() & ObjectId.Mask;
+                server.World.Offer(_avatar, taker, ObjectRef.ReadList(ref r));
+                break;
+            }
+
+            case GameMessage.AcceptOffer when _avatar is not null:
+                server.World.AcceptOffer(_avatar);
+                break;
+
+            case GameMessage.CancelOffer when _avatar is not null:
+                server.World.CancelOffer(_avatar);
+                break;
+
+            case GameMessage.UserCommand when _avatar is not null:
+            {
+                var command = (UserCommandType)r.U8();
+                switch (command)
+                {
+                    case UserCommandType.Deposit:
+                    case UserCommandType.Withdraw:
+                        server.World.BankCommand(_avatar, command, (int)Math.Min(r.U32(), int.MaxValue));
+                        break;
+                    case UserCommandType.Balance:
+                        server.World.BankCommand(_avatar, command);
+                        break;
+                    default:
+                        Log.Info($"Session {id}: Benutzerbefehl {command} wird noch nicht unterstützt");
+                        break;
+                }
+                break;
+            }
 
             case GameMessage.ReqMove when _avatar is not null:
             {
@@ -294,7 +347,7 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         SendPlayer();
         SendRoomContents();
         SendHealth();
-        PostGame(GameReplies.Inventory([]));
+        PostGame(GameReplies.Inventory(server.World.InventoryOf(_avatar)));
         SendEchoPing();
     }
 
@@ -336,6 +389,7 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         var objects = present.Select(server.World.ToRoomObject)
             .Concat(room.Npcs.Select(server.World.ToRoomObject))
             .Concat(monsters.Select(server.World.ToRoomObject))
+            .Concat(server.World.FloorItemsIn(room, this))
             .ToList();
         PostGame(GameReplies.RoomContents(room.ObjectId, objects));
     }

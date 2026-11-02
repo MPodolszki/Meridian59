@@ -17,6 +17,13 @@ public sealed class Avatar(uint id, string name, Session session)
     public DateTime NextAttack { get; set; }
     public DateTime LastCombat { get; set; }
     public DateTime NextRegen { get; set; }
+
+    /// <summary>Besitz (Inventar, Bankkonten) des Charakters.</summary>
+    public CharacterState State { get; set; } = new();
+    /// <summary>Laufender Handel (KOD poOffer_who/plOffer_items): NPC, angebotene Gegenstände, Bezahlung.</summary>
+    public Npc? OfferTo { get; set; }
+    public List<(Item Source, Item Offer)> OfferItems { get; set; } = [];
+    public Item? OfferPayment { get; set; }
 }
 
 /// <summary>Laufzeitzustand eines Raums.</summary>
@@ -30,6 +37,8 @@ public sealed class Room(RoomDefinition definition)
     internal Dictionary<uint, Avatar> Avatars { get; } = new();
     public List<Npc> Npcs { get; } = new();
     public List<Monster> Monsters { get; } = new();
+    /// <summary>Gegenstände auf dem Boden.</summary>
+    public List<FloorItem> Items { get; } = new();
 
     /// <summary>Spawn-Punkte und Monsterarten mit Gewicht (KOD plGenerators/plMonsters).</summary>
     public List<GridPos> Generators { get; } = new();
@@ -55,7 +64,7 @@ public abstract record MoveResult
 /// Die Spielwelt: Räume aus einer <see cref="WorldDefinition"/>. Alle Änderungen laufen unter einem Lock,
 /// Nachrichten an andere Sessions werden nur eingereiht (Session.Post), nie direkt gesendet.
 /// </summary>
-public sealed class World
+public sealed partial class World
 {
     private readonly object _gate = new();
     private readonly Dictionary<int, Room> _rooms;
@@ -66,9 +75,11 @@ public sealed class World
 
     private readonly Random _random;
 
-    public World(WorldDefinition definition, ResourceRegistry resources, string playerIcon, DialogFile? dialogs = null, int? seed = null)
+    public World(WorldDefinition definition, ResourceRegistry resources, string playerIcon, DialogFile? dialogs = null, int? seed = null,
+        ItemCatalog? items = null, ShopFile? shops = null)
     {
         _random = seed is { } s ? new Random(s) : new Random();
+        _items = items ?? ItemCatalog.Empty;
         _resources = resources;
         PlayerIcon = playerIcon;
         _rooms = definition.Rooms.ToDictionary(r => r.Id, r => new Room(r));
@@ -77,6 +88,8 @@ public sealed class World
             foreach (var npc in room.Definition.Npcs)
                 room.Npcs.Add(new Npc(++nextNpc, npc, (dialogs ?? DialogFile.Empty).Npcs.GetValueOrDefault(npc.KodClass)));
         SetUpMonsterRooms();
+        SetUpMerchants(shops ?? ShopFile.Empty);
+        SetUpTreasure(_items.Treasure);
         StartRoom = _rooms.TryGetValue(definition.StartRoom, out var start)
             ? start
             : throw new InvalidDataException($"Startraum {definition.StartRoom} fehlt in der Weltbeschreibung");
@@ -95,8 +108,16 @@ public sealed class World
     /// <summary>OF_ATTACKABLE aus include/proto.h.</summary>
     public const uint FlagAttackable = 0x00000008;
 
+    /// <summary>Händler tragen OF_BUYABLE (verkauft) bzw. OF_OFFERABLE (kauft/nimmt an), wie im Original.</summary>
     public RoomObject ToRoomObject(Npc n) =>
-        new(n.Id, _resources[n.DisplayName], new ObjectAppearance(_resources[PlayerIcon]), n.Row, n.Col, n.Angle);
+        new(n.Id, _resources[n.DisplayName], new ObjectAppearance(_resources[PlayerIcon]), n.Row, n.Col, n.Angle, NpcFlags(n));
+
+    private static uint NpcFlags(Npc n)
+    {
+        if (n.Merchant?.Definition is not { } d)
+            return 0;
+        return (d.Seller ? ObjectFlags.Buyable : 0) | (d.Buyer || d.Receive ? ObjectFlags.Offerable : 0);
+    }
 
     /// <summary>Beschreibung eines Objekts im Raum des Spielers (BP_REQ_LOOK), oder null.</summary>
     public string? Look(Avatar avatar, uint id)
@@ -107,6 +128,9 @@ public sealed class World
                 return npc.Describe();
             if (avatar.Room.Avatars.TryGetValue(id, out var other))
                 return other == avatar ? "Das bist du selbst, ein stämmiger Zwerg." : $"Du siehst {other.Name}, einen Zwerg.";
+            var item = avatar.Room.Items.FirstOrDefault(f => f.Item.Id == id)?.Item ?? avatar.State.Find(id);
+            if (item is not null)
+                return item.Kind.Description is { } d ? $"{item.Describe()}: {d}" : $"Du siehst {item.Describe()}.";
             return null;
         }
     }
@@ -128,6 +152,7 @@ public sealed class World
     {
         lock (_gate)
         {
+            avatar.State = StateFor(avatar.Id);
             var (row, col) = StartRoom.ArrivalPoint;
             Place(avatar, StartRoom, row, col);
         }
@@ -136,7 +161,10 @@ public sealed class World
     public void Leave(Avatar avatar)
     {
         lock (_gate)
+        {
+            CancelOfferLocked(avatar);
             Remove(avatar);
+        }
     }
 
     /// <summary>Bewegung des Spielers (BP_REQ_MOVE). Normale Ausgänge lösen erst mit <see cref="TryGo"/> aus,
@@ -231,6 +259,8 @@ public sealed class World
             // NPCs im Raum antworten, wenn sie sich angesprochen fühlen (alle im Raum hören es).
             foreach (var npc in avatar.Room.Npcs)
             {
+                if (TryConditionalSale(npc, avatar.Room, text))
+                    continue;
                 if (npc.Reply(text) is not { } reply)
                     continue;
                 byte[] answer = GameReplies.Said(npc.Id, _resources[npc.DisplayName], SayType.Normal, _resources["%q"], $"{npc.Name}: {reply}");
@@ -273,6 +303,7 @@ public sealed class World
             foreach (var room in _rooms.Values)
             {
                 TickSpawns(room, now);
+                TickOffers(room, now);
                 foreach (var monster in room.Monsters.ToList())
                     TickMonster(monster, now, seconds);
                 foreach (var avatar in room.Avatars.Values)
@@ -428,6 +459,7 @@ public sealed class World
             m.Target = null;
             Tell(avatar, $"Du hast {Article(m.Kind, accusative: true)} besiegt!");
             BroadcastRoom(m.Room, GameReplies.Animate(ToRoomObject(m), GameReplies.DeathGroup, 9, 1500));
+            CreateTreasure(m);
         }
     }
 
@@ -487,6 +519,7 @@ public sealed class World
     {
         if (avatar.Room is null || !avatar.Room.Avatars.Remove(avatar.Id))
             return;
+        CancelOfferLocked(avatar);
         Broadcast(avatar, GameReplies.Remove(avatar.Id));
     }
 

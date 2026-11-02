@@ -31,9 +31,19 @@ public sealed record MonsterKind(
     int SpeedFinePerSecond,
     int AggroRange)
 {
+    /// <summary>viLevel und viDifficulty (bestimmen Anzahl der Beutestücke und Geldmenge).</summary>
+    public int Level { get; init; }
+    public int Difficulty { get; init; }
+    /// <summary>Beutetabelle (viTreasure_type) aus data/items/items.json; null = keine Beute.</summary>
+    public string? Treasure { get; init; }
+    /// <summary>Gegenstand, der immer fallen gelassen wird (Skelett: Langschwert).</summary>
+    public string? AlwaysDrops { get; init; }
+
     // Zombie: SPEED_VERY_SLOW, Stufe 55, karma-aggressiv. Skelett: SPEED_AVERAGE, Stufe 75, aggressiv.
-    public static readonly MonsterKind Zombie = new("Zombie", "zombie.bgf", 24, 1, 4, 0.6, TimeSpan.FromSeconds(2.4), 70, 5 * 64);
-    public static readonly MonsterKind Skeleton = new("Skelett", "skeleton.bgf", 36, 2, 6, 0.65, TimeSpan.FromSeconds(1.8), 140, 7 * 64);
+    public static readonly MonsterKind Zombie = new("Zombie", "zombie.bgf", 24, 1, 4, 0.6, TimeSpan.FromSeconds(2.4), 70, 5 * 64)
+        { Level = 55, Difficulty = 4, Treasure = "zombie" };
+    public static readonly MonsterKind Skeleton = new("Skelett", "skeleton.bgf", 36, 2, 6, 0.65, TimeSpan.FromSeconds(1.8), 140, 7 * 64)
+        { Level = 75, Difficulty = 5, Treasure = "tough", AlwaysDrops = "longsword" };
 }
 
 /// <summary>Monster in einem Raum.</summary>

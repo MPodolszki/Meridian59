@@ -6,7 +6,7 @@
       "description": "Paddock wischt mit einem fleckigen Tuch über den Tresen. Er ist kräftig gebaut, hat rote Wangen und ein Lachen, das man bis auf die Straße hört.",
       "greeting": "Willkommen im Familiars, Fremder! Setz dich, ein Krug Bier wärmt die Knochen.",
       "topics": [
-        { "keywords": ["kaufen", "angebot", "bier", "krug", "essen", "käse", "buy"], "reply": "Ich hab frisches Bier im Krug und guten Käse aus dem Umland. Bezahlen kannst du, sobald die Münzen wieder klingen – der Handel kommt bald." },
+        { "keywords": ["kaufen", "angebot", "bier", "krug", "essen", "käse", "buy"], "reply": "Frisches Starkbier im Krug und guter Käse aus dem Umland. Schau dir an, was ich habe (B), und bezahl in Schillingen." },
         { "keywords": ["zimmer", "schlafen", "übernachten"], "reply": "Die Zimmer oben sind leider alle belegt. Versuch's später nochmal." },
         { "keywords": ["neuigkeiten", "gerücht", "news"], "reply": "Am Friedhof westlich der Stadt sollen nachts die Toten umgehen. Ich würde da nach Sonnenuntergang nicht hingehen." }
       ]
@@ -16,7 +16,7 @@
       "description": "Frisconar ist ein hagerer Mann mit fleckigen Fingern. Um ihn herum riecht es nach getrockneten Kräutern, Pilzen und etwas, das man lieber nicht benennen möchte.",
       "greeting": "Ah, ein Kunde. Kräuter, Pilze, Fackeln – und für die Neugierigen auch das eine oder andere Geheimnis.",
       "topics": [
-        { "keywords": ["kaufen", "angebot", "kräuter", "pilze", "fackel", "buy"], "reply": "Ich führe Kräuter, Blau- und Rotpilze, Holunderbeeren, Fackeln und leere Flaschen. Der Handel ist noch nicht eröffnet." },
+        { "keywords": ["kaufen", "angebot", "kräuter", "pilze", "fackel", "buy"], "reply": "Kräuter, Pilze, Holunderbeeren, Fackeln und Flaschen – schau dir mein Angebot an (B). Reagenzien kaufe ich dir auch ab, biete sie mir einfach an." },
         { "keywords": ["zauber", "lernen", "spruch", "magie", "hospiz"], "reply": "Ich könnte dir einen Spruch beibringen, der Verletzte schneller genesen lässt. Doch dafür musst du erst die Grundlagen der Magie beherrschen." }
       ]
     },
@@ -25,8 +25,8 @@
       "description": "Skivlat mustert dich über eine schmale Brille hinweg. Hinter ihm stehen schwere, eisenbeschlagene Truhen.",
       "greeting": "Willkommen in der Ersten Königlichen Bank von Tos. Ihr Gold ist bei uns sicher – sicherer als in Ihrer Tasche.",
       "topics": [
-        { "keywords": ["einzahlen", "abheben", "konto", "guthaben", "deposit", "withdraw", "balance"], "reply": "Einzahlen, abheben, Kontostand – sobald Sie Gold besitzen, stehe ich zu Diensten." },
-        { "keywords": ["edelstein", "smaragd", "saphir", "diamant", "kaufen", "buy"], "reply": "Ich handle auch mit Edelsteinen: Smaragde, Saphire, Diamanten. Für Kenner mit gut gefülltem Beutel." }
+        { "keywords": ["einzahlen", "abheben", "konto", "guthaben", "deposit", "withdraw", "balance"], "reply": "Sagen Sie einfach „einzahlen 100“, „abheben 100“ oder „kontostand“. Oder bieten Sie mir Schillinge an, dann zahle ich sie ein." },
+        { "keywords": ["edelstein", "smaragd", "saphir", "diamant", "kaufen", "buy"], "reply": "Ich handle mit Smaragden, Saphiren und Diamanten (B). Und bringen Sie mir Edelsteine, mindestens vier gleiche, zahle ich einen fairen Preis." }
       ]
     },
     "TosWatcher": {

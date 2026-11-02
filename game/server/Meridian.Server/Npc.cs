@@ -36,6 +36,9 @@ public sealed class Npc(uint id, NpcDefinition definition, NpcDialog? dialog)
 
     public string Describe() => dialog?.Description ?? $"Du siehst {Name}.";
 
+    /// <summary>Händler-Rolle (Laden, Ankauf, Bank), falls in data/shops definiert.</summary>
+    public Merchant? Merchant { get; set; }
+
     /// <summary>Antwort auf Gesagtes, oder null wenn der NPC sich nicht angesprochen fühlt.
     /// Themen-Stichwörter haben Vorrang; Begrüßung oder Nennung des Namens ergibt die Begrüßung.</summary>
     public string? Reply(string text)

@@ -9,7 +9,7 @@ namespace Meridian.Client;
 /// Einstiegspunkt des Clients. Baut Oberfläche und 3D-Szene im Code auf (Platzhalter-Grafik),
 /// verbindet sich über <see cref="ClientSession"/> und stellt Spieler als Kapseln dar.
 /// Steuerung: WASD laufen, Shift rennen, rechte Maustaste gedrückt halten zum Drehen,
-/// Leertaste Tür/Ausgang benutzen, Enter für Chat.
+/// Leertaste Tür/Ausgang benutzen, Enter für Chat, I Inventar, B Kaufen, G Aufheben (TradeUi.cs).
 /// </summary>
 public partial class Main : Node3D
 {
@@ -67,6 +67,8 @@ public partial class Main : Node3D
                 case "--camera": _cameraMode = args[++i]; break;
                 case "--delay": _screenshotDelay = float.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture); break;
                 case "--fight": _autoFight = args[++i] == "1"; break;
+                case "--inventory": _autoInventory = args[++i] == "1"; break;
+                case "--shop": _autoShop = args[++i] == "1"; break;
                 case "--walk": _autoWalkSeconds = float.Parse(args[++i], System.Globalization.CultureInfo.InvariantCulture); break;
                 case "--login" when i + 2 < args.Length:
                     _user.Text = args[++i];
@@ -82,6 +84,8 @@ public partial class Main : Node3D
     private bool _autoLogin;
     private float _screenshotDelay = 1.5f;
     private bool _autoFight;
+    private bool _autoInventory;
+    private bool _autoShop;
     private double _autoFightTimer;
     private string _cameraMode = "behind";   // "front" für Screenshots von vorne
     private string? _screenshotPath;
@@ -94,6 +98,13 @@ public partial class Main : Node3D
         {
             _autoFightTimer = 1.3;
             AttackNearestMonster();
+        }
+        if (_autoInventory && _session is { InWorld: true })
+            _inventoryPanel.Visible = true;
+        if (_autoShop && _session is { InWorld: true } && NearestNpc(o => o.IsSeller) != 0)
+        {
+            _autoShop = false;
+            OpenShop();
         }
         if (_screenshotPath is null || _screenshotTimer < 0)
             return;
@@ -197,6 +208,8 @@ public partial class Main : Node3D
         _chatInput = new LineEdit { Position = new Vector2(20, 645), Size = new Vector2(500, 32), PlaceholderText = "Enter zum Chatten" };
         _chatInput.TextSubmitted += OnChatSubmitted;
         ui.AddChild(_chatInput);
+
+        BuildTradeUi(ui);
     }
 
     private static LineEdit AddField(VBoxContainer box, string label, string value)
@@ -226,6 +239,8 @@ public partial class Main : Node3D
 
     private void OnSessionEvent(ClientEvent e)
     {
+        if (HandleTradeEvent(e))
+            return;
         switch (e)
         {
             case ClientEvent.Status s:
@@ -275,6 +290,8 @@ public partial class Main : Node3D
                 break;
             case ClientEvent.ObjectRemoved removed:
                 _npcs.Remove(removed.Id);
+                _npcObjects.Remove(removed.Id);
+                _floorItems.Remove(removed.Id);
                 _monsters.Remove(removed.Id);
                 if (_avatars.Remove(removed.Id, out var gone))
                     gone.QueueFree();
@@ -290,6 +307,8 @@ public partial class Main : Node3D
                     node.QueueFree();
                 _avatars.Clear();
                 _targets.Clear();
+                _floorItems.Clear();
+                _inventoryPanel.Visible = _shopPanel.Visible = _offerPanel.Visible = false;
                 break;
         }
     }
@@ -361,7 +380,7 @@ public partial class Main : Node3D
     {
         _chatInput.Clear();
         _chatInput.ReleaseFocus();
-        if (text.Length > 0 && _session is { InWorld: true })
+        if (text.Length > 0 && _session is { InWorld: true } && !await TryBankCommand(text))
             await _session.SayAsync(text);
     }
 
@@ -374,6 +393,16 @@ public partial class Main : Node3D
 
         bool self = o.Id == _session!.PlayerId;
         var spawn = ToWorld(o.Row, o.Col);
+        if (o.IsGettable)
+        {
+            var item = CreateFloorItem(o);
+            item.Position = spawn with { Y = GroundHeightAt(spawn) };
+            AddChild(item);
+            _avatars[o.Id] = item;
+            _targets[o.Id] = item.Position;
+            _floorItems.Add(o.Id);
+            return;
+        }
         if (self)
             BuildRoomGeometry(spawn);
         spawn.Y = GroundHeightAt(spawn);
@@ -383,7 +412,10 @@ public partial class Main : Node3D
         if (o.IsAttackable)
             _monsters.Add(o.Id);
         if (o.IsNpc)
+        {
             _npcs.Add(o.Id);
+            _npcObjects[o.Id] = o;
+        }
         root.AddChild(new Label3D
         {
             Text = _session.Resolve(o.NameRsc),
@@ -415,6 +447,12 @@ public partial class Main : Node3D
             LookAtNearestNpc();
         if (e is InputEventKey { Pressed: true, Keycode: Key.F } && !_chatInput.HasFocus())
             AttackNearestMonster();
+        if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.I } && !_chatInput.HasFocus())
+            _inventoryPanel.Visible = !_inventoryPanel.Visible;
+        if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.B } && !_chatInput.HasFocus())
+            OpenShop();
+        if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.G } && !_chatInput.HasFocus())
+            PickUpNearest();
     }
 
     public override void _Process(double delta)

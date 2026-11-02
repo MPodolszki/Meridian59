@@ -45,11 +45,15 @@ Getroffene Entscheidungen werden in game/docs/decisions.md festgehalten.
 - Vor größeren Änderungen einen kurzen Plan vorlegen.
 - Erkenntnisse über den Original-Code in game/docs/ dokumentieren, nicht nur im Chat.
 - Antworten kurz und auf Deutsch.
+- Mechaniken vorerst eng am Original (kod/) umsetzen, Abweichungen in game/docs festhalten.
+  Nicht jeden Schritt abfragen, sondern umsetzen, testen, committen.
 
 ## Nächster Schritt
 Stand: Server mit Login, Game-Modus, Tos (18 Räume), NPCs mit Dialogen, Kampf (docs/combat.md),
-Monster auf Friedhof/Krypta. Client (Godot 4.7.2) mit texturiertem Tos, animierten Figuren aus Blender
-(Zwerg, Zombie, Skelett via game/tools/blender/make_character.py), Lebensanzeige, Angriff (F).
-Nichts davon gegen das Original getestet.
-Offen: Handel/Inventar/Gold, Persistenz (offene Entscheidung), Tag-Nacht-Wechsel, Wegfindung für Monster,
+Monster auf Friedhof/Krypta. Gegenstände, Inventar, Schillinge, Kaufen/Verkaufen bei Tos-Händlern, Bank,
+Beute zum Aufheben (docs/trade.md, eng am KOD-Original). Client (Godot 4.7.2) mit texturiertem Tos, animierten
+Figuren aus Blender (Zwerg, Zombie, Skelett via game/tools/blender/make_character.py), Lebensanzeige, Angriff (F),
+Inventar (I), Laden (B), Aufheben (G). Nichts davon gegen das Original getestet.
+Offen: Persistenz (offene Entscheidung; Inventar/Konten gehen bei Serverneustart verloren), Gegenstände
+benutzen/ausrüsten, Handel zwischen Spielern, Tag-Nacht-Wechsel, Wegfindung für Monster,
 schönere Häuser/Innenräume, Original-Client-Test.

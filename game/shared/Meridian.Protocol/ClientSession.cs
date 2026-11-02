@@ -13,9 +13,20 @@ public sealed class ClientObject(uint id)
     public ushort Col { get; set; }
     public ushort Angle { get; set; }
     public uint Flags { get; set; }
+    /// <summary>Menge bei Mengen-Gegenständen (Tag 1 in der ID), sonst null.</summary>
+    public uint? Amount { get; set; }
 
     /// <summary>OF_PLAYER (include/proto.h) nicht gesetzt → Nicht-Spieler-Figur (NPC oder Monster).</summary>
-    public bool IsNpc => (Flags & 0x00000004) == 0 && !IsAttackable;
+    public bool IsNpc => (Flags & ObjectFlags.Player) == 0 && !IsAttackable && !IsGettable;
+
+    /// <summary>OF_GETTABLE: Gegenstand auf dem Boden.</summary>
+    public bool IsGettable => (Flags & ObjectFlags.Gettable) != 0;
+
+    /// <summary>OF_BUYABLE: Händler, bei dem man kaufen kann.</summary>
+    public bool IsSeller => (Flags & ObjectFlags.Buyable) != 0;
+
+    /// <summary>OF_OFFERABLE: NPC, dem man etwas anbieten kann.</summary>
+    public bool IsOfferable => (Flags & ObjectFlags.Offerable) != 0;
 
     /// <summary>OF_ATTACKABLE: Monster, die man angreifen kann.</summary>
     public bool IsAttackable => (Flags & 0x00000008) != 0;
@@ -39,7 +50,19 @@ public abstract record ClientEvent
     /// <summary>Einmalige Animation eines Objekts (BP_CHANGE): Angriff oder Sterben.</summary>
     public sealed record ObjectAnimated(uint Id, bool Death) : ClientEvent;
     public sealed record Disconnected(string Reason) : ClientEvent;
+    /// <summary>Inventar hat sich geändert (BP_INVENTORY/_ADD/_REMOVE oder Mengenänderung).</summary>
+    public sealed record InventoryChanged(IReadOnlyList<ClientObject> Items) : ClientEvent;
+    /// <summary>Ladenliste eines Händlers (BP_BUY_LIST).</summary>
+    public sealed record BuyList(ClientObject Seller, IReadOnlyList<BuyOption> Items) : ClientEvent;
+    /// <summary>Eigene angebotene Gegenstände bestätigt (BP_OFFERED).</summary>
+    public sealed record Offered(IReadOnlyList<ClientObject> Items) : ClientEvent;
+    /// <summary>Gegenangebot (BP_COUNTEROFFER), bei Händlern Geld.</summary>
+    public sealed record CounterOffer(IReadOnlyList<ClientObject> Items) : ClientEvent;
+    public sealed record OfferCanceled : ClientEvent;
 }
+
+/// <summary>Ware einer Ladenliste mit Preis pro Stück.</summary>
+public sealed record BuyOption(ClientObject Item, uint Price);
 
 /// <summary>
 /// Hochsprachlicher Client für das Meridian-Protokoll ohne Abhängigkeit von Godot:
@@ -54,6 +77,7 @@ public sealed class ClientSession : IDisposable
     private readonly ConcurrentQueue<ClientEvent> _events = new();
     private readonly Dictionary<uint, string> _resources = new();
     private readonly Dictionary<uint, ClientObject> _objects = new();
+    private readonly List<ClientObject> _inventory = new();
     private readonly CancellationTokenSource _cts = new();
     private TcpClient? _tcp;
     private ClientConnection? _conn;
@@ -66,6 +90,15 @@ public sealed class ClientSession : IDisposable
     public bool InWorld => PlayerId != 0;
 
     public event Action<ClientEvent>? Event;
+
+    /// <summary>Aktuelles Inventar (nur im Thread von <see cref="ProcessEvents"/> bzw. über Ereignisse lesen).</summary>
+    public IReadOnlyList<ClientObject> Inventory
+    {
+        get { lock (_inventory) return _inventory.ToList(); }
+    }
+
+    /// <summary>Anzeigename mit Menge, z. B. „3500 Schillinge“.</summary>
+    public string Describe(ClientObject o) => o.Amount is { } n ? $"{n} {Resolve(o.NameRsc)}" : Resolve(o.NameRsc);
 
     /// <summary>Text einer Ressource (per BP_CHANGE_RESOURCE gelernt), sonst "#id".</summary>
     public string Resolve(uint rsc)
@@ -114,6 +147,38 @@ public sealed class ClientSession : IDisposable
         SendGameAsync(new PacketWriter((byte)GameMessage.ReqAttack).U8(1).U32(id).ToArray());
 
     public Task QuitAsync() => SendGameAsync([(byte)GameMessage.ReqQuit]);
+
+    /// <summary>Gegenstand vom Boden aufheben (BP_REQ_GET).</summary>
+    public Task GetAsync(uint id) => SendGameAsync(new PacketWriter((byte)GameMessage.ReqGet).U32(id).ToArray());
+
+    /// <summary>Gegenstände ablegen (BP_REQ_DROP).</summary>
+    public Task DropAsync(IReadOnlyCollection<ObjectRef> items) =>
+        SendGameAsync(ObjectRef.WriteList(new PacketWriter((byte)GameMessage.ReqDrop), items).ToArray());
+
+    /// <summary>Ladenliste eines Händlers anfordern (BP_REQ_BUY).</summary>
+    public Task RequestBuyAsync(uint seller) => SendGameAsync(new PacketWriter((byte)GameMessage.ReqBuy).U32(seller).ToArray());
+
+    /// <summary>Waren kaufen (BP_REQ_BUY_ITEMS); Mengen-Gegenstände mit Anzahl.</summary>
+    public Task BuyItemsAsync(uint seller, IReadOnlyCollection<ObjectRef> items) =>
+        SendGameAsync(ObjectRef.WriteList(new PacketWriter((byte)GameMessage.ReqBuyItems).U32(seller), items).ToArray());
+
+    /// <summary>Gegenstände anbieten (BP_REQ_OFFER), z. B. einem Händler zum Verkauf.</summary>
+    public Task OfferAsync(uint taker, IReadOnlyCollection<ObjectRef> items) =>
+        SendGameAsync(ObjectRef.WriteList(new PacketWriter((byte)GameMessage.ReqOffer).U32(taker), items).ToArray());
+
+    public Task AcceptOfferAsync() => SendGameAsync([(byte)GameMessage.AcceptOffer]);
+
+    public Task CancelOfferAsync() => SendGameAsync([(byte)GameMessage.CancelOffer]);
+
+    /// <summary>Bankbefehle (BP_USERCOMMAND UC_DEPOSIT/UC_WITHDRAW/UC_BALANCE) an einen Bankier im Raum.</summary>
+    public Task DepositAsync(uint amount) =>
+        SendGameAsync(new PacketWriter((byte)GameMessage.UserCommand).U8((byte)UserCommandType.Deposit).U32(amount).ToArray());
+
+    public Task WithdrawAsync(uint amount) =>
+        SendGameAsync(new PacketWriter((byte)GameMessage.UserCommand).U8((byte)UserCommandType.Withdraw).U32(amount).ToArray());
+
+    public Task BalanceAsync() =>
+        SendGameAsync(new PacketWriter((byte)GameMessage.UserCommand).U8((byte)UserCommandType.Balance).ToArray());
 
     private async Task SendGameAsync(byte[] payload)
     {
@@ -297,8 +362,50 @@ public sealed class ClientSession : IDisposable
                 var o = ReadObjectDesc(ref r);
                 if (PeekOnceAnimation(ref r) is { } low)
                     Enqueue(new ClientEvent.ObjectAnimated(o.Id, low >= 9));
+                else
+                    UpdateInventory(list => { int i = list.FindIndex(x => x.Id == o.Id); if (i >= 0) list[i] = o; });
                 break;
             }
+            case GameMessage.Inventory:
+            {
+                var items = ReadObjectList(ref r);
+                UpdateInventory(list => { list.Clear(); list.AddRange(items); });
+                break;
+            }
+            case GameMessage.InventoryAdd:
+            {
+                var o = ReadObjectDesc(ref r);
+                UpdateInventory(list => { list.RemoveAll(x => x.Id == o.Id); list.Add(o); });
+                break;
+            }
+            case GameMessage.InventoryRemove:
+            {
+                uint id = r.U32() & ObjectId.Mask;
+                UpdateInventory(list => list.RemoveAll(x => x.Id == id));
+                break;
+            }
+            case GameMessage.BuyList:
+            {
+                var seller = ReadObjectDesc(ref r);
+                int n = r.U16();
+                var options = new List<BuyOption>(n);
+                for (int i = 0; i < n; i++)
+                {
+                    var item = ReadObjectDesc(ref r);
+                    options.Add(new BuyOption(item, r.U32()));
+                }
+                Enqueue(new ClientEvent.BuyList(seller, options));
+                break;
+            }
+            case GameMessage.Offered:
+                Enqueue(new ClientEvent.Offered(ReadObjectList(ref r)));
+                break;
+            case GameMessage.CounterOffer:
+                Enqueue(new ClientEvent.CounterOffer(ReadObjectList(ref r)));
+                break;
+            case GameMessage.OfferCanceled:
+                Enqueue(new ClientEvent.OfferCanceled());
+                break;
             case GameMessage.Said:
             {
                 r.U32(); r.U32(); r.U8();
@@ -342,6 +449,26 @@ public sealed class ClientSession : IDisposable
         return sb.ToString();
     }
 
+    private List<ClientObject> ReadObjectList(ref PacketReader r)
+    {
+        int n = r.U16();
+        var list = new List<ClientObject>(n);
+        for (int i = 0; i < n; i++)
+            list.Add(ReadObjectDesc(ref r));
+        return list;
+    }
+
+    private void UpdateInventory(Action<List<ClientObject>> change)
+    {
+        List<ClientObject> snapshot;
+        lock (_inventory)
+        {
+            change(_inventory);
+            snapshot = _inventory.ToList();
+        }
+        Enqueue(new ClientEvent.InventoryChanged(snapshot));
+    }
+
     private ClientObject ReadRoomObject(ref PacketReader r)
     {
         var o = ReadObjectDesc(ref r);
@@ -357,9 +484,9 @@ public sealed class ClientSession : IDisposable
     private ClientObject ReadObjectDesc(ref PacketReader r)
     {
         uint rawId = r.U32();
-        var o = new ClientObject(rawId & 0x0FFFFFFF);
+        var o = new ClientObject(rawId & ObjectId.Mask);
         if (rawId >> 28 == 1)
-            r.U32();                            // amount
+            o.Amount = r.U32();
         o.IconRsc = r.U32();
         o.Icon = Resolve(o.IconRsc);
         o.NameRsc = r.U32();

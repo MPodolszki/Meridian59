@@ -1,0 +1,117 @@
+{
+  "_hinweis": "Händler der Tos-NPCs aus kod/.../towns/tostwn (TsInnK, TsApoth, TsBanker): plFor_sale, InitCondSale, viMerchant_markup (0 flat … 3 normal … 5 ripoff), viAttributes. Bedingte Waren erscheinen, wenn ein Auslösewort fällt; {0} = Ware.",
+  "shops": {
+    "TosInnKeeper": {
+      "markup": 2,
+      "receive": true,
+      "forSale": [
+        {
+          "item": "mug"
+        },
+        {
+          "item": "cheese",
+          "number": 3
+        }
+      ],
+      "conditional": [
+        {
+          "item": "purplemushroom",
+          "number": 4,
+          "price": 250,
+          "triggers": [
+            "purpurpilz"
+          ],
+          "reply": "Ja, ich hab {0} hier. Mal sehen, was für ein Geschäft wir mit diesen kleinen Raritäten machen können."
+        },
+        {
+          "item": "orctooth",
+          "number": 2,
+          "price": 650,
+          "triggers": [
+            "orkzahn",
+            "orkzähne"
+          ],
+          "reply": "Noch ein Kunde, der {0} sucht? Ich sollte die Schänke dichtmachen und nur noch die Dinger verkaufen."
+        }
+      ],
+      "unwantedGive": "{0} sagt dir: „Was soll ich damit? Behalt das mal lieber.“"
+    },
+    "TosApothecary": {
+      "markup": 2,
+      "buyer": true,
+      "buysTypes": [
+        "reagent"
+      ],
+      "buysExceptTypes": [
+        "gem"
+      ],
+      "forSale": [
+        {
+          "item": "torch"
+        },
+        {
+          "item": "herbs",
+          "number": 5
+        },
+        {
+          "item": "mushroom",
+          "number": 5
+        },
+        {
+          "item": "elderberry",
+          "number": 4
+        },
+        {
+          "item": "bluemushroom",
+          "number": 4
+        },
+        {
+          "item": "redmushroom",
+          "number": 4
+        },
+        {
+          "item": "flask"
+        }
+      ],
+      "conditional": [
+        {
+          "item": "solagh",
+          "number": 4,
+          "price": 250,
+          "triggers": [
+            "solagh"
+          ],
+          "reply": "Tatsächlich habe ich {0}, von denen ich mich trennen würde. Aber billig ist das nicht."
+        }
+      ]
+    },
+    "TosBanker": {
+      "markup": 1,
+      "receive": true,
+      "bank": 1,
+      "gemTrade": true,
+      "wanted": [
+        "money",
+        "ruby",
+        "emerald",
+        "diamond",
+        "sapphire"
+      ],
+      "forSale": [
+        {
+          "item": "emerald",
+          "number": 15
+        },
+        {
+          "item": "sapphire",
+          "number": 10
+        },
+        {
+          "item": "diamond",
+          "number": 8
+        }
+      ],
+      "unwantedGive": "{0} sagt dir: „Dafür habe ich keinen Platz. Wenn es Schillinge wären …“"
+    }
+  }
+}

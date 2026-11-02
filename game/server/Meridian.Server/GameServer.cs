@@ -17,6 +17,10 @@ public sealed record ServerOptions
     public int? RandomSeed { get; init; }
     /// <summary>Dialogtexte der NPCs.</summary>
     public DialogFile Dialogs { get; init; } = DialogFile.Empty;
+    /// <summary>Gegenstandskatalog und Beutetabellen.</summary>
+    public ItemCatalog Items { get; init; } = ItemCatalog.Empty;
+    /// <summary>Händler (Läden, Ankauf, Bank) je NPC-Klasse.</summary>
+    public ShopFile Shops { get; init; } = ShopFile.Empty;
     /// <summary>Grafik (.bgf des Clients) für Spieler.</summary>
     public string PlayerIcon { get; init; } = "blank.bgf";
     /// <summary>Optional: Ressourcen-Ordner eines Original-Clients, um die Raum-Security aus den .roo-Dateien zu lesen.</summary>
@@ -40,7 +44,7 @@ public sealed class GameServer
         var world = options.World;
         if (options.ClientResourceDir is { } dir)
             world = world with { Rooms = world.Rooms.Select(r => WithSecurityFromClient(r, dir)).ToList() };
-        World = new World(world, Resources, options.PlayerIcon, options.Dialogs, options.RandomSeed);
+        World = new World(world, Resources, options.PlayerIcon, options.Dialogs, options.RandomSeed, options.Items, options.Shops);
     }
 
     private static RoomDefinition WithSecurityFromClient(RoomDefinition room, string dir)

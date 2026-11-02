@@ -39,8 +39,17 @@ public enum GameMessage : byte
     ReqUnuse = 107,
     SayTo = 110,
     SayGroup = 111,
+    ReqPut = 112,
+    ReqGet = 113,
     ReqLook = 116,
     ReqInventory = 117,
+    ReqDrop = 118,
+    ReqOffer = 120,
+    AcceptOffer = 121,
+    CancelOffer = 122,
+    ReqCounterOffer = 123,
+    ReqBuy = 124,
+    ReqBuyItems = 125,
     Player = 130,               // S→C
     Stat = 131,
     StatGroup = 132,
@@ -70,6 +79,12 @@ public enum GameMessage : byte
     Inventory = 208,
     InventoryAdd = 209,
     InventoryRemove = 210,
+    Offer = 211,
+    OfferCanceled = 212,
+    Offered = 213,
+    CounterOffer = 214,
+    CounterOffered = 215,
+    BuyList = 216,
     Create = 217,
     Remove = 218,
     Change = 219,
@@ -77,6 +92,14 @@ public enum GameMessage : byte
     LightPlayer = 221,
     LightShading = 222,
     InvalidateData = 228,
+}
+
+/// <summary>Unterbefehle von BP_USERCOMMAND (UC_* aus include/proto.h), soweit benutzt.</summary>
+public enum UserCommandType : byte
+{
+    Deposit = 35,               // u32 Betrag
+    Withdraw = 36,              // u32 Betrag
+    Balance = 37,
 }
 
 /// <summary>SAY_* aus include/proto.h.</summary>
