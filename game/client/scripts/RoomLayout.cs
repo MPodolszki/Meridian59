@@ -250,10 +250,12 @@ public sealed class RoomLayout
             return;
         }
 
+        // Gebäude/Wände reichen bis unter den Boden, damit sie über tiefer liegenden Straßen nicht schweben.
+        const float foundation = -12f;
         var block = new MeshInstance3D
         {
-            Mesh = new BoxMesh { Size = new Vector3(width, height, cellSize) },
-            Position = new Vector3(x, height / 2f, z),
+            Mesh = new BoxMesh { Size = new Vector3(width, height - foundation, cellSize) },
+            Position = new Vector3(x, (height + foundation) / 2f, z),
             MaterialOverride = Material(materials, kind == "wall" ? (outdoors ? "rock" : "plaster") : "house"),
         };
         root.AddChild(block);

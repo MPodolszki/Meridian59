@@ -108,7 +108,7 @@ public static class RoomDecor
                     int nr = r + dr, nc = c + dc;
                     if (nr < 0 || nc < 0 || nr >= layout.Rows || nc >= layout.Cols || !layout.IsWalkable(nr, nc))
                         continue;
-                    float street = Mathf.Max(layout.HeightMeters(layout.FloorAt(nr, nc), cell), 0f);
+                    float street = layout.HeightMeters(layout.FloorAt(nr, nc), cell);   // auch unter dem Bezugsboden
                     float height = top - street;
                     if (height < 1.5f)
                         continue;   // niedrige Kanten (Stufen, Mauern) bleiben schlicht
