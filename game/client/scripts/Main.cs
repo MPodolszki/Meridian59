@@ -9,7 +9,7 @@ namespace Meridian.Client;
 /// Einstiegspunkt des Clients. Baut Oberfläche und 3D-Szene im Code auf (Platzhalter-Grafik),
 /// verbindet sich über <see cref="ClientSession"/> und stellt Spieler als Kapseln dar.
 /// Steuerung: WASD laufen, Shift rennen, rechte Maustaste gedrückt halten zum Drehen,
-/// Leertaste Tür/Ausgang benutzen, Enter für Chat, I Inventar, B Kaufen, G Aufheben (TradeUi.cs).
+/// Linksklick auf eine Tür öffnet sie (Leertaste bleibt fürs Springen frei), Enter für Chat, I Inventar, B Kaufen, G Aufheben (TradeUi.cs).
 /// </summary>
 public partial class Main : Node3D
 {
@@ -515,8 +515,8 @@ public partial class Main : Node3D
             _yaw -= motion.Relative.X * 0.005f;
         if (e is InputEventKey { Pressed: true, Keycode: Key.Enter } && !_chatInput.HasFocus())
             _chatInput.GrabFocus();
-        if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Space } && !_chatInput.HasFocus())
-            GoThroughDoor();
+        if (e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left } click)
+            TryOpenDoorAt(click.Position);
         if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.E } && !_chatInput.HasFocus())
             LookAtNearestNpc();
         if (e is InputEventKey { Pressed: true, Keycode: Key.F } && !_chatInput.HasFocus())
@@ -631,7 +631,7 @@ public partial class Main : Node3D
         foreach (var e in _layout.Exits)
             if (e.Row == row && e.Col == col)
                 target = e.Target;
-        string? hint = target is null ? null : $"Leertaste: hinausgehen{(target.Length > 0 ? " → " + target : "")}";
+        string? hint = target is null ? null : $"Linksklick auf die Tür: hinausgehen{(target.Length > 0 ? " → " + target : "")}";
         if (hint == _exitHint)
             return;
         _exitHint = hint;
@@ -639,9 +639,45 @@ public partial class Main : Node3D
             _status.Text = hint;
     }
 
-    /// <summary>Leertaste wie im Original: Tür/Ausgang auf dem aktuellen Feld benutzen.
+    /// <summary>Reichweite zum Öffnen einer Tür per Klick (Meter vom Spieler zum Ausgangsfeld).</summary>
+    private const float DoorReach = 4f;
+
+    /// <summary>Linksklick: liegt eine Tür bzw. ein Ausgang nahe am Klickstrahl und in Reichweite, dorthin treten
+    /// und „Gehen“ schicken (BP_REQ_GO verlangt, dass man auf dem Ausgangsfeld steht).</summary>
+    private async void TryOpenDoorAt(Vector2 screen)
+    {
+        if (_session is not { InWorld: true } || _layout is null || !_avatars.TryGetValue(_session.PlayerId, out var self))
+            return;
+        var origin = _camera.ProjectRayOrigin(screen);
+        var dir = _camera.ProjectRayNormal(screen);
+        (int Row, int Col, float Distance)? best = null;
+        foreach (var (row, col, _) in _layout.Exits)
+        {
+            var center = new Vector3((col + 1.5f) * CellSize, GroundHeightAt(new Vector3((col + 1.5f) * CellSize, 0, (row + 1.5f) * CellSize)) + 1.2f, (row + 1.5f) * CellSize);
+            // Abstand des Ausgangs (Türhöhe) zum Klickstrahl; Tür steht am Feldrand, daher großzügig.
+            float along = (center - origin).Dot(dir);
+            if (along <= 0)
+                continue;
+            float rayDistance = (origin + dir * along).DistanceTo(center);
+            if (rayDistance < CellSize && (best is null || rayDistance < best.Value.Distance))
+                best = (row, col, rayDistance);
+        }
+        if (best is not { } door)
+            return;
+        var exitPos = new Vector3((door.Col + 1.5f) * CellSize, 0, (door.Row + 1.5f) * CellSize);
+        if (new Vector2(exitPos.X - self.Position.X, exitPos.Z - self.Position.Z).Length() > DoorReach)
+        {
+            _status.Text = "Die Tür ist zu weit weg.";
+            return;
+        }
+        exitPos.Y = GroundHeightAt(exitPos);
+        self.Position = exitPos;
+        await GoThroughDoor();
+    }
+
+    /// <summary>Tür/Ausgang auf dem aktuellen Feld benutzen.
     /// Vorher die aktuelle Position melden, da der Server sonst die bis zu 1 s alte kennt.</summary>
-    private async void GoThroughDoor()
+    private async System.Threading.Tasks.Task GoThroughDoor()
     {
         if (_session is not { InWorld: true } || !_avatars.TryGetValue(_session.PlayerId, out var self))
             return;
