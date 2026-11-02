@@ -69,3 +69,13 @@ Prozedural über dem Höhenraster, ohne fremde Assets: Fassaden an der Straße m
 Farben, Fachwerk, Steinsockel, Fenstern (nachts warm leuchtend), Türen und Dachüberständen. Innenräume mit
 Holzdecke und Balken, Vertäfelung an Wänden und Einbauten und Lampen alle vier Felder. Die Kamera bleibt innen
 unter der Decke. Das Licht (Sonne, Himmel, Umgebung) folgt dem Raumlicht des Servers (`docs/daynight.md`).
+
+## Animationen
+
+Die Bewegungen stammen aus der „Universal Animation Library“ von Quaternius (CC0, Standardversion; Spiegel
+github.com/J-Ponzo/gltf-universal-animation-library). `tools/blender/retarget_animations.py` überträgt sie auf
+unsere Modelle:
+
+    blender -b -P game/tools/blender/retarget_animations.py -- AnimationLibrary_Godot_Standard.gltf game/client/models/dwarf.glb
+
+Clips: Idle, Walk, Run, Sprint, Attack, Punch, Die, Hit, Cast, Jump_Start/Loop/Land, Interact, Idle_Torch.
