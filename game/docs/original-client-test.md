@@ -27,6 +27,21 @@ die Original-Grafiknamen: Spieler `bta.bgf` (Körper; Kopf/Arme/Beine als Overla
 Skelett `skelbody.bgf`; Gegenstände hatten schon die KOD-Icons. Der eigene Client bildet `skelbody` auf sein
 Skelett-Modell ab, alles Unbekannte wird zum Zwerg.
 
+Bedienung im Original-Client: Text ohne Befehl wird als Befehl gelesen – Sprechen mit `say …` (oder Taste F),
+Kaufen mit `buy`, Anbieten mit `offer`, Bank mit `deposit`/`withdraw`/`balance`, Aufheben/Ablegen mit `get`/`drop`.
+
+Geprüft 2026-11-02 (Steam-Client, Wine, Software-Renderer):
+
+| Funktion | Ergebnis |
+|---|---|
+| Login, Betreten, Darstellung Tos/Gasthaus, Paddock | geht |
+| Oberfläche (Text, Werte, Inventar) | geht nur mit Software-Renderer |
+| Chat (`say`), Paddock antwortet | geht |
+| Anschauen (`BP_LOOK`, Beschreibungsfenster) | geht |
+| Inventar mit Schillingen, Streitkolben ausrüsten, Waffe in der Ego-Ansicht | geht |
+| Kaufen (`buy` → Ladenliste → Kauf) | geht |
+| Verkaufen/Anbieten, Bank, Kampf, Beute, Tür/Raumwechsel | noch nicht geprüft |
+
 Start: `game/tools/run-original-client.sh NAME PASSWORT [HOST] [PORT]`.
 
 ## Starten gegen den eigenen Server
