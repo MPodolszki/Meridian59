@@ -151,6 +151,28 @@ public sealed class RazaTests : IAsyncDisposable
     }
 
     [Fact]
+    public void Barloque_ExitsLeadIntoExistingRooms_ExceptSewerGuildsAndWilderness()
+    {
+        var world = WorldDefinition.LoadAll(Data("world"));
+        var ids = world.Rooms.Select(r => r.Id).ToHashSet();
+        int[] town = [101, 102, 103, 104, 105, 106, 107, 109, 113, 114, 970, 971, 700];
+        Assert.Subset(ids, town.ToHashSet());
+        int[] notYet = [108, 593, 702, 709, 714];   // Kanalisation, Tor I3, Gildenhallen
+        foreach (var room in world.Rooms.Where(r => town.Contains(r.Id)))
+            Assert.All(room.Exits.Where(e => !notYet.Contains(e.To)), e => Assert.Contains(e.To, ids));
+        Assert.Contains(world.Rooms.Single(r => r.Id == 101).Objects, o => o.Type == "OO_RAZA_TREE1");
+    }
+
+    [Fact]
+    public async Task Barloque_InnkeeperSellsAMace_WhenAsked()
+    {
+        var (c, events) = await EnterAsync(106);
+        await c.MoveAsync(Room.Fine(11), Room.Fine(15), false);
+        await c.SayAsync("Hast du einen Streitkolben?");
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.Contains("kultivierte Stadt"));
+    }
+
+    [Fact]
     public void Clothing_ColorsLikeEncodeTwoColorXlat()
     {
         var items = ItemCatalog.Load(Data("items", "items.json"));
@@ -190,8 +212,8 @@ public sealed class RazaTests : IAsyncDisposable
             Items = ItemCatalog.Load(Data("items", "items.json")),
             Spells = SpellBook.Load(Data("spells", "spells.json")),
             Skills = SkillBook.Load(Data("skills", "skills.json")),
-            Shops = ShopFile.Merge(new[] { "raza", "marion", "cor", "jasper" }.Select(a => ShopFile.Load(Data("shops", a + ".json")))),
-            Dialogs = DialogFile.Merge(new[] { "raza", "marion", "cor", "jasper" }.Select(a => DialogFile.Load(Data("dialog", a + ".json")))),
+            Shops = ShopFile.Merge(new[] { "raza", "marion", "cor", "jasper", "barloque" }.Select(a => ShopFile.Load(Data("shops", a + ".json")))),
+            Dialogs = DialogFile.Merge(new[] { "raza", "marion", "cor", "jasper", "barloque" }.Select(a => DialogFile.Load(Data("dialog", a + ".json")))),
             Database = _db,
         }, accounts);
         _server.Start();

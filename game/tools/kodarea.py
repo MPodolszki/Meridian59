@@ -13,7 +13,7 @@ ANGLE = {"ANGLE_EAST": 0, "ANGLE_SOUTH_EAST": 512, "ANGLE_SOUTH": 1024, "ANGLE_S
 
 def ornaments(path):
     """Create(&OrnamentalObject,#type=X) bzw. Create(&Lamp) mit #new_row/#new_col/#fine_*/#new_angle."""
-    text = path.read_text(encoding="latin-1")
+    text = re.sub(r"#\s+", "#", path.read_text(encoding="latin-1"))   # „#⏎new_row=“ (barls.kod)
     out = []
     pattern = re.compile(r"Create\(&(OrnamentalObject,#type=(\w+)|Lamp)\)\s*,\s*(#[^)]*?)\)", re.S)
     for m in pattern.finditer(text):

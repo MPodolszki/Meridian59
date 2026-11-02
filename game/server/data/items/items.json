@@ -1273,6 +1273,38 @@
       "description": "Dieses Hemd bedeckt das Nötigste, schützt aber kaum.",
       "slot": "shirt",
       "color": 7
+    },
+    {
+      "key": "winegoblet",
+      "kodClass": "WineGoblet",
+      "name": "Kelch Wein",
+      "icon": "Goblet.bgf",
+      "value": 50,
+      "types": [
+        "food"
+      ],
+      "number": true,
+      "plural": "Kelche Wein",
+      "description": "Ein feines, erlesenes Getränk. Nur das gemeine Volk fände es geschmacklos.",
+      "nutrition": 6,
+      "filling": 8,
+      "beverage": true
+    },
+    {
+      "key": "pantsptblack",
+      "kodClass": "PantsC",
+      "name": "Hose (tiefschwarz)",
+      "icon": "pantsC.bgf",
+      "value": 50,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Diese Hose bedeckt die Beine, schützt aber kaum.",
+      "slot": "legs",
+      "translation": 44,
+      "legsMale": "bfe.bgf",
+      "legsFemale": "bff.bgf"
     }
   ],
   "treasure": {

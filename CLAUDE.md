@@ -80,4 +80,6 @@ Cor Noth mit Läden, Schneiderin, Waffenmeister (Fertigkeiten lernen wie Sprüch
 
 Jasper (Ost/West, Bank mit Tos-Konto, Läden, 14 verlassene Häuser) (docs/jasper.md). Raza-Portal würfelt Marion/Cor/Jasper.
 
-Offen: Barloque, Wildnis/Wälder, Tempel, Kanalisation Jasper, Heimatstadt je Spieler, Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.
+Barloque (Nord/Süd, Hafen, Läden, Gericht, Gefängnis, Gildenmeisterhalle) (docs/barloque.md).
+
+Offen: Wildnis zwischen den Städten, Tempel, Kanalisationen (Jasper, Barloque), Heimatstadt je Spieler, Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.

@@ -1,0 +1,1706 @@
+{
+  "source": "kod/object/active/holder/room/barlqrm, monsroom/objroom/barlbar1 (Meridian 59), erzeugt mit tools/make_barloque.py",
+  "startRoom": 101,
+  "rooms": [
+    {
+      "id": 101,
+      "constant": "RID_BAR_NORTH",
+      "kodClass": "BarloqueNorth",
+      "name": "North Barloque",
+      "roo": "barln.roo",
+      "music": "corloth.mid",
+      "baseLight": 164,
+      "outsideFactor": 10,
+      "outdoors": true,
+      "teleport": {
+        "row": 25,
+        "col": 42
+      },
+      "exits": [
+        {
+          "row": 2,
+          "col": 48,
+          "to": 107,
+          "toRow": 27,
+          "toCol": 27,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 49,
+          "to": 107,
+          "toRow": 27,
+          "toCol": 27,
+          "rotate": "NONE"
+        },
+        {
+          "row": 47,
+          "col": 41,
+          "to": 108,
+          "toRow": 56,
+          "toCol": 9,
+          "rotate": "NONE"
+        },
+        {
+          "row": 48,
+          "col": 41,
+          "to": 108,
+          "toRow": 56,
+          "toCol": 9,
+          "rotate": "NONE"
+        },
+        {
+          "row": 13,
+          "col": 16,
+          "to": 104,
+          "toRow": 5,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 16,
+          "col": 36,
+          "to": 105,
+          "toRow": 25,
+          "toCol": 8,
+          "rotate": "NONE"
+        },
+        {
+          "row": 16,
+          "col": 37,
+          "to": 105,
+          "toRow": 25,
+          "toCol": 8,
+          "rotate": "NONE"
+        },
+        {
+          "row": 19,
+          "col": 26,
+          "to": 106,
+          "toRow": 16,
+          "toCol": 12,
+          "rotate": "180"
+        },
+        {
+          "row": 28,
+          "col": 59,
+          "to": 103,
+          "toRow": 21,
+          "toCol": 11,
+          "rotate": "NONE"
+        },
+        {
+          "row": 28,
+          "col": 60,
+          "to": 103,
+          "toRow": 21,
+          "toCol": 11,
+          "rotate": "NONE"
+        },
+        {
+          "row": 21,
+          "col": 15,
+          "to": 714,
+          "toRow": 2,
+          "toCol": 33,
+          "rotate": "NONE"
+        },
+        {
+          "row": 21,
+          "col": 16,
+          "to": 714,
+          "toRow": 2,
+          "toCol": 33,
+          "rotate": "NONE"
+        },
+        {
+          "row": 44,
+          "col": 52,
+          "to": 102,
+          "toRow": 4,
+          "toCol": 38,
+          "rotate": "NONE"
+        },
+        {
+          "row": 45,
+          "col": 52,
+          "to": 102,
+          "toRow": 4,
+          "toCol": 38,
+          "rotate": "NONE"
+        },
+        {
+          "row": 46,
+          "col": 52,
+          "to": 102,
+          "toRow": 4,
+          "toCol": 38,
+          "rotate": "NONE"
+        },
+        {
+          "row": 63,
+          "col": 39,
+          "to": 102,
+          "toRow": 23,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 64,
+          "col": 39,
+          "to": 102,
+          "toRow": 23,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 65,
+          "col": 39,
+          "to": 102,
+          "toRow": 23,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 35,
+          "col": 54,
+          "to": 970,
+          "toRow": 3,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 35,
+          "col": 55,
+          "to": 970,
+          "toRow": 3,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 38,
+          "col": 52,
+          "to": 970,
+          "toRow": 4,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 32,
+          "col": 62,
+          "to": 971,
+          "toRow": 2,
+          "toCol": 7,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 26,
+          "col": 55,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 16,
+          "col": 22,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 13,
+          "col": 30,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 15,
+          "col": 21,
+          "message": "Diese Tür ist verschlossen."
+        }
+      ],
+      "objects": [
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 7,
+          "col": 25,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 7,
+          "col": 26,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 7,
+          "col": 28,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 25,
+          "col": 39,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 25,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 40,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 40,
+          "col": 39,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 24,
+          "col": 55,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 29,
+          "col": 56,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 52,
+          "col": 42,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 17,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 17,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 17,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 52,
+          "col": 40,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 46,
+          "col": 34,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 28,
+          "col": 32,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 26,
+          "col": 32,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 24,
+          "col": 32,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 22,
+          "col": 32,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 8,
+          "col": 24,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 21,
+          "col": 16,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 4,
+          "col": 50,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 4,
+          "col": 47,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 28,
+          "col": 65,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 50,
+          "col": 42,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 65,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 21,
+          "col": 55,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_TALLURN",
+          "row": 39,
+          "col": 42,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_TALLURN",
+          "row": 26,
+          "col": 42,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL",
+          "row": 4,
+          "col": 41,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL2",
+          "row": 10,
+          "col": 28,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL2",
+          "row": 7,
+          "col": 28,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL2",
+          "row": 9,
+          "col": 28,
+          "fineRow": 0,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL",
+          "row": 7,
+          "col": 42,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL",
+          "row": 7,
+          "col": 43,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 73,
+      "cols": 67
+    },
+    {
+      "id": 102,
+      "constant": "RID_BAR_SOUTH",
+      "kodClass": "BarloqueSouth",
+      "name": "South Barloque",
+      "roo": "barls.roo",
+      "music": "corloth.mid",
+      "baseLight": 164,
+      "outsideFactor": 10,
+      "outdoors": true,
+      "teleport": {
+        "row": 34,
+        "col": 43
+      },
+      "exits": [
+        {
+          "row": 3,
+          "col": 37,
+          "to": 101,
+          "toRow": 45,
+          "toCol": 51,
+          "rotate": "NONE"
+        },
+        {
+          "row": 4,
+          "col": 37,
+          "to": 101,
+          "toRow": 45,
+          "toCol": 51,
+          "rotate": "NONE"
+        },
+        {
+          "row": 5,
+          "col": 37,
+          "to": 101,
+          "toRow": 45,
+          "toCol": 51,
+          "rotate": "NONE"
+        },
+        {
+          "row": 22,
+          "col": 27,
+          "to": 101,
+          "toRow": 64,
+          "toCol": 38,
+          "rotate": "NONE"
+        },
+        {
+          "row": 23,
+          "col": 27,
+          "to": 101,
+          "toRow": 64,
+          "toCol": 38,
+          "rotate": "NONE"
+        },
+        {
+          "row": 24,
+          "col": 27,
+          "to": 101,
+          "toRow": 64,
+          "toCol": 38,
+          "rotate": "NONE"
+        },
+        {
+          "row": 46,
+          "col": 30,
+          "to": 593,
+          "toRow": 7,
+          "toCol": 11,
+          "rotate": "NONE"
+        },
+        {
+          "row": 46,
+          "col": 31,
+          "to": 593,
+          "toRow": 7,
+          "toCol": 12,
+          "rotate": "NONE"
+        },
+        {
+          "row": 33,
+          "col": 20,
+          "to": 700,
+          "toRow": 18,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 33,
+          "col": 21,
+          "to": 700,
+          "toRow": 18,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 16,
+          "col": 42,
+          "to": 702,
+          "toRow": 18,
+          "toCol": 32,
+          "rotate": "NONE"
+        },
+        {
+          "row": 17,
+          "col": 42,
+          "to": 702,
+          "toRow": 18,
+          "toCol": 32,
+          "rotate": "NONE"
+        },
+        {
+          "row": 36,
+          "col": 13,
+          "to": 109,
+          "toRow": 11,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 28,
+          "col": 42,
+          "to": 113,
+          "toRow": 3,
+          "toCol": 2,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 37,
+          "col": 19,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 39,
+          "col": 25,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 37,
+          "col": 36,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 37,
+          "col": 37,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 39,
+          "col": 43,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 35,
+          "col": 48,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 33,
+          "col": 28,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 22,
+          "col": 45,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 27,
+          "col": 40,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 28,
+          "col": 40,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 10,
+          "col": 47,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 4,
+          "col": 46,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 17,
+          "col": 44,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 38,
+          "col": 7,
+          "message": "Diese Tür ist verschlossen."
+        }
+      ],
+      "objects": [
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 8,
+          "col": 45,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 8,
+          "col": 43,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 8,
+          "col": 44,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 13,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 13,
+          "col": 47,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 39,
+          "col": 45,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 36,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 39,
+          "col": 23,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 25,
+          "col": 45,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 34,
+          "col": 23,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 34,
+          "col": 17,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 32,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 32,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 34,
+          "col": 3,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 35,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 33,
+          "col": 4,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 39,
+          "col": 9,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 39,
+          "col": 15,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 38,
+          "col": 3,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL2",
+          "row": 33,
+          "col": 50,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL2",
+          "row": 34,
+          "col": 49,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL2",
+          "row": 35,
+          "col": 50,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL2",
+          "row": 33,
+          "col": 48,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL2",
+          "row": 22,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_BARREL2",
+          "row": 23,
+          "col": 32,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 23,
+          "col": 40,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 22,
+          "col": 32,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 10,
+          "col": 40,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 32,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ],
+      "rows": 54,
+      "cols": 56
+    },
+    {
+      "id": 103,
+      "constant": "RID_BAR_TAVERN",
+      "kodClass": "BarlBar1",
+      "name": "The Bhrama & Falcon",
+      "roo": "barlbar1.roo",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "teleport": {
+        "row": 4,
+        "col": 7
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 22,
+          "col": 11,
+          "to": 101,
+          "toRow": 29,
+          "toCol": 60,
+          "rotate": "NONE"
+        }
+      ],
+      "music": "bar2.mid",
+      "npcs": [
+        {
+          "kodClass": "BarloqueBartender",
+          "name": "Meidei",
+          "icon": "bqbart.bgf",
+          "role": "Schankwirt",
+          "row": 10,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 22,
+      "cols": 21
+    },
+    {
+      "id": 104,
+      "constant": "RID_BAR_APOTH",
+      "kodClass": "BarApoth",
+      "name": "Joguer's Herbs and Roots",
+      "roo": "barapoth.roo",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 5,
+        "col": 5
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 6,
+          "col": 4,
+          "to": 101,
+          "toRow": 14,
+          "toCol": 16,
+          "rotate": "NONE"
+        },
+        {
+          "row": 7,
+          "col": 4,
+          "to": 101,
+          "toRow": 14,
+          "toCol": 16,
+          "rotate": "NONE"
+        }
+      ],
+      "music": "smithy.mid",
+      "npcs": [
+        {
+          "kodClass": "BarloqueApothecary",
+          "name": "Joguer",
+          "icon": "bqapoth.bgf",
+          "role": "Kräuterkundiger",
+          "row": 3,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        }
+      ],
+      "rows": 10,
+      "cols": 10
+    },
+    {
+      "id": 105,
+      "constant": "RID_BAR_HALL",
+      "kodClass": "BarHall",
+      "name": "Adventurer's Hall of Barloque",
+      "roo": "barhall.roo",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 5,
+        "col": 5
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 26,
+          "col": 8,
+          "to": 101,
+          "toRow": 17,
+          "toCol": 36,
+          "rotate": "NONE"
+        }
+      ],
+      "music": "main.mid",
+      "rows": 26,
+      "cols": 14
+    },
+    {
+      "id": 106,
+      "constant": "RID_BAR_INN",
+      "kodClass": "BarInn",
+      "name": "Brownestone Inn",
+      "roo": "barinn.roo",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 5,
+        "col": 6
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 17,
+          "col": 12,
+          "to": 101,
+          "toRow": 18,
+          "toCol": 26,
+          "rotate": "180"
+        }
+      ],
+      "music": "bar.mid",
+      "lockedDoors": [
+        {
+          "row": 1,
+          "col": 5,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch – vielleicht passiert etwas, wenn du einen Schlüssel benutzt."
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch – vielleicht passiert etwas, wenn du einen Schlüssel benutzt."
+        },
+        {
+          "row": 2,
+          "col": 7,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch – vielleicht passiert etwas, wenn du einen Schlüssel benutzt."
+        },
+        {
+          "row": 3,
+          "col": 7,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch – vielleicht passiert etwas, wenn du einen Schlüssel benutzt."
+        },
+        {
+          "row": 7,
+          "col": 5,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch – vielleicht passiert etwas, wenn du einen Schlüssel benutzt."
+        },
+        {
+          "row": 11,
+          "col": 6,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch – vielleicht passiert etwas, wenn du einen Schlüssel benutzt."
+        },
+        {
+          "row": 11,
+          "col": 7,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch – vielleicht passiert etwas, wenn du einen Schlüssel benutzt."
+        },
+        {
+          "row": 4,
+          "col": 12,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch – vielleicht passiert etwas, wenn du einen Schlüssel benutzt."
+        },
+        {
+          "row": 4,
+          "col": 13,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch – vielleicht passiert etwas, wenn du einen Schlüssel benutzt."
+        },
+        {
+          "row": 4,
+          "col": 17,
+          "message": "Die Tür rührt sich nicht. Seltsam, sie scheint sich gar nicht öffnen zu lassen. Es gibt ein kleines Schlüsselloch – vielleicht passiert etwas, wenn du einen Schlüssel benutzt."
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "BarloqueInnkeeper",
+          "name": "Pritchett",
+          "icon": "bqinnk.bgf",
+          "role": "Wirt",
+          "row": 12,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1536
+        }
+      ],
+      "rows": 20,
+      "cols": 21
+    },
+    {
+      "id": 107,
+      "constant": "RID_BAR_PORT",
+      "kodClass": "BarloquePort",
+      "name": "The Ports of Barloque",
+      "roo": "barlport.roo",
+      "music": "corloth.mid",
+      "baseLight": 164,
+      "outsideFactor": 10,
+      "outdoors": true,
+      "teleport": {
+        "row": 25,
+        "col": 29
+      },
+      "exits": [
+        {
+          "row": 29,
+          "col": 27,
+          "to": 101,
+          "toRow": 4,
+          "toCol": 49,
+          "rotate": "NONE"
+        },
+        {
+          "row": 29,
+          "col": 26,
+          "to": 101,
+          "toRow": 4,
+          "toCol": 49,
+          "rotate": "NONE"
+        },
+        {
+          "row": 22,
+          "col": 5,
+          "to": 709,
+          "toRow": 9,
+          "toCol": 23,
+          "rotate": "NONE"
+        },
+        {
+          "row": 11,
+          "col": 55,
+          "to": 114,
+          "toRow": 3,
+          "toCol": 11,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 15,
+          "col": 4,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 23,
+          "col": 13,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 24,
+          "col": 13,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 10,
+          "col": 10,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 10,
+          "col": 11,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 9,
+          "col": 15,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 9,
+          "col": 16,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 9,
+          "col": 19,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 17,
+          "col": 26,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 18,
+          "col": 26,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 20,
+          "col": 26,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 14,
+          "col": 32,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 14,
+          "col": 33,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 13,
+          "col": 32,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 13,
+          "col": 33,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 12,
+          "col": 34,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 12,
+          "col": 35,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 13,
+          "col": 34,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 13,
+          "col": 25,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 24,
+          "col": 41,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 24,
+          "col": 45,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 25,
+          "col": 45,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 22,
+          "col": 52,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 19,
+          "col": 57,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 19,
+          "col": 58,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 10,
+          "col": 47,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 10,
+          "col": 48,
+          "message": "Diese Tür ist verschlossen."
+        },
+        {
+          "row": 10,
+          "col": 50,
+          "message": "Diese Tür ist verschlossen."
+        }
+      ],
+      "rows": 29,
+      "cols": 59
+    },
+    {
+      "id": 109,
+      "constant": "RID_BAR_MERCHANT",
+      "kodClass": "BarMerchant",
+      "name": "The Sparkling Stone Shop",
+      "roo": "barmerch.roo",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 11,
+        "col": 5
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 12,
+          "col": 3,
+          "to": 102,
+          "toRow": 37,
+          "toCol": 13,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 4,
+          "to": 102,
+          "toRow": 37,
+          "toCol": 13,
+          "rotate": "NONE"
+        },
+        {
+          "row": 13,
+          "col": 3,
+          "to": 102,
+          "toRow": 37,
+          "toCol": 13,
+          "rotate": "NONE"
+        },
+        {
+          "row": 13,
+          "col": 4,
+          "to": 102,
+          "toRow": 37,
+          "toCol": 13,
+          "rotate": "NONE"
+        }
+      ],
+      "music": "smithy.mid",
+      "npcs": [
+        {
+          "kodClass": "BarloqueMerchant",
+          "name": "Herbutte",
+          "icon": "bqmerch.bgf",
+          "role": "Edelsteinhändler",
+          "row": 9,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        }
+      ],
+      "rows": 13,
+      "cols": 8
+    },
+    {
+      "id": 113,
+      "constant": "RID_BAR_SMITHY",
+      "kodClass": "BarloqueSmithy",
+      "name": "The Royal Blacksmith of Barloque",
+      "roo": "barsmith.roo",
+      "baseLight": 164,
+      "outsideFactor": 0,
+      "teleport": {
+        "row": 4,
+        "col": 2
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 3,
+          "col": 1,
+          "to": 102,
+          "toRow": 28,
+          "toCol": 41,
+          "rotate": "NONE"
+        }
+      ],
+      "music": "smithy.mid",
+      "npcs": [
+        {
+          "kodClass": "BarloqueBlacksmith",
+          "name": "Fehr'loi Qan",
+          "icon": "bqsmith.bgf",
+          "role": "Königlicher Schmied",
+          "row": 4,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 7,
+      "cols": 12
+    },
+    {
+      "id": 114,
+      "constant": "RID_BAR_VAULT",
+      "kodClass": "BarVault",
+      "name": "Office of the Barloque Vaultman",
+      "roo": "barvault.roo",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 2,
+        "col": 5
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 3,
+          "col": 12,
+          "to": 107,
+          "toRow": 10,
+          "toCol": 55,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 12,
+          "to": 107,
+          "toRow": 10,
+          "toCol": 55,
+          "rotate": "NONE"
+        }
+      ],
+      "music": "smithy.mid",
+      "npcs": [
+        {
+          "kodClass": "Barloquevaultman",
+          "name": "Obert Cair'bre",
+          "icon": "bqvaultm.bgf",
+          "role": "Lagerverwalter",
+          "row": 4,
+          "col": 11,
+          "fineRow": 48,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Willkommen im Lager von Barloque",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Mit DEPOSIT lagerst du Gegenstände ein, mit WITHDRAW holst du sie zurück. Das kostet eine Gebühr; Schillinge werden nicht eingelagert.",
+          "row": 5,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32
+        }
+      ],
+      "rows": 9,
+      "cols": 13
+    },
+    {
+      "id": 970,
+      "constant": "RID_BAR_COURT",
+      "kodClass": "BarloqueCourt",
+      "name": "Office of the Justicar",
+      "roo": "barcourt.roo",
+      "baseLight": 164,
+      "outsideFactor": 0,
+      "teleport": {
+        "row": 6,
+        "col": 12
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 2,
+          "col": 4,
+          "to": 101,
+          "toRow": 33,
+          "toCol": 54,
+          "rotate": "NONE"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "to": 101,
+          "toRow": 38,
+          "toCol": 51,
+          "rotate": "NONE"
+        },
+        {
+          "row": 6,
+          "col": 11,
+          "to": 970,
+          "toRow": 8,
+          "toCol": 11,
+          "rotate": "NONE"
+        },
+        {
+          "row": 7,
+          "col": 11,
+          "to": 970,
+          "toRow": 5,
+          "toCol": 11,
+          "rotate": "NONE"
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "BarloqueClerk",
+          "name": "Caramo",
+          "icon": "bqclerk.bgf",
+          "role": "Gerichtsschreiberin",
+          "row": 12,
+          "col": 12,
+          "fineRow": 28,
+          "fineCol": 28,
+          "angle": 2048
+        },
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Wache",
+          "row": 10,
+          "col": 1,
+          "fineRow": 60,
+          "fineCol": 28,
+          "angle": 0
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Justiziar",
+          "icon": "newbsign.bgf",
+          "role": "Schild",
+          "description": "Der Justiziar begnadigt Gesetzlose und Mörder und wird gewählt: Bei Caramo kauft man einen Wahlzettel, schreibt einen Namen darauf und gibt ihn zurück. Gesetzlose, Mörder und Neulinge dürfen nicht wählen.",
+          "row": 11,
+          "col": 12,
+          "fineRow": 0,
+          "fineCol": 32
+        }
+      ],
+      "rows": 14,
+      "cols": 12
+    },
+    {
+      "id": 971,
+      "constant": "RID_BAR_JAIL",
+      "kodClass": "BarloqueJail",
+      "name": "Old Jailhouse",
+      "roo": "barjail.roo",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 6,
+        "col": 12
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 2,
+          "col": 7,
+          "to": 101,
+          "toRow": 31,
+          "toCol": 62,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 6,
+          "col": 2,
+          "message": "Diese Tür ist verschlossen."
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Wache",
+          "row": 3,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 1024
+        },
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Wache",
+          "row": 14,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 3072
+        },
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Wache",
+          "row": 2,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 512
+        }
+      ],
+      "rows": 16,
+      "cols": 14
+    },
+    {
+      "id": 700,
+      "constant": "RID_GM_HALL",
+      "kodClass": "GMHall",
+      "name": "The Guildmaster's Hall",
+      "roo": "gmhall.roo",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "teleport": {
+        "row": 8,
+        "col": 7
+      },
+      "noCombat": true,
+      "exits": [
+        {
+          "row": 19,
+          "col": 6,
+          "to": 102,
+          "toRow": 34,
+          "toCol": 20,
+          "rotate": "NONE"
+        },
+        {
+          "row": 19,
+          "col": 7,
+          "to": 102,
+          "toRow": 34,
+          "toCol": 21,
+          "rotate": "NONE"
+        }
+      ],
+      "music": "bar.mid",
+      "npcs": [
+        {
+          "kodClass": "GuildCreator",
+          "name": "Frular",
+          "icon": "gcreator.bgf",
+          "role": "Gildenmeister",
+          "row": 5,
+          "col": 7,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 1024
+        }
+      ],
+      "rows": 19,
+      "cols": 12
+    }
+  ]
+}

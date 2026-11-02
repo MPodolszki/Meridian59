@@ -1,0 +1,158 @@
+{
+  "_hinweis": "Händler von Barloque (towns/barlqtwn). Sprüche Hitze/Verblassen (Joguer, mit Aufgabe) und Magischer Schild (Fehr'loi Qan), Feuersand, Schach, Lagerhaus (Obert), Zimmermiete, Wahlzettel (Caramo) fehlen noch.",
+  "shops": {
+    "BarloqueApothecary": {
+      "markup": 2,
+      "buyer": true,
+      "buysTypes": [
+        "reagent"
+      ],
+      "buysExceptTypes": [
+        "gem"
+      ],
+      "forSale": [
+        {
+          "item": "herbs",
+          "number": 5
+        },
+        {
+          "item": "mushroom",
+          "number": 5
+        },
+        {
+          "item": "elderberry",
+          "number": 5
+        },
+        {
+          "item": "redmushroom",
+          "number": 4
+        },
+        {
+          "item": "bluemushroom",
+          "number": 4
+        },
+        {
+          "item": "flask"
+        }
+      ]
+    },
+    "BarloqueBartender": {
+      "markup": 4,
+      "forSale": [
+        {
+          "item": "winegoblet"
+        },
+        {
+          "item": "mug",
+          "number": 4
+        },
+        {
+          "item": "apple",
+          "number": 4
+        },
+        {
+          "item": "waterskin",
+          "number": 4
+        },
+        {
+          "item": "bread",
+          "number": 4
+        },
+        {
+          "item": "meatpie",
+          "number": 4
+        },
+        {
+          "item": "cheese",
+          "number": 2
+        }
+      ]
+    },
+    "BarloqueInnkeeper": {
+      "forSale": [
+        {
+          "item": "pantsgray"
+        },
+        {
+          "item": "pantsptblack"
+        },
+        {
+          "item": "turkeyleg"
+        }
+      ],
+      "conditional": [
+        {
+          "item": "mace",
+          "number": 1,
+          "price": 100,
+          "triggers": [
+            "streitkolben",
+            "mace"
+          ],
+          "reply": "Aye, du könntest einen braucheth, wenn du unsere kultivierte Stadt verlasseth. Ich hab welche, die du kaufeth kannst."
+        }
+      ]
+    },
+    "BarloqueMerchant": {
+      "markup": 2,
+      "buyer": true,
+      "buysTypes": [
+        "gem",
+        "light"
+      ],
+      "forSale": [
+        {
+          "item": "diamond",
+          "number": 1
+        },
+        {
+          "item": "torch"
+        },
+        {
+          "item": "sapphire",
+          "number": 1
+        },
+        {
+          "item": "emerald",
+          "number": 1
+        }
+      ]
+    },
+    "BarloqueBlacksmith": {
+      "markup": 4,
+      "buyer": true,
+      "buysTypes": [
+        "weapon",
+        "armor",
+        "shield",
+        "light"
+      ],
+      "forSale": [
+        {
+          "item": "chainarmor"
+        },
+        {
+          "item": "axe"
+        },
+        {
+          "item": "hammer"
+        },
+        {
+          "item": "metalshield"
+        }
+      ],
+      "conditional": [
+        {
+          "item": "mace",
+          "number": 1,
+          "price": 100,
+          "triggers": [
+            "streitkolben",
+            "mace"
+          ],
+          "reply": "All diese schönen Waffen, und du willst einen Streitkolben. Na schön, dann verkaufe ich dir eben einen."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "_hinweis": "Bewohner von Barloque (towns/barlqtwn), Texte sinngemäß nach dem Original.",
+  "npcs": {
+    "BarloqueApothecary": {
+      "title": "Kräuterkundiger",
+      "description": "Joguer pfeift eine alberne Melodie, während er seinen Garten magischer Kräuter und Pilze pflegt. Er gilt als bester Kräuterkundiger des Landes.",
+      "greeting": "Glückwunsch! Du hast den besten Laden im ganzen Land gefunden.",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "kräuter",
+            "pilze",
+            "buy"
+          ],
+          "reply": "Kräuter, Pilze, Holunderbeeren und Flaschen (B). Reagenzien kaufe ich auch, nur keine Edelsteine."
+        },
+        {
+          "keywords": [
+            "schüler",
+            "pupil",
+            "lernen",
+            "hitze",
+            "verblassen"
+          ],
+          "reply": "Wer bei mir lernen will, muss sich erst als würdiger Schüler erweisen."
+        }
+      ]
+    },
+    "BarloqueBartender": {
+      "title": "Schankwirt",
+      "description": "Meidei bediente einst nur die Reichen; heute ist er ein eifriger Anhänger Shal'illes und vergrault damit fast seine Gäste.",
+      "greeting": "Sei gegrüßt und willkommen in meiner bescheidenen Schenke! Gepriesen sei Shal'ille!",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "wein",
+            "bier",
+            "essen",
+            "buy"
+          ],
+          "reply": "Wein, Starkbier, Brot, Käse, Pasteten (B). Und vergiss nicht, Shal'ille zu danken."
+        },
+        {
+          "keywords": [
+            "shal'ille",
+            "shalille"
+          ],
+          "reply": "Gesegnet sei sie, die Gütige!"
+        },
+        {
+          "keywords": [
+            "qor"
+          ],
+          "reply": "Sprich diesen Namen nicht in meinem Haus aus!"
+        },
+        {
+          "keywords": [
+            "treppe",
+            "oben"
+          ],
+          "reply": "Bitte, guter Freund, steig diese Treppe nicht hinauf."
+        }
+      ]
+    },
+    "BarloqueInnkeeper": {
+      "title": "Wirt",
+      "description": "Pritchett, einst Seemann, hat sich einen Titel gekauft und ist der am wenigsten hochnäsige Mensch in Barloque. Er spricht absichtlich ein gebrochenes, altertümliches Deutsch.",
+      "greeting": "Ich bin frohet, dich zu sehen, Kamerad.",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "hose",
+            "buy"
+          ],
+          "reply": "Hosen und Truthahnkeulen hab ich, mein Freund (B)."
+        },
+        {
+          "keywords": [
+            "zimmer",
+            "mieten"
+          ],
+          "reply": "Ein Zimmer kosteth für 85 Tage 5000 Schillinge, danach 75 je Tag – doch derzeit sind alle belegeth."
+        },
+        {
+          "keywords": [
+            "seemann",
+            "sailor",
+            "meer"
+          ],
+          "reply": "Ah, das Meer! Die besten Jahre meines Lebens verbrachteth ich auf den Wellen."
+        }
+      ]
+    },
+    "BarloqueMerchant": {
+      "title": "Edelsteinhändler",
+      "description": "Herbutte ist ein aristokratischer Snob, der für jeden außer dem Königshaus nur Verachtung übrig hat.",
+      "greeting": "",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "edelstein",
+            "buy"
+          ],
+          "reply": "Diamant, Saphir, Smaragd – nur das Feinste (B). Edelsteine nehme ich dir ab, gewöhnlichen Tand nicht."
+        },
+        {
+          "keywords": [
+            "tos",
+            "cor",
+            "jasper",
+            "marion",
+            "hazar",
+            "kocatan"
+          ],
+          "reply": "Ach, die Provinz. Wie entsetzlich."
+        }
+      ]
+    },
+    "BarloqueBlacksmith": {
+      "title": "Königlicher Schmied",
+      "description": "Fehr'loi Qan ist ein großartiger, aber langsamer Waffenschmied und Kraanan treu ergeben.",
+      "greeting": "Hallo, und willkommen.",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "waffe",
+            "rüstung",
+            "buy"
+          ],
+          "reply": "Kettenrüstung, Axt, Hammer, Rundschild (B). Waffen und Rüstungen kaufe ich."
+        },
+        {
+          "keywords": [
+            "kraanan"
+          ],
+          "reply": "Kraanan führe deine Klinge!"
+        }
+      ]
+    },
+    "Barloquevaultman": {
+      "title": "Lagerverwalter",
+      "description": "Obert Cair'bre verwaltet die Lager von Barloque und bewahrt die Habe der Abenteurer auf – gegen eine Gebühr.",
+      "greeting": "Sei gegrüßt!",
+      "topics": [
+        {
+          "keywords": [
+            "lager",
+            "einlagern",
+            "vault"
+          ],
+          "reply": "Mein Lager ist derzeit geschlossen. Komm später wieder."
+        }
+      ]
+    },
+    "BarloqueClerk": {
+      "title": "Gerichtsschreiberin",
+      "description": "Caramo führt die Bücher des Justiziars und die Wahl zu seinem Amt.",
+      "greeting": "",
+      "topics": [
+        {
+          "keywords": [
+            "justiziar",
+            "wahl",
+            "stimme"
+          ],
+          "reply": "Der Justiziar begnadigt Gesetzlose und Mörder; er wird gewählt. Die Wahl ruht derzeit."
+        }
+      ]
+    },
+    "GuildCreator": {
+      "title": "Gildenmeister",
+      "description": "Frular verwaltet die Gilden des Reiches und ihre Mieten.",
+      "greeting": "",
+      "topics": [
+        {
+          "keywords": [
+            "gilde",
+            "miete",
+            "rent"
+          ],
+          "reply": "Gilden kann man derzeit noch nicht gründen."
+        }
+      ]
+    },
+    "DukeGuard": {
+      "title": "Wache",
+      "description": "Eine Wache des Herzogs, reglos auf ihrem Posten.",
+      "greeting": "",
+      "topics": []
+    }
+  }
+}
