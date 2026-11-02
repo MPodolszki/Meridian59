@@ -15,6 +15,10 @@ public sealed record DialogFile(IReadOnlyDictionary<string, NpcDialog> Npcs)
         JsonSerializer.Deserialize<DialogFile>(File.ReadAllText(path), Json) ?? new DialogFile(new Dictionary<string, NpcDialog>());
 
     public static DialogFile Empty { get; } = new(new Dictionary<string, NpcDialog>());
+
+    /// <summary>Dialoge mehrerer Gebiete zusammenführen (NPC-Klassen sind eindeutig).</summary>
+    public static DialogFile Merge(IEnumerable<DialogFile> files) =>
+        new(files.SelectMany(f => f.Npcs).ToDictionary(kv => kv.Key, kv => kv.Value));
 }
 
 /// <summary>Nicht-Spieler-Figur in einem Raum.</summary>
@@ -34,7 +38,7 @@ public sealed class Npc(uint id, NpcDefinition definition, NpcDialog? dialog)
     public ushort Col => Room.Fine(definition.Col, definition.FineCol);
     public ushort Angle => (ushort)definition.Angle;
 
-    public string Describe() => dialog?.Description ?? $"Du siehst {Name}.";
+    public string Describe() => definition.Description ?? dialog?.Description ?? $"Du siehst {Name}.";
 
     /// <summary>Händler-Rolle (Laden, Ankauf, Bank), falls in data/shops definiert.</summary>
     public Merchant? Merchant { get; set; }
@@ -50,7 +54,7 @@ public sealed class Npc(uint id, NpcDefinition definition, NpcDialog? dialog)
             if (topic.Keywords.Any(k => lower.Contains(k, StringComparison.Ordinal)))
                 return topic.Reply;
         if (lower.Contains(Name.ToLowerInvariant(), StringComparison.Ordinal) || Greetings.Any(g => lower.Contains(g, StringComparison.Ordinal)))
-            return dialog.Greeting;
+            return dialog.Greeting.Length > 0 ? dialog.Greeting : null;   // Portal, Schilder: stumm
         return null;
     }
 }

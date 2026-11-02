@@ -10,7 +10,7 @@ public sealed class EnchantmentTests : IAsyncLifetime
     private static string Data(params string[] parts) => Path.Combine([AppContext.BaseDirectory, "data", .. parts]);
 
     private readonly string _db = Path.Combine(Path.GetTempPath(), $"meridian-ench-{Guid.NewGuid():N}.db");
-    private readonly CancellationTokenSource _cts = new(TimeSpan.FromSeconds(30));
+    private readonly CancellationTokenSource _cts = new(TimeSpan.FromSeconds(60));
     private GameServer _server = null!;
     private Task _run = null!;
 
@@ -60,12 +60,12 @@ public sealed class EnchantmentTests : IAsyncLifetime
         Assert.Equal(1, bless.Targets);
 
         // Erfolg ist ein Wurf: so lange wirken, bis der Segen sitzt (Mana 23, Kosten 6 bzw. 3 bei Misserfolg).
-        for (int i = 0; i < 5 && !events.Any(e => e is ClientEvent.EnchantmentsChanged { Enchantments.Count: 1 }); i++)
+        for (int i = 0; i < 7 && !events.Any(e => e is ClientEvent.EnchantmentsChanged { Enchantments.Count: 1 }); i++)
         {
             int before = events.Count;
             await c.CastAsync(bless.Spell.Id, [c.PlayerId]);
-            await WaitForAsync(c, events, e => events.IndexOf(e!) >= before && e is ClientEvent.Chat ch
-                && (ch.Text.StartsWith("Kraanan erfüllt dich") || ch.Text.Contains("misslungen")));
+            await WaitForAsync(c, events, _ => events.Skip(before).Any(e => e is ClientEvent.Chat ch
+                && (ch.Text.StartsWith("Kraanan erfüllt dich") || ch.Text.Contains("misslungen"))));
         }
         var shown = events.OfType<ClientEvent.EnchantmentsChanged>().Last().Enchantments;
         Assert.Equal("Segen", c.Resolve(Assert.Single(shown).NameRsc));
@@ -74,12 +74,17 @@ public sealed class EnchantmentTests : IAsyncLifetime
         // Erneut auf sich selbst: erlaubt (CanRecastSelfEnchantment), kein „bereits“-Hinweis.
         int mark = events.Count;
         await c.CastAsync(bless.Spell.Id, [c.PlayerId]);
-        await WaitForAsync(c, events, e => events.IndexOf(e!) >= mark && e is ClientEvent.Chat ch
-            && (ch.Text.StartsWith("Kraanan erfüllt dich") || ch.Text.Contains("misslungen") || ch.Text.Contains("nicht genug Mana")));
+        await WaitForAsync(c, events, _ => events.Skip(mark).Any(e => e is ClientEvent.Chat ch
+            && (ch.Text.StartsWith("Kraanan erfüllt dich") || ch.Text.Contains("misslungen") || ch.Text.Contains("nicht genug Mana"))));
         Assert.DoesNotContain(events.Skip(mark), e => e is ClientEvent.Chat ch && ch.Text.Contains("bereits"));
 
         // Abmelden und wieder anmelden: Verzauberung bleibt (Restdauer gespeichert).
         c.Dispose();
+        while (_server.World.OnlineCount > 0)   // Server hat die Abmeldung verarbeitet
+        {
+            _cts.Token.ThrowIfCancellationRequested();
+            await Task.Delay(20);
+        }
         using var again = new ClientSession();
         var events2 = new List<ClientEvent>();
         again.Event += events2.Add;

@@ -1,0 +1,1390 @@
+{
+  "source": "kod/object/active/holder/room/guest*/newb* (Meridian 59), erzeugt mit tools/make_raza.py",
+  "startRoom": 1011,
+  "start": true,
+  "rooms": [
+    {
+      "id": 1011,
+      "constant": "RID_RAZA_INN",
+      "kodClass": "Newb1",
+      "name": "Raza Inn",
+      "roo": "guest1.roo",
+      "music": "login.mid",
+      "baseLight": 255,
+      "outsideFactor": 10,
+      "teleport": {
+        "row": 7,
+        "col": 4
+      },
+      "noCombat": true,
+      "respawnRoom": 1011,
+      "improveCap": 25,
+      "exits": [
+        {
+          "row": 1,
+          "col": 6,
+          "to": 1012,
+          "toRow": 25,
+          "toCol": 41,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 8,
+          "col": 9,
+          "message": "Die Hintertür ist verschlossen."
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "HazarInnkeeper",
+          "name": "Marcus",
+          "icon": "jsmerch.bgf",
+          "role": "Wirt (verkauft nichts)",
+          "row": 3,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Willkommen",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Willkommen im Spiel! Wir hoffen, dass dir diese einzigartige Online-Welt gefällt.\n\nZuerst lernst du zu gehen: Mit W und S gehst du vor und zurück, mit den Pfeiltasten drehst du dich.\n\nViele Dinge in der Welt kannst du mit der rechten Maustaste anschauen – diese Schilder zum Beispiel, oder den Wirt.\n\nDurch Türen gehst du mit der Leertaste.\n-------------------\nWenn du bereit bist, geh zur Ausgangstür (vorne links), drück die Leertaste und lies das nächste Schild, das du gleich draußen siehst.",
+          "row": 6,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32
+        }
+      ],
+      "rows": 8,
+      "cols": 11
+    },
+    {
+      "id": 1012,
+      "constant": "RID_RAZA",
+      "kodClass": "Newb2",
+      "name": "Raza",
+      "roo": "guest2.roo",
+      "music": "login.mid",
+      "baseLight": 255,
+      "outsideFactor": 10,
+      "outdoors": true,
+      "terrain": "village",
+      "teleport": {
+        "row": 23,
+        "col": 41
+      },
+      "noCombat": true,
+      "respawnRoom": 1011,
+      "improveCap": 25,
+      "lockedDoors": [
+        {
+          "row": 18,
+          "col": 8,
+          "message": "Die Tür des Bauernhauses ist von innen fest verriegelt."
+        },
+        {
+          "row": 19,
+          "col": 8,
+          "message": "Die Tür des Bauernhauses ist von innen fest verriegelt."
+        },
+        {
+          "row": 27,
+          "col": 6,
+          "message": "Die Tür des kleinen Schuppens ist verschlossen."
+        },
+        {
+          "row": 28,
+          "col": 6,
+          "message": "Die Tür des kleinen Schuppens ist verschlossen."
+        },
+        {
+          "row": 12,
+          "col": 36,
+          "message": "Die Tore des Tempels bleiben verschlossen, außer bei Begräbnissen."
+        },
+        {
+          "row": 19,
+          "col": 18,
+          "message": "Die Türen des Rathauses sind von innen fest verriegelt."
+        },
+        {
+          "row": 20,
+          "col": 18,
+          "message": "Die Türen des Rathauses sind von innen fest verriegelt."
+        },
+        {
+          "row": 21,
+          "col": 18,
+          "message": "Die Türen des Rathauses sind von innen fest verriegelt."
+        },
+        {
+          "row": 23,
+          "col": 57,
+          "message": "Die Tür zu Eric d'Jorns Wohnung ist verschlossen."
+        },
+        {
+          "row": 22,
+          "col": 57,
+          "message": "Die Tür zu Eric d'Jorns Wohnung ist verschlossen."
+        }
+      ],
+      "exits": [
+        {
+          "row": 26,
+          "col": 41,
+          "to": 1011,
+          "toRow": 3,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 16,
+          "col": 20,
+          "to": 1013,
+          "toRow": 6,
+          "toCol": 8,
+          "rotate": "NONE"
+        },
+        {
+          "row": 17,
+          "col": 19,
+          "to": 1013,
+          "toRow": 6,
+          "toCol": 8,
+          "rotate": "NONE"
+        },
+        {
+          "row": 16,
+          "col": 19,
+          "to": 1013,
+          "toRow": 6,
+          "toCol": 8,
+          "rotate": "NONE"
+        },
+        {
+          "row": 23,
+          "col": 19,
+          "to": 1014,
+          "toRow": 3,
+          "toCol": 5,
+          "rotate": "NONE"
+        },
+        {
+          "row": 24,
+          "col": 19,
+          "to": 1014,
+          "toRow": 3,
+          "toCol": 5,
+          "rotate": "NONE"
+        },
+        {
+          "row": 24,
+          "col": 20,
+          "to": 1014,
+          "toRow": 3,
+          "toCol": 5,
+          "rotate": "NONE"
+        },
+        {
+          "row": 26,
+          "col": 51,
+          "to": 1015,
+          "toRow": 2,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 26,
+          "col": 52,
+          "to": 1015,
+          "toRow": 2,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 7,
+          "col": 44,
+          "to": 1016,
+          "toRow": 11,
+          "toCol": 16,
+          "rotate": "WEST"
+        },
+        {
+          "row": 8,
+          "col": 44,
+          "to": 1016,
+          "toRow": 11,
+          "toCol": 16,
+          "rotate": "WEST"
+        },
+        {
+          "row": 18,
+          "col": 57,
+          "to": 1017,
+          "toRow": 5,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 19,
+          "col": 57,
+          "to": 1017,
+          "toRow": 5,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 8,
+          "col": 53,
+          "to": 1018,
+          "toRow": 12,
+          "toCol": 11,
+          "rotate": "NONE"
+        },
+        {
+          "row": 8,
+          "col": 54,
+          "to": 1018,
+          "toRow": 12,
+          "toCol": 11,
+          "rotate": "NONE"
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "Sign",
+          "name": "Unterwegs",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Jetzt, da du draußen bist, kannst du das Laufen richtig üben. Mit Shift gehst du langsamer, mit A und D trittst du zur Seite. Mit Ende drehst du dich schnell um.\n\nAuf der Karte kannst du mit der rechten Maustaste eigene Notizen eintragen.\n-------------------\nDanach geh zur Schmiede im Nordflügel des Steinhauses am Westende des Teichs.",
+          "row": 20,
+          "col": 41,
+          "fineRow": 32,
+          "fineCol": 32
+        }
+      ],
+      "fixedMonsters": [
+        {
+          "kind": "cow",
+          "row": 29,
+          "col": 56
+        },
+        {
+          "kind": "cow",
+          "row": 28,
+          "col": 60
+        },
+        {
+          "kind": "cow",
+          "row": 30,
+          "col": 59
+        }
+      ],
+      "objects": [
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 12,
+          "col": 33,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 28,
+          "col": 38,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 5,
+          "col": 63,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 28,
+          "col": 63,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 6,
+          "col": 61,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 8,
+          "col": 62,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 8,
+          "col": 60,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 10,
+          "col": 63,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 28,
+          "col": 55,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 25,
+          "col": 55,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 25,
+          "col": 63,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 28,
+          "col": 36,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 28,
+          "col": 47,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 12,
+          "col": 48,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 23,
+          "col": 20,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 12,
+          "col": 41,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 16,
+          "col": 22,
+          "fineRow": 4,
+          "fineCol": 46,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 27,
+          "col": 28,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 19,
+          "col": 20,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_TREE1",
+          "row": 26,
+          "col": 62,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 6,
+          "col": 64,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_RAZA_SHRUB",
+          "row": 5,
+          "col": 14,
+          "fineRow": 24,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "OO_NESTOBJ2",
+          "row": 7,
+          "col": 18,
+          "fineRow": 56,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_DUNG",
+          "row": 7,
+          "col": 17,
+          "fineRow": 32,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE1",
+          "row": 6,
+          "col": 19,
+          "fineRow": 40,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_ROCKB",
+          "row": 7,
+          "col": 19,
+          "fineRow": 56,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 6,
+          "col": 23,
+          "fineRow": 36,
+          "fineCol": 30,
+          "angle": 0
+        },
+        {
+          "type": "OO_NESTOBJ1",
+          "row": 7,
+          "col": 26,
+          "fineRow": 34,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_DUNG",
+          "row": 8,
+          "col": 16,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 5,
+          "col": 16,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "OO_ROCK1",
+          "row": 5,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 30,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 12,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 26,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 21,
+          "col": 44,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 14,
+          "col": 43,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 11,
+          "col": 57,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 22,
+          "col": 55,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 5,
+          "col": 17,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "OO_DUNG",
+          "row": 6,
+          "col": 25,
+          "fineRow": 36,
+          "fineCol": 30,
+          "angle": 0
+        },
+        {
+          "type": "OO_DUNG",
+          "row": 7,
+          "col": 24,
+          "fineRow": 34,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_DUNG",
+          "row": 7,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NESTOBJ1",
+          "row": 7,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 30,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 5,
+          "col": 26,
+          "fineRow": 30,
+          "fineCol": 28,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 5,
+          "col": 22,
+          "fineRow": 38,
+          "fineCol": 30,
+          "angle": 0
+        },
+        {
+          "type": "OO_NESTOBJ2",
+          "row": 5,
+          "col": 21,
+          "fineRow": 30,
+          "fineCol": 30,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 6,
+          "col": 16,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 5,
+          "col": 18,
+          "fineRow": 56,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 6,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 6,
+          "col": 17,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_HAY",
+          "row": 6,
+          "col": 16,
+          "fineRow": 56,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_DUNG",
+          "row": 6,
+          "col": 18,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NESTOBJ2",
+          "row": 5,
+          "col": 20,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 5,
+          "col": 18,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 9,
+          "col": 15,
+          "fineRow": 56,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 5,
+          "col": 19,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 7,
+          "col": 16,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 7,
+          "col": 16,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_ROCKB",
+          "row": 6,
+          "col": 24,
+          "fineRow": 40,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "OO_ROCKB",
+          "row": 6,
+          "col": 17,
+          "fineRow": 48,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "OO_ROCKC",
+          "row": 8,
+          "col": 23,
+          "fineRow": 16,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 12,
+          "col": 11,
+          "fineRow": 8,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 9,
+          "col": 17,
+          "fineRow": 40,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 5,
+          "col": 18,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 14,
+          "col": 8,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 26,
+          "col": 4,
+          "fineRow": 48,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 26,
+          "col": 5,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 11,
+          "col": 10,
+          "fineRow": 24,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "OO_LETTUCE",
+          "row": 23,
+          "col": 9,
+          "fineRow": 56,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 11,
+          "col": 4,
+          "fineRow": 24,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 11,
+          "col": 4,
+          "fineRow": 24,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 25,
+          "col": 9,
+          "fineRow": 40,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_LETTUCE",
+          "row": 22,
+          "col": 9,
+          "fineRow": 40,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 28,
+          "col": 12,
+          "fineRow": 40,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 25,
+          "col": 11,
+          "fineRow": 24,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 10,
+          "col": 13,
+          "fineRow": 0,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "OO_CORN",
+          "row": 28,
+          "col": 11,
+          "fineRow": 56,
+          "fineCol": 8,
+          "angle": 0
+        }
+      ],
+      "rows": 30,
+      "cols": 66
+    },
+    {
+      "id": 1013,
+      "constant": "RID_NEWB3",
+      "kodClass": "Newb3",
+      "name": "Raza Blacksmith",
+      "roo": "guest3.roo",
+      "music": "smithy.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "teleport": {
+        "row": 6,
+        "col": 8
+      },
+      "noCombat": true,
+      "respawnRoom": 1011,
+      "improveCap": 25,
+      "exits": [
+        {
+          "row": 7,
+          "col": 8,
+          "to": 1012,
+          "toRow": 17,
+          "toCol": 21,
+          "rotate": "NONE"
+        },
+        {
+          "row": 7,
+          "col": 9,
+          "to": 1012,
+          "toRow": 17,
+          "toCol": 21,
+          "rotate": "NONE"
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "HazarBlacksmith",
+          "name": "Tomas",
+          "icon": "bqsmith.bgf",
+          "role": "Schmied (Waffen, Rüstungen)",
+          "row": 4,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Einkaufen",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Du bist fast mit leeren Händen in diese Welt gekommen, aber ein wenig Geld hast du. Geh zum Schmied, drück Enter und tippe BUY: Er zeigt dir, was er verkauft. Kauf zuerst eine Waffe, dann eine Rüstung.\n\nUnbewaffnet bist du trotzdem noch: Schau dir die Waffe im Inventar an und benutze sie (USE). Ein gelber Schein zeigt, dass du sie führst. Genauso mit der Rüstung. Mit UNUSE legst du etwas ab; ein Doppelklick im Inventar geht auch.\n-------------\nDanach geh in die Schenke, das große braune Haus am Ostende des Dorfs.",
+          "row": 4,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32
+        }
+      ],
+      "rows": 10,
+      "cols": 10
+    },
+    {
+      "id": 1014,
+      "constant": "RID_NEWB4",
+      "kodClass": "Newb4",
+      "name": "Ravi's Magicks of Raza",
+      "roo": "guest4.roo",
+      "music": "login.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "teleport": {
+        "row": 3,
+        "col": 5
+      },
+      "noCombat": true,
+      "respawnRoom": 1011,
+      "improveCap": 25,
+      "exits": [
+        {
+          "row": 2,
+          "col": 5,
+          "to": 1012,
+          "toRow": 23,
+          "toCol": 21,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "to": 1012,
+          "toRow": 23,
+          "toCol": 21,
+          "rotate": "NONE"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "to": 1012,
+          "toRow": 23,
+          "toCol": 21,
+          "rotate": "NONE"
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "HazarApothecary",
+          "name": "Ravi",
+          "icon": "kcshopk.bgf",
+          "role": "Apotheker (Reagenzien, Edelsteine)",
+          "row": 6,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Verkaufen",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Manchmal möchte ein Händler oder Dorfbewohner, dass du ihm etwas bringst. Noch öfter findest du nach einem Kampf Dinge, die du selbst nicht brauchst, aber verkaufen kannst – etwa Entwurzelbeeren von den Mumien. Mit OFFER (Strg+O) bietest du sie Ravi, dem Apotheker, an.\n\nNicht jeder will alles: Ravi kauft keine Waffen. Sag „buy“ oder „sell“, dann erfährst du, was ein Händler nimmt.\n--------------------\nHier endet deine Einführung. Schau dich um und probier Neues aus – vielleicht im Großen Museum, das Ausstellungen über die Wunder Meridians zeigt.",
+          "row": 4,
+          "col": 6,
+          "fineRow": 48,
+          "fineCol": 32
+        }
+      ],
+      "rows": 7,
+      "cols": 8
+    },
+    {
+      "id": 1015,
+      "constant": "RID_NEWB5",
+      "kodClass": "Newb5",
+      "name": "Raza Hut",
+      "roo": "guest5.roo",
+      "music": "login.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "teleport": {
+        "row": 2,
+        "col": 2
+      },
+      "noCombat": true,
+      "respawnRoom": 1011,
+      "improveCap": 25,
+      "exits": [
+        {
+          "row": 1,
+          "col": 2,
+          "to": 1012,
+          "toRow": 25,
+          "toCol": 52,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "to": 1012,
+          "toRow": 25,
+          "toCol": 52,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "to": 1012,
+          "toRow": 25,
+          "toCol": 52,
+          "rotate": "NONE"
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "HazarElder",
+          "name": "Rodric d'Stane",
+          "icon": "mrelder.bgf",
+          "role": "Ältester",
+          "row": 5,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Verständigung",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Sich zu verständigen ist in Meridian wichtig. Am häufigsten nutzt man SAY: Tippst du SAY HALLO, antwortet dir der Älteste in dieser Hütte.\n\nJeder Spieler im selben Gebiet hört, was du sagst. Händler und Älteste hören allerdings schlecht – geh nahe heran.\n\nMit BROADCAST erreichst du alle, die gerade spielen. Füll diesen Kanal nicht mit Unsinn; jede Rundnachricht kostet die Hälfte deines Manas.\n-------------------------\nSag QUEST, um zu erfahren, was du als Nächstes tun sollst.",
+          "row": 3,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 0
+        }
+      ],
+      "rows": 5,
+      "cols": 5
+    },
+    {
+      "id": 1016,
+      "constant": "RID_RAZA_MAUSOLEUM",
+      "kodClass": "Newb6",
+      "name": "Mausoleum",
+      "roo": "guest6.roo",
+      "music": "nec03.mid",
+      "baseLight": 124,
+      "outsideFactor": 0,
+      "teleport": {
+        "row": 11,
+        "col": 23
+      },
+      "respawnRoom": 1011,
+      "improveCap": 25,
+      "exits": [
+        {
+          "row": 11,
+          "col": 17,
+          "to": 1012,
+          "toRow": 7,
+          "toCol": 43,
+          "rotate": "WEST"
+        }
+      ],
+      "generators": [
+        {
+          "row": 11,
+          "col": 4
+        },
+        {
+          "row": 5,
+          "col": 21
+        },
+        {
+          "row": 5,
+          "col": 36
+        },
+        {
+          "row": 9,
+          "col": 28
+        },
+        {
+          "row": 17,
+          "col": 35
+        },
+        {
+          "row": 21,
+          "col": 23
+        },
+        {
+          "row": 25,
+          "col": 11
+        },
+        {
+          "row": 29,
+          "col": 18
+        },
+        {
+          "row": 37,
+          "col": 35
+        },
+        {
+          "row": 38,
+          "col": 19
+        }
+      ],
+      "monsters": [
+        {
+          "kind": "mummy",
+          "weight": 50
+        },
+        {
+          "kind": "mummynotreasure",
+          "weight": 50
+        }
+      ],
+      "maxMonsters": 20,
+      "npcs": [
+        {
+          "kodClass": "Sign",
+          "name": "Umschauen",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Wenn dich gerade kein Monster jagt, lern noch etwas: Mit Bild auf und Bild ab schaust du nach oben und nach unten in die Grube voller Mumien. Wink ihnen ruhig mit WAVE – sie winken nicht zurück.\n\nBild ab hilft sehr gegen kleinere Gegner, und die meisten frühen Gegner sind kleiner als du. Mit Pos1 richtest du den Blick wieder gerade aus.",
+          "row": 11,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 48
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 3,
+          "col": 18,
+          "fineRow": 0,
+          "fineCol": 8
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 5,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 40
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 19,
+          "col": 18,
+          "fineRow": 0,
+          "fineCol": 40
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 22,
+          "col": 11,
+          "fineRow": 24,
+          "fineCol": 56
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 23,
+          "col": 8,
+          "fineRow": 40,
+          "fineCol": 16
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Knochenhaufen",
+          "icon": "bonepile.bgf",
+          "role": "Schild",
+          "description": "Dieser Knochenhaufen ist zweifellos von einem Leichnam übrig, der seit Dutzenden Meridian-Jahren verwest.",
+          "row": 25,
+          "col": 14,
+          "fineRow": 0,
+          "fineCol": 40
+        }
+      ],
+      "rows": 39,
+      "cols": 40
+    },
+    {
+      "id": 1017,
+      "constant": "RID_RAZA_BAR",
+      "kodClass": "Newb7",
+      "name": "Raza Pub",
+      "roo": "guest7.roo",
+      "music": "login.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "teleport": {
+        "row": 5,
+        "col": 4
+      },
+      "noCombat": true,
+      "respawnRoom": 1011,
+      "improveCap": 25,
+      "exits": [
+        {
+          "row": 5,
+          "col": 2,
+          "to": 1012,
+          "toRow": 18,
+          "toCol": 56,
+          "rotate": "NONE"
+        }
+      ],
+      "npcs": [
+        {
+          "kodClass": "HazarBartender",
+          "name": "Eric d'Jorn",
+          "icon": "tsinnk.bgf",
+          "role": "Wirt der Schenke (Essen, Kleidung)",
+          "row": 8,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1536
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Leben, Mana und Ausdauer",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Oben siehst du drei Werte: Lebenspunkte, Mana und Ausdauer. Lebenspunkte verlierst du, wenn du Schaden nimmst; bei null stirbst du. Mana bestimmt, wie viele Zauber du wirken kannst. Beides kommt mit der Zeit zurück.\n\nAm wichtigsten ist die Ausdauer: Von ihr hängt ab, wie schnell Lebenspunkte und Mana zurückkehren, und Rennen kostet Ausdauer. Du gewinnst sie durch Essen (im Inventar benutzen) und durch Rasten. In Gasthäusern und Schenken geht das doppelt so schnell, und dort gibt es auch Proviant.\n-----------------------\nGeh von hier zum Haus des Ältesten, der kleinen Hütte südwestlich von hier.",
+          "row": 4,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32
+        }
+      ],
+      "rows": 9,
+      "cols": 8
+    },
+    {
+      "id": 1018,
+      "constant": "RID_RAZA_MUSEUM",
+      "kodClass": "Newb8",
+      "name": "The Grand Museum of Raza",
+      "roo": "guest8.roo",
+      "music": "login.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "teleport": {
+        "row": 9,
+        "col": 11
+      },
+      "noCombat": true,
+      "respawnRoom": 1011,
+      "improveCap": 25,
+      "exits": [
+        {
+          "row": 13,
+          "col": 10,
+          "to": 1012,
+          "toRow": 9,
+          "toCol": 54,
+          "rotate": "NONE"
+        },
+        {
+          "row": 13,
+          "col": 11,
+          "to": 1012,
+          "toRow": 9,
+          "toCol": 54,
+          "rotate": "NONE"
+        },
+        {
+          "row": 13,
+          "col": 12,
+          "to": 1012,
+          "toRow": 9,
+          "toCol": 54,
+          "rotate": "NONE"
+        }
+      ],
+      "portal": {
+        "row": 2,
+        "col": 11,
+        "toRoom": 52,
+        "warning": "Achtung: Wenn du dieses Portal betrittst, kannst du nicht nach Raza zurückkehren. Betritt es nur, wenn du deinen Fähigkeiten vertraust. Mehr steht auf dem Schild rechts neben dem Portal.",
+        "text": "Du betrittst das Portal und beginnst dein Abenteuer in Meridian 59!"
+      },
+      "npcs": [
+        {
+          "kodClass": "NewbPortal",
+          "name": "Portal",
+          "icon": "portal.bgf",
+          "role": "Portal aufs Festland",
+          "row": 2,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "kodClass": "Sign",
+          "name": "Hinaus in die Welt",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Das Portal neben diesem Schild bringt dich in eine sichere Stadt, damit du die Welt von Meridian 59 entdecken kannst.\n\nJetzt lohnt es sich, weitere Hilfe zu lesen: Dein Schutzengel hat dir Post mit Hinweisen geschickt (MAIL).\n\nUnd ein letzter Rat: Such dir Freunde. Meridian 59 ist eine Gemeinschaft, und wer mächtige Verbündete hat, kommt weiter als ein Einzelgänger.\n\nWir sehen uns im Spiel!",
+          "row": 2,
+          "col": 12,
+          "fineRow": 16,
+          "fineCol": 16
+        }
+      ],
+      "rows": 15,
+      "cols": 21
+    }
+  ]
+}

@@ -1,0 +1,383 @@
+{
+  "_hinweis": "Bewohner von Raza (Hazar-NPCs aus kod/.../towns/hazartwn, Sprüche aus util/library.kod), sinngemäß übersetzt.",
+  "npcs": {
+    "HazarInnkeeper": {
+      "title": "Wirt",
+      "description": "Marcus, ein Veteran der Orkkriege, scheint zufrieden damit, ein kleines, ruhiges Gasthaus auf dem Land zu führen.",
+      "greeting": "Willkommen in Meridian 59! Fühl dich wie zu Hause.",
+      "topics": [
+        {
+          "keywords": [
+            "quest",
+            "aufgabe",
+            "auftrag"
+          ],
+          "reply": "Ummm, davon weiß ich nichts. Frag lieber den Ältesten nach solchen Dingen."
+        },
+        {
+          "keywords": [
+            "kaufen",
+            "buy"
+          ],
+          "reply": "Mir fällt nichts ein, was ich kaufen wollte."
+        },
+        {
+          "keywords": [
+            "verkaufen",
+            "sell",
+            "zimmer"
+          ],
+          "reply": "Ich habe keine freien Zimmer zu vermieten. Selbst verkaufe ich nichts, aber frag herum – andere hier schon."
+        },
+        {
+          "keywords": [
+            "entroot",
+            "entwurzel",
+            "beeren"
+          ],
+          "reply": "Entwurzelbeeren? Ich dachte nicht, dass die hier in der Gegend wachsen."
+        },
+        {
+          "keywords": [
+            "akardius",
+            "herzog",
+            "duke",
+            "prinzessin",
+            "princess",
+            "kateriina"
+          ],
+          "reply": "Der Herzog und die Prinzessin streiten ständig darüber, wem was rechtmäßig zusteht. Zum Glück sind wir hier weit weg davon."
+        },
+        {
+          "keywords": [
+            "cor",
+            "jasper",
+            "marion",
+            "barloque",
+            "tos",
+            "städte"
+          ],
+          "reply": "Die fünf Städte sind weit weg von hier."
+        },
+        {
+          "keywords": [
+            "hilfe",
+            "help"
+          ],
+          "reply": "Ich helfe, wo ich kann – aber du solltest wirklich die Schilder lesen."
+        }
+      ]
+    },
+    "HazarBlacksmith": {
+      "title": "Schmied",
+      "description": "Tomas fertigt unauffällige, aber verlässliche Waffen. Seine Kunden gewinnt er mit Kameradschaft und niedrigen Preisen.",
+      "greeting": "Hallo, und willkommen.",
+      "topics": [
+        {
+          "keywords": [
+            "quest",
+            "aufgabe",
+            "auftrag"
+          ],
+          "reply": "Hmm … ich habe gehört, Eric sucht ständig nach Entwurzelbeeren. Keine Ahnung, wozu."
+        },
+        {
+          "keywords": [
+            "kaufen",
+            "buy"
+          ],
+          "reply": "Waffen und Rüstungen nehme ich dir gern ab – biete sie mir einfach an."
+        },
+        {
+          "keywords": [
+            "verkaufen",
+            "sell",
+            "waffe",
+            "rüstung"
+          ],
+          "reply": "Hinter dem Tresen habe ich ein paar Waffen, die ich dir zeigen kann. Sag BUY (oder drück B)."
+        },
+        {
+          "keywords": [
+            "entroot",
+            "entwurzel",
+            "beeren"
+          ],
+          "reply": "Entwurzelbeeren? Ich dachte nicht, dass die hier in der Gegend wachsen."
+        },
+        {
+          "keywords": [
+            "rodric",
+            "ältester",
+            "alter mann"
+          ],
+          "reply": "Ich habe gehört, der alte Mann hat eine Aufgabe für dich."
+        },
+        {
+          "keywords": [
+            "akardius",
+            "herzog",
+            "duke",
+            "prinzessin",
+            "princess",
+            "kateriina"
+          ],
+          "reply": "Der Herzog und die Prinzessin streiten ständig darüber, wem was rechtmäßig zusteht. Zum Glück sind wir hier weit weg davon."
+        },
+        {
+          "keywords": [
+            "cor",
+            "jasper",
+            "marion",
+            "barloque",
+            "tos",
+            "städte"
+          ],
+          "reply": "Die fünf Städte sind weit weg von hier."
+        },
+        {
+          "keywords": [
+            "hilfe",
+            "help"
+          ],
+          "reply": "Ich helfe, wo ich kann – aber du solltest wirklich die Schilder lesen."
+        }
+      ]
+    },
+    "HazarApothecary": {
+      "title": "Apotheker",
+      "description": "Ravi ist ein seltsamer Mann unbekannter Herkunft. Für seinen spärlich bestückten Laden kauft er gern Reagenzien und Edelsteine.",
+      "greeting": "Hast du etwas, das du mir verkaufen willst? Ich kaufe fast alles.",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "buy"
+          ],
+          "reply": "Reagenzien und Edelsteine kaufe ich dir ab, Waffen nicht. Biete mir einfach an, was du hast."
+        },
+        {
+          "keywords": [
+            "verkaufen",
+            "sell"
+          ],
+          "reply": "Meine Schränke sind fast leer. Schau dir an, was ich noch habe (B)."
+        },
+        {
+          "keywords": [
+            "quest",
+            "aufgabe",
+            "auftrag"
+          ],
+          "reply": "Ummm, davon weiß ich nichts. Frag lieber den Ältesten nach solchen Dingen."
+        },
+        {
+          "keywords": [
+            "rodric",
+            "ältester",
+            "alter mann"
+          ],
+          "reply": "Ich habe gehört, der alte Mann hat eine Aufgabe für dich."
+        },
+        {
+          "keywords": [
+            "akardius",
+            "herzog",
+            "duke",
+            "prinzessin",
+            "princess",
+            "kateriina"
+          ],
+          "reply": "Der Herzog und die Prinzessin streiten ständig darüber, wem was rechtmäßig zusteht. Zum Glück sind wir hier weit weg davon."
+        },
+        {
+          "keywords": [
+            "cor",
+            "jasper",
+            "marion",
+            "barloque",
+            "tos",
+            "städte"
+          ],
+          "reply": "Die fünf Städte sind weit weg von hier."
+        },
+        {
+          "keywords": [
+            "hilfe",
+            "help"
+          ],
+          "reply": "Ich helfe, wo ich kann – aber du solltest wirklich die Schilder lesen."
+        }
+      ]
+    },
+    "HazarBartender": {
+      "title": "Wirt der Schenke",
+      "description": "Ein grinsender, verschmitzter Mann steht still hinter dem Tresen und grinst.",
+      "greeting": "Lust auf einen ordentlichen Schluck? Die Spezialität des Hauses haut dich glatt um!",
+      "topics": [
+        {
+          "keywords": [
+            "kaufen",
+            "buy"
+          ],
+          "reply": "Ich glaube, mein Lieferant wäre sauer, wenn er mich beim Handeln mit dir erwischt!"
+        },
+        {
+          "keywords": [
+            "verkaufen",
+            "sell",
+            "essen"
+          ],
+          "reply": "Ich habe reichlich Proviant, der einen Abenteurer bei Kräften hält!"
+        },
+        {
+          "keywords": [
+            "entroot",
+            "entwurzel",
+            "beeren"
+          ],
+          "reply": "Entwurzelbeeren? Bring mir mindestens zehn davon, und ich belohne dich ordentlich!"
+        },
+        {
+          "keywords": [
+            "quest",
+            "aufgabe",
+            "auftrag"
+          ],
+          "reply": "Ummm, davon weiß ich nichts. Frag lieber den Ältesten nach solchen Dingen."
+        },
+        {
+          "keywords": [
+            "akardius",
+            "herzog",
+            "duke",
+            "prinzessin",
+            "princess",
+            "kateriina"
+          ],
+          "reply": "Der Herzog und die Prinzessin streiten ständig darüber, wem was rechtmäßig zusteht. Zum Glück sind wir hier weit weg davon."
+        },
+        {
+          "keywords": [
+            "cor",
+            "jasper",
+            "marion",
+            "barloque",
+            "tos",
+            "städte"
+          ],
+          "reply": "Die fünf Städte sind weit weg von hier."
+        },
+        {
+          "keywords": [
+            "hilfe",
+            "help"
+          ],
+          "reply": "Ich helfe, wo ich kann – aber du solltest wirklich die Schilder lesen."
+        }
+      ]
+    },
+    "HazarElder": {
+      "title": "Ältester",
+      "description": "Der alte Mann sieht dich mit Augen an, die schon über die Ewigkeit hinausgeblickt haben.",
+      "greeting": "Willkommen, mein Kind. Möge der Weg deines Lebens ein guter sein.",
+      "topics": [
+        {
+          "keywords": [
+            "quest",
+            "aufgabe",
+            "auftrag"
+          ],
+          "reply": "Ja, ja! Ich brauche Abenteurer, die das Mausoleum im Norden des Dorfs säubern!"
+        },
+        {
+          "keywords": [
+            "mausoleum"
+          ],
+          "reply": "Das Mausoleum liegt im Norden des Dorfs. Seit einiger Zeit wimmelt es dort von Mumien."
+        },
+        {
+          "keywords": [
+            "mumie",
+            "mumien",
+            "mummy"
+          ],
+          "reply": "Die Mumien sind langsam, aber zäh. Nimm eine Waffe mit und geh nicht allein in die Tiefe."
+        },
+        {
+          "keywords": [
+            "kaufen",
+            "buy"
+          ],
+          "reply": "Weltliche Güter brauche ich nicht."
+        },
+        {
+          "keywords": [
+            "verkaufen",
+            "sell"
+          ],
+          "reply": "Sehe ich aus wie ein gewöhnlicher Hausierer? Nein!"
+        },
+        {
+          "keywords": [
+            "eric"
+          ],
+          "reply": "Eric führt die Schenke im Osten. Ein Spaßvogel, aber ein guter Kerl."
+        },
+        {
+          "keywords": [
+            "ravi"
+          ],
+          "reply": "Ravi ist ein seltsamer Mann. Woher er kam, weiß niemand."
+        },
+        {
+          "keywords": [
+            "marcus"
+          ],
+          "reply": "Marcus hat in den Orkkriegen gekämpft. Jetzt führt er das Gasthaus."
+        },
+        {
+          "keywords": [
+            "tomas"
+          ],
+          "reply": "Tomas ist ein ehrlicher Schmied. Bei ihm bekommst du deine erste Waffe."
+        },
+        {
+          "keywords": [
+            "akardius",
+            "herzog",
+            "duke",
+            "prinzessin",
+            "princess",
+            "kateriina"
+          ],
+          "reply": "Der Herzog und die Prinzessin streiten ständig darüber, wem was rechtmäßig zusteht. Zum Glück sind wir hier weit weg davon."
+        },
+        {
+          "keywords": [
+            "cor",
+            "jasper",
+            "marion",
+            "barloque",
+            "tos",
+            "städte"
+          ],
+          "reply": "Die fünf Städte sind weit weg von hier."
+        },
+        {
+          "keywords": [
+            "hilfe",
+            "help"
+          ],
+          "reply": "Ich helfe, wo ich kann – aber du solltest wirklich die Schilder lesen."
+        }
+      ]
+    },
+    "NewbPortal": {
+      "title": "Portal",
+      "description": "Wer dieses Portal betritt, lässt seine Übungsausrüstung zurück und gelangt aufs Festland von Meridian 59 – ohne Rückkehr.",
+      "greeting": "",
+      "topics": []
+    }
+  }
+}

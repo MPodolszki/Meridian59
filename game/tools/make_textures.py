@@ -144,12 +144,23 @@ def stonewall():
     return albedo, height * (0.8 + 0.2 * noise)
 
 
+def grass():
+    """Wiese: grünes Rauschen mit hellen und dunklen Halmtupfen (Raza)."""
+    noise = periodic_noise(6, 4)
+    patches = periodic_noise(3, 2)
+    blades = rng.random((N, N)).astype(np.float32)
+    tone = 0.35 + 0.35 * noise + 0.2 * patches + 0.25 * (blades - 0.5)
+    albedo = colorize(np.clip(tone, 0, 1), (0.16, 0.26, 0.08), (0.42, 0.58, 0.20))
+    return albedo, noise * 0.5 + blades * 0.3
+
+
 MATERIALS = {
     "cobblestone": (cobblestone, 5.0),
     "plaster": (plaster, 1.5),
     "planks": (planks, 3.0),
     "roof": (roof, 3.0),
     "stonewall": (stonewall, 4.0),
+    "grass": (grass, 2.0),
 }
 
 

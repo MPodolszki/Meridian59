@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Godot;
 
@@ -26,6 +27,10 @@ public sealed class RoomLayout
     /// <summary>Ausgänge (0-basiertes Feld, Zielraum) und verschlossene Türen aus tools/export_exits.py.</summary>
     public List<(int Row, int Col, string Target)> Exits { get; } = new();
     public List<(int Row, int Col)> Locked { get; } = new();
+    /// <summary>Gelände ("village": Wiese statt Pflaster), Wassertiefe je Feld (SF_DEPTH 0–3) und Bäume/Sträucher.</summary>
+    public string? Terrain { get; private set; }
+    private string[]? _depth;
+    public List<(int Row, int Col, int FineRow, int FineCol, bool Shrub)> Trees { get; } = new();
 
     private RoomLayout(int rows, int cols, int ceiling, int[,] floor)
     {
@@ -63,6 +68,13 @@ public sealed class RoomLayout
         if (root.TryGetProperty("exits", out var exits))
             foreach (var e in exits.EnumerateArray())
                 layout.Exits.Add((e[0].GetInt32() - 1, e[1].GetInt32() - 1, e.GetArrayLength() > 2 ? e[2].GetString() ?? "" : ""));
+        if (root.TryGetProperty("terrain", out var terrain))
+            layout.Terrain = terrain.GetString();
+        if (root.TryGetProperty("depth", out var depth))
+            layout._depth = depth.EnumerateArray().Select(d => d.GetString() ?? "").ToArray();
+        if (root.TryGetProperty("trees", out var trees))
+            foreach (var t in trees.EnumerateArray())
+                layout.Trees.Add((t[0].GetInt32() - 1, t[1].GetInt32() - 1, t[2].GetInt32(), t[3].GetInt32(), t[4].GetString() == "shrub"));
         if (root.TryGetProperty("locked", out var locked))
             foreach (var e in locked.EnumerateArray())
                 layout.Locked.Add((e[0].GetInt32() - 1, e[1].GetInt32() - 1));
@@ -80,6 +92,10 @@ public sealed class RoomLayout
     /// <summary>Bodenhöhe des Felds (0-basierter Index), -1 außerhalb.</summary>
     public int FloorAt(int row, int col) =>
         row >= 0 && row < Rows && col >= 0 && col < Cols ? _floor[row, col] : -1;
+
+    /// <summary>Wassertiefe des Felds (0 = trocken, 1–3 = flach bis sehr tief).</summary>
+    public int DepthAt(int row, int col) =>
+        _depth is not null && row >= 0 && row < _depth.Length && col >= 0 && col < _depth[row].Length ? _depth[row][col] - '0' : 0;
 
     public bool IsWalkable(int row, int col)
     {
@@ -111,11 +127,14 @@ public sealed class RoomLayout
                 int end = c + 1;
                 while (end < Cols && Classify(r, end, cellSize, wallHeight) == (kind, height))
                     end++;
-                AddRun(root, materials, kind, height, r, c, end, cellSize, outdoors);
+                AddRun(root, materials, kind, height, r, c, end, cellSize, outdoors, Terrain);
                 c = end;
             }
         }
         root.AddChild(RoomDecor.Build(this, cellSize, outdoors, wallHeight));
+        foreach (var t in Trees)
+            root.AddChild(Tree(t.Shrub, new Vector3((t.Col + 1 + t.FineCol / 64f) * cellSize,
+                HeightMeters(Math.Max(FloorAt(t.Row, t.Col), 0), cellSize), (t.Row + 1 + t.FineRow / 64f) * cellSize)));
         return root;
     }
 
@@ -128,17 +147,19 @@ public sealed class RoomLayout
         if (f < 0)
             return ("wall", wallHeight);
         float h = MathF.Round(HeightMeters(f, cellSize) * 4f) / 4f;   // auf 25 cm runden → größere Blöcke
-        return IsWalkable(r, c) ? ("floor", h) : ("building", Math.Max(h, 1f));
+        if (!IsWalkable(r, c))
+            return ("building", Math.Max(h, 1f));
+        return DepthAt(r, c) > 0 ? ("water", h) : ("floor", h);
     }
 
     private static void AddRun(Node3D root, Dictionary<string, StandardMaterial3D> materials,
-        string kind, float height, int row, int c0, int c1, float cellSize, bool outdoors)
+        string kind, float height, int row, int c0, int c1, float cellSize, bool outdoors, string? terrain)
     {
         float width = (c1 - c0) * cellSize;
         float x = (c0 + 1) * cellSize + width / 2f;
         float z = (row + 1) * cellSize + cellSize / 2f;
 
-        if (kind == "floor")
+        if (kind is "floor" or "water")
         {
             // Bodenplatte von einer festen Unterkante bis zur Bodenhöhe: Felder unter dem Bezugsboden (negative
             // Höhe, z. B. tiefer liegende Straßenteile) dürfen keine Quader mit negativer Dicke werden – das gab Löcher.
@@ -147,7 +168,7 @@ public sealed class RoomLayout
             {
                 Mesh = new BoxMesh { Size = new Vector3(width, height - bottom, cellSize) },
                 Position = new Vector3(x, (height + bottom) / 2f, z),
-                MaterialOverride = Material(materials, outdoors ? "street" : "planks"),
+                MaterialOverride = Material(materials, kind == "water" ? "water" : !outdoors ? "planks" : terrain == "village" ? "grass" : "street"),
             };
             root.AddChild(tile);
             return;
@@ -172,6 +193,30 @@ public sealed class RoomLayout
         }
     }
 
+    /// <summary>Baum (OO_RAZA_TREE1) bzw. Strauch aus Stamm und Kronenkugeln.</summary>
+    private static Node3D Tree(bool shrub, Vector3 at)
+    {
+        var tree = new Node3D { Position = at, Name = shrub ? "Shrub" : "Tree" };
+        var bark = new StandardMaterial3D { AlbedoColor = new Color(0.33f, 0.23f, 0.14f), Roughness = 1f };
+        var leaves = new StandardMaterial3D { AlbedoColor = new Color(0.20f, 0.38f, 0.14f), Roughness = 1f };
+        float trunk = shrub ? 0.3f : 2.6f;
+        tree.AddChild(new MeshInstance3D
+        {
+            Mesh = new CylinderMesh { TopRadius = shrub ? 0.06f : 0.16f, BottomRadius = shrub ? 0.08f : 0.24f, Height = trunk },
+            Position = new Vector3(0, trunk / 2f, 0),
+            MaterialOverride = bark,
+        });
+        float r = shrub ? 0.6f : 1.6f;
+        foreach (var (x, y, z, s) in new[] { (0f, 0f, 0f, 1f), (0.5f, -0.3f, 0.3f, 0.75f), (-0.45f, -0.25f, -0.35f, 0.7f), (0.1f, 0.45f, -0.2f, 0.65f) })
+            tree.AddChild(new MeshInstance3D
+            {
+                Mesh = new SphereMesh { Radius = r * s, Height = 2f * r * s * 0.9f },
+                Position = new Vector3(x * r, trunk + r * 0.7f + y * r, z * r),
+                MaterialOverride = leaves,
+            });
+        return tree;
+    }
+
     private static StandardMaterial3D Material(Dictionary<string, StandardMaterial3D> cache, string name)
     {
         if (cache.TryGetValue(name, out var m))
@@ -184,9 +229,20 @@ public sealed class RoomLayout
             "house" => ("plaster", 4f, new Color(0.78f, 0.70f, 0.56f)),
             "roof" => ("roof", 3f, new Color(0.50f, 0.22f, 0.16f)),
             "rock" => ("stonewall", 4f, new Color(0.42f, 0.42f, 0.40f)),
+            "grass" => ("grass", 4f, new Color(0.30f, 0.45f, 0.15f)),
+            "water" => ("", 1f, new Color(0.18f, 0.32f, 0.42f, 0.85f)),
             _ => ("plaster", 4f, new Color(0.66f, 0.60f, 0.50f)),
         };
         m = new StandardMaterial3D { AlbedoColor = color, Roughness = 0.95f };
+        if (name == "water")
+        {
+            // Wasser (SF_DEPTH): glatt, spiegelnd, leicht durchsichtig.
+            m.Roughness = 0.08f;
+            m.Metallic = 0.3f;
+            m.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
+            cache[name] = m;
+            return m;
+        }
         string albedo = $"res://textures/{texture}_albedo.png";
         if (ResourceLoader.Exists(albedo))
         {

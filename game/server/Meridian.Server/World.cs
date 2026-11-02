@@ -44,6 +44,9 @@ public sealed class Avatar(uint id, string name, Session session)
     /// <summary>Aktuelles Kampfziel (poKill_target) und ob man seitdem verfehlt wurde (PFLAG_DODGED).</summary>
     public Monster? KillTarget { get; set; }
     public bool Dodged { get; set; }
+    /// <summary>Portal der Neulingsinsel: schon gewarnt, steht gerade darauf.</summary>
+    public bool PortalWarned { get; set; }
+    public bool OnPortal { get; set; }
 }
 
 /// <summary>Laufzeitzustand eines Raums.</summary>
@@ -111,14 +114,25 @@ public sealed partial class World
             foreach (var npc in room.Definition.Npcs)
                 room.Npcs.Add(new Npc(++nextNpc, npc, (dialogs ?? DialogFile.Empty).Npcs.GetValueOrDefault(npc.KodClass)));
         SetUpMonsterRooms();
+        SetUpAreaMonsters();
         SetUpMerchants(shops ?? ShopFile.Empty);
         SetUpTreasure(_items.Treasure);
         StartRoom = _rooms.TryGetValue(definition.StartRoom, out var start)
             ? start
             : throw new InvalidDataException($"Startraum {definition.StartRoom} fehlt in der Weltbeschreibung");
+        RespawnRoom = definition.RespawnRoom is { } r && _rooms.TryGetValue(r, out var respawn) ? respawn : StartRoom;
     }
 
+    /// <summary>Spieler in der Welt (alle Räume).</summary>
+    public int OnlineCount
+    {
+        get { lock (_gate) return _rooms.Values.Sum(r => r.Avatars.Count); }
+    }
+
+    /// <summary>Hier beginnen neue Charaktere (Original: Gasthaus von Raza, RID_NEWB1).</summary>
     public Room StartRoom { get; }
+    /// <summary>Hier erwacht man nach dem Tod, wenn der Raum keinen eigenen Wiederbelebungsraum hat.</summary>
+    public Room RespawnRoom { get; }
 
     /// <summary>Feste Spielstunde (Tests/Entwicklung), sonst die Uhr des Originals.</summary>
     public int? FixedHour { get; init; }
@@ -233,7 +247,13 @@ public sealed partial class World
             {
                 s.EnsureResource(monster.Kind.Name);
                 s.EnsureResource(monster.Kind.Icon);
-                return (ToRoomObject(monster), $"Ein {monster.Kind.Name}. Er sieht nicht freundlich aus.");
+                string desc = monster.Kind.Description ?? monster.Kind.Gender switch
+                {
+                    "f" => $"Eine {monster.Kind.Name}. Sie sieht nicht freundlich aus.",
+                    "n" => $"Ein {monster.Kind.Name}. Es sieht nicht freundlich aus.",
+                    _ => $"Ein {monster.Kind.Name}. Er sieht nicht freundlich aus.",
+                };
+                return (ToRoomObject(monster), desc);
             }
             var item = avatar.Room.Items.FirstOrDefault(f => f.Item.Id == id)?.Item ?? avatar.State.Find(id);
             if (item is null)
@@ -300,6 +320,8 @@ public sealed partial class World
                 Place(avatar, target, Room.Fine(edge.ToRow), Room.Fine(edge.ToCol));
                 return new MoveResult.ChangedRoom(target);
             }
+            if (Portal(avatar, row, col) is { } portal)
+                return portal;
             if (avatar.Row / 16 != row / 16 || avatar.Col / 16 != col / 16)
                 BreakTrance(avatar);
             avatar.Row = row;
@@ -385,10 +407,13 @@ public sealed partial class World
 
     /// <summary>ROTATE_* aus KOD (TranslateAngleChange): "NONE" = keine Drehung, "90"/"180"/… Grad relativ.
     /// Absolute ANGLE_*-Einträge wirken im Original als keine Drehung.</summary>
-    public static ushort RotateAngle(ushort angle, string? rotate) =>
-        int.TryParse(rotate, out int degrees)
-            ? (ushort)((angle + degrees * 4096 / 360) % 4096)
-            : angle;
+    /// <summary>Drehung beim Raumwechsel: Grad relativ, oder feste Richtung (SET_ANGLE_WEST → "WEST" usw.).</summary>
+    public static ushort RotateAngle(ushort angle, string? rotate) => rotate switch
+    {
+        "EAST" => 0, "SOUTH" => 1024, "WEST" => 2048, "NORTH" => 3072,
+        _ when int.TryParse(rotate, out int degrees) => (ushort)((angle + degrees * 4096 / 360) % 4096),
+        _ => angle,
+    };
 
     public void Turn(Avatar avatar, ushort angle)
     {
@@ -447,6 +472,22 @@ public sealed partial class World
             crypt.MonsterTable.AddRange([(MonsterKind.Zombie, 80), (MonsterKind.Skeleton, 20)]);
             crypt.MaxMonsters = 5;
             crypt.NightOnly = true;
+        }
+    }
+
+    /// <summary>Monster aus den Gebietsdateien: feste Bewohner (Kühe) und Monsterräume (Mausoleum von Raza).</summary>
+    private void SetUpAreaMonsters()
+    {
+        foreach (var room in _rooms.Values)
+        {
+            var d = room.Definition;
+            foreach (var f in d.FixedMonsters)
+                SpawnMonsterLocked(room, MonsterKind.ByKey(f.Kind), new GridPos(f.Row, f.Col));
+            if (d.Monsters.Count == 0)
+                continue;
+            room.Generators.AddRange(d.Generators);
+            room.MonsterTable.AddRange(d.Monsters.Select(e => (MonsterKind.ByKey(e.Kind), e.Weight)));
+            room.MaxMonsters = d.MaxMonsters;
         }
     }
 
@@ -522,6 +563,8 @@ public sealed partial class World
             }
             return;
         }
+        if (m.Kind.Peaceful)
+            return;   // Kühe stehen nur herum
 
         // Ziel wählen: nächster Spieler in Aggro-Reichweite; Ziel verlieren, wenn es zu weit weg ist.
         if (m.Target is { } t && (t.Room != room || t.Hp <= 0 || Distance(m.Row, m.Col, t.Row, t.Col) > m.Kind.AggroRange * 2))
@@ -656,6 +699,11 @@ public sealed partial class World
     {
         lock (_gate)
         {
+            if (avatar.Room.Definition.NoCombat)
+            {
+                Tell(avatar, "Hier ist kein Kampf erlaubt.");   // room.kod ReqSomethingAttack
+                return;
+            }
             var m = avatar.Room.Monsters.FirstOrDefault(x => x.Id == targetId && x.Alive);
             if (m is null)
             {
@@ -728,13 +776,14 @@ public sealed partial class World
     private void KillPlayer(Avatar victim, Monster killer)
     {
         killer.Target = null;
-        Tell(victim, $"Du wurdest von {Article(killer.Kind, dative: true)} getötet. Du erwachst in Tos.");
+        // Wiederbelebung mit vollen Lebenspunkten: in Raza im Gasthaus (user.kod), sonst im Wiederbelebungsraum.
+        var home = victim.Room.Definition.RespawnRoom is { } r && _rooms.TryGetValue(r, out var own) ? own : RespawnRoom;
+        Tell(victim, $"Du wurdest von {Article(killer.Kind, dative: true)} getötet. Du erwachst in {home.Definition.Name}.");
         BroadcastRoom(victim.Room, GameReplies.Animate(ToRoomObject(victim), GameReplies.DeathGroup, 9, 1500));
-        // Wiederbelebung am Ankunftspunkt des Startraums mit vollen Lebenspunkten.
         victim.Casting = null;
         Remove(victim);
-        var (row, col) = StartRoom.ArrivalPoint;
-        Place(victim, StartRoom, row, col);
+        var (row, col) = home.ArrivalPoint;
+        Place(victim, home, row, col);
         victim.Hp = victim.MaxHp;
         victim.Session.NotifyRoomChanged();
         victim.Session.SendHealth();
@@ -742,9 +791,13 @@ public sealed partial class World
 
     private static string Article(MonsterKind kind, bool capital = true, bool accusative = false, bool dative = false)
     {
-        // Zombie: der/den/dem Zombie; Skelett: das/das/dem Skelett
-        bool neuter = kind == MonsterKind.Skeleton;
-        string article = dative ? "dem" : neuter ? "das" : accusative ? "den" : "der";
+        // der/den/dem Zombie, das/das/dem Skelett, die/die/der Mumie
+        string article = kind.Gender switch
+        {
+            "f" => dative ? "der" : "die",
+            "n" => dative ? "dem" : "das",
+            _ => dative ? "dem" : accusative ? "den" : "der",
+        };
         if (capital && !accusative && !dative)
             article = char.ToUpperInvariant(article[0]) + article[1..];
         return $"{article} {kind.Name}";

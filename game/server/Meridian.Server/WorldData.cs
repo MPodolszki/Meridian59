@@ -5,6 +5,11 @@ namespace Meridian.Server;
 /// <summary>Weltbeschreibung aus JSON (z. B. data/world/tos.json, aus den KOD-Quellen abgeleitet).</summary>
 public sealed record WorldDefinition(int StartRoom, IReadOnlyList<RoomDefinition> Rooms)
 {
+    /// <summary>Diese Gebietsdatei bestimmt den Startraum neuer Charaktere, wenn mehrere zusammengeführt werden.</summary>
+    public bool Start { get; init; }
+    /// <summary>Hier erwacht man nach dem Tod, sofern der Raum nichts anderes sagt (Standard: Startraum).</summary>
+    public int? RespawnRoom { get; init; }
+
     private static readonly JsonSerializerOptions Json = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -15,6 +20,29 @@ public sealed record WorldDefinition(int StartRoom, IReadOnlyList<RoomDefinition
     public static WorldDefinition Load(string path) =>
         JsonSerializer.Deserialize<WorldDefinition>(File.ReadAllText(path), Json)
         ?? throw new InvalidDataException($"{path}: leere Weltbeschreibung");
+
+    /// <summary>Gebiete laden: eine Datei oder alle *.json eines Ordners (tos.json, raza.json, …), Räume
+    /// zusammengeführt. Startraum aus der Datei mit "start": true (sonst der ersten).</summary>
+    public static WorldDefinition LoadAll(string fileOrDirectory)
+    {
+        if (!Directory.Exists(fileOrDirectory))
+            return Load(fileOrDirectory);
+        var parts = AreaFiles(fileOrDirectory).Select(Load).ToList();
+        if (parts.Count == 0)
+            throw new InvalidDataException($"{fileOrDirectory}: keine Gebietsdateien");
+        var rooms = parts.SelectMany(p => p.Rooms).ToList();
+        if (rooms.GroupBy(r => r.Id).FirstOrDefault(g => g.Count() > 1) is { } dup)
+            throw new InvalidDataException($"Raum {dup.Key} ist in mehreren Gebietsdateien definiert");
+        return new WorldDefinition((parts.FirstOrDefault(p => p.Start) ?? parts[0]).StartRoom, rooms)
+        {
+            RespawnRoom = parts.Select(p => p.RespawnRoom).FirstOrDefault(r => r is not null),
+        };
+    }
+
+    /// <summary>Gebietsdateien eines Ordners, sortiert (Dialoge/Läden heißen gleich, siehe Program.cs).</summary>
+    public static IReadOnlyList<string> AreaFiles(string fileOrDirectory) => Directory.Exists(fileOrDirectory)
+        ? Directory.GetFiles(fileOrDirectory, "*.json").Order(StringComparer.Ordinal).ToList()
+        : [fileOrDirectory];
 
     /// <summary>Ein einzelner Raum ohne Ausgänge (Standard, wenn keine Weltdatei angegeben ist).</summary>
     public static WorldDefinition SingleRoom(string roo = "tosinn.roo", string name = "Gasthaus") =>
@@ -45,6 +73,30 @@ public sealed record RoomDefinition(int Id, string Name, string Roo)
     public IReadOnlyList<EdgeExitDefinition> EdgeExits { get; init; } = [];
     public IReadOnlyList<PlacedObjectDefinition> Objects { get; init; } = [];
     public IReadOnlyList<NpcDefinition> Npcs { get; init; } = [];
+    /// <summary>ROOM_NO_COMBAT: hier kann niemand angreifen (room.kod ReqSomethingAttack).</summary>
+    public bool NoCombat { get; init; }
+    /// <summary>Wer hier stirbt, erwacht in diesem Raum (Raza: Gasthaus, user.kod).</summary>
+    public int? RespawnRoom { get; init; }
+    /// <summary>ModifyChanceToImprove der Neulingsräume: Fähigkeiten nur bis zu diesem Wert, Chance × 3/2.</summary>
+    public int? ImproveCap { get; init; }
+    /// <summary>Feste Bewohner, die nicht nachwachsen (Kühe in Raza, CreateStandardObjects).</summary>
+    public IReadOnlyList<FixedMonsterDefinition> FixedMonsters { get; init; } = [];
+    /// <summary>Monsterräume (plGenerators/plMonsters): Spawnpunkte, Arten mit Gewicht, Höchstzahl.</summary>
+    public IReadOnlyList<GridPos> Generators { get; init; } = [];
+    public IReadOnlyList<MonsterTableEntry> Monsters { get; init; } = [];
+    public int MaxMonsters { get; init; }
+    /// <summary>Portal (newbport.kod): beim ersten Betreten Warnung, beim zweiten hinüber.</summary>
+    public PortalDefinition? Portal { get; init; }
+}
+
+public sealed record FixedMonsterDefinition(string Kind, int Row, int Col);
+
+public sealed record MonsterTableEntry(string Kind, int Weight);
+
+public sealed record PortalDefinition(int Row, int Col, int ToRoom)
+{
+    public string? Warning { get; init; }
+    public string? Text { get; init; }
 }
 
 public sealed record ExitDefinition(int Row, int Col, int To, int ToRow, int ToCol)
@@ -80,4 +132,6 @@ public sealed record NpcDefinition(string KodClass, int Row, int Col)
     public int FineRow { get; init; } = 32;
     public int FineCol { get; init; } = 32;
     public int Angle { get; init; }
+    /// <summary>Eigener Text beim Anschauen (Schilder); sonst aus dem Dialog der Klasse.</summary>
+    public string? Description { get; init; }
 }

@@ -571,6 +571,51 @@
       "number": true,
       "plural": "Entwurzbeeren",
       "description": "Eine dunkle, bittere Beere."
+    },
+    {
+      "key": "leatherarmor",
+      "kodClass": "LeatherArmor",
+      "name": "Lederrüstung",
+      "icon": "leathamr.bgf",
+      "value": 400,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Aus dicken, gegerbten Trollhäuten grob zusammengenäht. Sie riecht nach verdorbenem Trollfleisch, schützt aber ein wenig.",
+      "slot": "armor",
+      "damageReduce": 0,
+      "defenseBonus": 50
+    },
+    {
+      "key": "metalshield",
+      "kodClass": "MetalShield",
+      "name": "kleiner Rundschild",
+      "icon": "metlshld.bgf",
+      "value": 160,
+      "types": [
+        "shield"
+      ],
+      "article": "einen",
+      "description": "Ein auf einen Holzrahmen gebogenes Zinnblech. Schlecht gearbeitet, aber im Kampf ein wenig Schutz.",
+      "slot": "shield",
+      "damageReduce": 1,
+      "defenseBonus": 5
+    },
+    {
+      "key": "knightshield",
+      "kodClass": "KnightShield",
+      "name": "Ritterschild",
+      "icon": "mtlshld.bgf",
+      "value": 800,
+      "types": [
+        "shield"
+      ],
+      "article": "einen",
+      "description": "Fast drei Fuß hoch, aus poliertem Stahl und von bester Machart. Auf dem Holzgriff ist das Zeichen von Fehr'loi Qan eingeritzt.",
+      "slot": "shield",
+      "damageReduce": 2,
+      "defenseBonus": 15
     }
   ],
   "treasure": {
@@ -676,6 +721,36 @@
       {
         "item": "martyrscroll",
         "weight": 1
+      }
+    ],
+    "newbie": [
+      {
+        "item": "redmushroom",
+        "weight": 30
+      },
+      {
+        "item": "entrootberry",
+        "weight": 20
+      },
+      {
+        "item": "ruby",
+        "weight": 15
+      },
+      {
+        "item": "snack",
+        "weight": 15
+      },
+      {
+        "item": "orctooth",
+        "weight": 10
+      },
+      {
+        "item": "mace",
+        "weight": 7
+      },
+      {
+        "item": "herbs",
+        "weight": 3
       }
     ]
   }

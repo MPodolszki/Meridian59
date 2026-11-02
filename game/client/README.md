@@ -62,7 +62,14 @@ Neu erzeugen (im Repo-Root):
 
 ```bash
 python -I game/tools/roo2layout.py game/server/data/world/tos.json resource/rooms game/client/rooms
+python -I game/tools/roo2layout.py game/server/data/world/raza.json resource/rooms game/client/rooms
+cd game && python3 tools/export_exits.py
 ```
+
+`roo2layout.py` schreibt zusätzlich die Wassertiefe der Sektoren (`depth`, SF_DEPTH1–3), `export_exits.py`
+danach Ausgänge, Türen, Gelände (`terrain: "village"` → Wiese) und Bäume/Sträucher aus den Zierobjekten
+(`trees`). Wasser wird glatt und leicht durchsichtig gezeichnet. Kuh, Portal, Schild und Knochenhaufen sind
+einfache Formen (`scripts/PropModels.cs`), Mumien nutzen das Zombie-Modell.
 
 Noch nicht gegen den Original-Server getestet.
 

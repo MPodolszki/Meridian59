@@ -2,7 +2,7 @@
 using Meridian.Server;
 
 // Aufruf:
-//   Meridian.Server [--port 5959] [--database meridian.db] [--world data/world/tos.json]
+//   Meridian.Server [--port 5959] [--database meridian.db] [--world data/world | data/world/tos.json]
 //                   [--client-dir <resource-ordner>] [--player-icon bta.bgf] [--start-room 52]
 //                   [--save-period 5] [--accounts accounts.json] [--hour 23]
 //   Meridian.Server add-account <name> <passwort> [--admin] [--database meridian.db]
@@ -12,7 +12,7 @@ using Meridian.Server;
 string accountsPath = "accounts.json";
 int port = 5959;
 string? clientDir = null;
-string worldPath = Path.Combine(AppContext.BaseDirectory, "data", "world", "tos.json");
+string worldPath = Path.Combine(AppContext.BaseDirectory, "data", "world");
 string playerIcon = "bta.bgf";   // Körper des männlichen Spielers im Original
 int? startRoom = null;
 string? database = null;
@@ -64,24 +64,26 @@ using var sigint = System.Runtime.InteropServices.PosixSignalRegistration.Create
 using var sigterm = System.Runtime.InteropServices.PosixSignalRegistration.Create(
     System.Runtime.InteropServices.PosixSignal.SIGTERM, ctx => { ctx.Cancel = true; cts.Cancel(); });
 
-var world = File.Exists(worldPath) ? WorldDefinition.Load(worldPath) : WorldDefinition.SingleRoom();
+bool haveWorld = File.Exists(worldPath) || Directory.Exists(worldPath);
+var world = haveWorld ? WorldDefinition.LoadAll(worldPath) : WorldDefinition.SingleRoom();
 if (startRoom is { } sr)
     world = world with { StartRoom = sr };   // zum Testen einzelner Räume
-Log.Info(File.Exists(worldPath)
+Log.Info(haveWorld
     ? $"Welt: {world.Rooms.Count} Räume aus {worldPath}"
     : $"Keine Weltdatei unter {worldPath} – nur ein Testraum");
 
-// Dialoge liegen neben der Weltdatei: data/world/tos.json → data/dialog/tos.json
-string dialogPath = Path.Combine(Path.GetDirectoryName(worldPath)!, "..", "dialog", Path.GetFileName(worldPath));
-var dialogs = File.Exists(dialogPath) ? DialogFile.Load(dialogPath) : DialogFile.Empty;
-// Läden: data/shops/tos.json, Gegenstände: data/items/items.json
-string shopPath = Path.Combine(Path.GetDirectoryName(worldPath)!, "..", "shops", Path.GetFileName(worldPath));
-var shops = File.Exists(shopPath) ? ShopFile.Load(shopPath) : ShopFile.Empty;
-string itemPath = Path.Combine(Path.GetDirectoryName(worldPath)!, "..", "items", "items.json");
+// Je Gebiet liegen Dialoge und Läden gleichnamig daneben: data/world/tos.json → data/dialog/tos.json, data/shops/tos.json.
+var areaFiles = haveWorld ? WorldDefinition.AreaFiles(worldPath) : [];
+string dataDir = Path.Combine(Directory.Exists(worldPath) ? worldPath : Path.GetDirectoryName(Path.GetFullPath(worldPath))!, "..");
+string Sibling(string kind, string area) => Path.Combine(dataDir, kind, Path.GetFileName(area));
+var dialogs = DialogFile.Merge(areaFiles.Select(a => Sibling("dialog", a)).Where(File.Exists).Select(DialogFile.Load));
+var shops = ShopFile.Merge(areaFiles.Select(a => Sibling("shops", a)).Where(File.Exists).Select(ShopFile.Load));
+// Gegenstände, Sprüche und Fertigkeiten gelten für alle Gebiete.
+string itemPath = Path.Combine(dataDir, "items", "items.json");
 var items = File.Exists(itemPath) ? ItemCatalog.Load(itemPath) : ItemCatalog.Empty;
-string spellPath = Path.Combine(Path.GetDirectoryName(worldPath)!, "..", "spells", "spells.json");
+string spellPath = Path.Combine(dataDir, "spells", "spells.json");
 var spells = File.Exists(spellPath) ? SpellBook.Load(spellPath) : SpellBook.Empty;
-string skillPath = Path.Combine(Path.GetDirectoryName(worldPath)!, "..", "skills", "skills.json");
+string skillPath = Path.Combine(dataDir, "skills", "skills.json");
 var skills = File.Exists(skillPath) ? SkillBook.Load(skillPath) : SkillBook.Empty;
 
 var server = new GameServer(new ServerOptions

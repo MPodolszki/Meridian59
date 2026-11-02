@@ -70,4 +70,6 @@ Springen mit der Leertaste (nur Client-Optik, docs: client/README.md).
 
 Persönliche Verzauberungen: Segen, Superstärke, Eile, Widerstände (docs/magic.md).
 
-Offen: weitere Gebiete außer Tos.
+Raza (Neulingsinsel, 8 Räume, Start neuer Charaktere, Portal nach Tos) eng am Original (docs/raza.md).
+
+Offen: Raza-Reste (Mausoleum-Rätsel, Museum), weitere Gebiete (Marion, Jasper, Cor, Tempel), Kleidung.

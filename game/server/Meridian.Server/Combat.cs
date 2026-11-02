@@ -117,6 +117,12 @@ public sealed record MonsterKind(
     public string? Treasure { get; init; }
     /// <summary>Gegenstand, der immer fallen gelassen wird (Skelett: Langschwert).</summary>
     public string? AlwaysDrops { get; init; }
+    /// <summary>Grammatisches Geschlecht für Texte: "m" (der Zombie), "f" (die Mumie), "n" (das Skelett).</summary>
+    public string Gender { get; init; } = "m";
+    /// <summary>Text beim Anschauen (vrDesc); sonst ein allgemeiner.</summary>
+    public string? Description { get; init; }
+    /// <summary>MOB_NOFIGHT / nicht aggressiv: greift nie an (Kühe).</summary>
+    public bool Peaceful { get; init; }
 
     // Zombie: SPEED_VERY_SLOW, Stufe 55, karma-aggressiv. Skelett: SPEED_AVERAGE, Stufe 75, aggressiv.
     // Max. LP = 120 × Stufe / 100 (GetMaxHitPoints); Schaden und Takt aus Stufe/Schwierigkeit/Tempo.
@@ -132,6 +138,33 @@ public sealed record MonsterKind(
         {
             ["thrust"] = 70, ["shock"] = 70, ["cold"] = 70, ["unholy"] = 70, ["fire"] = -10, ["holy"] = -20, ["bludgeon"] = -20,
         },
+        Gender = "n",
+    };
+    // Mumie (mummy.kod): Stufe 25 → 25 LP (unter Stufe 40 gilt die Stufe), Schwierigkeit 2, SPEED_VERY_SLOW, aggressiv,
+    // Beute TID_NEWBIE_AREA; mummyt.kod ohne Beute.
+    public static readonly MonsterKind Mummy = new("Mumie", "mummy.bgf", 25, 0, 0, 0, TimeSpan.Zero, 70, 5 * 64)
+    {
+        Level = 25, Difficulty = 2, KodSpeed = 4, Treasure = "newbie", Gender = "f",
+        Description = "Eine Mumie. In vergilbte Binden gewickelt schlurft sie dir entgegen.",
+    };
+    public static readonly MonsterKind MummyNoTreasure = Mummy with { Treasure = null };
+    // Kuh (cow.kod): MOB_NOFIGHT, Stufe 200; steht in Raza (ROOM_NO_COMBAT), ist also nicht angreifbar.
+    public static readonly MonsterKind Cow = new("Kuh", "cow.bgf", 240, 0, 0, 0, TimeSpan.Zero, 0, 0)
+    {
+        Level = 200, KodSpeed = 8, Gender = "f", Peaceful = true,
+        Description = "Eine Zwergkuh. Eine missglückte Zucht hat diese Rinder auf Hüfthöhe schrumpfen lassen; "
+            + "die Bauern von Raza halten sie trotzdem, denn ihre Milch ist süß.",
+    };
+
+    /// <summary>Monsterarten für die Gebietsdateien ("zombie", "skeleton", "mummy", "mummynotreasure", "cow").</summary>
+    public static MonsterKind ByKey(string key) => key.ToLowerInvariant() switch
+    {
+        "zombie" => Zombie,
+        "skeleton" => Skeleton,
+        "mummy" => Mummy,
+        "mummynotreasure" => MummyNoTreasure,
+        "cow" => Cow,
+        _ => throw new InvalidDataException($"Unbekannte Monsterart {key}"),
     };
 }
 

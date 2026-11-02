@@ -82,8 +82,8 @@ public sealed partial class World
     // ------------------------------------------------------------------ Charakter
 
     /// <summary>Besitz eines Charakters (bleibt bis Serverende erhalten). Beim ersten Mal die Startausrüstung
-    /// wie player.kod AddDefaultObjects (Streitkolben, 500 + 2000 Schillinge) plus AddRealWorldObjects (1000),
-    /// weil neue Charaktere direkt in Tos statt auf Raza beginnen.</summary>
+    /// wie player.kod AddDefaultObjects (Streitkolben, 500 + 2000 Schillinge). AddRealWorldObjects (1000 Schillinge,
+    /// Streitkolben, Äpfel) gibt es wie im Original erst beim Portal von Raza aufs Festland (WorldArea.cs).</summary>
     private CharacterState StateFor(uint characterId)
     {
         if (!_characters.TryGetValue(characterId, out var state))
@@ -93,7 +93,7 @@ public sealed partial class World
             state.Initialized = true;
             if (_items.TryGet("mace", out var mace))
                 state.Inventory.Add(NewItem(mace));
-            state.Inventory.Add(NewItem(_items.Money, 500 + 2000 + 1000));
+            state.Inventory.Add(NewItem(_items.Money, 500 + 2000));
         }
         return state;
     }
@@ -640,6 +640,19 @@ public sealed partial class World
                 continue;
             }
 
+            if (def.Reward is { } reward && _items.TryGet(reward.Item, out var rewardFor) && offer.Kind == rewardFor)
+            {
+                if (offer.Number < reward.Min || source.Number < offer.Number)
+                {
+                    NpcSay(npc, avatar.Room, reward.TooFew);
+                    continue;
+                }
+                NpcSay(npc, avatar.Room, reward.Thanks);
+                TakeNumber(avatar, source, offer.Number);
+                if (_items.TryGet(reward.Gives, out var gift))
+                    Give(avatar, NewItem(gift));
+                continue;
+            }
             if (def.Bank is { } bank && offer.Kind.IsMoney)
             {
                 BankDeposit(avatar, npc, bank, offer.Number);

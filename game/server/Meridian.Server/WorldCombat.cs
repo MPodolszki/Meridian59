@@ -138,7 +138,9 @@ public sealed partial class World
         int difficulty = monsterLevel is { } lvl ? Math.Clamp(lvl, 1, 150) : 60;
         int factor = Math.Clamp(2 * difficulty + 10, 50, 100);
         chance = Math.Max(chance * factor / 100, 5);
-        chance = Math.Clamp(chance, 1 + req / 10, 99);
+        if (ModifyChanceToImprove(a, ability, chance) is not { } modified)
+            return;
+        chance = Math.Clamp(modified, 1 + req / 10, 99);
         if (_random.Next(0, 101) >= chance)
             return;
         s.Skills[skid] = ability + 1;

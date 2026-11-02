@@ -10,6 +10,7 @@ Ausgabe je Raum: <roo-name>.json mit
     floor        – Liste von Zeilen (Zeile 1 zuerst), je Feld Bodenhöhe in KOD-Einheiten
                    (64 = 1 Feld), -1 = kein Boden (massive Wand / außerhalb)
     ceiling      – höchste Deckenhöhe im Raum (für Innenwände)
+    depth        – nur wenn vorhanden: je Zeile ein Text mit der Wassertiefe je Feld (0–3, SF_DEPTH1–3)
 Formatbeschreibung des .roo-Formats: clientd3d/bspload.c.
 """
 import json
@@ -57,7 +58,7 @@ def read_roo(path):
         for sloped in (0x400, 0x800):           # SF_SLOPED_FLOOR / SF_SLOPED_CEILING
             if flags & sloped:
                 p += 46
-        sectors.append((floor_h, ceil_h))
+        sectors.append((floor_h, ceil_h, flags & 3))   # SF_DEPTH0..3: Wassertiefe
     return width >> 10, height >> 10, leaves, sectors
 
 
@@ -73,21 +74,28 @@ def inside(x, y, poly):
 
 def layout(path):
     cols, rows, leaves, sectors = read_roo(path)
-    floor = []
+    floor, depth = [], []
     max_ceiling = 0
     for row in range(rows):
-        line = []
+        line, wet = [], ''
         for col in range(cols):
             x, y = col * 1024 + 512, row * 1024 + 512   # Feldmitte in Client-Feineinheiten
             sector = next((s for s, poly in leaves if inside(x, y, poly)), None)
             if sector is None or sector >= len(sectors):
                 line.append(-1)
+                wet += '0'
             else:
-                f, c = sectors[sector]
+                f, c, d = sectors[sector]
                 line.append(f)
+                wet += str(d)
                 max_ceiling = max(max_ceiling, c)
         floor.append(line)
-    return {'source': path.name, 'rows': rows, 'cols': cols, 'ceiling': max_ceiling, 'floor': floor}
+        depth.append(wet)
+    data = {'source': path.name, 'rows': rows, 'cols': cols, 'ceiling': max_ceiling}
+    if any(set(w) - {'0'} for w in depth):
+        data['depth'] = depth
+    data['floor'] = floor
+    return data
 
 
 def main(world_json, roo_dir, out_dir):

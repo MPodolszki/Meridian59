@@ -61,7 +61,7 @@ public sealed class TradeTests : IAsyncLifetime
     public async Task NewCharacter_StartsWithMaceAndMoney()
     {
         var (anna, events) = await EnterAsync();
-        await WaitForAsync(anna, events, _ => Money(anna) == 3500);
+        await WaitForAsync(anna, events, _ => Money(anna) == 2500);
         Assert.Contains(anna.Inventory, o => anna.Resolve(o.NameRsc) == "Streitkolben");
     }
 
@@ -81,7 +81,7 @@ public sealed class TradeTests : IAsyncLifetime
 
         var cheese = list.Items[0].Item;
         await anna.BuyItemsAsync(paddock, [new ObjectRef(cheese.Id, 2)]);
-        await WaitForAsync(anna, events, _ => Money(anna) == 3500 - 224);
+        await WaitForAsync(anna, events, _ => Money(anna) == 2500 - 224);
         Assert.Contains(anna.Inventory, o => anna.Resolve(o.NameRsc) == "Laibe Käse" && o.Amount == 2);
     }
 
@@ -96,7 +96,7 @@ public sealed class TradeTests : IAsyncLifetime
 
         await anna.BuyItemsAsync(paddock, [new ObjectRef(cheese.Id, 500)]);
         await WaitForAsync(anna, events, e => e is ClientEvent.Chat c && c.Text.Contains("Komm wieder"));
-        Assert.Equal(3500, Money(anna));
+        Assert.Equal(2500, Money(anna));
     }
 
     [Fact]
@@ -121,14 +121,14 @@ public sealed class TradeTests : IAsyncLifetime
         var herbs = events.OfType<ClientEvent.BuyList>().Last().Items.Single(i => anna.Resolve(i.Item.NameRsc) == "Kräuter");
         Assert.Equal(14u, herbs.Price);
         await anna.BuyItemsAsync(frisconar, [new ObjectRef(herbs.Item.Id, 5)]);
-        await WaitForAsync(anna, events, _ => Money(anna) == 3500 - 70);
+        await WaitForAsync(anna, events, _ => Money(anna) == 2500 - 70);
 
         var mine = anna.Inventory.Single(o => anna.Resolve(o.NameRsc) == "Kräuter");
         await anna.OfferAsync(frisconar, [new ObjectRef(mine.Id, 3)]);
         // Ankauf: Wert × (100 − 10 × Aufschlag) / 100 = 30 × 0,8
         await WaitForAsync(anna, events, e => e is ClientEvent.CounterOffer c && c.Items.Single().Amount == 24);
         await anna.AcceptOfferAsync();
-        await WaitForAsync(anna, events, _ => Money(anna) == 3500 - 70 + 24);
+        await WaitForAsync(anna, events, _ => Money(anna) == 2500 - 70 + 24);
         Assert.Contains(anna.Inventory, o => anna.Resolve(o.NameRsc) == "Kräuter" && o.Amount == 2);
     }
 
@@ -137,7 +137,7 @@ public sealed class TradeTests : IAsyncLifetime
     {
         var (anna, events) = await EnterAsync();
         uint frisconar = Npc(anna, events, "Frisconar");
-        await WaitForAsync(anna, events, _ => Money(anna) == 3500);
+        await WaitForAsync(anna, events, _ => Money(anna) == 2500);
         var mace = anna.Inventory.Single(o => anna.Resolve(o.NameRsc) == "Streitkolben");
         await anna.OfferAsync(frisconar, [new ObjectRef(mace.Id, null)]);
         await WaitForAsync(anna, events, e => e is ClientEvent.Chat c && c.Text.Contains("kein Interesse"));
@@ -148,16 +148,16 @@ public sealed class TradeTests : IAsyncLifetime
     public async Task Bank_DepositBalanceWithdraw()
     {
         var (anna, events) = await EnterAsync();
-        await WaitForAsync(anna, events, _ => Money(anna) == 3500);
+        await WaitForAsync(anna, events, _ => Money(anna) == 2500);
         await anna.DepositAsync(1000);
         await WaitForAsync(anna, events, e => e is ClientEvent.Chat c && c.Text.Contains("jetzt 1000 Schillinge"));
-        Assert.Equal(2500, Money(anna));
+        Assert.Equal(1500, Money(anna));
 
         await anna.WithdrawAsync(5000);
         await WaitForAsync(anna, events, e => e is ClientEvent.Chat c && c.Text.Contains("nur 1000 Schillinge auf deinem Konto"));
 
         await anna.WithdrawAsync(400);
-        await WaitForAsync(anna, events, _ => Money(anna) == 2900);
+        await WaitForAsync(anna, events, _ => Money(anna) == 1900);
         await anna.BalanceAsync();
         await WaitForAsync(anna, events, e => e is ClientEvent.Chat c && c.Text.Contains("600 Schillinge auf deinem Konto"));
     }
@@ -166,7 +166,7 @@ public sealed class TradeTests : IAsyncLifetime
     public async Task DeadMonster_DropsTreasure_ThatCanBePickedUp()
     {
         var (anna, events) = await EnterAsync();
-        await WaitForAsync(anna, events, _ => Money(anna) == 3500);
+        await WaitForAsync(anna, events, _ => Money(anna) == 2500);
         var monster = _server.World.SpawnMonster(1, Piñata, new GridPos(10, 9));
         while (!events.Any(e => e is ClientEvent.ObjectAdded { Object.IsGettable: true }))
         {
@@ -184,7 +184,7 @@ public sealed class TradeTests : IAsyncLifetime
     public async Task Use_EquipsWeapon_AndUnuseRemovesIt()
     {
         var (anna, events) = await EnterAsync();
-        await WaitForAsync(anna, events, _ => Money(anna) == 3500);
+        await WaitForAsync(anna, events, _ => Money(anna) == 2500);
         var mace = anna.Inventory.Single(o => anna.Resolve(o.NameRsc) == "Streitkolben");
         await anna.UseAsync(mace.Id);
         await WaitForAsync(anna, events, _ => anna.Inventory.Any(o => o.Id == mace.Id && o.Used));
@@ -220,11 +220,11 @@ public sealed class TradeTests : IAsyncLifetime
     public async Task Drop_PartOfMoney_LiesOnTheFloor()
     {
         var (anna, events) = await EnterAsync();
-        await WaitForAsync(anna, events, _ => Money(anna) == 3500);
+        await WaitForAsync(anna, events, _ => Money(anna) == 2500);
         var money = anna.Inventory.Single(o => o.Icon == "coin.bgf");
         await anna.DropAsync([new ObjectRef(money.Id, 100)]);
         await WaitForAsync(anna, events, e => e is ClientEvent.ObjectAdded { Object: { IsGettable: true, Amount: 100 } });
-        Assert.Equal(3400, Money(anna));
+        Assert.Equal(2400, Money(anna));
     }
 
     private static int Money(ClientSession s) => (int)(s.Inventory.FirstOrDefault(o => o.Icon == "coin.bgf")?.Amount ?? 0);
@@ -237,8 +237,8 @@ public sealed class TradeTests : IAsyncLifetime
     {
         var (anna, aEvents) = await EnterAsync();
         var (bert, bEvents) = await EnterAsync("Bert");
-        await WaitForAsync(anna, aEvents, _ => Money(anna) == 3500);
-        await WaitForAsync(bert, bEvents, _ => Money(bert) == 3500);
+        await WaitForAsync(anna, aEvents, _ => Money(anna) == 2500);
+        await WaitForAsync(bert, bEvents, _ => Money(bert) == 2500);
         var annaMoney = anna.Inventory.Single(o => o.Icon == "coin.bgf");
         var bertMace = bert.Inventory.Single(o => bert.Resolve(o.NameRsc) == "Streitkolben");
 
@@ -248,8 +248,8 @@ public sealed class TradeTests : IAsyncLifetime
         await WaitForAsync(anna, aEvents, e => e is ClientEvent.CounterOffer c && c.Items.Count == 1);
         await anna.AcceptOfferAsync();
 
-        await WaitForAsync(anna, aEvents, _ => Money(anna) == 3400 && anna.Inventory.Count(o => anna.Resolve(o.NameRsc) == "Streitkolben") == 2);
-        await WaitForAsync(bert, bEvents, _ => Money(bert) == 3600 && bert.Inventory.All(o => bert.Resolve(o.NameRsc) != "Streitkolben"));
+        await WaitForAsync(anna, aEvents, _ => Money(anna) == 2400 && anna.Inventory.Count(o => anna.Resolve(o.NameRsc) == "Streitkolben") == 2);
+        await WaitForAsync(bert, bEvents, _ => Money(bert) == 2600 && bert.Inventory.All(o => bert.Resolve(o.NameRsc) != "Streitkolben"));
         await WaitForAsync(bert, bEvents, e => e is ClientEvent.OfferCanceled);
     }
 
@@ -258,7 +258,7 @@ public sealed class TradeTests : IAsyncLifetime
     {
         var (anna, aEvents) = await EnterAsync();
         var (bert, bEvents) = await EnterAsync("Bert");
-        await WaitForAsync(anna, aEvents, _ => Money(anna) == 3500);
+        await WaitForAsync(anna, aEvents, _ => Money(anna) == 2500);
         var mace = anna.Inventory.Single(o => anna.Resolve(o.NameRsc) == "Streitkolben");
         await anna.OfferAsync(bert.PlayerId, [new ObjectRef(mace.Id, null)]);
         await WaitForAsync(bert, bEvents, e => e is ClientEvent.OfferReceived);

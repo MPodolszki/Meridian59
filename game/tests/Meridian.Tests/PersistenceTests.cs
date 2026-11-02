@@ -58,10 +58,10 @@ public sealed class PersistenceTests : IAsyncLifetime
             var events = new List<ClientEvent>();
             anna.Event += events.Add;
             await anna.ConnectAsync("127.0.0.1", server.Port, "Anna", "pw");
-            await WaitForAsync(anna, events, _ => Money(anna) == 3500);
+            await WaitForAsync(anna, events, _ => Money(anna) == 2500);
 
             await anna.DepositAsync(1200);
-            await WaitForAsync(anna, events, _ => Money(anna) == 2300);
+            await WaitForAsync(anna, events, _ => Money(anna) == 1300);
             var mace = anna.Inventory.Single(o => anna.Resolve(o.NameRsc) == "Streitkolben");
             await anna.UseAsync(mace.Id);
             await WaitForAsync(anna, events, _ => anna.Inventory.Any(o => o.Used));
@@ -79,7 +79,7 @@ public sealed class PersistenceTests : IAsyncLifetime
             var events = new List<ClientEvent>();
             anna.Event += events.Add;
             await anna.ConnectAsync("127.0.0.1", server.Port, "Anna", "pw");
-            await WaitForAsync(anna, events, _ => Money(anna) == 2300);
+            await WaitForAsync(anna, events, _ => Money(anna) == 1300);
             await WaitForAsync(anna, events, _ => anna.Inventory.Any(o => anna.Resolve(o.NameRsc) == "Streitkolben" && o.Used));
 
             var self = events.OfType<ClientEvent.ObjectAdded>().Last(e => e.Object.Id == anna.PlayerId).Object;

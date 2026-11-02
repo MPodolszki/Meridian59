@@ -24,6 +24,8 @@ public sealed record ShopDefinition
     public IReadOnlyList<string> Wanted { get; init; } = [];
     /// <summary>Edelsteintausch des Tos-Bankiers (TsBanker CheckWhyWanted).</summary>
     public bool GemTrade { get; init; }
+    /// <summary>Belohnung für ein gewolltes Geschenk ab einer Mindestmenge (hzbart.kod: 10 Entwurzelbeeren → Ritterschild).</summary>
+    public GiftReward? Reward { get; init; }
     public IReadOnlyList<SaleEntry> ForSale { get; init; } = [];
     /// <summary>Lehrbare Sprüche (plFor_sale, dritte Liste), Schlüssel aus data/spells.</summary>
     public IReadOnlyList<string> Spells { get; init; } = [];
@@ -34,6 +36,9 @@ public sealed record ShopDefinition
 
     public bool Seller => ForSale.Count > 0 || Conditional.Count > 0 || Spells.Count > 0;
 }
+
+/// <summary>Geschenk <paramref name="Item"/> ab <paramref name="Min"/> Stück gegen <paramref name="Gives"/>; sonst <paramref name="TooFew"/>.</summary>
+public sealed record GiftReward(string Item, int Min, string Gives, string Thanks, string TooFew);
 
 public sealed record SaleEntry(string Item)
 {
@@ -56,6 +61,10 @@ public sealed record ShopFile(IReadOnlyDictionary<string, ShopDefinition> Shops)
         JsonSerializer.Deserialize<ShopFile>(File.ReadAllText(path), Json) ?? Empty;
 
     public static ShopFile Empty { get; } = new(new Dictionary<string, ShopDefinition>());
+
+    /// <summary>Läden mehrerer Gebiete zusammenführen.</summary>
+    public static ShopFile Merge(IEnumerable<ShopFile> files) =>
+        new(files.SelectMany(f => f.Shops).ToDictionary(kv => kv.Key, kv => kv.Value));
 }
 
 /// <summary>Preisregeln aus monster.kod (GetPrice, Offer). Fraktions-Bonus ist immer 100 %.</summary>

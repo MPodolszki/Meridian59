@@ -10,8 +10,9 @@ Daten: `server/data/items/items.json`, `server/data/shops/tos.json`; Client: `cl
 - Mengen-Gegenstände werden mit Tag 1 in der Objekt-ID und `u32 amount` übertragen (protocol.md 4.5) und im Inventar
   zusammengelegt. Mengenänderungen gehen per `BP_CHANGE` an den Client (KOD `SomethingChanged`),
   neue/entfernte Gegenstände per `BP_INVENTORY_ADD`/`_REMOVE`.
-- Startausstattung: Streitkolben + 500 + 2000 Schillinge (player.kod `AddDefaultObjects`) + 1000 (`AddRealWorldObjects`,
-  weil wir direkt in Tos statt auf Raza beginnen) = 3500 Schillinge. Reagenzien für Sprüche fehlen (noch keine Magie).
+- Startausstattung: Streitkolben + 500 + 2000 Schillinge (player.kod `AddDefaultObjects`) = 2500 Schillinge; dazu
+  Reagenzien für die Startsprüche. `AddRealWorldObjects` (1000 Schillinge, Streitkolben, 5 Äpfel, Reagenzien für je
+  5 Zauber) gibt es wie im Original erst am Portal von Raza (docs/raza.md).
 
 ## Kaufen (`BP_REQ_BUY` → `BP_BUY_LIST`, `BP_REQ_BUY_ITEMS`)
 - Preis pro Stück = Wert × (100 + 20 × Aufschlag) / 100, mindestens 1 (monster.kod `GetPrice`, Fraktionsbonus 100 %).

@@ -468,7 +468,9 @@ public sealed partial class World
         final += s.SchoolCasts.GetValueOrDefault(spell.School) / spell.Level / MagicRules.CastsPerPercentBonus;
         if (ability > 2 * req - 1)
             final /= MagicRules.SoftcapPenalty;
-        final = Math.Clamp(final, 1 + req / 10, 99);
+        if (ModifyChanceToImprove(a, ability, final) is not { } modified)
+            return;
+        final = Math.Clamp(modified, 1 + req / 10, 99);
         if (_random.Next(0, 101) >= final)
             return;
         s.Spells[spell.Sid] = ability + 1;

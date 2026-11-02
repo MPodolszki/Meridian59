@@ -1,6 +1,7 @@
 {
   "source": "kod/object/active/holder/room/tosrm (Meridian 59)",
   "startRoom": 50,
+  "respawnRoom": 50,
   "rooms": [
     {
       "id": 50,
