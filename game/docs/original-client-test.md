@@ -45,6 +45,7 @@ Geprüft 2026-11-02 (Steam-Client, Wine, Software-Renderer):
 | Bank (`deposit`/`balance`/`withdraw` bei Skivlat) | geht |
 | Kampf auf dem Friedhof nachts (Taste E, Treffer/Schaden) | geht |
 | Verkaufen/Anbieten (`offer`), Beute aufheben (`get`), Essen | geht |
+| Sprüche, Mana, Charakterwerte, Zaubern (`cast …` bzw. Menü Zaubersprüche) | geht |
 | Andere Spieler als vollständige Figur (Körper `bta` + Arme, Beine, Kopf, Gesicht, Haare; Waffe in der Hand) | geht |
 
 Hinweis: Der Steam-Client hat eine neue Tastenbelegung (`config.ini`): Angriff E, Sagen F, Gehen/Öffnen Leertaste.
