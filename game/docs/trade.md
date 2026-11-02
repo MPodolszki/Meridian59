@@ -37,6 +37,16 @@ Daten: `server/data/items/items.json`, `server/data/shops/tos.json`; Client: `cl
     mit 5 % Chance „schlechte Qualität“ (Steine weg, kein Geld) – TsBanker `CheckWhyWanted`.
   - **Paddock** nimmt nichts an („Was soll ich damit?“).
 
+## Handel zwischen Spielern (user.kod UserOffer/UserCounterOffer/UserAcceptOffer)
+- A bietet B Gegenstände an (`BP_REQ_OFFER` mit Spieler-ID) → A bekommt `BP_OFFERED`, B eine Systemmeldung und
+  `BP_OFFER` (Anbieter + Gegenstände). Wer schon handelt, kann kein weiteres Angebot annehmen.
+- B antwortet mit `BP_REQ_COUNTEROFFER` (auch leer = Geschenk) → B bekommt `BP_COUNTEROFFERED`, A `BP_COUNTEROFFER`.
+- Nur A nimmt an (`BP_ACCEPT_OFFER`); dann wird geprüft, ob beide noch alles besitzen, und getauscht. B bekommt
+  `BP_OFFER_CANCELED`, damit sein Dialog schließt.
+- Abbruch durch einen (`BP_CANCEL_OFFER`), Raumwechsel oder Ausloggen beendet den Handel für beide.
+- Client: Im Inventar „Anbieten“ wählt den nächsten Händler, sonst den nächsten Spieler. Ein Angebot öffnet einen
+  Dialog: „Gegenangebot“ (ausgewählter Inventar-Gegenstand), „Ohne Gegenleistung“, „Ablehnen“.
+
 ## Bank (`BP_USERCOMMAND` UC_DEPOSIT 35 / UC_WITHDRAW 36 / UC_BALANCE 37)
 - Geht nur, wenn ein Bankier im Raum ist. Texte und Prüfungen wie monster.kod `BankDeposit`/`BankWithdraw`.
 - Im Client per Chat: `einzahlen 100`, `abheben 100`, `kontostand` (auch `deposit`/`withdraw`/`balance`).
@@ -63,7 +73,7 @@ Daten: `server/data/items/items.json`, `server/data/shops/tos.json`; Client: `cl
   Token, Siegelringe oder Quest-Gegenstände in der Beute.
 - Ausrüsten tauscht automatisch; das Original verlangt teils erst das Ablegen. Keine Haltbarkeit/Abnutzung,
   keine Alkoholwirkung, Fackel brennt nicht ab.
-- Handel zwischen Spielern fehlt noch (nur Spieler ↔ NPC).
+- Spielerhandel: kein Gewichtslimit, im Client nur ein Gegenstand pro Angebot/Gegenangebot (Protokoll kann mehrere).
 - Aufheben nur innerhalb von 2 Feldern; höchstens 40 Gegenstände pro Raum am Boden (ältere verschwinden) –
   das Original räumt anders auf.
 - Kein Schmied in Tos (nicht in der Weltbeschreibung), daher kauft niemand Waffen/Rüstungen.

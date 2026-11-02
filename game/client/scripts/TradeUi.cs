@@ -31,6 +31,9 @@ public partial class Main
     private PanelContainer _offerPanel = null!;
     private Label _offerText = null!;
 
+    private PanelContainer _incomingPanel = null!;
+    private Label _incomingText = null!;
+
     private void BuildTradeUi(CanvasLayer ui)
     {
         // Inventar rechts oben
@@ -104,6 +107,44 @@ public partial class Main
         offerButtons.AddChild(decline);
         offerBox.AddChild(offerButtons);
         ui.AddChild(_offerPanel);
+
+        // Angebot eines anderen Spielers: Gegenangebot aus dem Inventar (Auswahl), Geschenk annehmen oder ablehnen.
+        _incomingPanel = new PanelContainer { Position = new Vector2(420, 380), Visible = false };
+        var inBox = new VBoxContainer { CustomMinimumSize = new Vector2(440, 0) };
+        _incomingPanel.AddChild(inBox);
+        _incomingText = new Label { AutowrapMode = TextServer.AutowrapMode.Word };
+        inBox.AddChild(_incomingText);
+        var inButtons = new HBoxContainer();
+        var counter = new Button { Text = "Gegenangebot", TooltipText = "Den im Inventar (I) ausgewählten Gegenstand anbieten" };
+        counter.Pressed += async () =>
+        {
+            if (_session is null || SelectedRef() is not { } r)
+            {
+                _status.Text = "Wähle im Inventar (I) aus, was du dafür gibst.";
+                return;
+            }
+            _incomingPanel.Visible = false;
+            await _session.CounterOfferAsync([r]);
+        };
+        inButtons.AddChild(counter);
+        var gift = new Button { Text = "Ohne Gegenleistung" };
+        gift.Pressed += async () =>
+        {
+            _incomingPanel.Visible = false;
+            if (_session is not null)
+                await _session.CounterOfferAsync([]);
+        };
+        inButtons.AddChild(gift);
+        var refuse = new Button { Text = "Ablehnen" };
+        refuse.Pressed += async () =>
+        {
+            _incomingPanel.Visible = false;
+            if (_session is not null)
+                await _session.CancelOfferAsync();
+        };
+        inButtons.AddChild(refuse);
+        inBox.AddChild(inButtons);
+        ui.AddChild(_incomingPanel);
     }
 
     /// <summary>Handels-Ereignisse aus der Session; false = nicht zuständig.</summary>
@@ -130,9 +171,16 @@ public partial class Main
                 _offerPanel.Visible = true;
                 return true;
             case ClientEvent.Offered:
+            case ClientEvent.CounterOffered:
+                return true;
+            case ClientEvent.OfferReceived received:
+                _incomingText.Text = $"{_session!.Resolve(received.Offerer.NameRsc)} bietet dir an: "
+                    + $"{string.Join(", ", received.Items.Select(_session.Describe))}.";
+                _incomingPanel.Visible = true;
+                _inventoryPanel.Visible = true;
                 return true;
             case ClientEvent.OfferCanceled:
-                _offerPanel.Visible = false;
+                _offerPanel.Visible = _incomingPanel.Visible = false;
                 return true;
         }
         return false;
@@ -211,13 +259,16 @@ public partial class Main
     {
         if (_session is not { InWorld: true } || SelectedRef() is not { } r)
             return;
-        uint npc = NearestNpc(o => o.IsOfferable);
-        if (npc == 0)
+        // Nächster Händler, der etwas annimmt, oder nächster Spieler.
+        uint target = NearestNpc(o => o.IsOfferable);
+        if (target == 0)
+            target = NearestPlayer();
+        if (target == 0)
         {
             _status.Text = "Niemand in der Nähe, der etwas annimmt.";
             return;
         }
-        await _session.OfferAsync(npc, [r]);
+        await _session.OfferAsync(target, [r]);
     }
 
     private async void BuySelected()
@@ -279,6 +330,26 @@ public partial class Main
             {
                 best = id;
                 bestDistance = npc.Position.DistanceTo(self.Position);
+            }
+        }
+        return best;
+    }
+
+    private uint NearestPlayer()
+    {
+        if (_session is null || !_avatars.TryGetValue(_session.PlayerId, out var self))
+            return 0;
+        uint best = 0;
+        float bestDistance = 6f;
+        foreach (var (id, node) in _avatars)
+        {
+            if (id == _session.PlayerId || _npcs.Contains(id) || _monsters.Contains(id) || _floorItems.Contains(id))
+                continue;
+            float d = node.Position.DistanceTo(self.Position);
+            if (d < bestDistance)
+            {
+                best = id;
+                bestDistance = d;
             }
         }
         return best;

@@ -211,6 +211,14 @@ public static class GameReplies
     public static byte[] CounterOffer(IReadOnlyCollection<RoomObject> items) =>
         WriteObjectList(new PacketWriter((byte)GameMessage.CounterOffer), items).ToArray();
 
+    /// <summary>BP_OFFER: Ein Spieler bietet dir etwas an (Anbieter, Gegenstände).</summary>
+    public static byte[] Offer(RoomObject offerer, IReadOnlyCollection<RoomObject> items) =>
+        WriteObjectList(WriteObjectDesc(new PacketWriter((byte)GameMessage.Offer), offerer), items).ToArray();
+
+    /// <summary>BP_COUNTEROFFERED: Bestätigung des eigenen Gegenangebots.</summary>
+    public static byte[] CounterOffered(IReadOnlyCollection<RoomObject> items) =>
+        WriteObjectList(new PacketWriter((byte)GameMessage.CounterOffered), items).ToArray();
+
     public static byte[] OfferCanceled() => new PacketWriter((byte)GameMessage.OfferCanceled).ToArray();
 
     private static PacketWriter WriteObjectList(PacketWriter w, IReadOnlyCollection<RoomObject> items)

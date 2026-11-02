@@ -242,6 +242,10 @@ public sealed class Session(int id, TcpClient client, GameServer server)
                 break;
             }
 
+            case GameMessage.ReqCounterOffer when _avatar is not null:
+                server.World.CounterOffer(_avatar, ObjectRef.ReadList(ref r));
+                break;
+
             case GameMessage.AcceptOffer when _avatar is not null:
                 server.World.AcceptOffer(_avatar);
                 break;

@@ -63,6 +63,10 @@ public abstract record ClientEvent
     /// <summary>Gegenangebot (BP_COUNTEROFFER), bei Händlern Geld.</summary>
     public sealed record CounterOffer(IReadOnlyList<ClientObject> Items) : ClientEvent;
     public sealed record OfferCanceled : ClientEvent;
+    /// <summary>Ein anderer Spieler bietet dir etwas an (BP_OFFER); antworten mit Gegenangebot oder Abbruch.</summary>
+    public sealed record OfferReceived(ClientObject Offerer, IReadOnlyList<ClientObject> Items) : ClientEvent;
+    /// <summary>Eigenes Gegenangebot bestätigt (BP_COUNTEROFFERED).</summary>
+    public sealed record CounterOffered(IReadOnlyList<ClientObject> Items) : ClientEvent;
 }
 
 /// <summary>Ware einer Ladenliste mit Preis pro Stück.</summary>
@@ -175,6 +179,10 @@ public sealed class ClientSession : IDisposable
     /// <summary>Gegenstände anbieten (BP_REQ_OFFER), z. B. einem Händler zum Verkauf.</summary>
     public Task OfferAsync(uint taker, IReadOnlyCollection<ObjectRef> items) =>
         SendGameAsync(ObjectRef.WriteList(new PacketWriter((byte)GameMessage.ReqOffer).U32(taker), items).ToArray());
+
+    /// <summary>Gegenangebot auf ein Angebot eines Spielers (BP_REQ_COUNTEROFFER); leer = Geschenk annehmen.</summary>
+    public Task CounterOfferAsync(IReadOnlyCollection<ObjectRef> items) =>
+        SendGameAsync(ObjectRef.WriteList(new PacketWriter((byte)GameMessage.ReqCounterOffer), items).ToArray());
 
     public Task AcceptOfferAsync() => SendGameAsync([(byte)GameMessage.AcceptOffer]);
 
@@ -430,6 +438,15 @@ public sealed class ClientSession : IDisposable
                 break;
             case GameMessage.CounterOffer:
                 Enqueue(new ClientEvent.CounterOffer(ReadObjectList(ref r)));
+                break;
+            case GameMessage.Offer:
+            {
+                var offerer = ReadObjectDesc(ref r);
+                Enqueue(new ClientEvent.OfferReceived(offerer, ReadObjectList(ref r)));
+                break;
+            }
+            case GameMessage.CounterOffered:
+                Enqueue(new ClientEvent.CounterOffered(ReadObjectList(ref r)));
                 break;
             case GameMessage.OfferCanceled:
                 Enqueue(new ClientEvent.OfferCanceled());

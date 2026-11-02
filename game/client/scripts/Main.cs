@@ -321,7 +321,7 @@ public partial class Main : Node3D
                 _avatars.Clear();
                 _targets.Clear();
                 _floorItems.Clear();
-                _inventoryPanel.Visible = _shopPanel.Visible = _offerPanel.Visible = false;
+                _inventoryPanel.Visible = _shopPanel.Visible = _offerPanel.Visible = _incomingPanel.Visible = false;
                 break;
         }
     }

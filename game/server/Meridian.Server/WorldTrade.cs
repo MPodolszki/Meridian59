@@ -520,9 +520,14 @@ public sealed partial class World
         {
             if (refs.Any(r => r.Amount is 0))
                 return;
+            if (avatar.Room.Avatars.TryGetValue(npcId, out var player) && player != avatar)
+            {
+                OfferToPlayer(avatar, player, refs);
+                return;
+            }
             var npc = NpcInRoom(avatar, npcId);
             var merchant = npc?.Merchant;
-            if (npc is null || merchant is null || avatar.OfferTo is not null
+            if (npc is null || merchant is null || avatar.Trading
                 || !(merchant.Definition.Buyer || merchant.Definition.Receive))
             {
                 string who = npc?.Name ?? (avatar.Room.Avatars.TryGetValue(npcId, out var other) ? other.Name : "dem");
@@ -647,6 +652,11 @@ public sealed partial class World
     {
         lock (_gate)
         {
+            if (avatar.OfferPlayer is not null)
+            {
+                AcceptPlayerOffer(avatar);
+                return;
+            }
             if (avatar.OfferTo is not { Merchant: { } merchant } || avatar.OfferPayment is not { } payment)
             {
                 Tell(avatar, "Es gibt kein Angebot, das du annehmen könntest.");
@@ -684,6 +694,14 @@ public sealed partial class World
 
     private void CancelOfferLocked(Avatar avatar)
     {
+        if (avatar.OfferPlayer is { } partner)
+        {
+            // user.kod CancelIfOffer / OfferCanceled: beide Seiten schließen den Handel.
+            Tell(partner, $"{avatar.Name} hat den Handel abgebrochen.");
+            EndPlayerTrade(partner);
+            EndPlayerTrade(avatar);
+            return;
+        }
         if (avatar.OfferTo is not { } npc)
             return;
         if (npc.Merchant is { } merchant && merchant.Customer == avatar)
@@ -692,6 +710,145 @@ public sealed partial class World
         avatar.OfferItems = [];
         avatar.OfferPayment = null;
         avatar.Session.Post(GameReplies.OfferCanceled());
+    }
+
+    // ------------------------------------------------------------------ Handel zwischen Spielern (user.kod)
+
+    /// <summary>Angebotene Gegenstände prüfen und vorbereiten (UserOffer/UserCounterOffer): eigene, keine doppelten,
+    /// Mengen 1..Bestand. null = ungültig.</summary>
+    private List<(Item Source, Item Offer)>? PrepareOffer(Avatar a, IReadOnlyList<ObjectRef> refs)
+    {
+        var list = new List<(Item Source, Item Offer)>();
+        foreach (var r in refs)
+        {
+            if (a.State.Find(r.Id) is not { } item || list.Any(o => o.Source == item))
+                return null;
+            if (item.Kind.Number)
+            {
+                int amount = (int)(r.Amount ?? 1);
+                if (amount < 1 || amount > item.Number)
+                {
+                    Tell(a, $"Du hast keine {amount} davon.");
+                    return null;
+                }
+                list.Add((item, NewItem(item.Kind, amount)));
+            }
+            else
+                list.Add((item, item));
+        }
+        return list;
+    }
+
+    private List<RoomObject> ShowItems(Avatar to, IEnumerable<(Item Source, Item Offer)> items)
+    {
+        var list = new List<RoomObject>();
+        foreach (var (_, o) in items)
+        {
+            EnsureItemResources(to.Session, o);
+            list.Add(ToRoomObject(o));
+        }
+        return list;
+    }
+
+    private void OfferToPlayer(Avatar from, Avatar to, IReadOnlyList<ObjectRef> refs)
+    {
+        if (from.Trading)
+        {
+            Tell(from, $"Du kannst {to.Name} nichts anbieten.");
+            return;
+        }
+        if (to.Trading)
+        {
+            Tell(from, $"{to.Name} ist gerade mit einem anderen Handel beschäftigt.");
+            return;
+        }
+        if (PrepareOffer(from, refs) is not { Count: > 0 } items)
+            return;
+        from.OfferPlayer = to;
+        from.OfferInitiator = true;
+        from.OfferItems = items;
+        from.Session.Post(GameReplies.Offered(ShowItems(from, items)));
+
+        to.OfferPlayer = from;
+        to.OfferInitiator = false;
+        to.OfferItems = [];
+        Tell(to, $"{from.Name} bietet dir etwas an.");
+        to.Session.EnsureResource(from.Name);
+        to.Session.EnsureResource(PlayerIcon);
+        to.Session.Post(GameReplies.Offer(ToRoomObject(from), ShowItems(to, items)));
+    }
+
+    /// <summary>Gegenangebot (BP_REQ_COUNTEROFFER) des Angebotenen; eine leere Liste nimmt das Angebot als Geschenk an.</summary>
+    public void CounterOffer(Avatar avatar, IReadOnlyList<ObjectRef> refs)
+    {
+        lock (_gate)
+        {
+            if (avatar.OfferPlayer is not { } partner || avatar.OfferInitiator)
+            {
+                Tell(avatar, "Du hast kein Angebot, auf das du antworten könntest.");
+                return;
+            }
+            if (PrepareOffer(avatar, refs) is not { } items)
+            {
+                CancelOfferLocked(avatar);
+                return;
+            }
+            avatar.OfferItems = items;
+            avatar.Session.Post(GameReplies.CounterOffered(ShowItems(avatar, items)));
+            partner.OfferOtherAccepted = true;
+            partner.Session.Post(GameReplies.CounterOffer(ShowItems(partner, items)));
+        }
+    }
+
+    /// <summary>UserAcceptOffer zwischen Spielern: beide Seiten müssen ihre Gegenstände noch besitzen, dann wird getauscht.</summary>
+    private void AcceptPlayerOffer(Avatar a)
+    {
+        var b = a.OfferPlayer!;
+        if (!a.OfferInitiator || !a.OfferOtherAccepted)
+        {
+            Tell(a, "Es gibt noch kein Gegenangebot, das du annehmen könntest.");
+            return;
+        }
+        static bool StillHas(Avatar x) =>
+            x.OfferItems.All(o => x.State.Inventory.Contains(o.Source) && o.Source.Number >= o.Offer.Number);
+        if (!StillHas(a) || !StillHas(b))
+        {
+            Tell(a, "Nicht mehr alle angebotenen Gegenstände sind vorhanden.");
+            CancelOfferLocked(a);
+            return;
+        }
+        var fromA = a.OfferItems;
+        var fromB = b.OfferItems;
+        foreach (var (source, offer) in fromA)
+            Remove(a, source, offer);
+        foreach (var (source, offer) in fromB)
+            Remove(b, source, offer);
+        foreach (var (_, offer) in fromA)
+            Give(b, offer);
+        foreach (var (_, offer) in fromB)
+            Give(a, offer);
+        Tell(a, $"Der Handel mit {b.Name} ist abgeschlossen.");
+        Tell(b, $"Der Handel mit {a.Name} ist abgeschlossen.");
+        EndPlayerTrade(b);   // AcceptOffer schickt dem Partner BP_OFFER_CANCELED, damit sein Dialog schließt
+        EndPlayerTrade(a, notify: false);
+
+        void Remove(Avatar owner, Item source, Item offer)
+        {
+            if (source.Kind.Number)
+                TakeNumber(owner, source, offer.Number);
+            else
+                Take(owner, source);
+        }
+    }
+
+    private static void EndPlayerTrade(Avatar a, bool notify = true)
+    {
+        a.OfferPlayer = null;
+        a.OfferInitiator = false;
+        a.OfferOtherAccepted = false;
+        a.OfferItems = [];
+        if (notify)
+            a.Session.Post(GameReplies.OfferCanceled());
     }
 
     /// <summary>CancelOfferTimer: Händler zieht sein Gegenangebot zurück.</summary>

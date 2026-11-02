@@ -35,6 +35,7 @@ public sealed class TradeTests : IAsyncLifetime
     {
         var accounts = AccountStore.Open(_accountsPath);
         accounts.AddOrUpdate("Anna", "pw");
+        accounts.AddOrUpdate("Bert", "pw");
         _server = new GameServer(new ServerOptions
         {
             Port = 0,
@@ -231,12 +232,48 @@ public sealed class TradeTests : IAsyncLifetime
     private static uint Npc(ClientSession s, List<ClientEvent> events, string name) =>
         events.OfType<ClientEvent.ObjectAdded>().First(e => s.Resolve(e.Object.NameRsc).StartsWith(name)).Object.Id;
 
-    private async Task<(ClientSession, List<ClientEvent>)> EnterAsync()
+    [Fact]
+    public async Task PlayerTrade_OfferCounterofferAccept()
+    {
+        var (anna, aEvents) = await EnterAsync();
+        var (bert, bEvents) = await EnterAsync("Bert");
+        await WaitForAsync(anna, aEvents, _ => Money(anna) == 3500);
+        await WaitForAsync(bert, bEvents, _ => Money(bert) == 3500);
+        var annaMoney = anna.Inventory.Single(o => o.Icon == "coin.bgf");
+        var bertMace = bert.Inventory.Single(o => bert.Resolve(o.NameRsc) == "Streitkolben");
+
+        await anna.OfferAsync(bert.PlayerId, [new ObjectRef(annaMoney.Id, 100)]);
+        await WaitForAsync(bert, bEvents, e => e is ClientEvent.OfferReceived o && o.Items.Single().Amount == 100);
+        await bert.CounterOfferAsync([new ObjectRef(bertMace.Id, null)]);
+        await WaitForAsync(anna, aEvents, e => e is ClientEvent.CounterOffer c && c.Items.Count == 1);
+        await anna.AcceptOfferAsync();
+
+        await WaitForAsync(anna, aEvents, _ => Money(anna) == 3400 && anna.Inventory.Count(o => anna.Resolve(o.NameRsc) == "Streitkolben") == 2);
+        await WaitForAsync(bert, bEvents, _ => Money(bert) == 3600 && bert.Inventory.All(o => bert.Resolve(o.NameRsc) != "Streitkolben"));
+        await WaitForAsync(bert, bEvents, e => e is ClientEvent.OfferCanceled);
+    }
+
+    [Fact]
+    public async Task PlayerTrade_Refused_CancelsForBoth()
+    {
+        var (anna, aEvents) = await EnterAsync();
+        var (bert, bEvents) = await EnterAsync("Bert");
+        await WaitForAsync(anna, aEvents, _ => Money(anna) == 3500);
+        var mace = anna.Inventory.Single(o => anna.Resolve(o.NameRsc) == "Streitkolben");
+        await anna.OfferAsync(bert.PlayerId, [new ObjectRef(mace.Id, null)]);
+        await WaitForAsync(bert, bEvents, e => e is ClientEvent.OfferReceived);
+        await bert.CancelOfferAsync();
+        await WaitForAsync(anna, aEvents, e => e is ClientEvent.OfferCanceled);
+        await WaitForAsync(anna, aEvents, e => e is ClientEvent.Chat { Text: "Bert hat den Handel abgebrochen." });
+        Assert.Contains(anna.Inventory, o => o.Id == mace.Id);
+    }
+
+    private async Task<(ClientSession, List<ClientEvent>)> EnterAsync(string name = "Anna")
     {
         var anna = new ClientSession();
         var events = new List<ClientEvent>();
         anna.Event += events.Add;
-        await anna.ConnectAsync("127.0.0.1", _server.Port, "Anna", "pw");
+        await anna.ConnectAsync("127.0.0.1", _server.Port, name, "pw");
         await WaitForAsync(anna, events, e => e is ClientEvent.EnteredRoom);
         await WaitForAsync(anna, events, e => e is ClientEvent.ObjectAdded a && a.Object.Id == anna.PlayerId);
         await WaitForAsync(anna, events, e => e is ClientEvent.InventoryChanged);

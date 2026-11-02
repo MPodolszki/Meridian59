@@ -25,6 +25,12 @@ public sealed class Avatar(uint id, string name, Session session)
     public Npc? OfferTo { get; set; }
     public List<(Item Source, Item Offer)> OfferItems { get; set; } = [];
     public Item? OfferPayment { get; set; }
+    /// <summary>Handel mit einem anderen Spieler: Partner, ob man selbst angeboten hat (nur der Anbietende
+    /// nimmt an) und ob der Partner ein Gegenangebot gemacht hat (pbOffer_OtherAccepted).</summary>
+    public Avatar? OfferPlayer { get; set; }
+    public bool OfferInitiator { get; set; }
+    public bool OfferOtherAccepted { get; set; }
+    public bool Trading => OfferTo is not null || OfferPlayer is not null;
 }
 
 /// <summary>Laufzeitzustand eines Raums.</summary>
