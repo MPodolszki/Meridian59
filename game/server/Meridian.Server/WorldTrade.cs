@@ -374,7 +374,7 @@ public sealed partial class World
 
         if (kind.Treasure is { } table && _treasure.TryGetValue(table, out var entries) && entries.Count > 0)
         {
-            int count = Math.Clamp(1 + kind.Level / 55 + _random.Next(0, kind.Difficulty / 3 + 1), 1, 6);
+            int count = kind.OneTreasure ? 1 : Math.Clamp(1 + kind.Level / 55 + _random.Next(0, kind.Difficulty / 3 + 1), 1, 6);
             for (int i = 0; i < count; i++)
                 if (GenerateTreasure(entries, kind.Level) is { } item)
                     drops.Add(item);

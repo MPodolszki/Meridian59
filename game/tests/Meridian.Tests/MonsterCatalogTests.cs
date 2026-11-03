@@ -32,6 +32,8 @@ public sealed class MonsterCatalogTests
         Assert.Equal(180, rat.SpeedFinePerSecond);
         Assert.True(rat.Aggressive);
         Assert.Equal("rat", rat.Treasure);
+        Assert.True(MonsterKind.ByKey("ghost").OneTreasure);   // MOB_ONE_TREASURE
+        Assert.False(rat.OneTreasure);
         Assert.Equal(90, MonsterKind.Skeleton.MaxHp);  // 75 × 120 / 100
         Assert.True(MonsterKind.Cow.Peaceful);
         Assert.True(MonsterKind.ByKey("ent").Immobile);

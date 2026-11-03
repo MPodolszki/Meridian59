@@ -4,7 +4,8 @@ server/data/items/items.json ("treasure"). Aufruf (im Ordner game):  python3 too
 
 Tabellenname = TID-Konstante ohne „TID_“ in Kleinbuchstaben (TID_MEDIUM_TOUGH → medium_tough, TID_NEWBIE_AREA →
 newbie). Gegenstände = KOD-Klasse in Kleinbuchstaben; Gegenstände, die es in items.json noch nicht gibt, werden
-weggelassen und am Ende aufgelistet (ihr Gewicht verfällt, wie eine Niete).
+weggelassen und am Ende aufgelistet; der Server normiert die übrigen wie TreasureType.Constructed auf 100
+(im Original liefert jeder Wurf einen Gegenstand, eine Niete gibt es nicht).
 """
 import collections
 import json

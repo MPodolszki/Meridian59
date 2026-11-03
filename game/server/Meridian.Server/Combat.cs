@@ -108,6 +108,8 @@ public sealed record MonsterKind(
     public int Wimpy { get; init; }
     /// <summary>AI_*-Verhalten ohne Präfix, z. B. "fight_aggressive", "fight_karma_aggressive", "nomove".</summary>
     public IReadOnlySet<string> Behavior { get; init; } = new HashSet<string>();
+    /// <summary>MOB_ONE_TREASURE (Geist): genau ein Beutestück statt 1 + Stufe/55 + Random(0, Schwierigkeit/3).</summary>
+    public bool OneTreasure { get; init; }
     /// <summary>Gift beim Treffer (poison.kod): Chance 1/n, Verlust lossRate/1000 LP alle 10 s, Dauer.</summary>
     public PoisonAttack? Poison { get; init; }
     /// <summary>Gräbt sich ein (Erdwürmer, groundwm.kod pbSurfaced): unsichtbar unter der Erde, taucht zum Angriff auf.</summary>
@@ -227,6 +229,7 @@ public sealed record MonsterKind(
                 Karma = e.GetProperty("karma").GetInt32(), Wimpy = e.GetProperty("wimpy").GetInt32(),
                 Treasure = Str("treasure"), AlwaysDrops = Str("alwaysDrops"), Gender = Str("gender") ?? "m",
                 Description = Str("description"), Behavior = behavior, Poison = poison,
+                OneTreasure = attributes.Contains("one_treasure"),
                 Casting = e.TryGetProperty("casting", out var ca) ? System.Text.Json.JsonSerializer.Deserialize<MonsterCasting>(ca.GetRawText(),
                     new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true }) : null,
                 Undead = e.TryGetProperty("undead", out var ud) && ud.GetBoolean(),
