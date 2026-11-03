@@ -55,6 +55,15 @@ public sealed record ItemKind(string Key, string Name, string Icon, int Value)
     /// <summary>Spruchgegenstand (spelitem.kod): Trank, Schriftrolle oder Zauberstab mit diesem Spruch (Schlüssel aus
     /// spells.json), Spruchstärke zwischen PowerMin und PowerMax, Ladungen (Stäbe) zwischen ChargesMin und ChargesMax.</summary>
     public string? Spell { get; init; }
+    /// <summary>Angriffsbonus beim Tragen (Panzerhandschuhe piAttack_bonus).</summary>
+    public int AttackBonus { get; init; }
+    /// <summary>Widerstandsring (resring.kod): Art und Wert, solange er getragen wird.</summary>
+    public string? ResistType { get; init; }
+    public int ResistValue { get; init; }
+    /// <summary>Berserkerring (besring.kod): Treffer − Random(15,25)×10, Schaden + Random(1,4); jeder Schlag kostet eine Ladung.</summary>
+    public bool Berserk { get; init; }
+    /// <summary>Ring der Unsichtbarkeit (ringinv.kod): unsichtbar, solange getragen; jede Minute eine Ladung.</summary>
+    public bool Invisible { get; init; }
     public int PowerMin { get; init; } = 30;
     public int PowerMax { get; init; } = 60;
     public int ChargesMin { get; init; } = 1;

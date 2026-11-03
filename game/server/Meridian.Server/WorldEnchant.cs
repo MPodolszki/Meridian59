@@ -116,7 +116,37 @@ public sealed partial class World
     }
 
     /// <summary>Unsichtbar (PFLAG_INVISIBLE): Monster bemerken den Spieler nicht von selbst.</summary>
-    private bool Invisible(Avatar a) => EnchantState(a, "invisibility") > 0;
+    private bool Invisible(Avatar a) => EnchantState(a, "invisibility") > 0 || a.State.Inventory.Any(i => i.Used && i.Kind.Invisible);
+
+    private static Item? BerserkRing(Avatar a) => a.State.Inventory.FirstOrDefault(i => i.Used && i.Kind.Berserk);
+
+    /// <summary>Ein Schlag mit dem Berserkerring kostet eine Ladung; leer zerbricht er.</summary>
+    private void WearRing(Avatar a, Item ring, string broken)
+    {
+        ring.Charges = (ring.Charges ?? 1) - 1;
+        if (ring.Charges > 0)
+            return;
+        UnuseLocked(a, ring, quiet: true);
+        Tell(a, broken);
+        TakeNumber(a, ring, 1);
+    }
+
+    /// <summary>Ring der Unsichtbarkeit: jede Minute im Gebrauch eine Ladung (RINGINVISIBILITY_CHARGE_RATE).</summary>
+    private void TickRings(Avatar a, DateTime now)
+    {
+        if (a.State.Inventory.FirstOrDefault(i => i.Used && i.Kind.Invisible) is not { } ring)
+        {
+            a.NextRingCharge = default;
+            return;
+        }
+        if (a.NextRingCharge == default)
+            a.NextRingCharge = now.AddMinutes(1);
+        else if (now >= a.NextRingCharge)
+        {
+            a.NextRingCharge = now.AddMinutes(1);
+            WearRing(a, ring, "Der Ring der Unsichtbarkeit zerfällt, du bist wieder sichtbar.");
+        }
+    }
 
     /// <summary>Kara'hols Fluch (karahol.kod): Treffer + 100 + 2 × Stärke.</summary>
     private int KaraholHit(Avatar a) => EnchantState(a, "karahol") is > 0 and var s ? 100 + 2 * s : 0;
@@ -141,6 +171,9 @@ public sealed partial class World
         foreach (var (sid, e) in a.State.Enchantments)
             if (_spells.BySid(sid) is { } s && s.Effect == effect && (attackType is null || s.AttackType == attackType))
                 sum += e.State;
+        // Widerstandsringe (resring.kod AddResistances), solange getragen.
+        if (effect == "resist" && attackType is not null)
+            sum += a.State.Inventory.Where(i => i.Used && i.Kind.ResistType == attackType).Sum(i => i.Kind.ResistValue);
         return sum;
     }
 

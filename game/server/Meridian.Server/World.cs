@@ -46,6 +46,7 @@ public sealed class Avatar(uint id, string name, Session session)
     public DateTime? HeldUntil { get; set; }
     /// <summary>Geblendet bis (EFFECT_BLIND) bzw. geschwächt bis (Schwächen eines Monsters: Treffer und Schaden × 3/4).</summary>
     public DateTime? BlindUntil { get; set; }
+    public DateTime NextRingCharge { get; set; }
     public DateTime? PalsyUntil { get; set; }
     /// <summary>Manafokus (focus.kod): Spruchstärke beim Wirken, solange die Trance hält.</summary>
     public int? ManaFocus { get; set; }
@@ -560,6 +561,7 @@ public sealed partial class World
                     TickRescue(avatar, now);
                     TickHeld(avatar, now);
                     TickAfflictions(avatar, now);
+                    TickRings(avatar, now);
                 }
             }
         }
@@ -852,6 +854,8 @@ public sealed partial class World
 
             // battler.kod TryAttack: Offensive gegen Defensive des Monsters.
             bool hit = CombatRules.HitChance(PlayerOffense(avatar), m.Kind.Defense) >= _random.Next(1, 101);
+            if (BerserkRing(avatar) is { } berserk)
+                WearRing(avatar, berserk, "Der Berserkerring zerspringt!");
             PracticeStrike(avatar, m, hit);
             if (!hit)
             {

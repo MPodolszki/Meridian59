@@ -39,6 +39,9 @@ public sealed partial class World
         off += ForcesOfLightBonus(a);       // forceslt.kod ModifyHitRoll
         off += KaraholHit(a);
         off -= WindsPenalty(a);
+        off += a.State.Inventory.Where(i => i.Used).Sum(i => i.Kind.AttackBonus);
+        if (BerserkRing(a) is not null)
+            off -= _random.Next(15, 26) * 10;    // besring.kod ModifyHitRoll
         if (a.PalsyUntil is not null)
             off = off * 3 / 4;
         return Math.Clamp(off, 1, 1000);
@@ -54,7 +57,7 @@ public sealed partial class World
         int block = shield is not null && SkillOf(a, Skill.Block) > 0
             ? Math.Clamp(SkillOf(a, Skill.Block) + shield.Kind.DefenseBonus, 1, 120) : 0;
         int def = parry * 2 + block + SkillOf(a, Skill.Dodge) * 3 + a.State.Attributes.Agility * 4 + BaseMaxHealth(a) * 3 / 2;
-        def += used.Where(i => i.Kind.Slot == "armor").Sum(i => i.Kind.DefenseBonus);
+        def += used.Where(i => i.Kind.Slot is "armor" or "helmet" or "gloves").Sum(i => i.Kind.DefenseBonus);
         def += DefenseBonus(a);
         return Math.Clamp(def, 1, 1000);
     }
@@ -84,6 +87,8 @@ public sealed partial class World
             if (ench is "holy" or "unholy")
                 types.Add(ench);
             d += BlessDamage(a) + KillingFieldsBonus(a) + KaraholDamage(a);
+            if (BerserkRing(a) is not null)
+                d += _random.Next(1, 5);         // besring.kod ModifyDamage
             if (a.PalsyUntil is not null)
                 d = d * 3 / 4;
             d = CombatRules.Resist(d, m.Kind.ResistanceTo(types));

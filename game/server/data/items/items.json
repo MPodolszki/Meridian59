@@ -1775,6 +1775,297 @@
       "powerMax": 60,
       "chargesMin": 4,
       "chargesMax": 9
+    },
+    {
+      "key": "platearmor",
+      "kodClass": "PlateArmor",
+      "name": "Plattenrüstung",
+      "icon": "plateamr.bgf",
+      "value": 2000,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Aus massiven Platten gehärteten Stahls; sie schützt vor allem außer den wildesten Angriffen. Sie trägt das Zeichen von Fehr'loi Qan.",
+      "slot": "armor",
+      "damageReduce": 6,
+      "defenseBonus": -200
+    },
+    {
+      "key": "scalearmor",
+      "kodClass": "ScaleArmor",
+      "name": "Schuppenrüstung",
+      "icon": "scaleamr.bgf",
+      "value": 1500,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Tausende sich überlappende Stahlschuppen. Stärker als ein Kettenhemd und leichter als Platte.",
+      "slot": "armor",
+      "damageReduce": 4,
+      "defenseBonus": -100
+    },
+    {
+      "key": "neruditearmor",
+      "kodClass": "NeruditeArmor",
+      "name": "Neruditrüstung",
+      "icon": "nerudamr.bgf",
+      "value": 3000,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "description": "Aus mächtigem Nerudit geschmiedet, leichter und haltbarer als gewöhnliche Platte – ein Meisterstück von Ixla cha'Totlak.",
+      "slot": "armor",
+      "damageReduce": 5,
+      "defenseBonus": -150
+    },
+    {
+      "key": "simplehelm",
+      "kodClass": "SimpleHelm",
+      "name": "Helm",
+      "icon": "helm.bgf",
+      "value": 100,
+      "types": [
+        "helmet"
+      ],
+      "article": "einen",
+      "description": "Stahl und Kettenglieder geben dem Träger dieses gepolsterten Helms mäßigen Schutz.",
+      "slot": "helmet",
+      "damageReduce": 1,
+      "defenseBonus": 20
+    },
+    {
+      "key": "circlet",
+      "kodClass": "Circlet",
+      "name": "Reif",
+      "icon": "invcirc.bgf",
+      "value": 350,
+      "types": [
+        "helmet"
+      ],
+      "article": "einen",
+      "description": "Dieser Reif aus Zinndraht ist heiß. Innen steht eingraviert: „Körperliche Kraft wird zu magischer Macht.“",
+      "slot": "helmet",
+      "damageReduce": 0,
+      "defenseBonus": 5
+    },
+    {
+      "key": "ivycirclet",
+      "kodClass": "IvyCirclet",
+      "name": "Efeukranz",
+      "icon": "ivycircl.bgf",
+      "value": 450,
+      "types": [
+        "helmet"
+      ],
+      "article": "einen",
+      "description": "Frische grüne Efeublätter um einen Holzreif gewunden – kühl und erfrischend auf der Stirn.",
+      "slot": "helmet",
+      "damageReduce": 0,
+      "defenseBonus": 10
+    },
+    {
+      "key": "gauntlet",
+      "kodClass": "Gauntlet",
+      "name": "Panzerhandschuhe",
+      "icon": "gauntlet.bgf",
+      "value": 400,
+      "types": [
+        "armor"
+      ],
+      "article": "",
+      "description": "Polierte Stahlhandschuhe schützen Hände und Unterarme und lassen dich sicherer und kräftiger zuschlagen.",
+      "slot": "gloves",
+      "damageReduce": 1,
+      "defenseBonus": 15,
+      "attackBonus": 20
+    },
+    {
+      "key": "orcshield",
+      "kodClass": "OrcShield",
+      "name": "Orkschild",
+      "icon": "osh.bgf",
+      "value": 1000,
+      "types": [
+        "shield"
+      ],
+      "article": "einen",
+      "description": "Der Schädel auf dem Schild soll Gegner einschüchtern; er ist eher Zierde als Schutz, hält aber einiges aus.",
+      "slot": "shield",
+      "damageReduce": 2,
+      "defenseBonus": 20
+    },
+    {
+      "key": "firering",
+      "kodClass": "FireRing",
+      "name": "Ring des Feuerschutzes",
+      "icon": "ring3.bgf",
+      "value": 280,
+      "types": [
+        "ring"
+      ],
+      "article": "einen",
+      "slot": "ring",
+      "resistType": "fire",
+      "resistValue": 50,
+      "description": "Ein schlichter Ring, der sich angenehm kühl anfühlt."
+    },
+    {
+      "key": "coldring",
+      "kodClass": "ColdRing",
+      "name": "Ring des Kälteschutzes",
+      "icon": "ring3.bgf",
+      "value": 280,
+      "types": [
+        "ring"
+      ],
+      "article": "einen",
+      "slot": "ring",
+      "resistType": "cold",
+      "resistValue": 50,
+      "description": "Ein schlichter Ring, der immer ein wenig warm ist."
+    },
+    {
+      "key": "shockring",
+      "kodClass": "ShockRing",
+      "name": "Ring des Blitzschutzes",
+      "icon": "ring3.bgf",
+      "value": 280,
+      "types": [
+        "ring"
+      ],
+      "article": "einen",
+      "slot": "ring",
+      "resistType": "shock",
+      "resistValue": 50,
+      "description": "Ein schlichter Ring aus mattem Metall."
+    },
+    {
+      "key": "acidring",
+      "kodClass": "AcidRing",
+      "name": "Ring des Säureschutzes",
+      "icon": "ring3.bgf",
+      "value": 280,
+      "types": [
+        "ring"
+      ],
+      "article": "einen",
+      "slot": "ring",
+      "resistType": "acid",
+      "resistValue": 50,
+      "description": "Ein schlichter Ring mit einem kalkigen Belag."
+    },
+    {
+      "key": "berserkerring",
+      "kodClass": "BerserkerRing",
+      "name": "Berserkerring",
+      "icon": "ring2.bgf",
+      "value": 200,
+      "types": [
+        "ring"
+      ],
+      "article": "einen",
+      "slot": "ring",
+      "berserk": true,
+      "chargesMin": 80,
+      "chargesMax": 120,
+      "description": "Dieser Ring glüht warm und rot. Eine Inschrift lautet: „Lüsterne Hiebe sind stark, doch nicht immer treffsicher.“"
+    },
+    {
+      "key": "ringinvisibility",
+      "kodClass": "RingInvisibility",
+      "name": "Ring der Unsichtbarkeit",
+      "icon": "ring1.bgf",
+      "value": 470,
+      "types": [
+        "ring"
+      ],
+      "article": "einen",
+      "slot": "ring",
+      "invisible": true,
+      "chargesMin": 4,
+      "chargesMax": 7,
+      "description": "Dieser Ring trägt seltsame Zeichen und schimmert so, dass man ihn kaum klar erkennt."
+    },
+    {
+      "key": "uncutseraphym",
+      "kodClass": "UncutSeraphym",
+      "name": "ungeschliffener Seraphym",
+      "icon": "serapunc.bgf",
+      "value": 30,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "ungeschliffene Seraphyme",
+      "description": "Ein hässlicher Steinklumpen, den die Zauberer der Orks sehr schätzen. Eine Ader darin pulsiert wie ein Herzschlag."
+    },
+    {
+      "key": "yrxlsap",
+      "kodClass": "Yrxlsap",
+      "name": "Yrx'l-Saft",
+      "icon": "yrxlsap.bgf",
+      "value": 100,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Yrx'l-Saft",
+      "description": "Der Lebenssaft des letzten bekannten Yrx'l-Baums, begehrt für die mächtigsten Zauber."
+    },
+    {
+      "key": "webmoss",
+      "kodClass": "WebMoss",
+      "name": "Netzmoos",
+      "icon": "webmoss.bgf",
+      "value": 70,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Netzmoos",
+      "description": "Eine fleischfressende Pflanze, die Insekten wie ein Spinnennetz fängt."
+    },
+    {
+      "key": "rainbowfern",
+      "kodClass": "RainbowFern",
+      "name": "Regenbogenfarn",
+      "icon": "fern.bgf",
+      "value": 20,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Regenbogenfarne",
+      "description": "Einst im Koniman-Dschungel so häufig wie Unkraut – bis man seine Kraft als Reagenz entdeckte."
+    },
+    {
+      "key": "kriipaclaw",
+      "kodClass": "KriipaClaw",
+      "name": "Kriipa-Klaue",
+      "icon": "kriclaw.bgf",
+      "value": 60,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Kriipa-Klauen",
+      "description": "Die Waffe der gefährlichen Kriipa; vollkommene Klauen sind selten."
+    },
+    {
+      "key": "shamanblood",
+      "kodClass": "ShamanBlood",
+      "name": "Schamanenblut",
+      "icon": "avblood.bgf",
+      "value": 70,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Fläschchen Schamanenblut",
+      "description": "Die Magie der Avar-Schamanen fließt in ihren Adern – und lässt sich ausleihen."
     }
   ],
   "treasure": {
@@ -2022,6 +2313,10 @@
         "weight": 11
       },
       {
+        "item": "scalearmor",
+        "weight": 8
+      },
+      {
         "item": "longsword",
         "weight": 6
       },
@@ -2038,6 +2333,10 @@
         "weight": 4
       },
       {
+        "item": "berserkerring",
+        "weight": 5
+      },
+      {
         "item": "mysticsword",
         "weight": 4
       }
@@ -2052,11 +2351,35 @@
         "weight": 3
       },
       {
+        "item": "neruditearmor",
+        "weight": 1
+      },
+      {
         "item": "killingfieldscroll",
         "weight": 1
       }
     ],
     "avar_shaman": [
+      {
+        "item": "shamanblood",
+        "weight": 40
+      },
+      {
+        "item": "yrxlsap",
+        "weight": 13
+      },
+      {
+        "item": "webmoss",
+        "weight": 10
+      },
+      {
+        "item": "rainbowfern",
+        "weight": 9
+      },
+      {
+        "item": "kriipaclaw",
+        "weight": 6
+      },
       {
         "item": "curepoisonpotion",
         "weight": 4
@@ -2066,13 +2389,25 @@
         "weight": 4
       },
       {
+        "item": "uncutseraphym",
+        "weight": 3
+      },
+      {
         "item": "polishedseraphym",
         "weight": 3
       }
     ],
     "avar": [
       {
+        "item": "rainbowfern",
+        "weight": 30
+      },
+      {
         "item": "bread",
+        "weight": 15
+      },
+      {
+        "item": "kriipaclaw",
         "weight": 15
       },
       {
@@ -2080,8 +2415,28 @@
         "weight": 14
       },
       {
+        "item": "webmoss",
+        "weight": 8
+      },
+      {
+        "item": "uncutseraphym",
+        "weight": 8
+      },
+      {
         "item": "turkeyleg",
         "weight": 5
+      },
+      {
+        "item": "yrxlsap",
+        "weight": 1
+      },
+      {
+        "item": "neruditearmor",
+        "weight": 1
+      },
+      {
+        "item": "ivycirclet",
+        "weight": 1
       }
     ],
     "cave_orc": [
@@ -2095,6 +2450,10 @@
       },
       {
         "item": "goldshield",
+        "weight": 5
+      },
+      {
+        "item": "simplehelm",
         "weight": 5
       },
       {
@@ -2114,7 +2473,27 @@
         "weight": 3
       },
       {
+        "item": "firering",
+        "weight": 3
+      },
+      {
+        "item": "coldring",
+        "weight": 3
+      },
+      {
+        "item": "shockring",
+        "weight": 3
+      },
+      {
+        "item": "acidring",
+        "weight": 2
+      },
+      {
         "item": "money",
+        "weight": 2
+      },
+      {
+        "item": "uncutseraphym",
         "weight": 2
       },
       {
@@ -2152,6 +2531,10 @@
         "weight": 15
       },
       {
+        "item": "shamanblood",
+        "weight": 5
+      },
+      {
         "item": "inkycap",
         "weight": 5
       }
@@ -2160,6 +2543,22 @@
       {
         "item": "nightvisionpotion",
         "weight": 9
+      },
+      {
+        "item": "firering",
+        "weight": 3
+      },
+      {
+        "item": "coldring",
+        "weight": 3
+      },
+      {
+        "item": "shockring",
+        "weight": 3
+      },
+      {
+        "item": "acidring",
+        "weight": 3
       },
       {
         "item": "strengthpotion",
@@ -2204,12 +2603,28 @@
         "weight": 30
       },
       {
+        "item": "webmoss",
+        "weight": 20
+      },
+      {
         "item": "meatpie",
         "weight": 20
       },
       {
+        "item": "rainbowfern",
+        "weight": 15
+      },
+      {
         "item": "money",
         "weight": 7
+      },
+      {
+        "item": "kriipaclaw",
+        "weight": 7
+      },
+      {
+        "item": "yrxlsap",
+        "weight": 1
       }
     ],
     "ent": [
@@ -2312,6 +2727,18 @@
         "weight": 10
       },
       {
+        "item": "ringinvisibility",
+        "weight": 10
+      },
+      {
+        "item": "gauntlet",
+        "weight": 10
+      },
+      {
+        "item": "platearmor",
+        "weight": 10
+      },
+      {
         "item": "knightshield",
         "weight": 10
       },
@@ -2346,6 +2773,10 @@
         "weight": 8
       },
       {
+        "item": "gauntlet",
+        "weight": 7
+      },
+      {
         "item": "longsword",
         "weight": 7
       },
@@ -2364,6 +2795,26 @@
       {
         "item": "bluemushroom",
         "weight": 5
+      },
+      {
+        "item": "acidring",
+        "weight": 5
+      },
+      {
+        "item": "firering",
+        "weight": 4
+      },
+      {
+        "item": "coldring",
+        "weight": 4
+      },
+      {
+        "item": "shockring",
+        "weight": 4
+      },
+      {
+        "item": "scalearmor",
+        "weight": 4
       },
       {
         "item": "darkangelfeather",
@@ -2394,15 +2845,31 @@
       {
         "item": "purplemushroom",
         "weight": 5
+      },
+      {
+        "item": "firering",
+        "weight": 5
       }
     ],
     "lich": [
+      {
+        "item": "ivycirclet",
+        "weight": 20
+      },
       {
         "item": "scimitar",
         "weight": 15
       },
       {
+        "item": "platearmor",
+        "weight": 10
+      },
+      {
         "item": "longsword",
+        "weight": 10
+      },
+      {
+        "item": "orcshield",
         "weight": 10
       },
       {
@@ -2411,6 +2878,14 @@
       },
       {
         "item": "mysticsword",
+        "weight": 5
+      },
+      {
+        "item": "ringinvisibility",
+        "weight": 5
+      },
+      {
+        "item": "firering",
         "weight": 5
       },
       {
@@ -2474,8 +2949,28 @@
         "weight": 20
       },
       {
+        "item": "platearmor",
+        "weight": 10
+      },
+      {
+        "item": "ivycirclet",
+        "weight": 10
+      },
+      {
+        "item": "orcshield",
+        "weight": 10
+      },
+      {
         "item": "knightshield",
         "weight": 8
+      },
+      {
+        "item": "ringinvisibility",
+        "weight": 5
+      },
+      {
+        "item": "acidring",
+        "weight": 5
       },
       {
         "item": "mysticsword",
@@ -2556,6 +3051,10 @@
       {
         "item": "dragonflyeye",
         "weight": 30
+      },
+      {
+        "item": "uncutseraphym",
+        "weight": 30
       }
     ],
     "medium": [
@@ -2606,6 +3105,22 @@
         "weight": 10
       },
       {
+        "item": "firering",
+        "weight": 5
+      },
+      {
+        "item": "coldring",
+        "weight": 5
+      },
+      {
+        "item": "shockring",
+        "weight": 5
+      },
+      {
+        "item": "berserkerring",
+        "weight": 5
+      },
+      {
         "item": "resistshockpotion",
         "weight": 5
       },
@@ -2624,7 +3139,23 @@
         "weight": 12
       },
       {
+        "item": "neruditearmor",
+        "weight": 9
+      },
+      {
+        "item": "uncutseraphym",
+        "weight": 3
+      },
+      {
         "item": "flask",
+        "weight": 2
+      },
+      {
+        "item": "orcshield",
+        "weight": 2
+      },
+      {
+        "item": "platearmor",
         "weight": 2
       },
       {
@@ -2680,6 +3211,10 @@
         "weight": 35
       },
       {
+        "item": "uncutseraphym",
+        "weight": 10
+      },
+      {
         "item": "dragonflyeye",
         "weight": 6
       },
@@ -2694,6 +3229,10 @@
       {
         "item": "torch",
         "weight": 5
+      },
+      {
+        "item": "gauntlet",
+        "weight": 4
       },
       {
         "item": "flask",
@@ -2766,6 +3305,18 @@
       {
         "item": "diamond",
         "weight": 8
+      },
+      {
+        "item": "scalearmor",
+        "weight": 1
+      },
+      {
+        "item": "gauntlet",
+        "weight": 1
+      },
+      {
+        "item": "simplehelm",
+        "weight": 1
       }
     ],
     "skeleton4": [
@@ -2810,11 +3361,23 @@
         "weight": 1
       },
       {
+        "item": "circlet",
+        "weight": 1
+      },
+      {
         "item": "enfeeblewand",
         "weight": 1
       }
     ],
     "spider_queen": [
+      {
+        "item": "berserkerring",
+        "weight": 11
+      },
+      {
+        "item": "firering",
+        "weight": 10
+      },
       {
         "item": "emerald",
         "weight": 10
@@ -2879,6 +3442,10 @@
       },
       {
         "item": "mysticsword",
+        "weight": 1
+      },
+      {
+        "item": "platearmor",
         "weight": 1
       },
       {
@@ -3014,6 +3581,10 @@
         "weight": 4
       },
       {
+        "item": "simplehelm",
+        "weight": 4
+      },
+      {
         "item": "longsword",
         "weight": 4
       },
@@ -3026,8 +3597,28 @@
         "weight": 4
       },
       {
+        "item": "gauntlet",
+        "weight": 3
+      },
+      {
         "item": "purplemushroom",
         "weight": 3
+      },
+      {
+        "item": "scalearmor",
+        "weight": 2
+      },
+      {
+        "item": "uncutseraphym",
+        "weight": 2
+      },
+      {
+        "item": "berserkerring",
+        "weight": 1
+      },
+      {
+        "item": "platearmor",
+        "weight": 1
       }
     ]
   }

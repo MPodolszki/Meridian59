@@ -92,3 +92,22 @@ angreift (sonst das nächste in 10 Feldern) bzw. bei hilfreichen Sprüchen auf e
 viHits_init_min/max Ladungen (gespeichert, Schema v6) und zerfallen leer.
 Abweichungen: Tränke sind immer beschriftet (im Original oft unbekannt) und verderben nicht; Zauberstäbe kann man
 noch nicht auf ein bestimmtes Ziel richten.
+
+## Rüstungen, Helme, Handschuhe, Ringe, Reagenzien (2026-11-03)
+Neu aus `kod/object/item/passitem/defmod`, `attmod`, `ring`, `numbitem` (Werte viDefense_base, viDamage_base,
+viValue_average):
+
+| Gegenstand | Platz | Wirkung |
+|---|---|---|
+| Plattenrüstung / Schuppenrüstung / Neruditrüstung | Rüstung | Schaden −6/−4/−5, Abwehr −200/−100/−150 |
+| Helm / Reif / Efeukranz | Kopf | Abwehr +20 (Schaden −1) / +5 / +10 |
+| Panzerhandschuhe | Hände | Abwehr +15, Treffer +20, Schaden −1 |
+| Orkschild | Schild | Abwehr +20, Schaden −2 |
+| Ringe des Feuer-/Kälte-/Blitz-/Säureschutzes | Ring | Widerstand 50 gegen die Art |
+| Berserkerring | Ring | Treffer − Random(15,25)×10, Schaden + Random(1,4); 80–120 Schläge, dann zerspringt er |
+| Ring der Unsichtbarkeit | Ring | unsichtbar für Monster, solange getragen; 4–7 Minuten |
+| ungeschliffener Seraphym, Yrx'l-Saft, Netzmoos, Regenbogenfarn, Kriipa-Klaue, Schamanenblut | Reagenz | (für spätere Sprüche) |
+
+Zwei Ringe gleichzeitig (linke und rechte Hand). Abweichungen: Haltbarkeit (piHits) von Rüstungen, Helmen und
+Handschuhen fehlt; Ringe sind sofort erkennbar (im Original zeigen Widerstandsringe ihre Art erst später); Hitze
+in Metallrüstungen (GetHeatDamage) fehlt; viSpell_modifier der Rüstungen auf die Zauberchance fehlt.

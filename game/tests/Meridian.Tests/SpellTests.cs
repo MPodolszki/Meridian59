@@ -166,6 +166,25 @@ public sealed class SpellTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task Helmet_AddsDefense_AtMostTwoRingsAreWorn()
+    {
+        var (c, events, me) = await EnterAsync(2);
+        GiveReagents(me, ("simplehelm", 1), ("firering", 1), ("coldring", 1), ("shockring", 1));
+        int before = _server.World.PlayerDefense(me);
+        await c.UseAsync(me.State.Inventory.First(i => i.Kind.Key == "simplehelm").Id);
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.StartsWith("Du setzt"));
+        Assert.Equal(before + 20, _server.World.PlayerDefense(me));
+        foreach (string ring in new[] { "firering", "coldring", "shockring" })
+        {
+            int n = events.Count;
+            await c.UseAsync(me.State.Inventory.First(i => i.Kind.Key == ring).Id);
+            await WaitForAsync(c, events, _ => events.Skip(n).OfType<ClientEvent.Chat>().Any(ch => ch.Text.StartsWith("Du steckst")));
+        }
+        Assert.Equal(2, me.State.Inventory.Count(i => i.Used && i.Kind.Slot == "ring"));
+        Assert.DoesNotContain(me.State.Inventory, i => i.Used && i.Kind.Key == "firering");
+    }
+
+    [Fact]
     public void MonsterSpells_HaveTheOriginalValues()
     {
         var book = SpellBook.Load(Data("spells", "spells.json"));

@@ -199,8 +199,12 @@ public sealed partial class World
             }
             if (item.Used)
                 return;
-            foreach (var other in avatar.State.Inventory.Where(i => i.Used && i.Kind.Slot == slot).ToList())
+            // Zwei Ringe (linke und rechte Hand), sonst ein Gegenstand je Platz.
+            var worn = avatar.State.Inventory.Where(i => i.Used && i.Kind.Slot == slot).ToList();
+            foreach (var other in slot == "ring" ? worn.Take(Math.Max(0, worn.Count - 1)) : worn)
                 UnuseLocked(avatar, other, quiet: false);
+            if (item.Kind.ChargesMax > 1)
+                item.Charges ??= _random.Next(item.Kind.ChargesMin, item.Kind.ChargesMax + 1);
             item.Used = true;
             avatar.Session.Post(GameReplies.Use(item.Id));
             SendWindowOverlay(avatar, item, visible: true);
@@ -209,7 +213,9 @@ public sealed partial class World
             Tell(avatar, slot switch
             {
                 "weapon" => $"Du nimmst {item.Describe()} in die Hand.",
-                "armor" or "shirt" or "legs" => $"Du ziehst {item.Describe()} an.",
+                "armor" or "shirt" or "legs" or "gloves" => $"Du ziehst {item.Describe()} an.",
+                "helmet" => $"Du setzt {item.Describe()} auf.",
+                "ring" => $"Du steckst {item.Describe()} an.",
                 _ => item.Kind.Light ? $"Du zündest {item.Describe()} an." : $"Du nimmst {item.Describe()} in die Hand.",
             });
         }
