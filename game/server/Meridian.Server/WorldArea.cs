@@ -8,6 +8,27 @@ public sealed partial class World
 {
     /// <summary>newbport.kod TeleportSomething: erstes Betreten warnt, nach Verlassen und erneutem Betreten geht es
     /// aufs Festland mit voller Ausdauer und der Ausrüstung aus AddRealWorldObjects.</summary>
+    /// <summary>Zonen-Übergang (SomethingMoved → UtilGoNearSquare): beim Betreten eines Feldes der Zone in den
+    /// Zielraum, Blickrichtung wie angegeben.</summary>
+    private MoveResult? RegionExit(Avatar a, ushort row, ushort col)
+    {
+        var exits = a.Room.Definition.RegionExits;
+        if (exits.Count == 0)
+            return null;
+        int r = row / 64, c = col / 64;
+        if (r == a.Row / 64 && c == a.Col / 64)
+            return null;
+        var exit = exits.FirstOrDefault(e => e.Contains(r, c));
+        if (exit is null)
+            return null;
+        if (!_rooms.TryGetValue(exit.To, out var target))
+            return new MoveResult.Blocked("Dieser Weg ist noch nicht begehbar.");
+        Remove(a);
+        a.Angle = RotateAngle(a.Angle, exit.Angle);
+        Place(a, target, Room.Fine(exit.ToRow), Room.Fine(exit.ToCol));
+        return new MoveResult.ChangedRoom(target);
+    }
+
     private MoveResult? Portal(Avatar a, ushort row, ushort col)
     {
         if (a.Room.Definition.Portal is not { } portal)

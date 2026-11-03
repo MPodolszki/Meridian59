@@ -1,0 +1,7972 @@
+{
+  "source": "kod/object/active/holder/room/monsroom (Wildnis)",
+  "startRoom": 3,
+  "rooms": [
+    {
+      "id": 3,
+      "constant": "RID_FIELD1",
+      "kodClass": "Field1",
+      "name": "The Fields",
+      "roo": "field1.roo",
+      "music": "pk_fm.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "fields",
+      "teleport": {
+        "row": 42,
+        "col": 15
+      },
+      "exits": [],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 79,
+      "cols": 79
+    },
+    {
+      "id": 4,
+      "constant": "RID_FOREST4",
+      "kodClass": "Forest4",
+      "name": "The Deep Dark Woods of Tos",
+      "roo": "forest4.roo",
+      "music": "forest.mid",
+      "baseLight": 84,
+      "outsideFactor": 6,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 24,
+        "col": 24
+      },
+      "exits": [],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [
+        {
+          "rects": [
+            [8, 46, 8, 47]
+          ],
+          "to": 26,
+          "toConstant": "RID_FOREST2",
+          "toRow": 54,
+          "toCol": 46,
+          "angle": "EAST"
+        },
+        {
+          "rects": [
+            [57, 49, 57, 49]
+          ],
+          "to": 28,
+          "toConstant": "RID_FOREST3",
+          "toRow": 40,
+          "toCol": 21,
+          "angle": "EAST"
+        },
+        {
+          "rects": [
+            [48, 3, 48, 5]
+          ],
+          "to": 6,
+          "toConstant": "RID_FOREST5",
+          "toRow": 7,
+          "toCol": 56,
+          "angle": "WEST"
+        }
+      ],
+      "monsters": [
+        {
+          "kind": "ant",
+          "weight": 30
+        },
+        {
+          "kind": "spider",
+          "weight": 70
+        }
+      ],
+      "generators": [
+        {
+          "row": 29,
+          "col": 13
+        },
+        {
+          "row": 8,
+          "col": 15
+        },
+        {
+          "row": 20,
+          "col": 23
+        },
+        {
+          "row": 26,
+          "col": 22
+        },
+        {
+          "row": 17,
+          "col": 45
+        },
+        {
+          "row": 46,
+          "col": 33
+        },
+        {
+          "row": 51,
+          "col": 38
+        },
+        {
+          "row": 53,
+          "col": 48
+        },
+        {
+          "row": 42,
+          "col": 16
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 20000,
+      "genPercent": 100,
+      "objects": [
+        {
+          "type": "TREE_PINE",
+          "row": 43,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 44,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 46,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 41,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 45,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 40,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 31,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 35,
+          "col": 29,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 46,
+          "col": 31,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 47,
+          "col": 38,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 52,
+          "col": 37,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 20,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 22,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 25,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 28,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 11,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 7,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 22,
+          "col": 34,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 25,
+          "col": 38,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 26,
+          "col": 40,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 31,
+          "col": 40,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 19,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 15,
+          "col": 46,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 9,
+          "col": 47,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 64,
+      "cols": 53
+    },
+    {
+      "id": 5,
+      "constant": "RID_CAVE3",
+      "kodClass": "Cave3",
+      "name": "The Underground Lake",
+      "roo": "cave3.roo",
+      "music": "ksong.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "outdoors": true,
+      "terrain": "lake",
+      "teleport": {
+        "row": 74,
+        "col": 34
+      },
+      "exits": [
+        {
+          "row": 75,
+          "col": 34,
+          "to": 27,
+          "toConstant": "RID_CAVE2",
+          "toRow": 19,
+          "toCol": 30,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 75,
+      "cols": 78
+    },
+    {
+      "id": 6,
+      "constant": "RID_FOREST5",
+      "kodClass": "Forest5",
+      "name": "The Deep Dark Woods of Marion",
+      "roo": "forest5.roo",
+      "music": "walk2.mid",
+      "baseLight": 84,
+      "outsideFactor": 6,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 31,
+        "col": 21
+      },
+      "exits": [],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [
+        {
+          "rects": [
+            [7, 58, 7, 58]
+          ],
+          "to": 4,
+          "toConstant": "RID_FOREST4",
+          "toRow": 47,
+          "toCol": 4
+        },
+        {
+          "rects": [
+            [36, 5, 36, 6]
+          ],
+          "to": 200,
+          "toConstant": "RID_MARION",
+          "toRow": 30,
+          "toCol": 65
+        },
+        {
+          "rects": [
+            [17, 12, 18, 12]
+          ],
+          "to": 48,
+          "toConstant": "RID_TEMPLE",
+          "toRow": 9,
+          "toCol": 31
+        }
+      ],
+      "monsters": [
+        {
+          "kind": "ant",
+          "weight": 60
+        },
+        {
+          "kind": "spider",
+          "weight": 40
+        }
+      ],
+      "generators": [
+        {
+          "row": 42,
+          "col": 26
+        },
+        {
+          "row": 31,
+          "col": 17
+        },
+        {
+          "row": 29,
+          "col": 23
+        },
+        {
+          "row": 19,
+          "col": 17
+        },
+        {
+          "row": 20,
+          "col": 25
+        },
+        {
+          "row": 25,
+          "col": 33
+        },
+        {
+          "row": 39,
+          "col": 41
+        },
+        {
+          "row": 16,
+          "col": 35
+        },
+        {
+          "row": 22,
+          "col": 45
+        },
+        {
+          "row": 17,
+          "col": 48
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 20000,
+      "genPercent": 100,
+      "objects": [
+        {
+          "type": "TREE_PINE",
+          "row": 33,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 39,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 40,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 41,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 33,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 28,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 33,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 18,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 23,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 27,
+          "col": 31,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 15,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 39,
+          "col": 39,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 41,
+          "col": 42,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 48,
+          "col": 41,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 26,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 15,
+          "col": 46,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 17,
+          "col": 50,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 34,
+          "col": 39,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 28,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 38,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 24,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 7,
+          "col": 51,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 6,
+          "col": 53,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 56,
+      "cols": 63
+    },
+    {
+      "id": 24,
+      "constant": "RID_FOREST1",
+      "kodClass": "Forest1",
+      "name": "The Forests of Meridian",
+      "roo": "forest1.roo",
+      "music": "walk1.mid",
+      "baseLight": 124,
+      "outsideFactor": 5,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 10,
+        "col": 10
+      },
+      "exits": [],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [
+        {
+          "type": "TREE_PINE",
+          "row": 12,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 7,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 9,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 11,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 15,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 14,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 21,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 3,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 5,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 17,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 22,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 26,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 36,
+      "cols": 39
+    },
+    {
+      "id": 26,
+      "constant": "RID_FOREST2",
+      "kodClass": "Forest2",
+      "name": "The Forests of Meridian",
+      "roo": "forest2.roo",
+      "music": "walk2.mid",
+      "baseLight": 124,
+      "outsideFactor": 5,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 26,
+        "col": 33
+      },
+      "exits": [],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [
+        {
+          "rects": [
+            [1, 1, 18, 6]
+          ],
+          "to": 27,
+          "toConstant": "RID_CAVE2",
+          "toRow": 55,
+          "toCol": 35,
+          "angle": "NORTH"
+        },
+        {
+          "rects": [
+            [1, 41, 15, 67]
+          ],
+          "to": 24,
+          "toConstant": "RID_FOREST1",
+          "toRow": 25,
+          "toCol": 2,
+          "angle": "EAST"
+        },
+        {
+          "rects": [
+            [34, 58, 55, 67]
+          ],
+          "to": 28,
+          "toConstant": "RID_FOREST3",
+          "toRow": 1,
+          "toCol": 7,
+          "angle": "SOUTH"
+        },
+        {
+          "rects": [
+            [47, 14, 47, 14]
+          ],
+          "to": 35,
+          "toConstant": "RID_NEST1",
+          "toRow": 4,
+          "toCol": 17,
+          "angle": "SOUTH"
+        },
+        {
+          "rects": [
+            [55, 46, 55, 47]
+          ],
+          "to": 4,
+          "toConstant": "RID_FOREST4",
+          "toRow": 10,
+          "toCol": 47,
+          "angle": "WEST"
+        }
+      ],
+      "monsters": [
+        {
+          "kind": "ant",
+          "weight": 60
+        },
+        {
+          "kind": "spider",
+          "weight": 40
+        }
+      ],
+      "generators": [
+        {
+          "row": 22,
+          "col": 13
+        },
+        {
+          "row": 23,
+          "col": 29
+        },
+        {
+          "row": 43,
+          "col": 45
+        },
+        {
+          "row": 52,
+          "col": 47
+        },
+        {
+          "row": 41,
+          "col": 30
+        },
+        {
+          "row": 20,
+          "col": 32
+        },
+        {
+          "row": 28,
+          "col": 51
+        },
+        {
+          "row": 26,
+          "col": 56
+        },
+        {
+          "row": 43,
+          "col": 19
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 120000,
+      "genPercent": 60,
+      "objects": [
+        {
+          "type": "TREE_PINE",
+          "row": 22,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 47,
+          "col": 14,
+          "fineRow": 48,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 19,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 24,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 20,
+          "col": 17,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 22,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 23,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 24,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 31,
+          "col": 32,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 25,
+          "col": 54,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 29,
+          "col": 50,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 28,
+          "col": 44,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 27,
+          "col": 41,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 36,
+          "col": 41,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 41,
+          "col": 47,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 47,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 53,
+          "col": 46,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 44,
+          "col": 42,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 40,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 42,
+          "col": 31,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 41,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 45,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 20,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 17,
+          "col": 40,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 7,
+          "col": 38,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 12,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 30,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 12,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 19,
+          "col": 4,
+          "fineRow": 10,
+          "fineCol": 26,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 19,
+          "col": 3,
+          "fineRow": 5,
+          "fineCol": 10,
+          "angle": 0
+        }
+      ],
+      "rows": 55,
+      "cols": 67
+    },
+    {
+      "id": 27,
+      "constant": "RID_CAVE2",
+      "kodClass": "Cave2",
+      "name": "A Deep, Dark, Spooky, Icky Cave",
+      "roo": "cave2.roo",
+      "music": "song.mid",
+      "baseLight": 0,
+      "outsideFactor": 2,
+      "outdoors": true,
+      "terrain": "cave",
+      "teleport": {
+        "row": 23,
+        "col": 16
+      },
+      "exits": [
+        {
+          "row": 18,
+          "col": 30,
+          "to": 5,
+          "toConstant": "RID_CAVE3",
+          "toRow": 74,
+          "toCol": 34,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "SOUTH",
+          "to": 587,
+          "toConstant": "RID_H7",
+          "toRow": 19,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 2500,
+          "toConstant": "RID_ORC_CAVE1",
+          "toRow": 43,
+          "toCol": 41,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "orc",
+          "weight": 50
+        },
+        {
+          "kind": "spider",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 51,
+          "col": 14
+        },
+        {
+          "row": 50,
+          "col": 34
+        },
+        {
+          "row": 18,
+          "col": 50
+        },
+        {
+          "row": 27,
+          "col": 47
+        },
+        {
+          "row": 23,
+          "col": 39
+        },
+        {
+          "row": 19,
+          "col": 30
+        },
+        {
+          "row": 25,
+          "col": 26
+        },
+        {
+          "row": 25,
+          "col": 33
+        },
+        {
+          "row": 32,
+          "col": 35
+        },
+        {
+          "row": 31,
+          "col": 31
+        },
+        {
+          "row": 35,
+          "col": 58
+        },
+        {
+          "row": 15,
+          "col": 43
+        },
+        {
+          "row": 16,
+          "col": 56
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 45000,
+      "genPercent": 80,
+      "objects": [],
+      "rows": 58,
+      "cols": 63
+    },
+    {
+      "id": 28,
+      "constant": "RID_FOREST3",
+      "kodClass": "Forest3",
+      "name": "The Forests of Meridian",
+      "roo": "forest3.roo",
+      "music": "forest.mid",
+      "baseLight": 124,
+      "outsideFactor": 5,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 18,
+        "col": 15
+      },
+      "exits": [
+        {
+          "row": 13,
+          "col": 39,
+          "to": 37,
+          "toConstant": "RID_HERMITHUT",
+          "toRow": 6,
+          "toCol": 6,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [
+        {
+          "rects": [
+            [39, 19, 40, 19]
+          ],
+          "to": 4,
+          "toConstant": "RID_FOREST4",
+          "toRow": 54,
+          "toCol": 49,
+          "angle": "NORTH"
+        }
+      ],
+      "monsters": [
+        {
+          "kind": "ant",
+          "weight": 40
+        },
+        {
+          "kind": "spider",
+          "weight": 60
+        }
+      ],
+      "generators": [
+        {
+          "row": 11,
+          "col": 7
+        },
+        {
+          "row": 14,
+          "col": 13
+        },
+        {
+          "row": 10,
+          "col": 23
+        },
+        {
+          "row": 5,
+          "col": 32
+        },
+        {
+          "row": 19,
+          "col": 20
+        },
+        {
+          "row": 25,
+          "col": 30
+        },
+        {
+          "row": 35,
+          "col": 35
+        },
+        {
+          "row": 37,
+          "col": 25
+        },
+        {
+          "row": 44,
+          "col": 23
+        },
+        {
+          "row": 20,
+          "col": 32
+        },
+        {
+          "row": 25,
+          "col": 8
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 60000,
+      "genPercent": 50,
+      "objects": [
+        {
+          "type": "TREE_PINE",
+          "row": 13,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 4,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 13,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 18,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 20,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 14,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 11,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 9,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 7,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 6,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 4,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 21,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 21,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 19,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 22,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 28,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 33,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 36,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 41,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 44,
+          "col": 29,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 21,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 17,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 26,
+          "col": 34,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 19,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 20,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 16,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 47,
+      "cols": 55
+    },
+    {
+      "id": 32,
+      "constant": "RID_CANYON1",
+      "kodClass": "Canyon1",
+      "name": "The Berdonne Canyons",
+      "roo": "canyons.roo",
+      "music": "walk1.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "mountain",
+      "teleport": {
+        "row": 19,
+        "col": 12
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 28,
+          "toConstant": "RID_FOREST3",
+          "toRow": 2,
+          "toCol": 39,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 47,
+          "toConstant": "RID_CANYON2",
+          "toRow": 3,
+          "toCol": 64,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "redant",
+          "weight": 50
+        },
+        {
+          "kind": "orc",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 51,
+          "col": 20
+        },
+        {
+          "row": 39,
+          "col": 28
+        },
+        {
+          "row": 34,
+          "col": 19
+        },
+        {
+          "row": 24,
+          "col": 12
+        },
+        {
+          "row": 26,
+          "col": 23
+        },
+        {
+          "row": 18,
+          "col": 13
+        },
+        {
+          "row": 7,
+          "col": 6
+        },
+        {
+          "row": 18,
+          "col": 31
+        },
+        {
+          "row": 17,
+          "col": 36
+        },
+        {
+          "row": 31,
+          "col": 35
+        },
+        {
+          "row": 30,
+          "col": 34
+        },
+        {
+          "row": 33,
+          "col": 26
+        },
+        {
+          "row": 26,
+          "col": 25
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 40000,
+      "genPercent": 70,
+      "objects": [],
+      "rows": 64,
+      "cols": 42
+    },
+    {
+      "id": 45,
+      "constant": "RID_BADLAND1",
+      "kodClass": "Badland1",
+      "name": "The Badlands",
+      "roo": "badland1.roo",
+      "music": "walk5.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "badlands",
+      "teleport": {
+        "row": 25,
+        "col": 17
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 49,
+          "toConstant": "RID_BADLAND2",
+          "toRow": 27,
+          "toCol": 20,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 615,
+          "toConstant": "RID_K5",
+          "toRow": 17,
+          "toCol": 1,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "ant",
+          "weight": 60
+        },
+        {
+          "kind": "groundworm",
+          "weight": 40
+        }
+      ],
+      "generators": [
+        {
+          "row": 22,
+          "col": 24
+        },
+        {
+          "row": 61,
+          "col": 20
+        },
+        {
+          "row": 47,
+          "col": 68
+        },
+        {
+          "row": 15,
+          "col": 37
+        },
+        {
+          "row": 12,
+          "col": 61
+        },
+        {
+          "row": 31,
+          "col": 52
+        },
+        {
+          "row": 64,
+          "col": 46
+        },
+        {
+          "row": 33,
+          "col": 34
+        },
+        {
+          "row": 35,
+          "col": 18
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 20000,
+      "genPercent": 100,
+      "objects": [],
+      "rows": 77,
+      "cols": 80
+    },
+    {
+      "id": 47,
+      "constant": "RID_CANYON2",
+      "kodClass": "Canyon2",
+      "name": "Martyr's Battleground",
+      "roo": "canyons2.roo",
+      "music": "walk1.mid",
+      "baseLight": 164,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "mountain",
+      "teleport": {
+        "row": 37,
+        "col": 17
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 47,
+          "toConstant": "RID_CANYON2",
+          "toRow": 70,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 47,
+          "toConstant": "RID_CANYON2",
+          "toRow": 1,
+          "toCol": 28,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "stonetroll",
+          "weight": 85
+        },
+        {
+          "kind": "groundwormqueen",
+          "weight": 15
+        }
+      ],
+      "generators": [
+        {
+          "row": 9,
+          "col": 50
+        },
+        {
+          "row": 11,
+          "col": 30
+        },
+        {
+          "row": 6,
+          "col": 22
+        },
+        {
+          "row": 24,
+          "col": 31
+        },
+        {
+          "row": 25,
+          "col": 50
+        },
+        {
+          "row": 30,
+          "col": 53
+        },
+        {
+          "row": 52,
+          "col": 53
+        },
+        {
+          "row": 36,
+          "col": 59
+        },
+        {
+          "row": 50,
+          "col": 36
+        },
+        {
+          "row": 42,
+          "col": 15
+        },
+        {
+          "row": 52,
+          "col": 8
+        },
+        {
+          "row": 60,
+          "col": 37
+        },
+        {
+          "row": 62,
+          "col": 43
+        },
+        {
+          "row": 32,
+          "col": 12
+        },
+        {
+          "row": 10,
+          "col": 10
+        }
+      ],
+      "maxMonsters": 20,
+      "genTime": 10000,
+      "genPercent": 85,
+      "initCountMin": 9,
+      "initCountMax": 12,
+      "objects": [],
+      "rows": 71,
+      "cols": 66
+    },
+    {
+      "id": 49,
+      "constant": "RID_BADLAND2",
+      "kodClass": "Badland2",
+      "name": "Kardde's Canyon",
+      "roo": "badland2.roo",
+      "music": "walk5.mid",
+      "baseLight": 124,
+      "outsideFactor": 5,
+      "outdoors": true,
+      "terrain": "badlands",
+      "teleport": {
+        "row": 8,
+        "col": 20
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 593,
+          "toConstant": "RID_I3",
+          "toRow": 29,
+          "toCol": 36,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 45,
+          "toConstant": "RID_BADLAND1",
+          "toRow": 1,
+          "toCol": 53,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 27,
+      "cols": 24
+    },
+    {
+      "id": 515,
+      "constant": "RID_A5",
+      "kodClass": "OutdoorsA5",
+      "name": "Seafarer's Peak",
+      "roo": "a5.roo",
+      "music": "forest.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "mountain",
+      "teleport": {
+        "row": 45,
+        "col": 32
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "SOUTH",
+          "to": 516,
+          "toConstant": "RID_A6",
+          "toRow": 1,
+          "toCol": 20,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "redant",
+          "weight": 60
+        },
+        {
+          "kind": "troll",
+          "weight": 40
+        }
+      ],
+      "generators": [
+        {
+          "row": 38,
+          "col": 39
+        },
+        {
+          "row": 41,
+          "col": 29
+        },
+        {
+          "row": 44,
+          "col": 7
+        },
+        {
+          "row": 42,
+          "col": 20
+        },
+        {
+          "row": 28,
+          "col": 40
+        },
+        {
+          "row": 13,
+          "col": 44
+        },
+        {
+          "row": 11,
+          "col": 45
+        },
+        {
+          "row": 12,
+          "col": 33
+        },
+        {
+          "row": 19,
+          "col": 14
+        },
+        {
+          "row": 20,
+          "col": 19
+        },
+        {
+          "row": 21,
+          "col": 2
+        },
+        {
+          "row": 30,
+          "col": 17
+        },
+        {
+          "row": 20,
+          "col": 7
+        },
+        {
+          "row": 14,
+          "col": 7
+        },
+        {
+          "row": 2,
+          "col": 7
+        }
+      ],
+      "maxMonsters": 15,
+      "genTime": 40000,
+      "genPercent": 80,
+      "initCountMin": 5,
+      "initCountMax": 7,
+      "objects": [],
+      "rows": 50,
+      "cols": 53
+    },
+    {
+      "id": 516,
+      "constant": "RID_A6",
+      "kodClass": "OutdoorsA6",
+      "name": "The Hills",
+      "roo": "a6.roo",
+      "music": "forest.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "lake",
+      "teleport": {
+        "row": 34,
+        "col": 11
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 515,
+          "toConstant": "RID_A5",
+          "toRow": 50,
+          "toCol": 31,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 526,
+          "toConstant": "RID_B6",
+          "toRow": 1,
+          "toCol": 6,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "redant",
+          "weight": 30
+        },
+        {
+          "kind": "troll",
+          "weight": 70
+        }
+      ],
+      "generators": [
+        {
+          "row": 20,
+          "col": 15
+        },
+        {
+          "row": 26,
+          "col": 7
+        },
+        {
+          "row": 28,
+          "col": 26
+        },
+        {
+          "row": 29,
+          "col": 43
+        },
+        {
+          "row": 14,
+          "col": 38
+        },
+        {
+          "row": 17,
+          "col": 49
+        },
+        {
+          "row": 7,
+          "col": 27
+        },
+        {
+          "row": 14,
+          "col": 13
+        },
+        {
+          "row": 12,
+          "col": 4
+        },
+        {
+          "row": 29,
+          "col": 18
+        },
+        {
+          "row": 3,
+          "col": 40
+        },
+        {
+          "row": 6,
+          "col": 46
+        },
+        {
+          "row": 3,
+          "col": 28
+        },
+        {
+          "row": 1,
+          "col": 23
+        }
+      ],
+      "maxMonsters": 12,
+      "genTime": 40000,
+      "genPercent": 80,
+      "initCountMin": 4,
+      "initCountMax": 6,
+      "objects": [],
+      "rows": 41,
+      "cols": 51
+    },
+    {
+      "id": 526,
+      "constant": "RID_B6",
+      "kodClass": "OutdoorsB6",
+      "name": "Druid Hills",
+      "roo": "b6.roo",
+      "music": "walk4.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "mountain",
+      "teleport": {
+        "row": 12,
+        "col": 12
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 536,
+          "toConstant": "RID_C6",
+          "toRow": 18,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 750,
+          "toConstant": "RID_ICE_CAVE1",
+          "toRow": 46,
+          "toCol": 25,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 516,
+          "toConstant": "RID_A6",
+          "toRow": 41,
+          "toCol": 7,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "scorpion",
+          "weight": 40
+        },
+        {
+          "kind": "troll",
+          "weight": 60
+        }
+      ],
+      "generators": [
+        {
+          "row": 12,
+          "col": 3
+        },
+        {
+          "row": 16,
+          "col": 7
+        },
+        {
+          "row": 9,
+          "col": 15
+        },
+        {
+          "row": 14,
+          "col": 25
+        },
+        {
+          "row": 10,
+          "col": 36
+        },
+        {
+          "row": 6,
+          "col": 34
+        },
+        {
+          "row": 24,
+          "col": 44
+        },
+        {
+          "row": 28,
+          "col": 40
+        },
+        {
+          "row": 26,
+          "col": 22
+        },
+        {
+          "row": 21,
+          "col": 11
+        },
+        {
+          "row": 43,
+          "col": 7
+        },
+        {
+          "row": 41,
+          "col": 25
+        },
+        {
+          "row": 38,
+          "col": 40
+        }
+      ],
+      "maxMonsters": 13,
+      "genTime": 45000,
+      "genPercent": 80,
+      "initCountMin": 4,
+      "initCountMax": 8,
+      "objects": [],
+      "rows": 49,
+      "cols": 50
+    },
+    {
+      "id": 534,
+      "constant": "RID_C4",
+      "kodClass": "OutdoorsC4",
+      "name": "Deep Woods of Ileria",
+      "roo": "c4.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 30,
+        "col": 21
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 544,
+          "toConstant": "RID_D4",
+          "toRow": 21,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 533,
+          "toConstant": "RID_C3",
+          "toRow": 40,
+          "toCol": 13,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [
+        {
+          "rects": [
+            [36, 1, 54, 8]
+          ],
+          "to": 200,
+          "toConstant": "RID_MARION",
+          "toRow": 30,
+          "toCol": 66
+        },
+        {
+          "rects": [
+            [1, 1, 17, 12]
+          ],
+          "to": 48,
+          "toConstant": "RID_TEMPLE",
+          "toRow": 9,
+          "toCol": 31,
+          "angle": "SOUTH_WEST"
+        }
+      ],
+      "monsters": [
+        {
+          "kind": "spiderbaby",
+          "weight": 60
+        },
+        {
+          "kind": "ent",
+          "weight": 40
+        }
+      ],
+      "generators": [
+        {
+          "row": 37,
+          "col": 14
+        },
+        {
+          "row": 26,
+          "col": 33
+        },
+        {
+          "row": 6,
+          "col": 50
+        },
+        {
+          "row": 15,
+          "col": 51
+        },
+        {
+          "row": 19,
+          "col": 45
+        },
+        {
+          "row": 24,
+          "col": 45
+        },
+        {
+          "row": 16,
+          "col": 36
+        },
+        {
+          "row": 20,
+          "col": 25
+        },
+        {
+          "row": 23,
+          "col": 25
+        },
+        {
+          "row": 29,
+          "col": 24
+        },
+        {
+          "row": 29,
+          "col": 17
+        },
+        {
+          "row": 33,
+          "col": 20
+        },
+        {
+          "row": 41,
+          "col": 27
+        },
+        {
+          "row": 36,
+          "col": 42
+        },
+        {
+          "row": 39,
+          "col": 40
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 80000,
+      "genPercent": 80,
+      "objects": [
+        {
+          "type": "TREE_PINE",
+          "row": 6,
+          "col": 50,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 8,
+          "col": 52,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 5,
+          "col": 53,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 11,
+          "col": 47,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 14,
+          "col": 50,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 17,
+          "col": 47,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 17,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 19,
+          "col": 50,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 21,
+          "col": 47,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 22,
+          "col": 44,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 25,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 25,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 21,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 16,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 16,
+          "col": 37,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 28,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 30,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 32,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 29,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 32,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 34,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 23,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 19,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 22,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 19,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 41,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 34,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 54,
+      "cols": 56
+    },
+    {
+      "id": 535,
+      "constant": "RID_C5",
+      "kodClass": "OutdoorsC5",
+      "name": "West Merchant Way through Ilerian Woods",
+      "roo": "c5.roo",
+      "music": "walk1.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 19,
+        "col": 18
+      },
+      "exits": [
+        {
+          "row": 50,
+          "col": 35,
+          "to": 706,
+          "toConstant": "RID_GUILDH7",
+          "toRow": 2,
+          "toCol": 9,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 200,
+          "toConstant": "RID_MARION",
+          "toRow": 83,
+          "toCol": 52,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 536,
+          "toConstant": "RID_C6",
+          "toRow": 4,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 545,
+          "toConstant": "RID_D5",
+          "toRow": 21,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 545,
+          "toConstant": "RID_D5",
+          "toRow": 33,
+          "toCol": 6,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spiderbaby",
+          "weight": 30
+        },
+        {
+          "kind": "giantrat",
+          "weight": 70
+        }
+      ],
+      "generators": [
+        {
+          "row": 13,
+          "col": 12
+        },
+        {
+          "row": 17,
+          "col": 24
+        },
+        {
+          "row": 25,
+          "col": 8
+        },
+        {
+          "row": 25,
+          "col": 19
+        },
+        {
+          "row": 26,
+          "col": 29
+        },
+        {
+          "row": 25,
+          "col": 39
+        },
+        {
+          "row": 39,
+          "col": 10
+        },
+        {
+          "row": 39,
+          "col": 23
+        },
+        {
+          "row": 47,
+          "col": 35
+        },
+        {
+          "row": 53,
+          "col": 24
+        }
+      ],
+      "maxMonsters": 6,
+      "genTime": 70000,
+      "genPercent": 70,
+      "initCountMin": 1,
+      "initCountMax": 4,
+      "objects": [],
+      "rows": 57,
+      "cols": 52
+    },
+    {
+      "id": 536,
+      "constant": "RID_C6",
+      "kodClass": "OutdoorsC6",
+      "name": "Forest of Farol",
+      "roo": "c6.roo",
+      "music": "walk5.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 31,
+        "col": 23
+      },
+      "exits": [
+        {
+          "row": 2,
+          "col": 17,
+          "to": 706,
+          "toConstant": "RID_GUILDH7",
+          "toRow": 2,
+          "toCol": 21,
+          "rotate": "NONE"
+        },
+        {
+          "row": 3,
+          "col": 17,
+          "to": 706,
+          "toConstant": "RID_GUILDH7",
+          "toRow": 2,
+          "toCol": 21,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 546,
+          "toConstant": "RID_D6",
+          "toRow": 8,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 537,
+          "toConstant": "RID_C7",
+          "toRow": 4,
+          "toCol": 34,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 535,
+          "toConstant": "RID_C5",
+          "toRow": 55,
+          "toCol": 24,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 526,
+          "toConstant": "RID_B6",
+          "toRow": 39,
+          "toCol": 48,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spider",
+          "weight": 70
+        },
+        {
+          "kind": "ent",
+          "weight": 30
+        }
+      ],
+      "generators": [
+        {
+          "row": 5,
+          "col": 7
+        },
+        {
+          "row": 10,
+          "col": 27
+        },
+        {
+          "row": 14,
+          "col": 46
+        },
+        {
+          "row": 17,
+          "col": 11
+        },
+        {
+          "row": 22,
+          "col": 17
+        },
+        {
+          "row": 27,
+          "col": 25
+        },
+        {
+          "row": 33,
+          "col": 30
+        },
+        {
+          "row": 26,
+          "col": 29
+        },
+        {
+          "row": 30,
+          "col": 47
+        },
+        {
+          "row": 36,
+          "col": 38
+        },
+        {
+          "row": 44,
+          "col": 27
+        },
+        {
+          "row": 40,
+          "col": 17
+        },
+        {
+          "row": 27,
+          "col": 13
+        },
+        {
+          "row": 30,
+          "col": 5
+        },
+        {
+          "row": 35,
+          "col": 8
+        },
+        {
+          "row": 44,
+          "col": 5
+        }
+      ],
+      "maxMonsters": 12,
+      "genTime": 110000,
+      "genPercent": 70,
+      "initCountMin": 3,
+      "initCountMax": 8,
+      "objects": [],
+      "rows": 49,
+      "cols": 50
+    },
+    {
+      "id": 537,
+      "constant": "RID_C7",
+      "kodClass": "OutdoorsC7",
+      "name": "Faronath, home of the TreeFolk",
+      "roo": "c7.roo",
+      "music": "walk5.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 15,
+        "col": 19
+      },
+      "exits": [
+        {
+          "row": 6,
+          "col": 13,
+          "to": 706,
+          "toConstant": "RID_GUILDH7",
+          "toRow": 20,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 6,
+          "col": 14,
+          "to": 706,
+          "toConstant": "RID_GUILDH7",
+          "toRow": 20,
+          "toCol": 4,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 547,
+          "toConstant": "RID_D7",
+          "toRow": 6,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 536,
+          "toConstant": "RID_C6",
+          "toRow": 45,
+          "toCol": 26,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spider",
+          "weight": 5
+        },
+        {
+          "kind": "ent",
+          "weight": 95
+        }
+      ],
+      "generators": [
+        {
+          "row": 3,
+          "col": 11
+        },
+        {
+          "row": 5,
+          "col": 35
+        },
+        {
+          "row": 13,
+          "col": 10
+        },
+        {
+          "row": 14,
+          "col": 22
+        },
+        {
+          "row": 19,
+          "col": 7
+        },
+        {
+          "row": 24,
+          "col": 11
+        },
+        {
+          "row": 17,
+          "col": 18
+        },
+        {
+          "row": 24,
+          "col": 24
+        },
+        {
+          "row": 18,
+          "col": 35
+        },
+        {
+          "row": 19,
+          "col": 42
+        },
+        {
+          "row": 23,
+          "col": 35
+        },
+        {
+          "row": 39,
+          "col": 9
+        },
+        {
+          "row": 45,
+          "col": 11
+        },
+        {
+          "row": 40,
+          "col": 17
+        },
+        {
+          "row": 34,
+          "col": 28
+        },
+        {
+          "row": 41,
+          "col": 27
+        },
+        {
+          "row": 38,
+          "col": 34
+        },
+        {
+          "row": 37,
+          "col": 46
+        }
+      ],
+      "maxMonsters": 8,
+      "genTime": 45000,
+      "genPercent": 80,
+      "initCountMin": 6,
+      "initCountMax": 12,
+      "objects": [],
+      "rows": 49,
+      "cols": 50
+    },
+    {
+      "id": 544,
+      "constant": "RID_D4",
+      "kodClass": "OutdoorsD4",
+      "name": "Valley of Ileria",
+      "roo": "d4.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 44,
+        "col": 34
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 554,
+          "toConstant": "RID_E4",
+          "toRow": 7,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 534,
+          "toConstant": "RID_C4",
+          "toRow": 6,
+          "toCol": 54,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 552,
+          "toConstant": "RID_E2",
+          "toRow": 62,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 545,
+          "toConstant": "RID_D5",
+          "toRow": 4,
+          "toCol": 20,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "fungusbeast",
+          "weight": 65
+        },
+        {
+          "kind": "groundwormlarva",
+          "weight": 35
+        }
+      ],
+      "generators": [
+        {
+          "row": 13,
+          "col": 14
+        },
+        {
+          "row": 12,
+          "col": 29
+        },
+        {
+          "row": 12,
+          "col": 48
+        },
+        {
+          "row": 26,
+          "col": 23
+        },
+        {
+          "row": 22,
+          "col": 40
+        },
+        {
+          "row": 32,
+          "col": 11
+        },
+        {
+          "row": 30,
+          "col": 32
+        },
+        {
+          "row": 29,
+          "col": 48
+        },
+        {
+          "row": 30,
+          "col": 66
+        },
+        {
+          "row": 45,
+          "col": 21
+        },
+        {
+          "row": 40,
+          "col": 35
+        },
+        {
+          "row": 40,
+          "col": 49
+        },
+        {
+          "row": 44,
+          "col": 60
+        },
+        {
+          "row": 53,
+          "col": 10
+        },
+        {
+          "row": 55,
+          "col": 20
+        },
+        {
+          "row": 53,
+          "col": 36
+        },
+        {
+          "row": 54,
+          "col": 50
+        },
+        {
+          "row": 55,
+          "col": 71
+        },
+        {
+          "row": 65,
+          "col": 54
+        },
+        {
+          "row": 69,
+          "col": 31
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 70000,
+      "genPercent": 80,
+      "initCountMin": 5,
+      "initCountMax": 10,
+      "objects": [
+        {
+          "type": "TREE_PINE",
+          "row": 5,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 15,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 9,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 14,
+          "col": 39,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 8,
+          "col": 48,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 14,
+          "col": 53,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 9,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 17,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 20,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 29,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 44,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 40,
+          "col": 17,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 31,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 37,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 48,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 55,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 53,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 60,
+          "col": 29,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 65,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 69,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 70,
+          "col": 34,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 63,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 63,
+          "col": 43,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 58,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 60,
+          "col": 50,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 54,
+          "col": 58,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 54,
+          "col": 70,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 65,
+          "col": 65,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 67,
+          "col": 56,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 80,
+      "cols": 80
+    },
+    {
+      "id": 545,
+      "constant": "RID_D5",
+      "kodClass": "OutdoorsD5",
+      "name": "West Merchant Way",
+      "roo": "d5.roo",
+      "music": "forest.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 24,
+        "col": 63
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 535,
+          "toConstant": "RID_C5",
+          "toRow": 31,
+          "toCol": 47,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 535,
+          "toConstant": "RID_C5",
+          "toRow": 20,
+          "toCol": 47,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 544,
+          "toConstant": "RID_D4",
+          "toRow": 79,
+          "toCol": 53,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 554,
+          "toConstant": "RID_E4",
+          "toRow": 47,
+          "toCol": 26,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 554,
+          "toConstant": "RID_E4",
+          "toRow": 47,
+          "toCol": 34,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 546,
+          "toConstant": "RID_D6",
+          "toRow": 2,
+          "toCol": 14,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 556,
+          "toConstant": "RID_E6",
+          "toRow": 2,
+          "toCol": 30,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spiderbaby",
+          "weight": 50
+        },
+        {
+          "kind": "centipede",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 8,
+          "col": 10
+        },
+        {
+          "row": 5,
+          "col": 39
+        },
+        {
+          "row": 6,
+          "col": 59
+        },
+        {
+          "row": 25,
+          "col": 9
+        },
+        {
+          "row": 18,
+          "col": 24
+        },
+        {
+          "row": 26,
+          "col": 35
+        },
+        {
+          "row": 16,
+          "col": 45
+        },
+        {
+          "row": 16,
+          "col": 62
+        },
+        {
+          "row": 20,
+          "col": 76
+        },
+        {
+          "row": 12,
+          "col": 94
+        },
+        {
+          "row": 40,
+          "col": 89
+        },
+        {
+          "row": 46,
+          "col": 74
+        },
+        {
+          "row": 41,
+          "col": 57
+        },
+        {
+          "row": 46,
+          "col": 34
+        },
+        {
+          "row": 43,
+          "col": 19
+        }
+      ],
+      "maxMonsters": 12,
+      "genTime": 90000,
+      "genPercent": 70,
+      "initCountMin": 5,
+      "initCountMax": 9,
+      "objects": [],
+      "rows": 50,
+      "cols": 102
+    },
+    {
+      "id": 546,
+      "constant": "RID_D6",
+      "kodClass": "OutdoorsD6",
+      "name": "Deep in the Forest of Farol",
+      "roo": "d6.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 20,
+        "col": 21
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 536,
+          "toConstant": "RID_C6",
+          "toRow": 13,
+          "toCol": 46,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 545,
+          "toConstant": "RID_D5",
+          "toRow": 48,
+          "toCol": 22,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 547,
+          "toConstant": "RID_D7",
+          "toRow": 3,
+          "toCol": 19,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "molluskmonster",
+          "weight": 30
+        },
+        {
+          "kind": "ent",
+          "weight": 70
+        }
+      ],
+      "generators": [
+        {
+          "row": 8,
+          "col": 4
+        },
+        {
+          "row": 15,
+          "col": 11
+        },
+        {
+          "row": 24,
+          "col": 5
+        },
+        {
+          "row": 27,
+          "col": 13
+        },
+        {
+          "row": 36,
+          "col": 9
+        },
+        {
+          "row": 5,
+          "col": 14
+        },
+        {
+          "row": 9,
+          "col": 22
+        },
+        {
+          "row": 6,
+          "col": 30
+        },
+        {
+          "row": 19,
+          "col": 19
+        },
+        {
+          "row": 17,
+          "col": 35
+        },
+        {
+          "row": 24,
+          "col": 32
+        },
+        {
+          "row": 30,
+          "col": 29
+        },
+        {
+          "row": 37,
+          "col": 36
+        },
+        {
+          "row": 39,
+          "col": 21
+        },
+        {
+          "row": 44,
+          "col": 26
+        }
+      ],
+      "maxMonsters": 13,
+      "genTime": 100000,
+      "genPercent": 80,
+      "initCountMin": 4,
+      "initCountMax": 8,
+      "objects": [],
+      "rows": 49,
+      "cols": 50
+    },
+    {
+      "id": 547,
+      "constant": "RID_D7",
+      "kodClass": "OutdoorsD7",
+      "name": "Deep in the Forest of Farol",
+      "roo": "d7.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 15,
+        "col": 29
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 537,
+          "toConstant": "RID_C7",
+          "toRow": 41,
+          "toCol": 47,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 546,
+          "toConstant": "RID_D6",
+          "toRow": 47,
+          "toCol": 23,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 557,
+          "toConstant": "RID_E7",
+          "toRow": 5,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 382,
+          "toConstant": "RID_JASWEST",
+          "toRow": 55,
+          "toCol": 1,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "ent",
+          "weight": 40
+        },
+        {
+          "kind": "groundwormlarva",
+          "weight": 60
+        }
+      ],
+      "generators": [
+        {
+          "row": 6,
+          "col": 5
+        },
+        {
+          "row": 13,
+          "col": 7
+        },
+        {
+          "row": 17,
+          "col": 12
+        },
+        {
+          "row": 33,
+          "col": 10
+        },
+        {
+          "row": 42,
+          "col": 14
+        },
+        {
+          "row": 45,
+          "col": 8
+        },
+        {
+          "row": 41,
+          "col": 23
+        },
+        {
+          "row": 40,
+          "col": 39
+        },
+        {
+          "row": 6,
+          "col": 21
+        },
+        {
+          "row": 11,
+          "col": 27
+        },
+        {
+          "row": 17,
+          "col": 25
+        },
+        {
+          "row": 16,
+          "col": 31
+        },
+        {
+          "row": 27,
+          "col": 21
+        },
+        {
+          "row": 32,
+          "col": 32
+        },
+        {
+          "row": 28,
+          "col": 35
+        },
+        {
+          "row": 10,
+          "col": 36
+        },
+        {
+          "row": 6,
+          "col": 42
+        },
+        {
+          "row": 26,
+          "col": 46
+        },
+        {
+          "row": 20,
+          "col": 44
+        },
+        {
+          "row": 6,
+          "col": 42
+        }
+      ],
+      "maxMonsters": 15,
+      "genTime": 100000,
+      "genPercent": 80,
+      "objects": [],
+      "rows": 49,
+      "cols": 50
+    },
+    {
+      "id": 552,
+      "constant": "RID_E2",
+      "kodClass": "OutdoorsE2",
+      "name": "The Great Ocean",
+      "roo": "e2.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 19,
+        "col": 32
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 562,
+          "toConstant": "RID_F2",
+          "toRow": 21,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 544,
+          "toConstant": "RID_D4",
+          "toRow": 1,
+          "toCol": 23,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "molluskmonster",
+          "weight": 80
+        },
+        {
+          "kind": "frogman",
+          "weight": 20
+        }
+      ],
+      "generators": [
+        {
+          "row": 40,
+          "col": 6
+        },
+        {
+          "row": 45,
+          "col": 13
+        },
+        {
+          "row": 58,
+          "col": 28
+        },
+        {
+          "row": 34,
+          "col": 34
+        },
+        {
+          "row": 32,
+          "col": 53
+        },
+        {
+          "row": 53,
+          "col": 50
+        },
+        {
+          "row": 40,
+          "col": 67
+        },
+        {
+          "row": 14,
+          "col": 66
+        },
+        {
+          "row": 15,
+          "col": 46
+        },
+        {
+          "row": 4,
+          "col": 68
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 45000,
+      "genPercent": 70,
+      "initCountMin": 2,
+      "initCountMax": 5,
+      "objects": [
+        {
+          "type": "TREE_PINE",
+          "row": 58,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 58,
+          "col": 51,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 57,
+          "col": 54,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 52,
+          "col": 52,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 40,
+          "col": 54,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 40,
+          "col": 71,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 66,
+      "cols": 74
+    },
+    {
+      "id": 554,
+      "constant": "RID_E4",
+      "kodClass": "OutdoorsE4",
+      "name": "East Merchant Way through Ilerian Woods",
+      "roo": "e4.roo",
+      "music": "forest.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 26,
+        "col": 26
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 544,
+          "toConstant": "RID_D4",
+          "toRow": 65,
+          "toCol": 79,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 564,
+          "toConstant": "RID_F4",
+          "toRow": 12,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 564,
+          "toConstant": "RID_F4",
+          "toRow": 23,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 545,
+          "toConstant": "RID_D5",
+          "toRow": 5,
+          "toCol": 77,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 545,
+          "toConstant": "RID_D5",
+          "toRow": 5,
+          "toCol": 85,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spiderbaby",
+          "weight": 65
+        },
+        {
+          "kind": "centipede",
+          "weight": 35
+        }
+      ],
+      "generators": [
+        {
+          "row": 6,
+          "col": 20
+        },
+        {
+          "row": 10,
+          "col": 24
+        },
+        {
+          "row": 17,
+          "col": 44
+        },
+        {
+          "row": 15,
+          "col": 35
+        },
+        {
+          "row": 14,
+          "col": 11
+        },
+        {
+          "row": 18,
+          "col": 7
+        },
+        {
+          "row": 28,
+          "col": 6
+        },
+        {
+          "row": 31,
+          "col": 15
+        },
+        {
+          "row": 26,
+          "col": 17
+        },
+        {
+          "row": 41,
+          "col": 14
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 100000,
+      "genPercent": 70,
+      "initCountMin": 5,
+      "initCountMax": 7,
+      "objects": [
+        {
+          "type": "TREE_PINE",
+          "row": 6,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 9,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 12,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 10,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 16,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 18,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 26,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 27,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 31,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 36,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 40,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 42,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 32,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 28,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 26,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 23,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 20,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 13,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 10,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 5,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 6,
+          "col": 31,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 14,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 15,
+          "col": 43,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 18,
+          "col": 44,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 29,
+          "col": 47,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 31,
+          "col": 41,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 29,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 41,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 39,
+          "col": 39,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 39,
+          "col": 46,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 47,
+          "col": 39,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 49,
+      "cols": 50
+    },
+    {
+      "id": 555,
+      "constant": "RID_E5",
+      "kodClass": "OutdoorsE5",
+      "name": "The Forest Shrine",
+      "roo": "e5.roo",
+      "music": "walk5.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 9,
+        "col": 3
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 556,
+          "toConstant": "RID_E6",
+          "toRow": 7,
+          "toCol": 59,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 22,
+      "cols": 28
+    },
+    {
+      "id": 556,
+      "constant": "RID_E6",
+      "kodClass": "OutdoorsE6",
+      "name": "Deep Forest of Farol",
+      "roo": "e6.roo",
+      "music": "walk5.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 7,
+        "col": 59
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 545,
+          "toConstant": "RID_D5",
+          "toRow": 47,
+          "toCol": 71,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 557,
+          "toConstant": "RID_E7",
+          "toRow": 2,
+          "toCol": 21,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 555,
+          "toConstant": "RID_E5",
+          "toRow": 8,
+          "toCol": 2,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spider",
+          "weight": 55
+        },
+        {
+          "kind": "centipede",
+          "weight": 30
+        },
+        {
+          "kind": "ent",
+          "weight": 15
+        }
+      ],
+      "generators": [
+        {
+          "row": 7,
+          "col": 59
+        },
+        {
+          "row": 10,
+          "col": 46
+        },
+        {
+          "row": 21,
+          "col": 48
+        },
+        {
+          "row": 29,
+          "col": 52
+        },
+        {
+          "row": 34,
+          "col": 59
+        },
+        {
+          "row": 13,
+          "col": 34
+        },
+        {
+          "row": 18,
+          "col": 39
+        },
+        {
+          "row": 36,
+          "col": 41
+        },
+        {
+          "row": 39,
+          "col": 42
+        },
+        {
+          "row": 47,
+          "col": 42
+        },
+        {
+          "row": 15,
+          "col": 29
+        },
+        {
+          "row": 20,
+          "col": 27
+        },
+        {
+          "row": 21,
+          "col": 20
+        },
+        {
+          "row": 18,
+          "col": 8
+        },
+        {
+          "row": 21,
+          "col": 7
+        },
+        {
+          "row": 31,
+          "col": 27
+        },
+        {
+          "row": 32,
+          "col": 6
+        },
+        {
+          "row": 39,
+          "col": 22
+        },
+        {
+          "row": 47,
+          "col": 28
+        },
+        {
+          "row": 44,
+          "col": 36
+        }
+      ],
+      "maxMonsters": 16,
+      "genTime": 45000,
+      "genPercent": 80,
+      "initCountMin": 5,
+      "initCountMax": 10,
+      "objects": [],
+      "rows": 55,
+      "cols": 63
+    },
+    {
+      "id": 557,
+      "constant": "RID_E7",
+      "kodClass": "OutdoorsE7",
+      "name": "The Sweet Grass Prairies",
+      "roo": "e7.roo",
+      "music": "walk5.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 22,
+        "col": 21
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 547,
+          "toConstant": "RID_D7",
+          "toRow": 6,
+          "toCol": 48,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 556,
+          "toConstant": "RID_E6",
+          "toRow": 53,
+          "toCol": 27,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 382,
+          "toConstant": "RID_JASWEST",
+          "toRow": 5,
+          "toCol": 61,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "centipede",
+          "weight": 25
+        },
+        {
+          "kind": "groundwormlarva",
+          "weight": 75
+        }
+      ],
+      "generators": [
+        {
+          "row": 15,
+          "col": 7
+        },
+        {
+          "row": 22,
+          "col": 12
+        },
+        {
+          "row": 28,
+          "col": 8
+        },
+        {
+          "row": 22,
+          "col": 19
+        },
+        {
+          "row": 7,
+          "col": 21
+        },
+        {
+          "row": 10,
+          "col": 31
+        },
+        {
+          "row": 15,
+          "col": 28
+        },
+        {
+          "row": 3,
+          "col": 40
+        },
+        {
+          "row": 19,
+          "col": 42
+        },
+        {
+          "row": 29,
+          "col": 47
+        },
+        {
+          "row": 24,
+          "col": 40
+        },
+        {
+          "row": 34,
+          "col": 38
+        },
+        {
+          "row": 30,
+          "col": 19
+        },
+        {
+          "row": 37,
+          "col": 18
+        },
+        {
+          "row": 40,
+          "col": 11
+        }
+      ],
+      "maxMonsters": 8,
+      "genTime": 100000,
+      "genPercent": 80,
+      "initCountMin": 3,
+      "initCountMax": 6,
+      "objects": [],
+      "rows": 49,
+      "cols": 50
+    },
+    {
+      "id": 562,
+      "constant": "RID_F2",
+      "kodClass": "OutdoorsF2",
+      "name": "The sandy shores of the Great Ocean",
+      "roo": "f2.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "beach",
+      "teleport": {
+        "row": 14,
+        "col": 48
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 108,
+          "toConstant": "RID_BAR_SEWER",
+          "toRow": 58,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 552,
+          "toConstant": "RID_E2",
+          "toRow": 21,
+          "toCol": 71,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "fungusbeast",
+          "weight": 50
+        },
+        {
+          "kind": "slime",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 5,
+          "col": 6
+        },
+        {
+          "row": 19,
+          "col": 7
+        },
+        {
+          "row": 15,
+          "col": 27
+        },
+        {
+          "row": 20,
+          "col": 31
+        },
+        {
+          "row": 6,
+          "col": 37
+        },
+        {
+          "row": 12,
+          "col": 46
+        },
+        {
+          "row": 11,
+          "col": 68
+        },
+        {
+          "row": 10,
+          "col": 81
+        },
+        {
+          "row": 6,
+          "col": 91
+        },
+        {
+          "row": 19,
+          "col": 89
+        }
+      ],
+      "maxMonsters": 6,
+      "genTime": 55000,
+      "genPercent": 80,
+      "initCountMin": 4,
+      "initCountMax": 6,
+      "objects": [
+        {
+          "type": "TREE_PINE",
+          "row": 21,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 17,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 19,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 17,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 21,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 21,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 18,
+          "col": 47,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 22,
+          "col": 55,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 16,
+          "col": 57,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 21,
+          "col": 62,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 20,
+          "col": 72,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 19,
+          "col": 87,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 18,
+          "col": 92,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 22,
+          "col": 93,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 25,
+      "cols": 106
+    },
+    {
+      "id": 563,
+      "constant": "RID_F3",
+      "kodClass": "OutdoorsF3",
+      "name": "Source of the River Ille",
+      "roo": "f3.roo",
+      "music": "walk5.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 23,
+        "col": 60
+      },
+      "exits": [
+        {
+          "row": 31,
+          "col": 23,
+          "to": 712,
+          "toConstant": "RID_GUILDH11",
+          "toRow": 3,
+          "toCol": 17,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 583,
+          "toConstant": "RID_H3",
+          "toRow": 8,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 583,
+          "toConstant": "RID_H3",
+          "toRow": 26,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 564,
+          "toConstant": "RID_F4",
+          "toRow": 2,
+          "toCol": 19,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "fungusbeast",
+          "weight": 70
+        },
+        {
+          "kind": "ant",
+          "weight": 30
+        }
+      ],
+      "generators": [
+        {
+          "row": 4,
+          "col": 72
+        },
+        {
+          "row": 15,
+          "col": 42
+        },
+        {
+          "row": 14,
+          "col": 72
+        },
+        {
+          "row": 19,
+          "col": 67
+        },
+        {
+          "row": 17,
+          "col": 53
+        },
+        {
+          "row": 19,
+          "col": 35
+        },
+        {
+          "row": 30,
+          "col": 48
+        },
+        {
+          "row": 31,
+          "col": 33
+        },
+        {
+          "row": 15,
+          "col": 3
+        },
+        {
+          "row": 30,
+          "col": 71
+        }
+      ],
+      "maxMonsters": 7,
+      "genTime": 120000,
+      "genPercent": 60,
+      "initCountMin": 2,
+      "initCountMax": 5,
+      "objects": [
+        {
+          "type": "TREE_PINE",
+          "row": 15,
+          "col": 37,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 21,
+          "col": 52,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 19,
+          "col": 70,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 30,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 29,
+          "col": 42,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 32,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 30,
+          "col": 51,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 25,
+          "col": 61,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 31,
+          "col": 70,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 24,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 14,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 3,
+          "col": 65,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_PINE",
+          "row": 7,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 34,
+      "cols": 76
+    },
+    {
+      "id": 564,
+      "constant": "RID_F4",
+      "kodClass": "OutdoorsF4",
+      "name": "East Merchant Way",
+      "roo": "f4.roo",
+      "music": "forest.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 27,
+        "col": 35
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 563,
+          "toConstant": "RID_F3",
+          "toRow": 32,
+          "toCol": 66,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 554,
+          "toConstant": "RID_E4",
+          "toRow": 27,
+          "toCol": 49,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 554,
+          "toConstant": "RID_E4",
+          "toRow": 34,
+          "toCol": 49,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 574,
+          "toConstant": "RID_G4",
+          "toRow": 42,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 574,
+          "toConstant": "RID_G4",
+          "toRow": 32,
+          "toCol": 2,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spider",
+          "weight": 45
+        },
+        {
+          "kind": "centipede",
+          "weight": 55
+        }
+      ],
+      "generators": [
+        {
+          "row": 5,
+          "col": 16
+        },
+        {
+          "row": 9,
+          "col": 6
+        },
+        {
+          "row": 13,
+          "col": 26
+        },
+        {
+          "row": 10,
+          "col": 41
+        },
+        {
+          "row": 19,
+          "col": 11
+        },
+        {
+          "row": 22,
+          "col": 37
+        },
+        {
+          "row": 37,
+          "col": 11
+        },
+        {
+          "row": 42,
+          "col": 22
+        },
+        {
+          "row": 35,
+          "col": 30
+        },
+        {
+          "row": 33,
+          "col": 42
+        }
+      ],
+      "maxMonsters": 6,
+      "genTime": 120000,
+      "genPercent": 60,
+      "initCountMin": 1,
+      "initCountMax": 3,
+      "objects": [],
+      "rows": 53,
+      "cols": 49
+    },
+    {
+      "id": 566,
+      "constant": "RID_F6",
+      "kodClass": "OutdoorsF6",
+      "name": "Off the beaten path",
+      "roo": "f6.roo",
+      "music": "walk1.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 9,
+        "col": 35
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 576,
+          "toConstant": "RID_G6",
+          "toRow": 126,
+          "toCol": 1,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 567,
+          "toConstant": "RID_F7",
+          "toRow": 1,
+          "toCol": 46,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "groundwormlarva",
+          "weight": 70
+        },
+        {
+          "kind": "centipede",
+          "weight": 30
+        }
+      ],
+      "generators": [
+        {
+          "row": 3,
+          "col": 48
+        },
+        {
+          "row": 13,
+          "col": 45
+        },
+        {
+          "row": 17,
+          "col": 48
+        },
+        {
+          "row": 26,
+          "col": 45
+        },
+        {
+          "row": 27,
+          "col": 40
+        },
+        {
+          "row": 19,
+          "col": 25
+        },
+        {
+          "row": 6,
+          "col": 31
+        },
+        {
+          "row": 5,
+          "col": 22
+        },
+        {
+          "row": 16,
+          "col": 7
+        },
+        {
+          "row": 17,
+          "col": 8
+        },
+        {
+          "row": 28,
+          "col": 9
+        },
+        {
+          "row": 42,
+          "col": 12
+        },
+        {
+          "row": 46,
+          "col": 3
+        },
+        {
+          "row": 15,
+          "col": 39
+        },
+        {
+          "row": 25,
+          "col": 32
+        },
+        {
+          "row": 17,
+          "col": 30
+        },
+        {
+          "row": 45,
+          "col": 35
+        },
+        {
+          "row": 36,
+          "col": 31
+        },
+        {
+          "row": 36,
+          "col": 11
+        },
+        {
+          "row": 26,
+          "col": 17
+        },
+        {
+          "row": 23,
+          "col": 32
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 70000,
+      "genPercent": 60,
+      "initCountMin": 3,
+      "initCountMax": 6,
+      "objects": [],
+      "rows": 49,
+      "cols": 49
+    },
+    {
+      "id": 567,
+      "constant": "RID_F7",
+      "kodClass": "OutdoorsF7",
+      "name": "Off the beaten path",
+      "roo": "f7.roo",
+      "music": "walk1.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 25,
+        "col": 15
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 566,
+          "toConstant": "RID_F6",
+          "toRow": 49,
+          "toCol": 29,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 568,
+          "toConstant": "RID_F8",
+          "toRow": 1,
+          "toCol": 30,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "giantrat",
+          "weight": 60
+        },
+        {
+          "kind": "groundwormlarva",
+          "weight": 40
+        }
+      ],
+      "generators": [
+        {
+          "row": 9,
+          "col": 32
+        },
+        {
+          "row": 24,
+          "col": 39
+        },
+        {
+          "row": 20,
+          "col": 35
+        },
+        {
+          "row": 34,
+          "col": 10
+        },
+        {
+          "row": 31,
+          "col": 24
+        },
+        {
+          "row": 39,
+          "col": 26
+        },
+        {
+          "row": 35,
+          "col": 38
+        },
+        {
+          "row": 38,
+          "col": 40
+        },
+        {
+          "row": 43,
+          "col": 21
+        },
+        {
+          "row": 45,
+          "col": 32
+        },
+        {
+          "row": 30,
+          "col": 5
+        },
+        {
+          "row": 45,
+          "col": 15
+        },
+        {
+          "row": 20,
+          "col": 26
+        },
+        {
+          "row": 16,
+          "col": 46
+        },
+        {
+          "row": 15,
+          "col": 15
+        }
+      ],
+      "maxMonsters": 9,
+      "genTime": 70000,
+      "genPercent": 60,
+      "initCountMin": 2,
+      "initCountMax": 5,
+      "objects": [],
+      "rows": 49,
+      "cols": 49
+    },
+    {
+      "id": 568,
+      "constant": "RID_F8",
+      "kodClass": "OutdoorsF8",
+      "name": "Lake of Jala's Song",
+      "roo": "f8.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 18,
+        "col": 21
+      },
+      "exits": [
+        {
+          "row": 6,
+          "col": 50,
+          "to": 703,
+          "toConstant": "RID_GUILDH3",
+          "toRow": 5,
+          "toCol": 2,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 578,
+          "toConstant": "RID_G8",
+          "toRow": 36,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 350,
+          "toConstant": "RID_JASPER",
+          "toRow": 18,
+          "toCol": 75,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 567,
+          "toConstant": "RID_F7",
+          "toRow": 49,
+          "toCol": 15,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 26,
+          "col": 50,
+          "message": "\\"
+        }
+      ],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spiderbaby",
+          "weight": 50
+        },
+        {
+          "kind": "centipede",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 6,
+          "col": 11
+        },
+        {
+          "row": 10,
+          "col": 22
+        },
+        {
+          "row": 6,
+          "col": 36
+        },
+        {
+          "row": 14,
+          "col": 42
+        },
+        {
+          "row": 23,
+          "col": 39
+        },
+        {
+          "row": 22,
+          "col": 19
+        },
+        {
+          "row": 25,
+          "col": 10
+        },
+        {
+          "row": 39,
+          "col": 12
+        },
+        {
+          "row": 39,
+          "col": 26
+        },
+        {
+          "row": 19,
+          "col": 28
+        }
+      ],
+      "maxMonsters": 5,
+      "genTime": 60000,
+      "genPercent": 60,
+      "initCountMin": 1,
+      "initCountMax": 3,
+      "objects": [],
+      "rows": 49,
+      "cols": 50
+    },
+    {
+      "id": 574,
+      "constant": "RID_G4",
+      "kodClass": "OutdoorsG4",
+      "name": "Main gate to Cor Noth",
+      "roo": "g4.roo",
+      "music": "walk1.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 42,
+        "col": 15
+      },
+      "exits": [
+        {
+          "row": 55,
+          "col": 24,
+          "to": 150,
+          "toConstant": "RID_CORNOTH",
+          "toRow": 2,
+          "toCol": 39,
+          "rotate": "NONE"
+        },
+        {
+          "row": 55,
+          "col": 25,
+          "to": 150,
+          "toConstant": "RID_CORNOTH",
+          "toRow": 2,
+          "toCol": 39,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 584,
+          "toConstant": "RID_H4",
+          "toRow": 32,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 563,
+          "toConstant": "RID_F3",
+          "toRow": 31,
+          "toCol": 66,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 564,
+          "toConstant": "RID_F4",
+          "toRow": 28,
+          "toCol": 48,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 564,
+          "toConstant": "RID_F4",
+          "toRow": 18,
+          "toCol": 48,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spiderbaby",
+          "weight": 75
+        },
+        {
+          "kind": "centipede",
+          "weight": 25
+        }
+      ],
+      "generators": [
+        {
+          "row": 5,
+          "col": 42
+        },
+        {
+          "row": 15,
+          "col": 16
+        },
+        {
+          "row": 22,
+          "col": 7
+        },
+        {
+          "row": 21,
+          "col": 44
+        },
+        {
+          "row": 30,
+          "col": 43
+        },
+        {
+          "row": 47,
+          "col": 47
+        },
+        {
+          "row": 45,
+          "col": 33
+        },
+        {
+          "row": 35,
+          "col": 32
+        },
+        {
+          "row": 46,
+          "col": 11
+        },
+        {
+          "row": 38,
+          "col": 6
+        }
+      ],
+      "maxMonsters": 7,
+      "genTime": 150000,
+      "genPercent": 40,
+      "initCountMin": 1,
+      "initCountMax": 4,
+      "objects": [],
+      "rows": 55,
+      "cols": 50
+    },
+    {
+      "id": 575,
+      "constant": "RID_G5",
+      "kodClass": "OutdoorsG5",
+      "name": "The King's Way",
+      "roo": "g5.roo",
+      "music": "walk1.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 35,
+        "col": 34
+      },
+      "exits": [
+        {
+          "row": 6,
+          "col": 18,
+          "to": 150,
+          "toConstant": "RID_CORNOTH",
+          "toRow": 30,
+          "toCol": 68,
+          "rotate": "NONE"
+        },
+        {
+          "row": 7,
+          "col": 18,
+          "to": 150,
+          "toConstant": "RID_CORNOTH",
+          "toRow": 31,
+          "toCol": 68,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 150,
+          "toConstant": "RID_CORNOTH",
+          "toRow": 31,
+          "toCol": 67,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 576,
+          "toConstant": "RID_G6",
+          "toRow": 2,
+          "toCol": 36,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 576,
+          "toConstant": "RID_G6",
+          "toRow": 2,
+          "toCol": 69,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spiderbaby",
+          "weight": 50
+        },
+        {
+          "kind": "giantrat",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 30,
+          "col": 14
+        },
+        {
+          "row": 30,
+          "col": 26
+        },
+        {
+          "row": 23,
+          "col": 32
+        },
+        {
+          "row": 33,
+          "col": 31
+        },
+        {
+          "row": 33,
+          "col": 37
+        },
+        {
+          "row": 30,
+          "col": 44
+        },
+        {
+          "row": 36,
+          "col": 23
+        },
+        {
+          "row": 38,
+          "col": 16
+        },
+        {
+          "row": 45,
+          "col": 19
+        },
+        {
+          "row": 47,
+          "col": 22
+        }
+      ],
+      "maxMonsters": 7,
+      "genTime": 50000,
+      "genPercent": 40,
+      "initCountMin": 1,
+      "initCountMax": 3,
+      "objects": [],
+      "rows": 48,
+      "cols": 50
+    },
+    {
+      "id": 576,
+      "constant": "RID_G6",
+      "kodClass": "OutdoorsG6",
+      "name": "The King's Way",
+      "roo": "g6.roo",
+      "music": "forest.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 87,
+        "col": 59
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "SOUTH",
+          "to": 578,
+          "toConstant": "RID_G8",
+          "toRow": 2,
+          "toCol": 13,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 575,
+          "toConstant": "RID_G5",
+          "toRow": 46,
+          "toCol": 12,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 575,
+          "toConstant": "RID_G5",
+          "toRow": 46,
+          "toCol": 45,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 566,
+          "toConstant": "RID_F6",
+          "toRow": 5,
+          "toCol": 49,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 587,
+          "toConstant": "RID_H7",
+          "toRow": 5,
+          "toCol": 1,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "frogman",
+          "weight": 90
+        },
+        {
+          "kind": "centipede",
+          "weight": 10
+        }
+      ],
+      "generators": [
+        {
+          "row": 9,
+          "col": 62
+        },
+        {
+          "row": 18,
+          "col": 77
+        },
+        {
+          "row": 29,
+          "col": 65
+        },
+        {
+          "row": 38,
+          "col": 76
+        },
+        {
+          "row": 48,
+          "col": 65
+        },
+        {
+          "row": 104,
+          "col": 30
+        },
+        {
+          "row": 119,
+          "col": 42
+        },
+        {
+          "row": 110,
+          "col": 22
+        }
+      ],
+      "maxMonsters": 9,
+      "genTime": 100000,
+      "genPercent": 80,
+      "initCountMin": 4,
+      "initCountMax": 8,
+      "objects": [],
+      "rows": 129,
+      "cols": 88
+    },
+    {
+      "id": 578,
+      "constant": "RID_G8",
+      "kodClass": "OutdoorsG8",
+      "name": "The Cragged Mountains",
+      "roo": "g8.roo",
+      "music": "walk4.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "mountain",
+      "teleport": {
+        "row": 16,
+        "col": 11
+      },
+      "exits": [
+        {
+          "row": 28,
+          "col": 30,
+          "to": 826,
+          "toConstant": "RID_NECROAREA1",
+          "toRow": 6,
+          "toCol": 18,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 568,
+          "toConstant": "RID_F8",
+          "toRow": 43,
+          "toCol": 46,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 576,
+          "toConstant": "RID_G6",
+          "toRow": 128,
+          "toCol": 71,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 579,
+          "toConstant": "RID_G9",
+          "toRow": 2,
+          "toCol": 18,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 579,
+          "toConstant": "RID_G9",
+          "toRow": 2,
+          "toCol": 61,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 826,
+          "toConstant": "RID_NECROAREA1",
+          "toRow": 7,
+          "toCol": 2,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "deathspider",
+          "weight": 40
+        },
+        {
+          "kind": "troll",
+          "weight": 60
+        }
+      ],
+      "generators": [
+        {
+          "row": 4,
+          "col": 14
+        },
+        {
+          "row": 16,
+          "col": 13
+        },
+        {
+          "row": 18,
+          "col": 8
+        },
+        {
+          "row": 27,
+          "col": 14
+        },
+        {
+          "row": 34,
+          "col": 6
+        },
+        {
+          "row": 26,
+          "col": 23
+        },
+        {
+          "row": 37,
+          "col": 17
+        },
+        {
+          "row": 22,
+          "col": 38
+        },
+        {
+          "row": 14,
+          "col": 31
+        },
+        {
+          "row": 11,
+          "col": 46
+        },
+        {
+          "row": 29,
+          "col": 42
+        },
+        {
+          "row": 27,
+          "col": 37
+        },
+        {
+          "row": 37,
+          "col": 39
+        },
+        {
+          "row": 32,
+          "col": 33
+        },
+        {
+          "row": 42,
+          "col": 27
+        },
+        {
+          "row": 46,
+          "col": 18
+        },
+        {
+          "row": 44,
+          "col": 47
+        },
+        {
+          "row": 27,
+          "col": 24
+        },
+        {
+          "row": 12,
+          "col": 18
+        },
+        {
+          "row": 21,
+          "col": 18
+        }
+      ],
+      "maxMonsters": 13,
+      "genTime": 100000,
+      "genPercent": 80,
+      "initCountMin": 6,
+      "initCountMax": 10,
+      "objects": [],
+      "rows": 49,
+      "cols": 50
+    },
+    {
+      "id": 579,
+      "constant": "RID_G9",
+      "kodClass": "OutdoorsG9",
+      "name": "An ancient place, its origin forgotten",
+      "roo": "g9.roo",
+      "music": "walk4.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "mountain",
+      "teleport": {
+        "row": 20,
+        "col": 66
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 589,
+          "toConstant": "RID_H9",
+          "toRow": 46,
+          "toCol": 5,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 801,
+          "toConstant": "RID_TEMPLE_KRAANAN",
+          "toRow": 46,
+          "toCol": 41,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 578,
+          "toConstant": "RID_G8",
+          "toRow": 46,
+          "toCol": 48,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 578,
+          "toConstant": "RID_G8",
+          "toRow": 46,
+          "toCol": 18,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "orc",
+          "weight": 80
+        },
+        {
+          "kind": "deathspider",
+          "weight": 20
+        }
+      ],
+      "generators": [
+        {
+          "row": 10,
+          "col": 44
+        },
+        {
+          "row": 25,
+          "col": 47
+        },
+        {
+          "row": 29,
+          "col": 58
+        },
+        {
+          "row": 22,
+          "col": 63
+        },
+        {
+          "row": 14,
+          "col": 68
+        },
+        {
+          "row": 19,
+          "col": 6
+        },
+        {
+          "row": 25,
+          "col": 11
+        },
+        {
+          "row": 35,
+          "col": 12
+        },
+        {
+          "row": 35,
+          "col": 23
+        },
+        {
+          "row": 18,
+          "col": 20
+        },
+        {
+          "row": 9,
+          "col": 18
+        },
+        {
+          "row": 13,
+          "col": 24
+        },
+        {
+          "row": 8,
+          "col": 31
+        },
+        {
+          "row": 24,
+          "col": 28
+        },
+        {
+          "row": 14,
+          "col": 38
+        },
+        {
+          "row": 30,
+          "col": 35
+        },
+        {
+          "row": 44,
+          "col": 39
+        },
+        {
+          "row": 44,
+          "col": 49
+        },
+        {
+          "row": 44,
+          "col": 61
+        }
+      ],
+      "maxMonsters": 6,
+      "genTime": 100000,
+      "genPercent": 80,
+      "initCountMin": 2,
+      "initCountMax": 9,
+      "objects": [],
+      "rows": 54,
+      "cols": 74
+    },
+    {
+      "id": 583,
+      "constant": "RID_H3",
+      "kodClass": "OutdoorsH3",
+      "name": "Outskirts of Barloque",
+      "roo": "h3.roo",
+      "music": "forest.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 32,
+        "col": 35
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 593,
+          "toConstant": "RID_I3",
+          "toRow": 18,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 593,
+          "toConstant": "RID_I3",
+          "toRow": 25,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 563,
+          "toConstant": "RID_F3",
+          "toRow": 9,
+          "toCol": 75,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 563,
+          "toConstant": "RID_F3",
+          "toRow": 28,
+          "toCol": 75,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 584,
+          "toConstant": "RID_H4",
+          "toRow": 2,
+          "toCol": 26,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 584,
+          "toConstant": "RID_H4",
+          "toRow": 2,
+          "toCol": 35,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "slime",
+          "weight": 30
+        },
+        {
+          "kind": "giantrat",
+          "weight": 70
+        }
+      ],
+      "generators": [
+        {
+          "row": 14,
+          "col": 4
+        },
+        {
+          "row": 17,
+          "col": 26
+        },
+        {
+          "row": 19,
+          "col": 8
+        },
+        {
+          "row": 35,
+          "col": 7
+        },
+        {
+          "row": 41,
+          "col": 9
+        },
+        {
+          "row": 31,
+          "col": 22
+        },
+        {
+          "row": 29,
+          "col": 38
+        },
+        {
+          "row": 38,
+          "col": 24
+        },
+        {
+          "row": 36,
+          "col": 37
+        },
+        {
+          "row": 42,
+          "col": 42
+        }
+      ],
+      "maxMonsters": 6,
+      "genTime": 100000,
+      "genPercent": 60,
+      "initCountMin": 2,
+      "initCountMax": 4,
+      "objects": [],
+      "rows": 47,
+      "cols": 48
+    },
+    {
+      "id": 584,
+      "constant": "RID_H4",
+      "kodClass": "OutdoorsH4",
+      "name": "The Flatlands",
+      "roo": "h4.roo",
+      "music": "forest.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "road",
+      "teleport": {
+        "row": 24,
+        "col": 29
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "SOUTH",
+          "to": 585,
+          "toConstant": "RID_H5",
+          "toRow": 4,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 574,
+          "toConstant": "RID_G4",
+          "toRow": 42,
+          "toCol": 49,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 583,
+          "toConstant": "RID_H3",
+          "toRow": 46,
+          "toCol": 14,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 583,
+          "toConstant": "RID_H3",
+          "toRow": 46,
+          "toCol": 33,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spider",
+          "weight": 45
+        },
+        {
+          "kind": "ant",
+          "weight": 55
+        }
+      ],
+      "generators": [
+        {
+          "row": 11,
+          "col": 31
+        },
+        {
+          "row": 12,
+          "col": 21
+        },
+        {
+          "row": 22,
+          "col": 26
+        },
+        {
+          "row": 23,
+          "col": 17
+        },
+        {
+          "row": 26,
+          "col": 4
+        },
+        {
+          "row": 31,
+          "col": 22
+        },
+        {
+          "row": 35,
+          "col": 14
+        },
+        {
+          "row": 40,
+          "col": 5
+        },
+        {
+          "row": 40,
+          "col": 24
+        },
+        {
+          "row": 35,
+          "col": 36
+        }
+      ],
+      "maxMonsters": 8,
+      "genTime": 120000,
+      "genPercent": 70,
+      "initCountMin": 2,
+      "initCountMax": 5,
+      "objects": [],
+      "rows": 43,
+      "cols": 39
+    },
+    {
+      "id": 585,
+      "constant": "RID_H5",
+      "kodClass": "OutdoorsH5",
+      "name": "The border of the Badlands",
+      "roo": "h5.roo",
+      "music": "forest.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "badlands",
+      "teleport": {
+        "row": 26,
+        "col": 12
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 584,
+          "toConstant": "RID_H4",
+          "toRow": 39,
+          "toCol": 36,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 586,
+          "toConstant": "RID_H6",
+          "toRow": 3,
+          "toCol": 20,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "troll",
+          "weight": 30
+        },
+        {
+          "kind": "groundworm",
+          "weight": 70
+        }
+      ],
+      "generators": [
+        {
+          "row": 19,
+          "col": 7
+        },
+        {
+          "row": 22,
+          "col": 14
+        },
+        {
+          "row": 27,
+          "col": 25
+        },
+        {
+          "row": 25,
+          "col": 36
+        },
+        {
+          "row": 38,
+          "col": 34
+        },
+        {
+          "row": 46,
+          "col": 26
+        },
+        {
+          "row": 36,
+          "col": 17
+        },
+        {
+          "row": 35,
+          "col": 8
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 160000,
+      "genPercent": 80,
+      "initCountMin": 1,
+      "initCountMax": 5,
+      "objects": [],
+      "rows": 53,
+      "cols": 40
+    },
+    {
+      "id": 586,
+      "constant": "RID_H6",
+      "kodClass": "OutdoorsH6",
+      "name": "Main gate to the city of Tos",
+      "roo": "h6.roo",
+      "music": "walk1.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 25,
+        "col": 22
+      },
+      "exits": [
+        {
+          "row": 27,
+          "col": 41,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 58,
+          "toCol": 4,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 596,
+          "toConstant": "RID_I6",
+          "toRow": 8,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 585,
+          "toConstant": "RID_H5",
+          "toRow": 45,
+          "toCol": 11,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 587,
+          "toConstant": "RID_H7",
+          "toRow": 8,
+          "toCol": 66,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "giantrat",
+          "weight": 70
+        },
+        {
+          "kind": "centipede",
+          "weight": 30
+        }
+      ],
+      "generators": [
+        {
+          "row": 8,
+          "col": 8
+        },
+        {
+          "row": 9,
+          "col": 14
+        },
+        {
+          "row": 5,
+          "col": 25
+        },
+        {
+          "row": 10,
+          "col": 30
+        },
+        {
+          "row": 18,
+          "col": 18
+        },
+        {
+          "row": 25,
+          "col": 19
+        },
+        {
+          "row": 20,
+          "col": 3
+        },
+        {
+          "row": 25,
+          "col": 9
+        },
+        {
+          "row": 42,
+          "col": 5
+        },
+        {
+          "row": 45,
+          "col": 12
+        },
+        {
+          "row": 41,
+          "col": 22
+        },
+        {
+          "row": 35,
+          "col": 30
+        },
+        {
+          "row": 47,
+          "col": 34
+        }
+      ],
+      "maxMonsters": 7,
+      "genTime": 25000,
+      "genPercent": 80,
+      "initCountMin": 5,
+      "initCountMax": 7,
+      "objects": [],
+      "rows": 58,
+      "cols": 44
+    },
+    {
+      "id": 587,
+      "constant": "RID_H7",
+      "kodClass": "OutdoorsH7",
+      "name": "Western border of the Twisted Wood",
+      "roo": "h7.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 22,
+        "col": 35
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 597,
+          "toConstant": "RID_I7",
+          "toRow": 7,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 586,
+          "toConstant": "RID_H6",
+          "toRow": 45,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 576,
+          "toConstant": "RID_G6",
+          "toRow": 115,
+          "toCol": 88,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [
+        {
+          "rects": [
+            [15, 1, 17, 6]
+          ],
+          "to": 27,
+          "toConstant": "RID_CAVE2",
+          "toRow": 57,
+          "toCol": 46,
+          "angle": "NORTH"
+        }
+      ],
+      "monsters": [
+        {
+          "kind": "spider",
+          "weight": 60
+        },
+        {
+          "kind": "centipede",
+          "weight": 40
+        }
+      ],
+      "generators": [
+        {
+          "row": 9,
+          "col": 6
+        },
+        {
+          "row": 10,
+          "col": 18
+        },
+        {
+          "row": 7,
+          "col": 39
+        },
+        {
+          "row": 4,
+          "col": 58
+        },
+        {
+          "row": 12,
+          "col": 62
+        },
+        {
+          "row": 22,
+          "col": 3
+        },
+        {
+          "row": 21,
+          "col": 16
+        },
+        {
+          "row": 22,
+          "col": 32
+        },
+        {
+          "row": 31,
+          "col": 33
+        },
+        {
+          "row": 36,
+          "col": 40
+        },
+        {
+          "row": 32,
+          "col": 23
+        },
+        {
+          "row": 50,
+          "col": 17
+        },
+        {
+          "row": 51,
+          "col": 49
+        },
+        {
+          "row": 24,
+          "col": 61
+        },
+        {
+          "row": 38,
+          "col": 60
+        },
+        {
+          "row": 39,
+          "col": 53
+        },
+        {
+          "row": 48,
+          "col": 60
+        }
+      ],
+      "maxMonsters": 12,
+      "genTime": 60000,
+      "genPercent": 80,
+      "initCountMin": 6,
+      "initCountMax": 9,
+      "objects": [],
+      "rows": 55,
+      "cols": 67
+    },
+    {
+      "id": 589,
+      "constant": "RID_H9",
+      "kodClass": "OutdoorsH9",
+      "name": "Under the shadow of the Sentinel",
+      "roo": "h9.roo",
+      "music": "walk4.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "mountain",
+      "teleport": {
+        "row": 34,
+        "col": 26
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 599,
+          "toConstant": "RID_I9",
+          "toRow": 67,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 579,
+          "toConstant": "RID_G9",
+          "toRow": 39,
+          "toCol": 71,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "orc",
+          "weight": 40
+        },
+        {
+          "kind": "deathspider",
+          "weight": 60
+        }
+      ],
+      "generators": [
+        {
+          "row": 4,
+          "col": 7
+        },
+        {
+          "row": 11,
+          "col": 22
+        },
+        {
+          "row": 15,
+          "col": 28
+        },
+        {
+          "row": 19,
+          "col": 41
+        },
+        {
+          "row": 32,
+          "col": 37
+        },
+        {
+          "row": 24,
+          "col": 30
+        },
+        {
+          "row": 21,
+          "col": 21
+        },
+        {
+          "row": 20,
+          "col": 14
+        },
+        {
+          "row": 9,
+          "col": 13
+        },
+        {
+          "row": 15,
+          "col": 9
+        },
+        {
+          "row": 30,
+          "col": 13
+        },
+        {
+          "row": 30,
+          "col": 19
+        },
+        {
+          "row": 36,
+          "col": 18
+        },
+        {
+          "row": 40,
+          "col": 28
+        },
+        {
+          "row": 46,
+          "col": 13
+        }
+      ],
+      "maxMonsters": 15,
+      "genTime": 80000,
+      "genPercent": 80,
+      "initCountMin": 8,
+      "initCountMax": 12,
+      "objects": [],
+      "rows": 54,
+      "cols": 46
+    },
+    {
+      "id": 593,
+      "constant": "RID_I3",
+      "kodClass": "OutdoorsI3",
+      "name": "Main gate of Barloque-- Royal City of Meridian",
+      "roo": "i3.roo",
+      "music": "walk1.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 13,
+        "col": 12
+      },
+      "exits": [
+        {
+          "row": 6,
+          "col": 11,
+          "to": 102,
+          "toConstant": "RID_BAR_SOUTH",
+          "toRow": 46,
+          "toCol": 30,
+          "rotate": "NONE"
+        },
+        {
+          "row": 6,
+          "col": 12,
+          "to": 102,
+          "toConstant": "RID_BAR_SOUTH",
+          "toRow": 46,
+          "toCol": 31,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 603,
+          "toConstant": "RID_J3",
+          "toRow": 7,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 49,
+          "toConstant": "RID_BADLAND2",
+          "toRow": 1,
+          "toCol": 22,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 583,
+          "toConstant": "RID_H3",
+          "toRow": 25,
+          "toCol": 47,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 583,
+          "toConstant": "RID_H3",
+          "toRow": 32,
+          "toCol": 47,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "centipede",
+          "weight": 40
+        },
+        {
+          "kind": "spiderbaby",
+          "weight": 60
+        }
+      ],
+      "generators": [
+        {
+          "row": 5,
+          "col": 33
+        },
+        {
+          "row": 5,
+          "col": 41
+        },
+        {
+          "row": 11,
+          "col": 52
+        },
+        {
+          "row": 13,
+          "col": 32
+        },
+        {
+          "row": 14,
+          "col": 23
+        },
+        {
+          "row": 11,
+          "col": 6
+        },
+        {
+          "row": 21,
+          "col": 5
+        },
+        {
+          "row": 25,
+          "col": 14
+        },
+        {
+          "row": 23,
+          "col": 36
+        }
+      ],
+      "maxMonsters": 7,
+      "genTime": 45000,
+      "genPercent": 40,
+      "initCountMin": 0,
+      "initCountMax": 2,
+      "objects": [],
+      "rows": 30,
+      "cols": 61
+    },
+    {
+      "id": 596,
+      "constant": "RID_I6",
+      "kodClass": "OutdoorsI6",
+      "name": "Outskirts of Tos",
+      "roo": "i6.roo",
+      "music": "walk1.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 23,
+        "col": 16
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 586,
+          "toConstant": "RID_H6",
+          "toRow": 54,
+          "toCol": 43,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 61,
+          "toConstant": "RID_EAST_TOS",
+          "toRow": 57,
+          "toCol": 36,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 597,
+          "toConstant": "RID_I7",
+          "toRow": 1,
+          "toCol": 39,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spider",
+          "weight": 50
+        },
+        {
+          "kind": "groundworm",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 8,
+          "col": 9
+        },
+        {
+          "row": 11,
+          "col": 24
+        },
+        {
+          "row": 19,
+          "col": 10
+        },
+        {
+          "row": 26,
+          "col": 21
+        },
+        {
+          "row": 33,
+          "col": 7
+        },
+        {
+          "row": 36,
+          "col": 16
+        },
+        {
+          "row": 35,
+          "col": 26
+        },
+        {
+          "row": 41,
+          "col": 6
+        },
+        {
+          "row": 43,
+          "col": 20
+        },
+        {
+          "row": 46,
+          "col": 35
+        },
+        {
+          "row": 38,
+          "col": 43
+        },
+        {
+          "row": 29,
+          "col": 43
+        },
+        {
+          "row": 20,
+          "col": 33
+        },
+        {
+          "row": 9,
+          "col": 35
+        },
+        {
+          "row": 16,
+          "col": 48
+        }
+      ],
+      "maxMonsters": 6,
+      "genTime": 80000,
+      "genPercent": 75,
+      "initCountMin": 1,
+      "initCountMax": 4,
+      "objects": [],
+      "rows": 49,
+      "cols": 50
+    },
+    {
+      "id": 597,
+      "constant": "RID_I7",
+      "kodClass": "OutdoorsI7",
+      "name": "The Twisted Wood",
+      "roo": "i7.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 23,
+        "col": 19
+      },
+      "exits": [
+        {
+          "row": 15,
+          "col": 38,
+          "to": 37,
+          "toConstant": "RID_HERMITHUT",
+          "toRow": 7,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 15,
+          "col": 39,
+          "to": 37,
+          "toConstant": "RID_HERMITHUT",
+          "toRow": 7,
+          "toCol": 6,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 587,
+          "toConstant": "RID_H7",
+          "toRow": 46,
+          "toCol": 66,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 596,
+          "toConstant": "RID_I6",
+          "toRow": 47,
+          "toCol": 46,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 598,
+          "toConstant": "RID_I8",
+          "toRow": 6,
+          "toCol": 17,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spider",
+          "weight": 55
+        },
+        {
+          "kind": "troll",
+          "weight": 45
+        }
+      ],
+      "generators": [
+        {
+          "row": 9,
+          "col": 8
+        },
+        {
+          "row": 4,
+          "col": 19
+        },
+        {
+          "row": 18,
+          "col": 9
+        },
+        {
+          "row": 18,
+          "col": 4
+        },
+        {
+          "row": 20,
+          "col": 19
+        },
+        {
+          "row": 7,
+          "col": 25
+        },
+        {
+          "row": 5,
+          "col": 39
+        },
+        {
+          "row": 26,
+          "col": 31
+        },
+        {
+          "row": 35,
+          "col": 35
+        },
+        {
+          "row": 40,
+          "col": 30
+        },
+        {
+          "row": 32,
+          "col": 19
+        },
+        {
+          "row": 40,
+          "col": 14
+        },
+        {
+          "row": 41,
+          "col": 43
+        },
+        {
+          "row": 44,
+          "col": 47
+        },
+        {
+          "row": 33,
+          "col": 51
+        }
+      ],
+      "maxMonsters": 15,
+      "genTime": 45000,
+      "genPercent": 80,
+      "initCountMin": 8,
+      "initCountMax": 12,
+      "objects": [],
+      "rows": 50,
+      "cols": 55
+    },
+    {
+      "id": 598,
+      "constant": "RID_I8",
+      "kodClass": "OutdoorsI8",
+      "name": "The Cragged Mountains",
+      "roo": "i8.roo",
+      "music": "walk4.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "mountain",
+      "teleport": {
+        "row": 7,
+        "col": 6
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 597,
+          "toConstant": "RID_I7",
+          "toRow": 48,
+          "toCol": 32,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 599,
+          "toConstant": "RID_I9",
+          "toRow": 4,
+          "toCol": 63,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "troll",
+          "weight": 60
+        },
+        {
+          "kind": "deathspider",
+          "weight": 40
+        }
+      ],
+      "generators": [
+        {
+          "row": 3,
+          "col": 3
+        },
+        {
+          "row": 7,
+          "col": 7
+        },
+        {
+          "row": 19,
+          "col": 12
+        },
+        {
+          "row": 22,
+          "col": 19
+        },
+        {
+          "row": 20,
+          "col": 27
+        },
+        {
+          "row": 16,
+          "col": 35
+        },
+        {
+          "row": 26,
+          "col": 34
+        },
+        {
+          "row": 30,
+          "col": 39
+        },
+        {
+          "row": 30,
+          "col": 14
+        },
+        {
+          "row": 36,
+          "col": 20
+        },
+        {
+          "row": 38,
+          "col": 29
+        },
+        {
+          "row": 48,
+          "col": 25
+        },
+        {
+          "row": 54,
+          "col": 27
+        },
+        {
+          "row": 50,
+          "col": 35
+        }
+      ],
+      "maxMonsters": 14,
+      "genTime": 80000,
+      "genPercent": 80,
+      "initCountMin": 8,
+      "initCountMax": 11,
+      "objects": [],
+      "rows": 65,
+      "cols": 42
+    },
+    {
+      "id": 599,
+      "constant": "RID_I9",
+      "kodClass": "OutdoorsI9",
+      "name": "Ukgoth, Holy Land of Trolls",
+      "roo": "i9.roo",
+      "music": "walk4.mid",
+      "baseLight": 124,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "mountain",
+      "teleport": {
+        "row": 42,
+        "col": 14
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 2,
+          "toConstant": "RID_CASTLE1C",
+          "toRow": 21,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 598,
+          "toConstant": "RID_I8",
+          "toRow": 60,
+          "toCol": 23,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 589,
+          "toConstant": "RID_H9",
+          "toRow": 21,
+          "toCol": 43,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "troll",
+          "weight": 100
+        }
+      ],
+      "generators": [
+        {
+          "row": 9,
+          "col": 50
+        },
+        {
+          "row": 11,
+          "col": 30
+        },
+        {
+          "row": 6,
+          "col": 22
+        },
+        {
+          "row": 24,
+          "col": 31
+        },
+        {
+          "row": 25,
+          "col": 50
+        },
+        {
+          "row": 30,
+          "col": 53
+        },
+        {
+          "row": 52,
+          "col": 53
+        },
+        {
+          "row": 36,
+          "col": 59
+        },
+        {
+          "row": 50,
+          "col": 36
+        },
+        {
+          "row": 42,
+          "col": 15
+        },
+        {
+          "row": 52,
+          "col": 8
+        },
+        {
+          "row": 60,
+          "col": 37
+        },
+        {
+          "row": 62,
+          "col": 43
+        },
+        {
+          "row": 32,
+          "col": 12
+        },
+        {
+          "row": 10,
+          "col": 10
+        }
+      ],
+      "maxMonsters": 15,
+      "genTime": 70000,
+      "genPercent": 85,
+      "initCountMin": 9,
+      "initCountMax": 12,
+      "objects": [],
+      "rows": 71,
+      "cols": 66
+    },
+    {
+      "id": 603,
+      "constant": "RID_J3",
+      "kodClass": "OutdoorsJ3",
+      "name": "The Queen's Way",
+      "roo": "j3.roo",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "road",
+      "teleport": {
+        "row": 14,
+        "col": 18
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 593,
+          "toConstant": "RID_I3",
+          "toRow": 25,
+          "toCol": 60,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 851,
+          "toConstant": "RID_CASTLE2B",
+          "toRow": 44,
+          "toCol": 84,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 21,
+          "col": 10
+        },
+        {
+          "row": 22,
+          "col": 10
+        },
+        {
+          "row": 21,
+          "col": 11
+        },
+        {
+          "row": 22,
+          "col": 15
+        },
+        {
+          "row": 22,
+          "col": 16
+        },
+        {
+          "row": 21,
+          "col": 15
+        }
+      ],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "spiderbaby",
+          "weight": 40
+        },
+        {
+          "kind": "giantrat",
+          "weight": 60
+        }
+      ],
+      "generators": [
+        {
+          "row": 21,
+          "col": 17
+        },
+        {
+          "row": 30,
+          "col": 15
+        },
+        {
+          "row": 10,
+          "col": 16
+        },
+        {
+          "row": 17,
+          "col": 7
+        }
+      ],
+      "maxMonsters": 5,
+      "genTime": 180000,
+      "genPercent": 60,
+      "initCountMin": 1,
+      "initCountMax": 3,
+      "objects": [],
+      "rows": 41,
+      "cols": 24
+    },
+    {
+      "id": 615,
+      "constant": "RID_K5",
+      "kodClass": "OutdoorsK5",
+      "name": "The Badlands",
+      "roo": "k5.roo",
+      "music": "walk5.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "badlands",
+      "teleport": {
+        "row": 33,
+        "col": 32
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 45,
+          "toConstant": "RID_BADLAND1",
+          "toRow": 3,
+          "toCol": 80,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "troll",
+          "weight": 30
+        },
+        {
+          "kind": "groundwormqueen",
+          "weight": 70
+        }
+      ],
+      "generators": [
+        {
+          "row": 10,
+          "col": 15
+        },
+        {
+          "row": 19,
+          "col": 12
+        },
+        {
+          "row": 23,
+          "col": 23
+        },
+        {
+          "row": 4,
+          "col": 24
+        },
+        {
+          "row": 8,
+          "col": 50
+        },
+        {
+          "row": 11,
+          "col": 30
+        },
+        {
+          "row": 25,
+          "col": 37
+        },
+        {
+          "row": 37,
+          "col": 28
+        },
+        {
+          "row": 36,
+          "col": 43
+        },
+        {
+          "row": 41,
+          "col": 48
+        },
+        {
+          "row": 49,
+          "col": 34
+        },
+        {
+          "row": 45,
+          "col": 22
+        },
+        {
+          "row": 14,
+          "col": 41
+        },
+        {
+          "row": 19,
+          "col": 30
+        },
+        {
+          "row": 28,
+          "col": 50
+        },
+        {
+          "row": 39,
+          "col": 37
+        }
+      ],
+      "maxMonsters": 34,
+      "genTime": 60000,
+      "genPercent": 80,
+      "initCountMin": 5,
+      "initCountMax": 7,
+      "objects": [],
+      "rows": 54,
+      "cols": 57
+    },
+    {
+      "id": 750,
+      "constant": "RID_ICE_CAVE1",
+      "kodClass": "IceCave1",
+      "name": "The Dreaded Caves of Ice",
+      "roo": "icecave1.roo",
+      "music": "castle.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "tundra",
+      "teleport": {
+        "row": 33,
+        "col": 25
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "SOUTH",
+          "to": 526,
+          "toConstant": "RID_B6",
+          "toRow": 3,
+          "toCol": 18,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "snowrat",
+          "weight": 55
+        },
+        {
+          "kind": "troll",
+          "weight": 45
+        }
+      ],
+      "generators": [
+        {
+          "row": 23,
+          "col": 5
+        },
+        {
+          "row": 8,
+          "col": 6
+        },
+        {
+          "row": 13,
+          "col": 20
+        },
+        {
+          "row": 6,
+          "col": 25
+        },
+        {
+          "row": 20,
+          "col": 20
+        },
+        {
+          "row": 8,
+          "col": 38
+        },
+        {
+          "row": 23,
+          "col": 40
+        },
+        {
+          "row": 20,
+          "col": 43
+        },
+        {
+          "row": 41,
+          "col": 44
+        },
+        {
+          "row": 46,
+          "col": 37
+        },
+        {
+          "row": 45,
+          "col": 29
+        },
+        {
+          "row": 35,
+          "col": 26
+        },
+        {
+          "row": 31,
+          "col": 25
+        },
+        {
+          "row": 25,
+          "col": 9
+        },
+        {
+          "row": 23,
+          "col": 7
+        },
+        {
+          "row": 25,
+          "col": 6
+        }
+      ],
+      "maxMonsters": 13,
+      "genTime": 25000,
+      "genPercent": 100,
+      "initCountMin": 6,
+      "initCountMax": 8,
+      "objects": [],
+      "rows": 47,
+      "cols": 45
+    }
+  ]
+}

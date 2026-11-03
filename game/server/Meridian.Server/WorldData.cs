@@ -71,6 +71,8 @@ public sealed record RoomDefinition(int Id, string Name, string Roo)
     public IReadOnlyList<ExitDefinition> Exits { get; init; } = [];
     public IReadOnlyList<LockedDoorDefinition> LockedDoors { get; init; } = [];
     public IReadOnlyList<EdgeExitDefinition> EdgeExits { get; init; } = [];
+    /// <summary>Zonen-Übergänge (KOD SomethingMoved mit UtilGoNearSquare): Betreten eines der Felder wechselt den Raum.</summary>
+    public IReadOnlyList<RegionExitDefinition> RegionExits { get; init; } = [];
     public IReadOnlyList<PlacedObjectDefinition> Objects { get; init; } = [];
     public IReadOnlyList<NpcDefinition> Npcs { get; init; } = [];
     /// <summary>ROOM_NO_COMBAT: hier kann niemand angreifen (room.kod ReqSomethingAttack).</summary>
@@ -85,6 +87,13 @@ public sealed record RoomDefinition(int Id, string Name, string Roo)
     public IReadOnlyList<GridPos> Generators { get; init; } = [];
     public IReadOnlyList<MonsterTableEntry> Monsters { get; init; } = [];
     public int MaxMonsters { get; init; }
+    /// <summary>monsroom.kod piGen_time (ms) und piGen_percent: alle GenTime ms mit GenPercent % Chance ein neues
+    /// Monster; 0 = alte Regel (Raum füllt sich schnell zur Hälfte, dann alle 20 s).</summary>
+    public int GenTime { get; init; }
+    public int GenPercent { get; init; } = 100;
+    /// <summary>piInit_count_min/max: so viele Monster beim Start.</summary>
+    public int InitCountMin { get; init; } = 1;
+    public int InitCountMax { get; init; } = 5;
     /// <summary>Raumrätsel: "mausoleum" (guest6.kod Hebel, Tür, Endkampf).</summary>
     public string? Puzzle { get; init; }
     /// <summary>Portal (newbport.kod): beim ersten Betreten Warnung, beim zweiten hinüber.</summary>
@@ -121,6 +130,15 @@ public sealed record EdgeExitDefinition(string Edge, int To, int ToRow, int ToCo
 {
     public string? ToConstant { get; init; }
     public string? Rotate { get; init; }
+}
+
+/// <summary>Zone als Rechtecke [zeile1, spalte1, zeile2, spalte2]; Angle: Blickrichtung nach dem Wechsel
+/// (EAST, SOUTH_WEST …), sonst unverändert.</summary>
+public sealed record RegionExitDefinition(IReadOnlyList<int[]> Rects, int To, int ToRow, int ToCol)
+{
+    public string? Angle { get; init; }
+
+    public bool Contains(int row, int col) => Rects.Any(q => row >= q[0] && row <= q[2] && col >= q[1] && col <= q[3]);
 }
 
 public sealed record PlacedObjectDefinition(string Type, int Row, int Col)

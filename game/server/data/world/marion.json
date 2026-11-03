@@ -174,7 +174,29 @@
         }
       ],
       "rows": 88,
-      "cols": 93
+      "cols": 93,
+      "regionExits": [
+        {
+          "rects": [
+            [1, 67, 31, 93]
+          ],
+          "to": 534,
+          "toConstant": "RID_C4",
+          "toRow": 34,
+          "toCol": 5,
+          "angle": "NORTH_EAST"
+        },
+        {
+          "rects": [
+            [84, 49, 88, 93]
+          ],
+          "to": 535,
+          "toConstant": "RID_C5",
+          "toRow": 3,
+          "toCol": 23,
+          "angle": "SOUTH_WEST"
+        }
+      ]
     },
     {
       "id": 201,

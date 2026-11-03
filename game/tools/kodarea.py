@@ -47,6 +47,12 @@ def npc(kod_class, name, icon, role, row, col, angle=0, fine_row=32, fine_col=32
 
 
 
+def dumps(world):
+    """JSON mit Einrückung, Zahlenlisten (Rechtecke, Felder) aber in einer Zeile."""
+    text = json.dumps(world, ensure_ascii=False, indent=2)
+    return re.sub(r"\[\s+(-?\d+(?:,\s+-?\d+)*)\s+\]", lambda m: "[" + ", ".join(m.group(1).split()).replace(",,", ",") + "]", text)
+
+
 def write_area(name, rooms, start=False, source="", respawn_room=None, start_room=None):
     """Größen aus client/rooms/*.json ergänzen und server/data/world/<name>.json schreiben."""
     for room in rooms:
@@ -61,5 +67,5 @@ def write_area(name, rooms, start=False, source="", respawn_room=None, start_roo
         world["respawnRoom"] = respawn_room
     world["rooms"] = rooms
     out = root / "server/data/world" / f"{name}.json"
-    out.write_text(json.dumps(world, ensure_ascii=False, indent=2) + "\n")
+    out.write_text(dumps(world) + "\n")
     print(f"{out}: {len(rooms)} Räume, {sum(len(r.get('objects', [])) for r in rooms)} Zierobjekte")

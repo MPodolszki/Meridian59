@@ -208,7 +208,18 @@ public sealed class RoomLayout
         return root;
     }
 
-    private static bool IsGreen(string? terrain) => terrain is "village" or "forest";
+    private static bool IsGreen(string? terrain) => terrain is "village" or "forest" or "fields" or "lake" or "road" or "beach";
+
+    /// <summary>Bodenbelag nach Gelände (Wildnis: viTerrain_type des Originals).</summary>
+    private static string FloorMaterial(string? terrain, bool outdoors) => terrain switch
+    {
+        "village" or "forest" or "fields" or "lake" or "road" => "grass",
+        "beach" => "sand",
+        "badlands" or "mountain" => "dirt",
+        "tundra" or "snow" => "snow",
+        "cave" => "rock",
+        _ => outdoors ? "street" : "planks",
+    };
 
     /// <summary>
     /// Kartenrand wie in Meridian: Wandfelder (-1) und ein Ring außerhalb des Rasters werden zu dichtem Wald, an der
@@ -319,7 +330,7 @@ public sealed class RoomLayout
             {
                 Mesh = new BoxMesh { Size = new Vector3(width, height - bottom, cellSize) },
                 Position = new Vector3(x, (height + bottom) / 2f, z),
-                MaterialOverride = Material(materials, kind == "water" ? "water" : !outdoors ? "planks" : terrain == "village" ? "grass" : "street"),
+                MaterialOverride = Material(materials, kind == "water" ? "water" : FloorMaterial(terrain, outdoors)),
             };
             root.AddChild(tile);
             return;
@@ -343,7 +354,7 @@ public sealed class RoomLayout
         {
             Mesh = new BoxMesh { Size = new Vector3(width, height - foundation, cellSize) },
             Position = new Vector3(x, (height + foundation) / 2f, z),
-            MaterialOverride = Material(materials, kind == "wall" ? (outdoors ? "rock" : "plaster") : "house"),
+            MaterialOverride = Material(materials, kind == "wall" ? (outdoors || terrain == "cave" ? "rock" : "plaster") : "house"),
         };
         root.AddChild(block);
         if (kind == "building")
@@ -395,6 +406,9 @@ public sealed class RoomLayout
             "roof" => ("roof", 3f, new Color(0.50f, 0.22f, 0.16f)),
             "rock" => ("stonewall", 4f, new Color(0.42f, 0.42f, 0.40f)),
             "grass" => ("grass", 4f, new Color(0.30f, 0.45f, 0.15f)),
+            "sand" => ("plaster", 5f, new Color(0.86f, 0.78f, 0.58f)),
+            "dirt" => ("stonewall", 5f, new Color(0.62f, 0.50f, 0.38f)),
+            "snow" => ("plaster", 5f, new Color(0.95f, 0.97f, 1.0f)),
             "water" => ("", 1f, new Color(0.18f, 0.32f, 0.42f, 0.85f)),
             _ => ("plaster", 4f, new Color(0.66f, 0.60f, 0.50f)),
         };

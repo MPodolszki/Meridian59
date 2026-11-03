@@ -71,6 +71,8 @@ public sealed class Room(RoomDefinition definition)
 
     /// <summary>Spawn-Punkte und Monsterarten mit Gewicht (KOD plGenerators/plMonsters).</summary>
     public List<GridPos> Generators { get; } = new();
+    public int? InitTarget { get; set; }
+    public bool InitDone { get; set; }
     public List<(MonsterKind Kind, int Weight)> MonsterTable { get; } = new();
     public int MaxMonsters { get; set; }
     public bool NightOnly { get; set; }
@@ -345,6 +347,8 @@ public sealed partial class World
             }
             if (Portal(avatar, row, col) is { } portal)
                 return portal;
+            if (RegionExit(avatar, row, col) is { } region)
+                return region;
             if (avatar.Row / 16 != row / 16 || avatar.Col / 16 != col / 16)
                 BreakTrance(avatar);
             avatar.Row = row;
@@ -433,7 +437,8 @@ public sealed partial class World
     /// <summary>Drehung beim Raumwechsel: Grad relativ, oder feste Richtung (SET_ANGLE_WEST → "WEST" usw.).</summary>
     public static ushort RotateAngle(ushort angle, string? rotate) => rotate switch
     {
-        "EAST" => 0, "SOUTH" => 1024, "WEST" => 2048, "NORTH" => 3072,
+        "EAST" => 0, "SOUTH_EAST" => 512, "SOUTH" => 1024, "SOUTH_WEST" => 1536,
+        "WEST" => 2048, "NORTH_WEST" => 2560, "NORTH" => 3072, "NORTH_EAST" => 3584,
         _ when int.TryParse(rotate, out int degrees) => (ushort)((angle + degrees * 4096 / 360) % 4096),
         _ => angle,
     };
@@ -548,8 +553,25 @@ public sealed partial class World
         // Friedhof und Krypta: neue Monster nur nachts (TryCreateMonster), vorhandene bleiben.
         if (room.NightOnly && !GameClock.IsNight(Hour(now)))
             return;
-        // Leerer Raum füllt sich schnell bis zur Hälfte, danach ein neues Monster alle 20 s.
-        room.NextSpawn = now.AddSeconds(room.Monsters.Count < room.MaxMonsters / 2 ? 2 : 20);
+        var def = room.Definition;
+        if (def.GenTime > 0)
+        {
+            // monsroom.kod: beim Laden InitCount Monster, danach alle piGen_time ms mit piGen_percent % eines.
+            room.InitTarget ??= _random.Next(def.InitCountMin, def.InitCountMax + 1);
+            bool initial = room.Monsters.Count(m => m.Alive) < Math.Min(room.InitTarget.Value, room.MaxMonsters) && !room.InitDone;
+            room.NextSpawn = now.AddMilliseconds(initial ? 500 : def.GenTime);
+            if (!initial)
+            {
+                room.InitDone = true;
+                if (_random.Next(100) >= def.GenPercent)
+                    return;
+            }
+        }
+        else
+        {
+            // Leerer Raum füllt sich schnell bis zur Hälfte, danach ein neues Monster alle 20 s.
+            room.NextSpawn = now.AddSeconds(room.Monsters.Count < room.MaxMonsters / 2 ? 2 : 20);
+        }
         if (room.Monsters.Count(m => m.Alive) >= room.MaxMonsters)
             return;
         int roll = _random.Next(room.MonsterTable.Sum(e => e.Weight));
