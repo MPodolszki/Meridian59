@@ -90,6 +90,8 @@ Monster datengetrieben: alle 62 Arten des Originals in server/data/monsters/mons
 Monster-Modelle: 46 eigene prozedurale Modelle mit Animationen (tools/blender/make_creature.py, creatures.py), Datei = Name der Original-Grafik; verschmolzene Körper per Distanzfeld (sdf.py) mit Hautrelief, Zeichnung, Gesichtstypen. Fremde Monster-Pakete verworfen (Quaternius zu niedlich, Sketchfab nicht gewünscht).
 Zauberschulen Teil 1: 37 von ~150 Sprüchen (Angriff, Schwächung, Fläche, Heilung, Gift heilen; docs/magic.md). Katalog aller Sprüche: docs/kod/spells_catalog.json, docs/spells-original.md (Reihenfolge dort).
 Wildnis (53 Räume, automatisch aus dem KOD: tools/kodroom.py, make_wilderness.py) und Tempel Shal'ille/Kraanan/Qor + Faren-Priesterin als Spruchlehrer (make_temples.py, docs/wilderness.md); Zonen-Übergänge und Spawnzeiten wie im Original. Alle Städte zu Fuß verbunden. Übersicht des Rests: docs/world-remaining.md.
-Offen (Magie): restliche Sprüche (Raumzauber, Wände, Gegenstände, Riija-Illusionen, Jala-Lieder), Monster zaubern, PvP.
+Weitere Gebiete automatisch aus dem KOD (tools/make_areas.py, docs/areas.md): Kanalisationen mit Lupogg-König, Burgen mit Herzog/Prinzessin, Nekropolis, Spinnennest, Feenwald, Gildenhallen (ohne Gilden).
+Sprüche: 60 von ~150 (Raumzauber, Schutz, Waffenweihen, Kara'hol, Nachtsicht, Manabombe …; docs/magic.md).
+Offen (Magie): Wände, Riija-Illusionen, Jala-Lieder, PvP-Sprüche, Leichen/Séance, Flüche/Krankheiten.
 Heimatstadt je Spieler wie im Original (Ahnenhalle Cor Noth, docs/cor.md); zaubernde Monster (docs/monsters.md).
-Offen: Kanalisationen (Jasper, Barloque), Heimatstadt je Spieler, Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.
+Offen: Ko'catan, Orkhöhlen, Gruft-Rätsel in Marion, fehlende Gegenstände (Tränke, Zauberstäbe, Ringe, Rüstungen), Gilden, Mietzimmer, PvP, Rätsel der Wildnis.
