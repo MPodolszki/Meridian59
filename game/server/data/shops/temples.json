@@ -11,6 +11,7 @@
         "purify",
         "forcesoflight",
         "majorheal",
+        "umbrella",
         "holysymbol",
         "finalrites",
         "breathoflife",
@@ -26,6 +27,8 @@
         "nightvision",
         "createweapon",
         "createfood",
+        "discordance",
+        "antimagicaura",
         "killingfields",
         "resistmagic",
         "armorofgort",
@@ -39,7 +42,8 @@
         "acidtouch",
         "karaholscurse",
         "enfeeble",
-        "hold"
+        "hold",
+        "invisibility"
       ]
     },
     "FarenPriestess": {
@@ -47,6 +51,7 @@
       "spells": [
         "light",
         "zap",
+        "winds",
         "resistfire",
         "resistcold",
         "resistshock",

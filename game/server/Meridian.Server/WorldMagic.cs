@@ -173,6 +173,7 @@ public sealed partial class World
                 break;
         }
         int power = ability / 2 + Math.Clamp(primary, 0, 30) + Math.Clamp(secondary, 0, 10);
+        power -= RoomEnchantState(a.Room, "antimagic");   // antimag.kod: − (Stärke/2 + 25) für jeden Spruch im Raum
         return Math.Clamp(power, MagicRules.SpellPowerMin, MagicRules.SpellPowerMax);
     }
 
@@ -344,10 +345,11 @@ public sealed partial class World
                 ChangeMana(target, amount);
                 break;
             }
-            case "bless" or "superstrength" or "haste" or "resist" or "gort" or "resistmagic" or "karahol" or "nightvision":
+            case "bless" or "superstrength" or "haste" or "resist" or "gort" or "resistmagic" or "karahol" or "nightvision"
+                or "umbrella" or "invisibility":
                 Enchant(a, target ?? a, spell, power);
                 break;
-            case "roomlight" or "roomdark" or "killingfields" or "forcesoflight":
+            case "roomlight" or "roomdark" or "killingfields" or "forcesoflight" or "antimagic" or "winds":
                 EnchantRoom(a, spell, power);
                 break;
             case "rescue":
@@ -358,6 +360,9 @@ public sealed partial class World
                 break;
             case "purify":
                 Purify(a, spell, power);
+                break;
+            case "discordance":
+                Discordance(a, spell, power);
                 break;
             default:
                 CastSchoolSpell(a, spell, target, victim, power);

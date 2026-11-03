@@ -33,6 +33,7 @@ public sealed partial class World
             "resist" => power / 2 + spell.ResistBase,         // GetResistanceStrength
             "resistmagic" => power / 3 + 7,                   // resmagic.kod
             "nightvision" => power + 50,                      // nightv.kod GainLight
+            "invisibility" => 25 + power,                     // invis.kod: Abwehr + 25 + Stärke
             _ => power,                                        // Segen, Eile: Spruchstärke
         };
         // haste.kod: 5 + 15 × Stärke / 100 Minuten (ganzzahlig); sonst Basis + Stärke × je Punkt Sekunden.
@@ -101,6 +102,21 @@ public sealed partial class World
         Tell(a, "Du bist wie gelähmt und kannst dich nicht rühren.");
         return true;
     }
+
+    /// <summary>Schirm (umbrella.kod): Abwehr + 250; Unsichtbarkeit (invis.kod): + 25 + Stärke.</summary>
+    private int DefenseBonus(Avatar a) => (EnchantState(a, "umbrella") > 0 ? 250 : 0) + EnchantState(a, "invisibility");
+
+    /// <summary>Schirm gegen Untote: Schaden − Schaden × (Stärke/20)/10, mindestens 1.</summary>
+    private int UmbrellaReduce(Avatar a, MonsterKind attacker, int damage)
+    {
+        int state = EnchantState(a, "umbrella");
+        if (state == 0 || !attacker.Undead)
+            return damage;
+        return Math.Clamp(damage - damage * (state / 20) / 10, 1, damage);
+    }
+
+    /// <summary>Unsichtbar (PFLAG_INVISIBLE): Monster bemerken den Spieler nicht von selbst.</summary>
+    private bool Invisible(Avatar a) => EnchantState(a, "invisibility") > 0;
 
     /// <summary>Kara'hols Fluch (karahol.kod): Treffer + 100 + 2 × Stärke.</summary>
     private int KaraholHit(Avatar a) => EnchantState(a, "karahol") is > 0 and var s ? 100 + 2 * s : 0;

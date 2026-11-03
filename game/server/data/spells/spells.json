@@ -1138,6 +1138,122 @@
       "effect": "purify",
       "description": "Ein heiliges Licht befreit dich mit etwas Glück von Gift und Lähmung. Braucht Smaragde und Holunderbeeren.",
       "castText": "Ein helles, heiliges Licht versucht, deine Seele von unreinen Einflüssen zu befreien."
+    },
+    {
+      "key": "umbrella",
+      "sid": 50,
+      "name": "Schirm",
+      "icon": "iumbrela.bgf",
+      "school": 1,
+      "level": 5,
+      "mana": 15,
+      "chanceToIncrease": 35,
+      "targets": 0,
+      "reagents": [],
+      "effect": "umbrella",
+      "durationBase": 40,
+      "durationPerPower": 6,
+      "description": "Eine Kuppel aus magischer Energie schützt dich vor allen Angreifern und besonders vor Untoten.",
+      "castText": "Eine Kuppel aus magischer Energie umschließt dich.",
+      "offText": "Die Kuppel aus magischer Energie löst sich auf."
+    },
+    {
+      "key": "invisibility",
+      "sid": 51,
+      "name": "Unsichtbarkeit",
+      "icon": "iinvisib.bgf",
+      "school": 2,
+      "level": 5,
+      "mana": 12,
+      "exertion": 8,
+      "chanceToIncrease": 20,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "darkangelfeather",
+          "number": 1
+        }
+      ],
+      "effect": "invisibility",
+      "durationBase": 20,
+      "durationPerPower": 2,
+      "description": "Ein schimmerndes Feld verhüllt dich: Monster bemerken dich nicht von selbst, und du bist schwerer zu treffen. Braucht eine Feder eines Dunklen Engels.",
+      "castText": "Ein schimmerndes Feld umhüllt deinen Körper.",
+      "offText": "Das schimmernde Feld löst sich auf, du bist wieder sichtbar."
+    },
+    {
+      "key": "discordance",
+      "sid": 43,
+      "name": "Zwietracht",
+      "icon": "idiscord.bgf",
+      "school": 3,
+      "level": 4,
+      "mana": 8,
+      "castTime": 1000,
+      "chanceToIncrease": 5,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "sapphire",
+          "number": 2
+        }
+      ],
+      "effect": "discordance",
+      "description": "Entfesselte magische Energie versucht, alle Verzauberungen dieses Ortes zu zerstören. Braucht Saphire.",
+      "castText": "Der Raum verzerrt sich leicht, gerade genug, um das spröde Manafeld zu beschädigen."
+    },
+    {
+      "key": "antimagicaura",
+      "sid": 52,
+      "name": "Antimagie-Aura",
+      "icon": "iantimag.bgf",
+      "school": 3,
+      "level": 6,
+      "mana": 15,
+      "castTime": 600,
+      "chanceToIncrease": 10,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "sapphire",
+          "number": 2
+        },
+        {
+          "item": "polishedseraphym",
+          "number": 1
+        }
+      ],
+      "effect": "antimagic",
+      "description": "Das Manafeld dieses Ortes gerät ins Wanken: jeder Zauber hier wird schwächer. Braucht Saphire und einen polierten Seraphym.",
+      "castText": "Das Manafeld beginnt zu schwanken.",
+      "offText": "Das Manafeld beruhigt sich wieder.",
+      "unnecessary": "Über diesem Ort liegt bereits eine Antimagie-Aura."
+    },
+    {
+      "key": "winds",
+      "sid": 25,
+      "name": "Winde",
+      "icon": "iwinds.bgf",
+      "school": 4,
+      "level": 3,
+      "mana": 10,
+      "chanceToIncrease": 35,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "elderberry",
+          "number": 3
+        },
+        {
+          "item": "purplemushroom",
+          "number": 1
+        }
+      ],
+      "effect": "winds",
+      "description": "Heftige Winde fegen durch die Gegend und erschweren allen das Zielen. Braucht Holunderbeeren und einen Purpurpilz.",
+      "castText": "Heftige Winde fegen plötzlich durch die Gegend und zerren an deinen Gliedern.",
+      "offText": "Die Winde lassen nach und legen sich.",
+      "unnecessary": "Hier wehen bereits magische Winde."
     }
   ],
   "startingSpells": [

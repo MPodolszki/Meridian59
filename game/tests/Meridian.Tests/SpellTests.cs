@@ -117,6 +117,26 @@ public sealed class SpellTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task Umbrella_RaisesDefense_DiscordanceEndsRoomEnchantments()
+    {
+        var (c, events, me) = await EnterAsync(50);
+        int before = _server.World.PlayerDefense(me);
+        await CastUntilAsync(c, events, me, 50, 0, t => t.Contains("Kuppel aus magischer Energie umschließt"));
+        Assert.Equal(before + 250, _server.World.PlayerDefense(me));
+        // Winde auf den Raum, dann Zwietracht mit voller Stärke: ab 60 % fällt eine Verzauberung sicher.
+        me.State.Spells[25] = 99;
+        me.State.Spells[43] = 99;
+        GiveReagents(me, ("elderberry", 40), ("purplemushroom", 20), ("sapphire", 40));
+        await CastUntilAsync(c, events, me, 25, 0, t => t.Contains("Heftige Winde"));
+        var room = _server.World.Rooms.Single();
+        Assert.Contains(25, room.Enchantments.Keys);
+        // Jede Raumverzauberung fällt mit Stärke % Chance; notfalls mehrmals wirken.
+        for (int i = 0; i < 10 && room.Enchantments.ContainsKey(25); i++)
+            await CastUntilAsync(c, events, me, 43, 0, t => t.Contains("Manafeld zu beschädigen"));
+        Assert.DoesNotContain(25, room.Enchantments.Keys);
+    }
+
+    [Fact]
     public void MonsterSpells_HaveTheOriginalValues()
     {
         var book = SpellBook.Load(Data("spells", "spells.json"));

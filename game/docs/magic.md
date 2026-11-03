@@ -148,3 +148,14 @@ Kräfte des Lichts für Shal'ille-Sprüche fehlt.
 - **Läutern** (purify.kod, Shal'ille 4): Gift und Lähmung verschwinden je mit Stärke % Chance.
 - **Lähmung** (hold.kod für Spieler): BP_EFFECT EFFECT_PARALYZE/RELEASE wie im Original; der Godot-Client sperrt
   dann die Bewegung, der Server lässt Angriff, Zaubern und Bewegung nicht zu.
+
+## Schirm, Unsichtbarkeit, Zwietracht, Antimagie-Aura, Winde (2026-11-03)
+- **Schirm** (umbrella.kod, Shal'ille 5): Abwehr + 250, gegen Untote Schaden − Schaden × (Stärke/20)/10; Random(D/2, D),
+  D = 40 + 6×Stärke s.
+- **Unsichtbarkeit** (invis.kod, Qor 5): Abwehr + 25 + Stärke, Monster suchen sich den Spieler nicht als Ziel (wehren
+  sich aber); D = 20 + 2×Stärke s. Braucht Federn Dunkler Engel (Beute). Für andere Spieler noch sichtbar.
+- **Zwietracht** (discord.kod, Kraanan 4): jede Raumverzauberung fällt mit Stärke % Chance, ab 60 eine sicher.
+- **Antimagie-Aura** (antimag.kod, Kraanan 6): jeder Spruch im Raum − (Stärke/2 + 25) Spruchstärke; D = 60 + Stärke s.
+  Braucht einen polierten Seraphym.
+- **Winde** (winds.kod, Faren 3): Zielen aller Spieler im Raum − Stärke/4 (Treffer − 4 × das), immer 60 s; die
+  Fehlschusschance für Fernwaffen fehlt (es gibt noch keine).

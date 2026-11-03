@@ -1331,6 +1331,33 @@
       "number": true,
       "plural": "Feenflügel",
       "description": "Ein zarter, schillernder Flügel einer Fee."
+    },
+    {
+      "key": "darkangelfeather",
+      "kodClass": "DarkAngelFeather",
+      "name": "Feder eines Dunklen Engels",
+      "icon": "dangfeth.bgf",
+      "value": 40,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Federn eines Dunklen Engels",
+      "description": "Diese fast fußlange Feder muss von einem Dunklen Engel stammen. Sie ist schwarz wie die Nacht."
+    },
+    {
+      "key": "polishedseraphym",
+      "kodClass": "PolishedSeraphym",
+      "name": "polierter Seraphym",
+      "icon": "serappol.bgf",
+      "value": 300,
+      "types": [
+        "reagent",
+        "gem"
+      ],
+      "number": true,
+      "plural": "polierte Seraphyme",
+      "description": "Ein vollkommen geschliffener Seraphym. Man sagt, er könne das Licht der Götter selbst einfangen."
     }
   ],
   "treasure": {
@@ -1562,6 +1589,10 @@
         "weight": 18
       },
       {
+        "item": "darkangelfeather",
+        "weight": 18
+      },
+      {
         "item": "purplemushroom",
         "weight": 16
       },
@@ -1592,7 +1623,12 @@
         "weight": 10
       }
     ],
-    "avar_shaman": [],
+    "avar_shaman": [
+      {
+        "item": "polishedseraphym",
+        "weight": 3
+      }
+    ],
     "avar": [
       {
         "item": "bread",
@@ -1646,6 +1682,10 @@
       }
     ],
     "dark_angel": [
+      {
+        "item": "darkangelfeather",
+        "weight": 45
+      },
       {
         "item": "bluedragonscale",
         "weight": 10
@@ -1760,6 +1800,10 @@
         "weight": 9
       },
       {
+        "item": "darkangelfeather",
+        "weight": 5
+      },
+      {
         "item": "inkycap",
         "weight": 4
       }
@@ -1814,6 +1858,10 @@
       {
         "item": "bluemushroom",
         "weight": 5
+      },
+      {
+        "item": "darkangelfeather",
+        "weight": 3
       },
       {
         "item": "bluedragonscale",
@@ -2022,6 +2070,10 @@
       {
         "item": "bluedragonscale",
         "weight": 15
+      },
+      {
+        "item": "darkangelfeather",
+        "weight": 15
       }
     ],
     "orc_chief": [
@@ -2098,6 +2150,10 @@
         "weight": 4
       },
       {
+        "item": "polishedseraphym",
+        "weight": 3
+      },
+      {
         "item": "money",
         "weight": 2
       }
@@ -2172,6 +2228,10 @@
         "weight": 10
       },
       {
+        "item": "darkangelfeather",
+        "weight": 10
+      },
+      {
         "item": "emerald",
         "weight": 10
       },
@@ -2212,6 +2272,10 @@
       {
         "item": "ruby",
         "weight": 4
+      },
+      {
+        "item": "darkangelfeather",
+        "weight": 4
       }
     ],
     "very_tough": [
@@ -2242,6 +2306,10 @@
       {
         "item": "bluedragonscale",
         "weight": 7
+      },
+      {
+        "item": "darkangelfeather",
+        "weight": 5
       },
       {
         "item": "mysticsword",

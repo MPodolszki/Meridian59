@@ -38,6 +38,7 @@ public sealed partial class World
         off += EnchantState(a, "bless");   // plAttack_modifiers: bless.kod ModifyHitRoll
         off += ForcesOfLightBonus(a);       // forceslt.kod ModifyHitRoll
         off += KaraholHit(a);
+        off -= WindsPenalty(a);
         return Math.Clamp(off, 1, 1000);
     }
 
@@ -52,6 +53,7 @@ public sealed partial class World
             ? Math.Clamp(SkillOf(a, Skill.Block) + shield.Kind.DefenseBonus, 1, 120) : 0;
         int def = parry * 2 + block + SkillOf(a, Skill.Dodge) * 3 + a.State.Attributes.Agility * 4 + BaseMaxHealth(a) * 3 / 2;
         def += used.Where(i => i.Kind.Slot == "armor").Sum(i => i.Kind.DefenseBonus);
+        def += DefenseBonus(a);
         return Math.Clamp(def, 1, 1000);
     }
 

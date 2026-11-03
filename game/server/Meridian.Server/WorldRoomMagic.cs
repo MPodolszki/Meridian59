@@ -11,7 +11,8 @@ public sealed record RoomEnchantment(SpellDefinition Spell, int State, DateTime 
 /// </summary>
 public sealed partial class World
 {
-    private static bool IsRoomEnchantment(SpellDefinition s) => s.Effect is "roomlight" or "roomdark" or "killingfields" or "forcesoflight";
+    private static bool IsRoomEnchantment(SpellDefinition s) =>
+        s.Effect is "roomlight" or "roomdark" or "killingfields" or "forcesoflight" or "antimagic" or "winds";
 
     /// <summary>Lichtänderung durch Licht/Dunkelheit (AddBaseLight).</summary>
     private static int LightDelta(Room room) => room.Enchantments.Values.Sum(e => e.Spell.Effect switch
@@ -45,6 +46,8 @@ public sealed partial class World
             "roomlight" => (25 + power, Half(45 + 3 * power)),
             "roomdark" => (power + 25, Half(30 + 2 * power)),
             "killingfields" => (1, 50 + power),
+            "antimagic" => (power / 2 + 25, Half(60 + power)),
+            "winds" => (power / 4, 60),                           // winds.kod: Dauer immer 60 s
             _ => (power, 6 * (power / 3 + 1)),                    // Kräfte des Lichts
         };
         room.Enchantments[spell.Sid] = new RoomEnchantment(spell, state, DateTime.UtcNow.AddSeconds(seconds));
@@ -120,6 +123,28 @@ public sealed partial class World
         Remove(a);
         var (row, col) = home.ArrivalPoint;
         Place(a, home, row, col);
+    }
+
+    /// <summary>Winde (winds.kod): Zielen aller Spieler im Raum − Stärke/4 (Treffer − 4 × das).</summary>
+    private int WindsPenalty(Avatar a) => RoomEnchantState(a.Room, "winds") * 4;
+
+    /// <summary>discord.kod: jede Raumverzauberung verschwindet mit Stärke % Chance; ab 60 % eine sicher vorweg.</summary>
+    private void Discordance(Avatar a, SpellDefinition spell, int power)
+    {
+        var room = a.Room;
+        foreach (var other in room.Avatars.Values)
+            Tell(other, spell.CastText ?? "Der Raum verzerrt sich leicht, gerade genug, um das spröde Manafeld zu beschädigen.");
+        var list = room.Enchantments.Keys.ToList();
+        if (list.Count > 0 && power >= 60)
+        {
+            int sid = list[_random.Next(list.Count)];
+            room.Enchantments[sid] = room.Enchantments[sid] with { Until = DateTime.MinValue };
+            list.Remove(sid);
+        }
+        foreach (int sid in list)
+            if (power > _random.Next(1, 101))
+                room.Enchantments[sid] = room.Enchantments[sid] with { Until = DateTime.MinValue };
+        TickRoomEnchantments(room, DateTime.UtcNow);
     }
 
     // ------------------------------------------------------------------ Läutern

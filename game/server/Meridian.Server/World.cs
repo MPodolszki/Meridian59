@@ -647,7 +647,7 @@ public sealed partial class World
         if (m.Target is { } t && (t.Room != room || t.Hp <= 0 || Distance(m.Row, m.Col, t.Row, t.Col) > m.Kind.AggroRange * 2))
             m.Target = null;
         m.Target ??= room.Avatars.Values
-            .Where(a => a.Hp > 0 && Distance(m.Row, m.Col, a.Row, a.Col) <= m.Kind.AggroRange && Hates(m.Kind, a))
+            .Where(a => a.Hp > 0 && !Invisible(a) && Distance(m.Row, m.Col, a.Row, a.Col) <= m.Kind.AggroRange && Hates(m.Kind, a))
             .OrderBy(a => Distance(m.Row, m.Col, a.Row, a.Col))
             .FirstOrDefault();
 
@@ -709,7 +709,7 @@ public sealed partial class World
             // Widerstände (resist.kod AddResistance) gegen die Angriffsart des Monsters, falls es eine hat.
             if (m.Kind.AttackType is { } type)
                 damage = CombatRules.Resist(damage, EnchantState(victim, "resist", type));
-            damage = GortAbsorb(victim, AssessPlayerDamage(victim, damage));
+            damage = GortAbsorb(victim, UmbrellaReduce(victim, m.Kind, AssessPlayerDamage(victim, damage)));
             victim.Hp = Math.Max(0, victim.Hp - damage);
             Tell(victim, $"{Article(m.Kind)} trifft dich für {damage} Schaden.");
             if (victim.Hp > 0 && m.Kind.Poison is { } poison && _random.Next(poison.OneIn) == 0)
