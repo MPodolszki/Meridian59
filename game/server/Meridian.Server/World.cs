@@ -401,7 +401,7 @@ public sealed partial class World
             return null;
         int r = row / 64, c = col / 64;
         string? edge = r > rows ? "SOUTH" : r < 1 ? "NORTH" : c > cols ? "EAST" : c < 1 ? "WEST" : null;
-        return edge is null ? null : room.EdgeExits.FirstOrDefault(e => e.Edge == edge);
+        return edge is null ? null : room.EdgeExits.FirstOrDefault(e => e.Edge == edge && e.Applies(r, c));
     }
 
     /// <summary>

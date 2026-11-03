@@ -62,7 +62,8 @@
           "toConstant": "RID_BAR_SEWER2",
           "toRow": 34,
           "toCol": 62,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 47
         },
         {
           "edge": "WEST",
@@ -70,7 +71,8 @@
           "toConstant": "RID_F2",
           "toRow": 7,
           "toCol": 106,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 46
         }
       ],
       "lockedDoors": [],
@@ -683,7 +685,8 @@
           "toConstant": "RID_JAS_SEWER3",
           "toRow": 43,
           "toCol": 1,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 33
         },
         {
           "edge": "EAST",
@@ -691,7 +694,8 @@
           "toConstant": "RID_JAS_SEWER3",
           "toRow": 54,
           "toCol": 1,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 32
         }
       ],
       "lockedDoors": [],
@@ -804,7 +808,8 @@
           "toConstant": "RID_JAS_SEWER2",
           "toRow": 28,
           "toCol": 51,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 48
         },
         {
           "edge": "WEST",
@@ -812,7 +817,8 @@
           "toConstant": "RID_JAS_SEWER2",
           "toRow": 38,
           "toCol": 51,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 47
         },
         {
           "edge": "NORTH",

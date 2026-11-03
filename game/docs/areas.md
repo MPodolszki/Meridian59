@@ -35,3 +35,21 @@ Fraktionsführer stehen wie in `factions.kod` (`viHomeroom`, `viMyRow/Col`) in i
 Nicht umgesetzt: Fraktionen (Herzog, Prinzessin, Rebellen), Ratsherren und Fahnen, Madelias Laden, Thron und
 Kohlebecken als Zierobjekte, Sonderlogik der Bibliothek (castle2d) und des Ballsaals (duke5), Mockers- und
 Bazmans-Raum (Verwaltung).
+
+## Nekropolis, Lich-Labyrinth, Unterwelt, Spinnennest (`necropolis.json`)
+| RID | Raum | Monster |
+|---|---|---|
+| 826–830 | Winding Caverns, Ancient Graveyard, Decaying City, Within the Walls, Ruins of Castle Brax (Zugang G8) | Dämonenskelette, Narthyl-Würmer, Hauer-Skelette |
+| 831, 832 | Ancient Building (zwei Häuser in der Stadt) | wie oben |
+| 833 | Goad's Grinder (Arena) | – |
+| 825 | The Dungeon of Castle Brax (Lich-Labyrinth) | – |
+| 35 | The Spider Nest (Zugang Forest2) | Spinnenkönigin fest, Spinnen, Spinnenjunge |
+| 1 | The Underworld | – (nicht angebunden) |
+
+Neu im Generator: Ränder mit Bedingung (`ROW/COL_IS_GREATER/LESS_THAN`, z. B. Nekropolis 5 → Labyrinth je nach
+Spalte; betrifft auch 22 Wildnis-, Kanal- und Burgräume) und fest platzierte Monster aus `Create(&Monster)`
+(Spinnenkönigin, Steintrolle in I9, Yeti in der Eishöhle).
+
+Nicht umgesetzt: Lich (entsteht im Original nur in der Gildenhalle der Nekromanten), Rätsel und Fallen des Labyrinths,
+Arena-Kämpfe (Goad's Grinder), Unterwelt als Totenreich (Tote erwachen hier wie bisher in ihrer Stadt),
+Nachwachsen der Spinnenkönigin.

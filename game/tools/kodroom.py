@@ -30,11 +30,20 @@ def classes():
     return out
 
 
+LOCAL = {}   # Konstanten der gerade gelesenen Datei (constants:-Abschnitt), von room_of gesetzt
+
+
+def local_constants(text):
+    sec = re.search(r"^constants:(.*?)^(resources|classvars|properties|messages):", text, re.S | re.M)
+    return {m.group(1).upper(): int(m.group(2), 0)
+            for m in re.finditer(r"^\s*(\w+)\s*=\s*(0x[0-9A-Fa-f]+|-?\d+)\s*$", sec.group(1) if sec else "", re.M)}
+
+
 def value(token):
     token = token.strip()
     if re.fullmatch(r"-?\d+", token):
         return int(token)
-    return CONST.get(token.upper())
+    return LOCAL.get(token.upper(), CONST.get(token.upper()))
 
 
 def resource(text, name):
@@ -82,9 +91,17 @@ def edge_exits(text):
     out = []
     for m in re.finditer(r"plEdge_Exits\s*=\s*Cons\(\[\s*([^\]]*)\]", text, re.I):
         parts = [p.strip() for p in m.group(1).split(",")]
-        out.append({"edge": EDGE[parts[0]], "to": value(parts[1]), "toConstant": parts[1], "toRow": value(parts[2]),
-                    "toCol": value(parts[3]), "rotate": ROTATE.get(parts[4], "NONE") if len(parts) > 4 else "NONE"})
+        e = {"edge": EDGE[parts[0]], "to": value(parts[1]), "toConstant": parts[1], "toRow": value(parts[2]),
+             "toCol": value(parts[3]), "rotate": ROTATE.get(parts[4], "NONE") if len(parts) > 4 else "NONE"}
+        # Bedingter Rand (room.kod): [ …, ROW_IS_GREATER_THAN|… , Wert ]
+        if len(parts) > 6 and parts[5] in COND:
+            e[COND[parts[5]]] = value(parts[6])
+        out.append(e)
     return out
+
+
+COND = {"ROW_IS_GREATER_THAN": "rowAbove", "ROW_IS_LESS_THAN": "rowBelow", "COL_IS_GREATER_THAN": "colAbove",
+        "COL_IS_LESS_THAN": "colBelow"}
 
 
 def _condition(cond):
@@ -189,6 +206,8 @@ missing_kinds = set()
 
 def room_of(path):
     text = path.read_text(encoding="latin-1")
+    LOCAL.clear()
+    LOCAL.update(local_constants(text))
     cls = re.search(r"^(\w+)\s+is\s+(\w+)", text, re.M).group(1)
     roo = resource(text, f"room_{cls}") or resource(text, symbol(text, "prRoom") or "")
     name_sym = symbol(text, "vrName")
@@ -245,6 +264,8 @@ def room_of(path):
             else:
                 fixed.append({"kind": key, "row": int(r), "col": int(c)})
     found = npcs(text)
+    fixed += [{"kind": n["fixed"], "row": n["row"], "col": n["col"]} for n in found if "fixed" in n]
+    found = [n for n in found if "fixed" not in n]
     if found:
         room["npcs"] = found
     if fixed:
@@ -272,6 +293,7 @@ def mob_classes():
     return _mobs
 
 
+PEACEFUL = {"cow"}   # Monsterklassen, die als Bewohner gelten (Kühe in Raza stehen schon in raza.json)
 ANGLES = {"EAST": 0, "SOUTH_EAST": 512, "SOUTH": 1024, "SOUTH_WEST": 1536, "WEST": 2048, "NORTH_WEST": 2560,
           "NORTH": 3072, "NORTH_EAST": 3584}
 
@@ -292,6 +314,9 @@ def npcs(text):
             name = resource(text, iargs.get("name", "")) or "Schild"
             desc = resource(text, iargs.get("desc", "")) or ""
             out.append(dict(kodClass="Sign", name=name, icon="razsign1.bgf", role="Schild", description=desc, **pos))
+            continue
+        if cls.lower() in kinds and cls.lower() not in PEACEFUL:
+            out.append(dict(fixed=kinds[cls.lower()], **pos))
             continue
         mob = mob_classes().get(cls.lower())
         if not mob:

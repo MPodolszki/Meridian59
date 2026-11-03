@@ -1,0 +1,1099 @@
+{
+  "source": "monsroom/necarea1.kod, monsroom/necarea2.kod, monsroom/necarea3.kod, monsroom/necare3a.kod, monsroom/necare3b.kod, monsroom/necarea4.kod, monsroom/necarea5.kod, necarena.kod, monsroom/lichmaze.kod, monsroom/uworld.kod, monsroom/nest1.kod",
+  "startRoom": 1,
+  "rooms": [
+    {
+      "id": 1,
+      "constant": "RID_UNDERWORLD",
+      "kodClass": "Underworld",
+      "name": "The Underworld",
+      "roo": "uworld.roo",
+      "music": "undrwrld.mid",
+      "baseLight": 128,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "mystical",
+      "teleport": {
+        "row": 23,
+        "col": 19
+      },
+      "exits": [],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 32,
+      "cols": 30
+    },
+    {
+      "id": 35,
+      "constant": "RID_NEST1",
+      "kodClass": "SpiderNest1",
+      "name": "The Spider Nest",
+      "roo": "nest1.roo",
+      "music": "song00.mid",
+      "baseLight": 84,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "lair",
+      "teleport": {
+        "row": 32,
+        "col": 7
+      },
+      "exits": [],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [
+        {
+          "rects": [
+            [26, 14, 26, 14]
+          ],
+          "to": 27,
+          "toConstant": "RID_CAVE2",
+          "toRow": 53,
+          "toCol": 14
+        },
+        {
+          "rects": [
+            [2, 19, 2, 19]
+          ],
+          "to": 27,
+          "toConstant": "RID_CAVE2",
+          "toRow": 50,
+          "toCol": 25
+        }
+      ],
+      "monsters": [
+        {
+          "kind": "spiderbaby",
+          "weight": 80
+        },
+        {
+          "kind": "spider",
+          "weight": 20
+        }
+      ],
+      "generators": [
+        {
+          "row": 8,
+          "col": 22
+        },
+        {
+          "row": 27,
+          "col": 22
+        },
+        {
+          "row": 22,
+          "col": 19
+        },
+        {
+          "row": 19,
+          "col": 20
+        },
+        {
+          "row": 31,
+          "col": 15
+        },
+        {
+          "row": 36,
+          "col": 11
+        },
+        {
+          "row": 30,
+          "col": 2
+        },
+        {
+          "row": 35,
+          "col": 19
+        },
+        {
+          "row": 19,
+          "col": 25
+        },
+        {
+          "row": 15,
+          "col": 24
+        },
+        {
+          "row": 24,
+          "col": 8
+        },
+        {
+          "row": 23,
+          "col": 2
+        },
+        {
+          "row": 4,
+          "col": 13
+        },
+        {
+          "row": 15,
+          "col": 16
+        },
+        {
+          "row": 2,
+          "col": 12
+        },
+        {
+          "row": 13,
+          "col": 5
+        },
+        {
+          "row": 9,
+          "col": 15
+        },
+        {
+          "row": 5,
+          "col": 11
+        },
+        {
+          "row": 17,
+          "col": 5
+        },
+        {
+          "row": 20,
+          "col": 8
+        },
+        {
+          "row": 28,
+          "col": 12
+        },
+        {
+          "row": 35,
+          "col": 16
+        },
+        {
+          "row": 25,
+          "col": 24
+        },
+        {
+          "row": 31,
+          "col": 10
+        },
+        {
+          "row": 34,
+          "col": 7
+        },
+        {
+          "row": 4,
+          "col": 23
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 20000,
+      "genPercent": 60,
+      "fixedMonsters": [
+        {
+          "kind": "spiderqueen",
+          "row": 21,
+          "col": 15
+        }
+      ],
+      "boss": true,
+      "objects": [],
+      "rows": 37,
+      "cols": 26
+    },
+    {
+      "id": 825,
+      "constant": "RID_LICH_MAZE",
+      "kodClass": "LichMaze",
+      "name": "The Dungeon of Castle Brax",
+      "roo": "lichmaze.roo",
+      "music": "nec03.mid",
+      "baseLight": 84,
+      "outsideFactor": 3,
+      "outdoors": true,
+      "terrain": "necropolis",
+      "teleport": {
+        "row": 9,
+        "col": 37
+      },
+      "exits": [
+        {
+          "row": 1,
+          "col": 44,
+          "to": 830,
+          "toConstant": "RID_NECROAREA5",
+          "toRow": 28,
+          "toCol": 32,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 45,
+          "to": 830,
+          "toConstant": "RID_NECROAREA5",
+          "toRow": 28,
+          "toCol": 32,
+          "rotate": "NONE"
+        },
+        {
+          "row": 43,
+          "col": 27,
+          "to": 715,
+          "toConstant": "RID_GUILDH15",
+          "toRow": 3,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 43,
+          "col": 28,
+          "to": 715,
+          "toConstant": "RID_GUILDH15",
+          "toRow": 3,
+          "toCol": 4,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 830,
+          "toConstant": "RID_NECROAREA5",
+          "toRow": 30,
+          "toCol": 20,
+          "rotate": "NONE",
+          "colAbove": 30
+        },
+        {
+          "edge": "NORTH",
+          "to": 830,
+          "toConstant": "RID_NECROAREA5",
+          "toRow": 29,
+          "toCol": 10,
+          "rotate": "NONE",
+          "colBelow": 30
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 46,
+      "cols": 52
+    },
+    {
+      "id": 826,
+      "constant": "RID_NECROAREA1",
+      "kodClass": "Necropolis1",
+      "name": "Winding Caverns",
+      "roo": "necarea1.roo",
+      "music": "nec01.mid",
+      "baseLight": 124,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "necropolis",
+      "teleport": {
+        "row": 6,
+        "col": 18
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 827,
+          "toConstant": "RID_NECROAREA2",
+          "toRow": 5,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 578,
+          "toConstant": "RID_G8",
+          "toRow": 27,
+          "toCol": 49,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 578,
+          "toConstant": "RID_G8",
+          "toRow": 27,
+          "toCol": 49,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 3,
+          "col": 44,
+          "message": "This door appears to be locked from the inside."
+        },
+        {
+          "row": 4,
+          "col": 44,
+          "message": "This door appears to be locked from the inside."
+        }
+      ],
+      "regionExits": [],
+      "objects": [],
+      "rows": 38,
+      "cols": 44
+    },
+    {
+      "id": 827,
+      "constant": "RID_NECROAREA2",
+      "kodClass": "Necropolis2",
+      "name": "Ancient Graveyard of Brax",
+      "roo": "necarea2.roo",
+      "music": "nec01.mid",
+      "baseLight": 84,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "necropolis",
+      "teleport": {
+        "row": 10,
+        "col": 15
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 828,
+          "toConstant": "RID_NECROAREA3",
+          "toRow": 9,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 826,
+          "toConstant": "RID_NECROAREA1",
+          "toRow": 21,
+          "toCol": 43,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "daemonskeleton",
+          "weight": 60
+        },
+        {
+          "kind": "narthylworm",
+          "weight": 40
+        }
+      ],
+      "generators": [
+        {
+          "row": 22,
+          "col": 31
+        },
+        {
+          "row": 2,
+          "col": 16
+        },
+        {
+          "row": 17,
+          "col": 35
+        },
+        {
+          "row": 20,
+          "col": 27
+        }
+      ],
+      "maxMonsters": 25,
+      "genTime": 40000,
+      "genPercent": 80,
+      "initCountMin": 7,
+      "initCountMax": 9,
+      "objects": [],
+      "rows": 29,
+      "cols": 40
+    },
+    {
+      "id": 828,
+      "constant": "RID_NECROAREA3",
+      "kodClass": "Necropolis3",
+      "name": "Decaying City of Brax",
+      "roo": "necarea3.roo",
+      "music": "nec02.mid",
+      "baseLight": 0,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "necropolis",
+      "teleport": {
+        "row": 15,
+        "col": 19
+      },
+      "exits": [
+        {
+          "row": 7,
+          "col": 23,
+          "to": 831,
+          "toConstant": "RID_NECROAREA3A",
+          "toRow": 2,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 7,
+          "col": 24,
+          "to": 831,
+          "toConstant": "RID_NECROAREA3A",
+          "toRow": 2,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 7,
+          "col": 26,
+          "to": 831,
+          "toConstant": "RID_NECROAREA3A",
+          "toRow": 3,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 8,
+          "col": 26,
+          "to": 831,
+          "toConstant": "RID_NECROAREA3A",
+          "toRow": 3,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 8,
+          "col": 27,
+          "to": 831,
+          "toConstant": "RID_NECROAREA3A",
+          "toRow": 3,
+          "toCol": 7,
+          "rotate": "NONE"
+        },
+        {
+          "row": 10,
+          "col": 27,
+          "to": 831,
+          "toConstant": "RID_NECROAREA3A",
+          "toRow": 7,
+          "toCol": 8,
+          "rotate": "NONE"
+        },
+        {
+          "row": 11,
+          "col": 27,
+          "to": 831,
+          "toConstant": "RID_NECROAREA3A",
+          "toRow": 7,
+          "toCol": 8,
+          "rotate": "NONE"
+        },
+        {
+          "row": 19,
+          "col": 26,
+          "to": 832,
+          "toConstant": "RID_NECROAREA3B",
+          "toRow": 6,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 19,
+          "col": 27,
+          "to": 832,
+          "toConstant": "RID_NECROAREA3B",
+          "toRow": 6,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 20,
+          "col": 27,
+          "to": 832,
+          "toConstant": "RID_NECROAREA3B",
+          "toRow": 6,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 20,
+          "col": 26,
+          "to": 832,
+          "toConstant": "RID_NECROAREA3B",
+          "toRow": 6,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 13,
+          "col": 44,
+          "to": 829,
+          "toConstant": "RID_NECROAREA4",
+          "toRow": 12,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 14,
+          "col": 44,
+          "to": 829,
+          "toConstant": "RID_NECROAREA4",
+          "toRow": 12,
+          "toCol": 4,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 827,
+          "toConstant": "RID_NECROAREA2",
+          "toRow": 24,
+          "toCol": 36,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 833,
+          "toConstant": "RID_BRAX_ARENA",
+          "toRow": 2,
+          "toCol": 11,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 5,
+          "col": 20,
+          "message": "\\"
+        },
+        {
+          "row": 5,
+          "col": 21,
+          "message": "\\"
+        },
+        {
+          "row": 19,
+          "col": 12,
+          "message": "\\"
+        },
+        {
+          "row": 20,
+          "col": 12,
+          "message": "\\"
+        },
+        {
+          "row": 20,
+          "col": 13,
+          "message": "\\"
+        }
+      ],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "narthylworm",
+          "weight": 60
+        },
+        {
+          "kind": "tuskedskeleton",
+          "weight": 40
+        }
+      ],
+      "generators": [
+        {
+          "row": 9,
+          "col": 15
+        },
+        {
+          "row": 14,
+          "col": 24
+        },
+        {
+          "row": 22,
+          "col": 20
+        },
+        {
+          "row": 17,
+          "col": 15
+        },
+        {
+          "row": 8,
+          "col": 19
+        },
+        {
+          "row": 14,
+          "col": 30
+        },
+        {
+          "row": 15,
+          "col": 28
+        }
+      ],
+      "maxMonsters": 25,
+      "genTime": 40000,
+      "genPercent": 80,
+      "initCountMin": 7,
+      "initCountMax": 9,
+      "objects": [],
+      "rows": 29,
+      "cols": 45
+    },
+    {
+      "id": 829,
+      "constant": "RID_NECROAREA4",
+      "kodClass": "Necropolis4",
+      "name": "Within the Walls of Castle Brax",
+      "roo": "necarea4.roo",
+      "music": "nec02.mid",
+      "baseLight": 0,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "necropolis",
+      "teleport": {
+        "row": 10,
+        "col": 24
+      },
+      "exits": [
+        {
+          "row": 11,
+          "col": 2,
+          "to": 828,
+          "toConstant": "RID_NECROAREA3",
+          "toRow": 14,
+          "toCol": 43,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 2,
+          "to": 828,
+          "toConstant": "RID_NECROAREA3",
+          "toRow": 14,
+          "toCol": 43,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 50,
+          "to": 830,
+          "toConstant": "RID_NECROAREA5",
+          "toRow": 11,
+          "toCol": 3,
+          "rotate": "NONE"
+        },
+        {
+          "row": 13,
+          "col": 50,
+          "to": 830,
+          "toConstant": "RID_NECROAREA5",
+          "toRow": 11,
+          "toCol": 3,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 830,
+          "toConstant": "RID_NECROAREA5",
+          "toRow": 23,
+          "toCol": 2,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "daemonskeleton",
+          "weight": 60
+        },
+        {
+          "kind": "tuskedskeleton",
+          "weight": 40
+        }
+      ],
+      "generators": [
+        {
+          "row": 12,
+          "col": 22
+        },
+        {
+          "row": 11,
+          "col": 46
+        },
+        {
+          "row": 11,
+          "col": 34
+        },
+        {
+          "row": 17,
+          "col": 41
+        },
+        {
+          "row": 8,
+          "col": 17
+        },
+        {
+          "row": 11,
+          "col": 13
+        }
+      ],
+      "maxMonsters": 25,
+      "genTime": 40000,
+      "genPercent": 80,
+      "initCountMin": 7,
+      "initCountMax": 9,
+      "objects": [],
+      "rows": 26,
+      "cols": 51
+    },
+    {
+      "id": 830,
+      "constant": "RID_NECROAREA5",
+      "kodClass": "Necropolis5",
+      "name": "Ruins of Castle Brax",
+      "roo": "necarea5.roo",
+      "music": "nec02.mid",
+      "baseLight": 0,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "necropolis",
+      "teleport": {
+        "row": 10,
+        "col": 3
+      },
+      "exits": [
+        {
+          "row": 11,
+          "col": 12,
+          "to": 830,
+          "toConstant": "RID_NECROAREA5",
+          "toRow": 11,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 12,
+          "to": 830,
+          "toConstant": "RID_NECROAREA5",
+          "toRow": 11,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 10,
+          "col": 14,
+          "to": 830,
+          "toConstant": "RID_NECROAREA5",
+          "toRow": 11,
+          "toCol": 11,
+          "rotate": "NONE"
+        },
+        {
+          "row": 11,
+          "col": 14,
+          "to": 830,
+          "toConstant": "RID_NECROAREA5",
+          "toRow": 11,
+          "toCol": 11,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 14,
+          "to": 830,
+          "toConstant": "RID_NECROAREA5",
+          "toRow": 11,
+          "toCol": 11,
+          "rotate": "NONE"
+        },
+        {
+          "row": 11,
+          "col": 2,
+          "to": 829,
+          "toConstant": "RID_NECROAREA4",
+          "toRow": 13,
+          "toCol": 49,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 2,
+          "to": 829,
+          "toConstant": "RID_NECROAREA4",
+          "toRow": 13,
+          "toCol": 49,
+          "rotate": "NONE"
+        },
+        {
+          "row": 32,
+          "col": 32,
+          "to": 825,
+          "toConstant": "RID_LICH_MAZE",
+          "toRow": 2,
+          "toCol": 45,
+          "rotate": "NONE"
+        },
+        {
+          "row": 32,
+          "col": 33,
+          "to": 825,
+          "toConstant": "RID_LICH_MAZE",
+          "toRow": 2,
+          "toCol": 45,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 829,
+          "toConstant": "RID_NECROAREA4",
+          "toRow": 23,
+          "toCol": 49,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 825,
+          "toConstant": "RID_LICH_MAZE",
+          "toRow": 2,
+          "toCol": 35,
+          "rotate": "NONE",
+          "colAbove": 15
+        },
+        {
+          "edge": "SOUTH",
+          "to": 825,
+          "toConstant": "RID_LICH_MAZE",
+          "toRow": 3,
+          "toCol": 21,
+          "rotate": "NONE",
+          "colBelow": 15
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 9,
+          "col": 34,
+          "message": "\\"
+        },
+        {
+          "row": 10,
+          "col": 34,
+          "message": "\\"
+        },
+        {
+          "row": 11,
+          "col": 34,
+          "message": "\\"
+        }
+      ],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "daemonskeleton",
+          "weight": 60
+        },
+        {
+          "kind": "narthylworm",
+          "weight": 40
+        }
+      ],
+      "generators": [
+        {
+          "row": 8,
+          "col": 18
+        },
+        {
+          "row": 15,
+          "col": 18
+        },
+        {
+          "row": 15,
+          "col": 32
+        },
+        {
+          "row": 8,
+          "col": 31
+        }
+      ],
+      "maxMonsters": 25,
+      "genTime": 40000,
+      "genPercent": 80,
+      "initCountMin": 7,
+      "initCountMax": 9,
+      "objects": [],
+      "rows": 32,
+      "cols": 38
+    },
+    {
+      "id": 831,
+      "constant": "RID_NECROAREA3A",
+      "kodClass": "Necropolis3a",
+      "name": "Ancient Building",
+      "roo": "nec3a.roo",
+      "music": "nec02.mid",
+      "baseLight": 0,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "necropolis",
+      "teleport": {
+        "row": 3,
+        "col": 6
+      },
+      "exits": [
+        {
+          "row": 3,
+          "col": 3,
+          "to": 828,
+          "toConstant": "RID_NECROAREA3",
+          "toRow": 8,
+          "toCol": 24,
+          "rotate": "NONE"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "to": 828,
+          "toConstant": "RID_NECROAREA3",
+          "toRow": 9,
+          "toCol": 25,
+          "rotate": "NONE"
+        },
+        {
+          "row": 7,
+          "col": 7,
+          "to": 828,
+          "toConstant": "RID_NECROAREA3",
+          "toRow": 10,
+          "toCol": 26,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "narthylworm",
+          "weight": 60
+        },
+        {
+          "kind": "daemonskeleton",
+          "weight": 40
+        }
+      ],
+      "generators": [
+        {
+          "row": 4,
+          "col": 6
+        },
+        {
+          "row": 5,
+          "col": 7
+        }
+      ],
+      "maxMonsters": 25,
+      "genTime": 40000,
+      "genPercent": 80,
+      "initCountMin": 7,
+      "initCountMax": 9,
+      "objects": [],
+      "rows": 8,
+      "cols": 9
+    },
+    {
+      "id": 832,
+      "constant": "RID_NECROAREA3B",
+      "kodClass": "Necropolis3b",
+      "name": "Ancient Building",
+      "roo": "nec3b.roo",
+      "music": "nec02.mid",
+      "baseLight": 0,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "necropolis",
+      "teleport": {
+        "row": 6,
+        "col": 6
+      },
+      "exits": [
+        {
+          "row": 5,
+          "col": 5,
+          "to": 828,
+          "toConstant": "RID_NECROAREA3",
+          "toRow": 18,
+          "toCol": 26,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "daemonskeleton",
+          "weight": 50
+        },
+        {
+          "kind": "tuskedskeleton",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 4,
+          "col": 6
+        },
+        {
+          "row": 6,
+          "col": 4
+        },
+        {
+          "row": 1,
+          "col": 7
+        }
+      ],
+      "maxMonsters": 25,
+      "genTime": 40000,
+      "genPercent": 80,
+      "initCountMin": 7,
+      "initCountMax": 9,
+      "objects": [],
+      "rows": 8,
+      "cols": 7
+    },
+    {
+      "id": 833,
+      "constant": "RID_BRAX_ARENA",
+      "kodClass": "NecArena",
+      "name": "Goad's Grinder",
+      "roo": "necarena.roo",
+      "music": "nec02.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "outdoors": true,
+      "terrain": "city",
+      "teleport": {
+        "row": 22,
+        "col": 13
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 828,
+          "toConstant": "RID_BRAX",
+          "toRow": 28,
+          "toCol": 19,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 26,
+      "cols": 24
+    }
+  ]
+}

@@ -130,6 +130,14 @@ public sealed record EdgeExitDefinition(string Edge, int To, int ToRow, int ToCo
 {
     public string? ToConstant { get; init; }
     public string? Rotate { get; init; }
+    /// <summary>Bedingter Rand (ROW/COL_IS_GREATER/LESS_THAN): gilt nur, wenn Zeile/Spalte darüber bzw. darunter liegt.</summary>
+    public int? RowAbove { get; init; }
+    public int? RowBelow { get; init; }
+    public int? ColAbove { get; init; }
+    public int? ColBelow { get; init; }
+
+    public bool Applies(int row, int col) => (RowAbove is not { } ra || row > ra) && (RowBelow is not { } rb || row < rb)
+        && (ColAbove is not { } ca || col > ca) && (ColBelow is not { } cb || col < cb);
 }
 
 /// <summary>Zone als Rechtecke [zeile1, spalte1, zeile2, spalte2]; Angle: Blickrichtung nach dem Wechsel

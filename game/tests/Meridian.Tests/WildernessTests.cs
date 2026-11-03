@@ -108,6 +108,20 @@ public sealed class WildernessTests : IAsyncDisposable
         Assert.Equal(["skeleton", "zombie"], r["CASTLE1"].Monsters.Select(m => m.Kind));
     }
 
+    [Fact]
+    public void Necropolis_ReachedFromTheCraggedMountains_SpiderQueenInHerNest()
+    {
+        var world = WorldDefinition.LoadAll(Data("world"));
+        var r = world.Rooms.ToDictionary(x => x.KodClass ?? "");
+        Assert.Contains(r["Necropolis1"].EdgeExits.Select(e => e.To).Concat(r["Necropolis1"].Exits.Select(e => e.To)), to => to == r["OutdoorsG8"].Id);
+        Assert.Contains(r["SpiderNest1"].FixedMonsters, m => m.Kind == "spiderqueen");
+        // Bedingte Ränder: Nekropolis 5 führt je nach Spalte an zwei Stellen ins Lich-Labyrinth.
+        var south = r["Necropolis5"].EdgeExits.Where(e => e.Edge == "SOUTH").ToList();
+        Assert.Equal(2, south.Count);
+        Assert.Single(south, e => e.Applies(10, 20));
+        Assert.Single(south, e => e.Applies(10, 5));
+    }
+
     private async Task<(ClientSession, List<ClientEvent>)> EnterAsync(int startRoom)
     {
         var accounts = AccountStore.Open(_db);

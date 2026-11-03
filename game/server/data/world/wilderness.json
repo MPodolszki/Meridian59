@@ -2183,7 +2183,8 @@
           "toConstant": "RID_ICE_CAVE1",
           "toRow": 46,
           "toCol": 25,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colAbove": 13
         },
         {
           "edge": "NORTH",
@@ -2191,7 +2192,8 @@
           "toConstant": "RID_A6",
           "toRow": 41,
           "toCol": 7,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colBelow": 14
         }
       ],
       "lockedDoors": [],
@@ -2670,7 +2672,8 @@
           "toConstant": "RID_D5",
           "toRow": 21,
           "toCol": 6,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 23
         },
         {
           "edge": "EAST",
@@ -2678,7 +2681,8 @@
           "toConstant": "RID_D5",
           "toRow": 33,
           "toCol": 6,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 22
         }
       ],
       "lockedDoors": [],
@@ -3465,7 +3469,8 @@
           "toConstant": "RID_C5",
           "toRow": 20,
           "toCol": 47,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 24
         },
         {
           "edge": "NORTH",
@@ -3473,7 +3478,8 @@
           "toConstant": "RID_D4",
           "toRow": 79,
           "toCol": 53,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colBelow": 50
         },
         {
           "edge": "NORTH",
@@ -3489,7 +3495,8 @@
           "toConstant": "RID_E4",
           "toRow": 47,
           "toCol": 34,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colAbove": 80
         },
         {
           "edge": "SOUTH",
@@ -3497,7 +3504,8 @@
           "toConstant": "RID_D6",
           "toRow": 2,
           "toCol": 14,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colBelow": 50
         },
         {
           "edge": "SOUTH",
@@ -3505,7 +3513,8 @@
           "toConstant": "RID_E6",
           "toRow": 2,
           "toCol": 30,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colAbove": 49
         }
       ],
       "lockedDoors": [],
@@ -3755,7 +3764,8 @@
           "toConstant": "RID_E7",
           "toRow": 5,
           "toCol": 2,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 20
         },
         {
           "edge": "EAST",
@@ -4044,7 +4054,8 @@
           "toConstant": "RID_F4",
           "toRow": 12,
           "toCol": 2,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 29
         },
         {
           "edge": "EAST",
@@ -4052,7 +4063,8 @@
           "toConstant": "RID_F4",
           "toRow": 23,
           "toCol": 2,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 28
         },
         {
           "edge": "SOUTH",
@@ -4060,7 +4072,8 @@
           "toConstant": "RID_D5",
           "toRow": 5,
           "toCol": 77,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colBelow": 28
         },
         {
           "edge": "SOUTH",
@@ -4068,7 +4081,8 @@
           "toConstant": "RID_D5",
           "toRow": 5,
           "toCol": 85,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colAbove": 27
         }
       ],
       "lockedDoors": [],
@@ -4932,7 +4946,8 @@
           "toConstant": "RID_H3",
           "toRow": 8,
           "toCol": 2,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 22
         },
         {
           "edge": "EAST",
@@ -4940,7 +4955,8 @@
           "toConstant": "RID_H3",
           "toRow": 26,
           "toCol": 2,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 21
         },
         {
           "edge": "SOUTH",
@@ -5150,7 +5166,8 @@
           "toConstant": "RID_E4",
           "toRow": 27,
           "toCol": 49,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 16
         },
         {
           "edge": "WEST",
@@ -5158,7 +5175,8 @@
           "toConstant": "RID_E4",
           "toRow": 34,
           "toCol": 49,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 15
         },
         {
           "edge": "EAST",
@@ -5166,7 +5184,8 @@
           "toConstant": "RID_G4",
           "toRow": 42,
           "toCol": 2,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 24
         },
         {
           "edge": "EAST",
@@ -5174,7 +5193,8 @@
           "toConstant": "RID_G4",
           "toRow": 32,
           "toCol": 2,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 25
         }
       ],
       "lockedDoors": [],
@@ -5677,7 +5697,8 @@
           "toConstant": "RID_F4",
           "toRow": 28,
           "toCol": 48,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 37
         },
         {
           "edge": "WEST",
@@ -5685,7 +5706,8 @@
           "toConstant": "RID_F4",
           "toRow": 18,
           "toCol": 48,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 38
         }
       ],
       "lockedDoors": [],
@@ -5801,7 +5823,8 @@
           "toConstant": "RID_G6",
           "toRow": 2,
           "toCol": 36,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colBelow": 31
         },
         {
           "edge": "SOUTH",
@@ -5809,7 +5832,8 @@
           "toConstant": "RID_G6",
           "toRow": 2,
           "toCol": 69,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colAbove": 30
         }
       ],
       "lockedDoors": [],
@@ -5906,7 +5930,8 @@
           "toConstant": "RID_G5",
           "toRow": 46,
           "toCol": 12,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colBelow": 51
         },
         {
           "edge": "NORTH",
@@ -5914,7 +5939,8 @@
           "toConstant": "RID_G5",
           "toRow": 46,
           "toCol": 45,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colAbove": 50
         },
         {
           "edge": "WEST",
@@ -5922,7 +5948,8 @@
           "toConstant": "RID_F6",
           "toRow": 5,
           "toCol": 49,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 115
         },
         {
           "edge": "EAST",
@@ -6037,7 +6064,8 @@
           "toConstant": "RID_G9",
           "toRow": 2,
           "toCol": 18,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colBelow": 20
         },
         {
           "edge": "SOUTH",
@@ -6045,7 +6073,8 @@
           "toConstant": "RID_G9",
           "toRow": 2,
           "toCol": 61,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colAbove": 19
         },
         {
           "edge": "EAST",
@@ -6198,7 +6227,8 @@
           "toConstant": "RID_G8",
           "toRow": 46,
           "toCol": 48,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colAbove": 20
         },
         {
           "edge": "NORTH",
@@ -6206,7 +6236,8 @@
           "toConstant": "RID_G8",
           "toRow": 46,
           "toCol": 18,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colBelow": 21
         }
       ],
       "lockedDoors": [],
@@ -6331,7 +6362,8 @@
           "toConstant": "RID_I3",
           "toRow": 18,
           "toCol": 2,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 30
         },
         {
           "edge": "EAST",
@@ -6339,7 +6371,8 @@
           "toConstant": "RID_I3",
           "toRow": 25,
           "toCol": 2,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 29
         },
         {
           "edge": "WEST",
@@ -6347,7 +6380,8 @@
           "toConstant": "RID_F3",
           "toRow": 9,
           "toCol": 75,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 18
         },
         {
           "edge": "WEST",
@@ -6355,7 +6389,8 @@
           "toConstant": "RID_F3",
           "toRow": 28,
           "toCol": 75,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 17
         },
         {
           "edge": "SOUTH",
@@ -6363,7 +6398,8 @@
           "toConstant": "RID_H4",
           "toRow": 2,
           "toCol": 26,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colBelow": 22
         },
         {
           "edge": "SOUTH",
@@ -6371,7 +6407,8 @@
           "toConstant": "RID_H4",
           "toRow": 2,
           "toCol": 35,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colAbove": 21
         }
       ],
       "lockedDoors": [],
@@ -6468,7 +6505,8 @@
           "toConstant": "RID_G4",
           "toRow": 42,
           "toCol": 49,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 28
         },
         {
           "edge": "NORTH",
@@ -6476,7 +6514,8 @@
           "toConstant": "RID_H3",
           "toRow": 46,
           "toCol": 14,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colBelow": 33
         },
         {
           "edge": "NORTH",
@@ -6484,7 +6523,8 @@
           "toConstant": "RID_H3",
           "toRow": 46,
           "toCol": 33,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "colAbove": 32
         }
       ],
       "lockedDoors": [],
@@ -6789,7 +6829,8 @@
           "toConstant": "RID_I7",
           "toRow": 7,
           "toCol": 2,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 20
         },
         {
           "edge": "EAST",
@@ -6797,7 +6838,8 @@
           "toConstant": "RID_H6",
           "toRow": 45,
           "toCol": 6,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 19
         },
         {
           "edge": "WEST",
@@ -7096,7 +7138,8 @@
           "toConstant": "RID_H3",
           "toRow": 25,
           "toCol": 47,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 22
         },
         {
           "edge": "WEST",
@@ -7104,7 +7147,8 @@
           "toConstant": "RID_H3",
           "toRow": 32,
           "toCol": 47,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 21
         }
       ],
       "lockedDoors": [],
@@ -7676,6 +7720,24 @@
       "genPercent": 85,
       "initCountMin": 9,
       "initCountMax": 12,
+      "fixedMonsters": [
+        {
+          "kind": "stonetroll",
+          "row": 28,
+          "col": 63
+        },
+        {
+          "kind": "stonetroll",
+          "row": 28,
+          "col": 59
+        },
+        {
+          "kind": "stonetroll",
+          "row": 25,
+          "col": 61
+        }
+      ],
+      "boss": true,
       "objects": [],
       "rows": 71,
       "cols": 66
@@ -7702,7 +7764,8 @@
           "toConstant": "RID_I3",
           "toRow": 25,
           "toCol": 60,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowBelow": 19
         },
         {
           "edge": "WEST",
@@ -7710,7 +7773,8 @@
           "toConstant": "RID_CASTLE2B",
           "toRow": 44,
           "toCol": 84,
-          "rotate": "NONE"
+          "rotate": "NONE",
+          "rowAbove": 20
         }
       ],
       "lockedDoors": [
@@ -8012,6 +8076,14 @@
       "genPercent": 100,
       "initCountMin": 6,
       "initCountMax": 8,
+      "fixedMonsters": [
+        {
+          "kind": "yeti",
+          "row": 21,
+          "col": 12
+        }
+      ],
+      "boss": true,
       "objects": [],
       "rows": 47,
       "cols": 45

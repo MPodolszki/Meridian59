@@ -25,6 +25,10 @@ AREAS = {
                 M / "objroom/duke5.kod", M / "objroom/castle1.kod", M / "castle1b.kod", roomdir / "castle1c.kod",
                 M / "throne1.kod", roomdir / "dungeon.kod", roomdir / "castle2a.kod", M / "castle2b.kod",
                 M / "castle2c.kod", roomdir / "castle2d.kod", roomdir / "castle2e.kod"],
+    # Nekropolis mit Arena, Lich-Labyrinth, Unterwelt und Spinnennest
+    "necropolis": [M / "necarea1.kod", M / "necarea2.kod", M / "necarea3.kod", M / "necare3a.kod", M / "necare3b.kod",
+                   M / "necarea4.kod", M / "necarea5.kod", roomdir / "necarena.kod", M / "lichmaze.kod",
+                   M / "uworld.kod", M / "nest1.kod"],
 }
 
 
