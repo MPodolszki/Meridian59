@@ -100,6 +100,10 @@ CASTING = {
     "ent": {"oneIn": 10, "power": 50, "range": 25, "spells": [{"spell": "lightning", "upTo": 100}]},
     "evilent": {"oneIn": 10, "power": 50, "range": 25, "spells": [{"spell": "lightning", "upTo": 100}]},
     "yeti": {"oneIn": 2, "power": 50, "ifRoomEnchanted": True, "spells": [{"spell": "discordance", "upTo": 100}]},
+    # iceper.kod MonsterCastSpell: Eisspeer werfen (THROW_CHANCE 5, Abstand² < 666, danach SPEAR_WAIT_TIME 10 s),
+    # Treffer wie ein Nahkampfschlag.
+    "iceperson": {"oneIn": 5, "power": 0, "range": 25, "minRange": True, "cooldownMs": 10000,
+                  "spells": [{"spell": "throw", "upTo": 100}]},
 }
 
 OVERRIDE = {

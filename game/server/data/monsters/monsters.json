@@ -1208,6 +1208,19 @@
       "drawFlags": 2097152,
       "special": {
         "ranged": "Eisspeer-Wurf: Chance 1/5, Distanz² < 666, nur wenn Speer vorhanden; danach 10 s bis neuer Speer."
+      },
+      "casting": {
+        "oneIn": 5,
+        "power": 0,
+        "range": 25,
+        "minRange": true,
+        "cooldownMs": 10000,
+        "spells": [
+          {
+            "spell": "throw",
+            "upTo": 100
+          }
+        ]
       }
     },
     "kriipa": {

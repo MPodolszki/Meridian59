@@ -249,6 +249,8 @@ public sealed record MonsterCasting(int OneIn, int Power, IReadOnlyList<MonsterS
     public int Range { get; init; } = 10;
     public bool MinRange { get; init; }
     public bool IfRoomEnchanted { get; init; }
+    /// <summary>Pause nach einem Zauber/Wurf (Eisgestalt: neuer Speer nach 10 s).</summary>
+    public int CooldownMs { get; init; }
 }
 
 /// <summary>Giftbiss eines Monsters (poison.kod MakePoisoned): Chance 1/<paramref name="OneIn"/> je Treffer.</summary>
@@ -285,6 +287,8 @@ public sealed class Monster(uint id, MonsterKind kind, Room room, GridPos home)
     public DateTime ManaTick { get; set; }
     /// <summary>Manabombe (ENCH_MANA_BOMB): bis dahin kein Zaubern.</summary>
     public DateTime ManaBombUntil { get; set; }
+    /// <summary>Nächster Zauber/Wurf frühestens (MonsterCasting.CooldownMs).</summary>
+    public DateTime NextCast { get; set; }
     public Avatar? TurnedBy { get; set; }
     public DateTime TurnedUntil { get; set; }
     public bool Alive => DiedAt is null;

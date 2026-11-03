@@ -30,15 +30,30 @@ public sealed partial class World
             return false;
         if (cast.IfRoomEnchanted && m.Room.Enchantments.Count == 0)
             return false;
+        if (now < m.NextCast)
+            return false;
         if (_random.Next(cast.OneIn) != 0)
             return false;
         int roll = _random.Next(1, 101);
         var pick = cast.Spells.FirstOrDefault(s => roll <= s.UpTo);
+        if (pick?.Spell == "throw")
+        {
+            m.NextCast = now.AddMilliseconds(cast.CooldownMs);
+            m.NextAttack = now + m.Kind.RollAttackTime(_random);
+            m.Angle = AngleTowards(victim.Row - m.Row, victim.Col - m.Col);
+            BroadcastRoom(m.Room, GameReplies.Turn(m.Id, m.Angle));
+            BroadcastRoom(m.Room, GameReplies.Animate(ToRoomObject(m), GameReplies.AttackGroup, 4, 600));
+            Tell(victim, $"{Article(m.Kind)} schleudert einen Eisspeer nach dir!");
+            victim.LastCombat = now;
+            MonsterStrike(m, victim, now);
+            return true;
+        }
         if (pick is null || pick.Spell == "skip" || _spells[pick.Spell] is not { } spell)
             return false;
         if (cast.Mana > 0 && m.Mana < pick.Mana)
             return false;
         m.Mana -= pick.Mana;
+        m.NextCast = now.AddMilliseconds(cast.CooldownMs);
         m.NextAttack = now + m.Kind.RollAttackTime(_random);
         m.Angle = AngleTowards(victim.Row - m.Row, victim.Col - m.Col);
         var room = m.Room;

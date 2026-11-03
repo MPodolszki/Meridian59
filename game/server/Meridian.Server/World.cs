@@ -708,30 +708,37 @@ public sealed partial class World
             BroadcastRoom(room, GameReplies.Turn(m.Id, m.Angle));
             BroadcastRoom(room, GameReplies.Animate(ToRoomObject(m), GameReplies.AttackGroup, 4, 600));
             victim.LastCombat = now;
-            // Lähmung (ENCH_PALSY: Schwächen, Schwindel): Offensive und Schaden × 3/4.
-            bool palsy = now < m.PalsyUntil;
-            int offense = palsy ? m.Kind.Offense * 3 / 4 : m.Kind.Offense;
-            if (CombatRules.HitChance(offense, PlayerDefense(victim)) < _random.Next(1, 101))
-            {
-                victim.Dodged = true;
-                Tell(victim, $"{Article(m.Kind)} verfehlt dich.");
-                return;
-            }
-            int damage = m.Kind.RollDamage(_random);
-            if (palsy)
-                damage = Math.Max(1, damage * 3 / 4);
-            // Widerstände (resist.kod AddResistance) gegen die Angriffsart des Monsters, falls es eine hat.
-            if (m.Kind.AttackType is { } type)
-                damage = CombatRules.Resist(damage, EnchantState(victim, "resist", type));
-            damage = GortAbsorb(victim, UmbrellaReduce(victim, m.Kind, AssessPlayerDamage(victim, damage)));
-            victim.Hp = Math.Max(0, victim.Hp - damage);
-            Tell(victim, $"{Article(m.Kind)} trifft dich für {damage} Schaden.");
-            if (victim.Hp > 0 && m.Kind.Poison is { } poison && _random.Next(poison.OneIn) == 0)
-                Poison(victim, poison, now);
-            victim.Session.SendHealth();
-            if (victim.Hp == 0)
-                KillPlayer(victim, m);
+            MonsterStrike(m, victim, now);
         }
+    }
+
+    /// <summary>Treffer eines Monsters (Nahkampf oder Wurf): Trefferwurf gegen die Abwehr, Schaden, Widerstand,
+    /// Rüstung, Gift.</summary>
+    private void MonsterStrike(Monster m, Avatar victim, DateTime now)
+    {
+        // Lähmung (ENCH_PALSY: Schwächen, Schwindel): Offensive und Schaden × 3/4.
+        bool palsy = now < m.PalsyUntil;
+        int offense = palsy ? m.Kind.Offense * 3 / 4 : m.Kind.Offense;
+        if (CombatRules.HitChance(offense, PlayerDefense(victim)) < _random.Next(1, 101))
+        {
+            victim.Dodged = true;
+            Tell(victim, $"{Article(m.Kind)} verfehlt dich.");
+            return;
+        }
+        int damage = m.Kind.RollDamage(_random);
+        if (palsy)
+            damage = Math.Max(1, damage * 3 / 4);
+        // Widerstände (resist.kod AddResistance) gegen die Angriffsart des Monsters, falls es eine hat.
+        if (m.Kind.AttackType is { } type)
+            damage = CombatRules.Resist(damage, EnchantState(victim, "resist", type));
+        damage = GortAbsorb(victim, UmbrellaReduce(victim, m.Kind, AssessPlayerDamage(victim, damage)));
+        victim.Hp = Math.Max(0, victim.Hp - damage);
+        Tell(victim, $"{Article(m.Kind)} trifft dich für {damage} Schaden.");
+        if (victim.Hp > 0 && m.Kind.Poison is { } poison && _random.Next(poison.OneIn) == 0)
+            Poison(victim, poison, now);
+        victim.Session.SendHealth();
+        if (victim.Hp == 0)
+            KillPlayer(victim, m);
     }
 
     /// <summary>Erholung wie player.kod: Lebenspunkte im Takt von CalculateHealthTime (mehr Ausdauer = schneller),

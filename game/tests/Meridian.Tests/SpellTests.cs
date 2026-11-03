@@ -185,6 +185,16 @@ public sealed class SpellTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task IcePerson_ThrowsSpearsFromAfar()
+    {
+        var (c, events, me) = await EnterAsync(2);
+        me.Hp = me.MaxHp = 500;
+        var ice = _server.World.SpawnMonster(1, MonsterKind.ByKey("iceperson"), new GridPos(5, 15));
+        ice.Target = me;
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.Contains("schleudert einen Eisspeer"));
+    }
+
+    [Fact]
     public void MonsterSpells_HaveTheOriginalValues()
     {
         var book = SpellBook.Load(Data("spells", "spells.json"));

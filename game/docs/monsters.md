@@ -48,3 +48,7 @@ Fehlt ein Spruch, schlägt das Monster in dieser Runde normal zu. Wirkungen auf 
 schwarzer Schleier), Schwächen (Treffer und Schaden × 3/4, Abweichung: im Original Stärkeverlust), Erdbeben (alle Spieler
 nach Abstand), Manabombe (Manaverlust). Die Manabombe eines Spielers hindert Monster 10 s am Zaubern. Läutern heilt
 auch Blindheit und Schwäche.
+
+Eisgestalt (iceper.kod): wirft außerhalb der Nahkampfreichweite mit Chance 1/5 einen Eisspeer bis Abstand² < 666
+(etwa 25 Felder), danach 10 s Pause; der Wurf trifft wie ein Schlag (Kälte). Feen schießen im Original nur optisch ein
+Geschoss bei normaler Angriffsreichweite – hier ein normaler Schockangriff.
