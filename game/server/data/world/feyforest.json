@@ -1,0 +1,898 @@
+{
+  "source": "monsroom/feyforst/a1.kod, monsroom/feyforst/b1.kod, monsroom/feyforst/b2.kod, monsroom/feyforst/c1.kod, monsroom/feyforst/c2.kod, monsroom/feyforst/c3.kod, monsroom/feyforst/d1.kod, monsroom/feyforst/d2.kod",
+  "startRoom": 511,
+  "rooms": [
+    {
+      "id": 511,
+      "constant": "RID_A1",
+      "kodClass": "OutdoorsA1",
+      "name": "North Quilicia Wood",
+      "roo": "a1.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "teleport": {
+        "row": 32,
+        "col": 32
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 531,
+          "toConstant": "RID_C1",
+          "toRow": 6,
+          "toCol": 1,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "monsters": [
+        {
+          "kind": "fairy",
+          "weight": 50
+        },
+        {
+          "kind": "evilfairy",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 11,
+          "col": 32
+        },
+        {
+          "row": 16,
+          "col": 15
+        },
+        {
+          "row": 22,
+          "col": 6
+        },
+        {
+          "row": 30,
+          "col": 6
+        },
+        {
+          "row": 30,
+          "col": 18
+        },
+        {
+          "row": 25,
+          "col": 32
+        },
+        {
+          "row": 39,
+          "col": 13
+        },
+        {
+          "row": 45,
+          "col": 23
+        },
+        {
+          "row": 45,
+          "col": 28
+        },
+        {
+          "row": 37,
+          "col": 37
+        },
+        {
+          "row": 36,
+          "col": 42
+        },
+        {
+          "row": 20,
+          "col": 42
+        },
+        {
+          "row": 25,
+          "col": 42
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 150000,
+      "genPercent": 80,
+      "rows": 49,
+      "cols": 49
+    },
+    {
+      "id": 521,
+      "constant": "RID_B1",
+      "kodClass": "OutdoorsB1",
+      "name": "Elhadrim",
+      "roo": "b1.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "teleport": {
+        "row": 10,
+        "col": 2
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 531,
+          "toConstant": "RID_C1",
+          "toRow": 29,
+          "toCol": 22,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 522,
+          "toConstant": "RID_B2",
+          "toRow": 1,
+          "toCol": 44,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "monsters": [
+        {
+          "kind": "fairy",
+          "weight": 50
+        },
+        {
+          "kind": "evilfairy",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 8,
+          "col": 36
+        },
+        {
+          "row": 11,
+          "col": 41
+        },
+        {
+          "row": 9,
+          "col": 17
+        },
+        {
+          "row": 8,
+          "col": 10
+        },
+        {
+          "row": 10,
+          "col": 2
+        },
+        {
+          "row": 20,
+          "col": 13
+        },
+        {
+          "row": 28,
+          "col": 23
+        },
+        {
+          "row": 17,
+          "col": 28
+        },
+        {
+          "row": 28,
+          "col": 34
+        },
+        {
+          "row": 35,
+          "col": 26
+        },
+        {
+          "row": 37,
+          "col": 10
+        },
+        {
+          "row": 28,
+          "col": 46
+        },
+        {
+          "row": 42,
+          "col": 33
+        },
+        {
+          "row": 43,
+          "col": 43
+        },
+        {
+          "row": 10,
+          "col": 23
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 180000,
+      "genPercent": 80,
+      "rows": 49,
+      "cols": 50
+    },
+    {
+      "id": 522,
+      "constant": "RID_B2",
+      "kodClass": "OutdoorsB2",
+      "name": "Lower Elhadrim",
+      "roo": "b2.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "teleport": {
+        "row": 38,
+        "col": 51
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 521,
+          "toConstant": "RID_B1",
+          "toRow": 49,
+          "toCol": 45,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 533,
+          "toConstant": "RID_C3",
+          "toRow": 1,
+          "toCol": 4,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "monsters": [
+        {
+          "kind": "fairy",
+          "weight": 50
+        },
+        {
+          "kind": "evilfairy",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 5,
+          "col": 10
+        },
+        {
+          "row": 5,
+          "col": 16
+        },
+        {
+          "row": 25,
+          "col": 24
+        },
+        {
+          "row": 12,
+          "col": 27
+        },
+        {
+          "row": 14,
+          "col": 40
+        },
+        {
+          "row": 14,
+          "col": 13
+        },
+        {
+          "row": 25,
+          "col": 9
+        },
+        {
+          "row": 38,
+          "col": 19
+        },
+        {
+          "row": 40,
+          "col": 26
+        },
+        {
+          "row": 38,
+          "col": 33
+        },
+        {
+          "row": 24,
+          "col": 48
+        },
+        {
+          "row": 31,
+          "col": 40
+        },
+        {
+          "row": 38,
+          "col": 50
+        },
+        {
+          "row": 47,
+          "col": 28
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 240000,
+      "genPercent": 80,
+      "rows": 49,
+      "cols": 56
+    },
+    {
+      "id": 531,
+      "constant": "RID_C1",
+      "kodClass": "OutdoorsC1",
+      "name": "The Fey's Crossing",
+      "roo": "c1.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "teleport": {
+        "row": 26,
+        "col": 54
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 511,
+          "toConstant": "RID_A1",
+          "toRow": 12,
+          "toCol": 49,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 532,
+          "toConstant": "RID_C2",
+          "toRow": 1,
+          "toCol": 29,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 521,
+          "toConstant": "RID_B1",
+          "toRow": 1,
+          "toCol": 21,
+          "rotate": "NONE",
+          "colBelow": 27
+        },
+        {
+          "edge": "SOUTH",
+          "to": 541,
+          "toConstant": "RID_D1",
+          "toRow": 1,
+          "toCol": 29,
+          "rotate": "NONE",
+          "colAbove": 50
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "monsters": [
+        {
+          "kind": "fairy",
+          "weight": 50
+        },
+        {
+          "kind": "evilfairy",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 14,
+          "col": 11
+        },
+        {
+          "row": 22,
+          "col": 13
+        },
+        {
+          "row": 20,
+          "col": 22
+        },
+        {
+          "row": 8,
+          "col": 33
+        },
+        {
+          "row": 18,
+          "col": 37
+        },
+        {
+          "row": 26,
+          "col": 49
+        },
+        {
+          "row": 24,
+          "col": 54
+        },
+        {
+          "row": 17,
+          "col": 59
+        },
+        {
+          "row": 10,
+          "col": 70
+        },
+        {
+          "row": 15,
+          "col": 72
+        },
+        {
+          "row": 4,
+          "col": 17
+        },
+        {
+          "row": 10,
+          "col": 51
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 100000,
+      "genPercent": 80,
+      "rows": 29,
+      "cols": 79
+    },
+    {
+      "id": 532,
+      "constant": "RID_C2",
+      "kodClass": "OutdoorsC2",
+      "name": "The Vale of Sorrows",
+      "roo": "c2.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "teleport": {
+        "row": 15,
+        "col": 13
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 531,
+          "toConstant": "RID_C1",
+          "toRow": 29,
+          "toCol": 39,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "monsters": [
+        {
+          "kind": "fairy",
+          "weight": 50
+        },
+        {
+          "kind": "evilfairy",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 24,
+          "col": 17
+        },
+        {
+          "row": 21,
+          "col": 39
+        },
+        {
+          "row": 26,
+          "col": 22
+        },
+        {
+          "row": 28,
+          "col": 39
+        },
+        {
+          "row": 24,
+          "col": 18
+        },
+        {
+          "row": 21,
+          "col": 40
+        },
+        {
+          "row": 26,
+          "col": 23
+        },
+        {
+          "row": 28,
+          "col": 40
+        },
+        {
+          "row": 23,
+          "col": 17
+        },
+        {
+          "row": 20,
+          "col": 39
+        },
+        {
+          "row": 25,
+          "col": 22
+        },
+        {
+          "row": 27,
+          "col": 39
+        },
+        {
+          "row": 23,
+          "col": 16
+        },
+        {
+          "row": 20,
+          "col": 38
+        },
+        {
+          "row": 25,
+          "col": 21
+        },
+        {
+          "row": 27,
+          "col": 38
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 50000,
+      "genPercent": 80,
+      "rows": 56,
+      "cols": 49
+    },
+    {
+      "id": 533,
+      "constant": "RID_C3",
+      "kodClass": "OutdoorsC3",
+      "name": "Quilicia Wood",
+      "roo": "c3.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "teleport": {
+        "row": 24,
+        "col": 33
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "SOUTH",
+          "to": 534,
+          "toConstant": "RID_C4",
+          "toRow": 1,
+          "toCol": 27,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 522,
+          "toConstant": "RID_B2",
+          "toRow": 49,
+          "toCol": 40,
+          "rotate": "NONE",
+          "colBelow": 20
+        },
+        {
+          "edge": "NORTH",
+          "to": 542,
+          "toConstant": "RID_D2",
+          "toRow": 49,
+          "toCol": 7,
+          "rotate": "NONE",
+          "colAbove": 19
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "monsters": [
+        {
+          "kind": "fairy",
+          "weight": 50
+        },
+        {
+          "kind": "evilfairy",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 3,
+          "col": 32
+        },
+        {
+          "row": 9,
+          "col": 18
+        },
+        {
+          "row": 24,
+          "col": 33
+        },
+        {
+          "row": 21,
+          "col": 30
+        },
+        {
+          "row": 27,
+          "col": 47
+        },
+        {
+          "row": 10,
+          "col": 47
+        },
+        {
+          "row": 27,
+          "col": 46
+        },
+        {
+          "row": 11,
+          "col": 47
+        },
+        {
+          "row": 30,
+          "col": 10
+        },
+        {
+          "row": 14,
+          "col": 12
+        },
+        {
+          "row": 30,
+          "col": 27
+        },
+        {
+          "row": 19,
+          "col": 21
+        },
+        {
+          "row": 16,
+          "col": 39
+        },
+        {
+          "row": 34,
+          "col": 30
+        },
+        {
+          "row": 21,
+          "col": 54
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 150000,
+      "genPercent": 80,
+      "rows": 40,
+      "cols": 62
+    },
+    {
+      "id": 541,
+      "constant": "RID_D1",
+      "kodClass": "OutdoorsD1",
+      "name": "Dirhadrim",
+      "roo": "d1.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "teleport": {
+        "row": 14,
+        "col": 35
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 531,
+          "toConstant": "RID_C1",
+          "toRow": 29,
+          "toCol": 68,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 542,
+          "toConstant": "RID_D2",
+          "toRow": 1,
+          "toCol": 45,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "monsters": [
+        {
+          "kind": "fairy",
+          "weight": 50
+        },
+        {
+          "kind": "evilfairy",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 13,
+          "col": 35
+        },
+        {
+          "row": 19,
+          "col": 41
+        },
+        {
+          "row": 24,
+          "col": 26
+        },
+        {
+          "row": 22,
+          "col": 15
+        },
+        {
+          "row": 44,
+          "col": 11
+        },
+        {
+          "row": 41,
+          "col": 21
+        },
+        {
+          "row": 40,
+          "col": 30
+        },
+        {
+          "row": 33,
+          "col": 20
+        },
+        {
+          "row": 24,
+          "col": 40
+        },
+        {
+          "row": 29,
+          "col": 44
+        },
+        {
+          "row": 5,
+          "col": 15
+        },
+        {
+          "row": 10,
+          "col": 20
+        },
+        {
+          "row": 14,
+          "col": 11
+        },
+        {
+          "row": 33,
+          "col": 30
+        },
+        {
+          "row": 40,
+          "col": 40
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 180000,
+      "genPercent": 80,
+      "rows": 49,
+      "cols": 47
+    },
+    {
+      "id": 542,
+      "constant": "RID_D2",
+      "kodClass": "OutdoorsD2",
+      "name": "Lower Dirhadrim",
+      "roo": "d2.roo",
+      "music": "walk7.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "teleport": {
+        "row": 32,
+        "col": 32
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "NORTH",
+          "to": 541,
+          "toConstant": "RID_D1",
+          "toRow": 49,
+          "toCol": 40,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 533,
+          "toConstant": "RID_C3",
+          "toRow": 1,
+          "toCol": 42,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "monsters": [
+        {
+          "kind": "fairy",
+          "weight": 50
+        },
+        {
+          "kind": "evilfairy",
+          "weight": 50
+        }
+      ],
+      "generators": [
+        {
+          "row": 34,
+          "col": 32
+        },
+        {
+          "row": 35,
+          "col": 42
+        },
+        {
+          "row": 8,
+          "col": 31
+        },
+        {
+          "row": 10,
+          "col": 24
+        },
+        {
+          "row": 22,
+          "col": 9
+        },
+        {
+          "row": 30,
+          "col": 10
+        },
+        {
+          "row": 5,
+          "col": 9
+        },
+        {
+          "row": 38,
+          "col": 21
+        },
+        {
+          "row": 23,
+          "col": 28
+        },
+        {
+          "row": 45,
+          "col": 31
+        },
+        {
+          "row": 38,
+          "col": 16
+        },
+        {
+          "row": 17,
+          "col": 46
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 210000,
+      "genPercent": 80,
+      "rows": 49,
+      "cols": 50
+    }
+  ]
+}

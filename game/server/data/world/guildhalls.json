@@ -1,0 +1,577 @@
+{
+  "source": "ghall/guildh1.kod, ghall/guildh10.kod, ghall/guildh11.kod, ghall/guildh14.kod, ghall/guildh15.kod, ghall/guildh2.kod, ghall/guildh3.kod, ghall/guildh4.kod, ghall/guildh5.kod, ghall/guildh6.kod, ghall/guildh7.kod, ghall/guildh8.kod, ghall/guildh9.kod",
+  "startRoom": 701,
+  "rooms": [
+    {
+      "id": 701,
+      "constant": "RID_GUILDH1",
+      "kodClass": "GuildHall1",
+      "name": "Mercenary Alley",
+      "roo": "guildh1.roo",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "teleport": {
+        "row": 18,
+        "col": 14
+      },
+      "exits": [
+        {
+          "row": 21,
+          "col": 13,
+          "to": 150,
+          "toConstant": "RID_CORNOTH",
+          "toRow": 38,
+          "toCol": 31,
+          "rotate": "90"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 28,
+      "cols": 21
+    },
+    {
+      "id": 702,
+      "constant": "RID_GUILDH2",
+      "kodClass": "GuildHall2",
+      "name": "The Hall of Explorers",
+      "roo": "guildh2.roo",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "city",
+      "teleport": {
+        "row": 18,
+        "col": 32
+      },
+      "exits": [
+        {
+          "row": 18,
+          "col": 34,
+          "to": 102,
+          "toConstant": "RID_BAR_SOUTH",
+          "toRow": 16,
+          "toCol": 43,
+          "rotate": "NONE"
+        },
+        {
+          "row": 18,
+          "col": 33,
+          "to": 102,
+          "toConstant": "RID_BAR_SOUTH",
+          "toRow": 16,
+          "toCol": 43,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 21,
+      "cols": 33
+    },
+    {
+      "id": 703,
+      "constant": "RID_GUILDH3",
+      "kodClass": "GuildHall3",
+      "name": "The Den of Shadows",
+      "roo": "guildh3.roo",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "cave",
+      "teleport": {
+        "row": 5,
+        "col": 4
+      },
+      "exits": [
+        {
+          "row": 5,
+          "col": 1,
+          "to": 568,
+          "toConstant": "RID_F8",
+          "toRow": 6,
+          "toCol": 47,
+          "rotate": "NONE"
+        },
+        {
+          "row": 25,
+          "col": 1,
+          "to": 568,
+          "toConstant": "RID_F8",
+          "toRow": 26,
+          "toCol": 49,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 29,
+      "cols": 21
+    },
+    {
+      "id": 704,
+      "constant": "RID_GUILDH4",
+      "kodClass": "GuildHall4",
+      "name": "The Wryn's Keep",
+      "roo": "guildh4.roo",
+      "baseLight": 124,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "city",
+      "teleport": {
+        "row": 50,
+        "col": 27
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "SOUTH",
+          "to": 350,
+          "toConstant": "RID_JASPER",
+          "toRow": 73,
+          "toCol": 36,
+          "rotate": "180"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 51,
+      "cols": 49
+    },
+    {
+      "id": 706,
+      "constant": "RID_GUILDH7",
+      "kodClass": "GuildHall7",
+      "name": "The Old Dwarven Hall",
+      "roo": "guildh7.roo",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "city",
+      "teleport": {
+        "row": 5,
+        "col": 11
+      },
+      "exits": [
+        {
+          "row": 2,
+          "col": 10,
+          "to": 535,
+          "toConstant": "RID_C5",
+          "toRow": 49,
+          "toCol": 35,
+          "rotate": "NONE"
+        },
+        {
+          "row": 19,
+          "col": 4,
+          "to": 537,
+          "toConstant": "RID_C7",
+          "toRow": 5,
+          "toCol": 14,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 22,
+          "to": 536,
+          "toConstant": "RID_C6",
+          "toRow": 3,
+          "toCol": 18,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 30,
+      "cols": 38
+    },
+    {
+      "id": 707,
+      "constant": "RID_GUILDH5",
+      "kodClass": "GuildHall5",
+      "name": "Konima's Abandoned Dwelling",
+      "roo": "guildh5.roo",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "city",
+      "teleport": {
+        "row": 29,
+        "col": 18
+      },
+      "exits": [
+        {
+          "row": 33,
+          "col": 17,
+          "to": 61,
+          "toConstant": "RID_EAST_TOS",
+          "toRow": 1,
+          "toCol": 41,
+          "rotate": "NONE"
+        },
+        {
+          "row": 33,
+          "col": 18,
+          "to": 61,
+          "toConstant": "RID_EAST_TOS",
+          "toRow": 1,
+          "toCol": 41,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [
+        {
+          "type": "TREE_OAK",
+          "row": 29,
+          "col": 18,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        }
+      ],
+      "rows": 34,
+      "cols": 29
+    },
+    {
+      "id": 708,
+      "constant": "RID_GUILDH8",
+      "kodClass": "GuildHall8",
+      "name": "The Sewer Hideout",
+      "roo": "guildh8.roo",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "sewers",
+      "teleport": {
+        "row": 24,
+        "col": 9
+      },
+      "exits": [
+        {
+          "row": 27,
+          "col": 8,
+          "to": 108,
+          "toConstant": "RID_BAR_SEWER",
+          "toRow": 6,
+          "toCol": 43,
+          "rotate": "NONE"
+        },
+        {
+          "row": 27,
+          "col": 9,
+          "to": 108,
+          "toConstant": "RID_BAR_SEWER",
+          "toRow": 6,
+          "toCol": 43,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 30,
+      "cols": 31
+    },
+    {
+      "id": 709,
+      "constant": "RID_GUILDH9",
+      "kodClass": "GuildHall9",
+      "name": "The Abandoned Warehouse",
+      "roo": "guildh9.roo",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "outdoors": true,
+      "terrain": "city",
+      "teleport": {
+        "row": 9,
+        "col": 19
+      },
+      "exits": [
+        {
+          "row": 9,
+          "col": 24,
+          "to": 107,
+          "toConstant": "RID_BAR_PORT",
+          "toRow": 22,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 10,
+          "col": 24,
+          "to": 107,
+          "toConstant": "RID_BAR_PORT",
+          "toRow": 22,
+          "toCol": 6,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 29,
+      "cols": 28
+    },
+    {
+      "id": 710,
+      "constant": "RID_GUILDH10",
+      "kodClass": "GuildHall10",
+      "name": "Jaarba's Abode",
+      "roo": "guildh10.roo",
+      "baseLight": 164,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "teleport": {
+        "row": 19,
+        "col": 11
+      },
+      "exits": [
+        {
+          "row": 20,
+          "col": 11,
+          "to": 350,
+          "toConstant": "RID_JASPER",
+          "toRow": 30,
+          "toCol": 61,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 20,
+      "cols": 20
+    },
+    {
+      "id": 711,
+      "constant": "RID_GUILDH6",
+      "kodClass": "GuildHall6",
+      "name": "The Ivory Chapel",
+      "roo": "guildh6.roo",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "city",
+      "teleport": {
+        "row": 11,
+        "col": 10
+      },
+      "exits": [
+        {
+          "row": 12,
+          "col": 10,
+          "to": 150,
+          "toConstant": "RID_CORNOTH",
+          "toRow": 36,
+          "toCol": 57,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 19,
+      "cols": 23
+    },
+    {
+      "id": 712,
+      "constant": "RID_GUILDH11",
+      "kodClass": "GuildHall11",
+      "name": "The home of the Friends of the Forest",
+      "roo": "guildh11.roo",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "outdoors": true,
+      "terrain": "forest",
+      "teleport": {
+        "row": 5,
+        "col": 16
+      },
+      "exits": [
+        {
+          "row": 2,
+          "col": 17,
+          "to": 563,
+          "toConstant": "RID_F3",
+          "toRow": 30,
+          "toCol": 23,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 18,
+          "to": 563,
+          "toConstant": "RID_F3",
+          "toRow": 30,
+          "toCol": 23,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 29,
+      "cols": 30
+    },
+    {
+      "id": 714,
+      "constant": "RID_GUILDH14",
+      "kodClass": "GuildHall14",
+      "name": "The Bookmaker's Guild House",
+      "roo": "guildh14.roo",
+      "music": "forest.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "outdoors": true,
+      "terrain": "guildhall",
+      "teleport": {
+        "row": 2,
+        "col": 32
+      },
+      "exits": [
+        {
+          "row": 2,
+          "col": 33,
+          "to": 101,
+          "toConstant": "RID_BAR_NORTH",
+          "toRow": 20,
+          "toCol": 16,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 49,
+      "cols": 52
+    },
+    {
+      "id": 715,
+      "constant": "RID_GUILDH15",
+      "kodClass": "GuildHall15",
+      "name": "Inner Sanctum of Queen Venya'cyr",
+      "roo": "guildh15.roo",
+      "music": "nec03.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "guildhall",
+      "teleport": {
+        "row": 13,
+        "col": 14
+      },
+      "exits": [
+        {
+          "row": 2,
+          "col": 3,
+          "to": 825,
+          "toConstant": "RID_LICH_MAZE",
+          "toRow": 42,
+          "toCol": 27,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "to": 825,
+          "toConstant": "RID_LICH_MAZE",
+          "toRow": 42,
+          "toCol": 27,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "to": 825,
+          "toConstant": "RID_LICH_MAZE",
+          "toRow": 42,
+          "toCol": 27,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "to": 825,
+          "toConstant": "RID_LICH_MAZE",
+          "toRow": 42,
+          "toCol": 27,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "to": 825,
+          "toConstant": "RID_LICH_MAZE",
+          "toRow": 42,
+          "toCol": 27,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "to": 825,
+          "toConstant": "RID_LICH_MAZE",
+          "toRow": 42,
+          "toCol": 27,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "to": 825,
+          "toConstant": "RID_LICH_MAZE",
+          "toRow": 42,
+          "toCol": 27,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "npcs": [
+        {
+          "kodClass": "DeadLich",
+          "name": "ghostly remains of Queen Venya'cyr",
+          "icon": "lichax.bgf",
+          "role": "Bewohner",
+          "row": 13,
+          "col": 49,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 2048
+        }
+      ],
+      "fixedMonsters": [
+        {
+          "kind": "lich",
+          "row": 13,
+          "col": 49
+        }
+      ],
+      "boss": true,
+      "objects": [],
+      "rows": 27,
+      "cols": 51
+    }
+  ]
+}

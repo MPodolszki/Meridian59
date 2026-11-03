@@ -23,5 +23,5 @@ Wald, Kanalisation, Mietzimmer: 39 Räume) und die Orkhöhlen (orccave1–6, Erw
 2. ~~Kanalisationen Barloque und Jasper~~ erledigt (`docs/areas.md`), mit Lupogg-König und Assassinen-Versteck.
 3. ~~Burgen und Herzog~~ erledigt (`docs/areas.md`).
 4. ~~Nekropolis, Lich-Labyrinth, Unterwelt, Spinnennest~~ erledigt (`docs/areas.md`).
-5. Wohnen: Gildenhallen, Mietzimmer, Gästehäuser (braucht Gilden und Lager).
-6. Feenwald, Hütten, Universität.
+5. Wohnen: ~~Gildenhallen~~ als Räume erledigt (ohne Gilden); Mietzimmer brauchen das Mietsystem. Gästehäuser guest1–8 sind Raza (schon da).
+6. ~~Feenwald, Hütten, Universität~~ erledigt (`docs/areas.md`); Bogenbauer und Handelsposten liegen auf Ko'catan.

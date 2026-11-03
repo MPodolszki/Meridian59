@@ -1,0 +1,94 @@
+{
+  "source": "hermhut.kod, univ.kod",
+  "startRoom": 37,
+  "rooms": [
+    {
+      "id": 37,
+      "constant": "RID_HERMITHUT",
+      "kodClass": "HermitHut",
+      "name": "The Hermit's Hut",
+      "roo": "hermhut.roo",
+      "music": "bar2.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "outdoors": true,
+      "terrain": "residence",
+      "teleport": {
+        "row": 5,
+        "col": 5
+      },
+      "exits": [
+        {
+          "row": 8,
+          "col": 6,
+          "to": 597,
+          "toConstant": "RID_I7",
+          "toRow": 16,
+          "toCol": 38,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "npcs": [
+        {
+          "kodClass": "OneCouncilor",
+          "name": "Alzahakar",
+          "icon": "onecon.bgf",
+          "role": "Bewohner",
+          "row": 4,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 2048
+        }
+      ],
+      "rows": 8,
+      "cols": 8
+    },
+    {
+      "id": 902,
+      "constant": "RID_UNIVERSITY",
+      "kodClass": "University",
+      "name": "Meridian University",
+      "roo": "univ.roo",
+      "music": "main.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "mystical",
+      "teleport": {
+        "row": 16,
+        "col": 8
+      },
+      "exits": [
+        {
+          "row": 54,
+          "col": 30,
+          "to": 593,
+          "toConstant": "RID_I3",
+          "toRow": 7,
+          "toCol": 11,
+          "rotate": "NONE"
+        },
+        {
+          "row": 54,
+          "col": 31,
+          "to": 593,
+          "toConstant": "RID_I3",
+          "toRow": 7,
+          "toCol": 12,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 18,
+      "cols": 14
+    }
+  ]
+}

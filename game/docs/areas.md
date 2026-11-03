@@ -53,3 +53,21 @@ Spalte; betrifft auch 22 Wildnis-, Kanal- und Burgräume) und fest platzierte Mo
 Nicht umgesetzt: Lich (entsteht im Original nur in der Gildenhalle der Nekromanten), Rätsel und Fallen des Labyrinths,
 Arena-Kämpfe (Goad's Grinder), Unterwelt als Totenreich (Tote erwachen hier wie bisher in ihrer Stadt),
 Nachwachsen der Spinnenkönigin.
+
+## Feenwald (`feyforest.json`)
+Acht Karten nördlich der Wälder von Ileria (A1, B1, B2, C1 The Fey's Crossing, C2 Vale of Sorrows, C3 Quilicia Wood,
+D1, D2), Zugang von C4 nach Norden. Monster wie `feyforst.kod TryCreateMonster`: Fee oder böse Fee (vereinfacht
+je 50 %; im Original entscheidet das Karma des Waldes), Spawnzeit je Karte (`piGen_time` 50–240 s, 80 %).
+Nicht umgesetzt: Waldkarma, Feenknoten (c2), Feenstaub.
+
+## Einsiedlerhütte und Universität (`huts.json`)
+The Hermit's Hut (37, Zugang I7 und Forest3) mit Alzahakar, dem Ratsherrn; Meridian University (902) – im Original
+führt kein Weg hinein, sie ist auch hier nicht angebunden. Bogenbauer und Handelsposten liegen auf Ko'catan.
+
+## Gildenhallen (`guildhalls.json`)
+13 Hallen des Festlands (701–704, 706–712, 714, 715), jeweils mit dem Zugang aus ihrer Stadt bzw. Wildnis, z. B.
+Mercenary Alley und Ivory Chapel (Cor Noth), Hall of Explorers (Barloque Süd), Wryn's Keep und Jaarba's Abode
+(Jasper), Den of Shadows (F8), Sewer Hideout (Kanalisation Barloque), Inner Sanctum of Queen Venya (Lich-Labyrinth).
+Die beiden Hallen auf Ko'catan (705, 713) fehlen. Nicht umgesetzt: Gilden, Kauf und Besitz einer Halle, Passwort-
+und Gildentüren, Lich in der Nekromantenhalle (guildh15). Mietzimmer (Barloque, Marion) entstehen im Original je
+Mieter (Raumnummern ab 10000) und kommen mit dem Mietsystem.

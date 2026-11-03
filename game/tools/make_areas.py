@@ -10,7 +10,7 @@ from pathlib import Path
 
 import roo2layout
 from kodarea import write_area
-from kodroom import ANGLES, CONST, missing_kinds, mob_classes, prop, resource, room_of, roomdir, symbol
+from kodroom import ANGLES, CONST, missing_kinds, mob_classes, monsters, prop, resource, room_of, roomdir, symbol
 
 root = Path(__file__).resolve().parent.parent
 M = roomdir / "monsroom"
@@ -29,6 +29,12 @@ AREAS = {
     "necropolis": [M / "necarea1.kod", M / "necarea2.kod", M / "necarea3.kod", M / "necare3a.kod", M / "necare3b.kod",
                    M / "necarea4.kod", M / "necarea5.kod", roomdir / "necarena.kod", M / "lichmaze.kod",
                    M / "uworld.kod", M / "nest1.kod"],
+    # Feenwald und Einzelgebäude der Wildnis: Einsiedlerhütte, Universität (Bogenbauer und Handelsposten liegen
+    # auf Ko'catan und kommen mit Ko'catan)
+    "feyforest": sorted((M / "feyforst").glob("*.kod")),
+    "huts": [roomdir / "hermhut.kod", roomdir / "univ.kod"],
+    # Gildenhallen (noch ohne Gildenbesitz; Mietzimmer entstehen im Original je Mieter und kommen mit dem Mietsystem)
+    "guildhalls": [p for p in sorted((roomdir / "ghall").glob("guildh*.kod")) if p.stem not in ("guildh12", "guildh13")],
 }
 
 
@@ -48,6 +54,20 @@ def home_npcs(rooms):
             "fineCol": prop(text, "viMyFC") or 32, "angle": ANGLES.get(angle[6:], 0) if angle.startswith("ANGLE_") else 0})
 
 
+def fey_monsters(rooms):
+    """feyforst.kod TryCreateMonster: Fee oder böse Fee je nach Karma des Waldes (Gleichgewicht ~50 %);
+    alle 150 s mit 80 % (piGen_time/percent des Feenwalds), Spawnpunkte aus plGenerators der Karte."""
+    for r, path in zip(rooms, sorted(AREAS["feyforest"], key=lambda p: room_of(p)["id"])):
+        gens = monsters(path.read_text(encoding="latin-1"))[1]
+        if gens:
+            r.update(monsters=[{"kind": "fairy", "weight": 50}, {"kind": "evilfairy", "weight": 50}],
+                     generators=[{"row": a, "col": b} for a, b in gens], maxMonsters=r.get("maxMonsters", 10),
+                     genTime=prop(path.read_text(encoding="latin-1"), "piGen_time") or 150000, genPercent=80)
+
+
+HOOKS = {"feyforest": fey_monsters}
+
+
 def build(name):
     rooms = sorted((room_of(p) for p in AREAS[name]), key=lambda r: r["id"])
     write_area(name, rooms, source=", ".join(str(p.relative_to(roomdir)) for p in AREAS[name]))
@@ -56,6 +76,8 @@ def build(name):
     # zweiter Durchgang: Größen aus den Layouts (Ränder, Zonen-Übergänge)
     rooms = sorted((room_of(p) for p in AREAS[name]), key=lambda r: r["id"])
     home_npcs(rooms)
+    if name in HOOKS:
+        HOOKS[name](rooms)
     write_area(name, rooms, source=", ".join(str(p.relative_to(roomdir)) for p in AREAS[name]))
 
 
