@@ -42,7 +42,8 @@ for r in rooms:
     r["edgeExits"] += EXTRA_EDGES.get(r["kodClass"], [])
     r["regionExits"] = r.get("regionExits", []) + EXTRA_REGIONS.get(r["kodClass"], [])
     if r["kodClass"] in EXTRA_NPCS:
-        r["npcs"] = EXTRA_NPCS[r["kodClass"]]
+        extra = {n["kodClass"] for n in EXTRA_NPCS[r["kodClass"]]}
+        r["npcs"] = [n for n in r.get("npcs", []) if n["kodClass"] not in extra] + EXTRA_NPCS[r["kodClass"]]
 write_area("wilderness", rooms, source="kod/object/active/holder/room/monsroom (Wildnis)")
 if missing_kinds:
     print("Monsterklassen ohne Eintrag in monsters.json:", ", ".join(sorted(missing_kinds)))

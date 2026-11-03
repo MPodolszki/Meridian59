@@ -59,8 +59,8 @@ verbunden (Test `WildernessTests.Towns_AreConnectedThroughTheWilderness`).
 - Zonen-Übergänge prüfen das Zielfeld nicht auf Belegung (`UtilGoNearSquare` sucht ein freies Nachbarfeld).
 
 ## Manaknoten (mananode.kod, 2026-11-03)
-Sechs Knoten des Festlands: A5 (20/17), G9 (52/30), H9 (45/32), Eishöhle (25/23), Höhle Cave2 (23/53), Castle
+Sieben Knoten des Festlands: Badlands, A5 (20/17), G9 (52/30), H9 (45/32), Eishöhle (25/23), Höhle Cave2 (23/53), Castle
 Victoria Obergeschoss. Benutzen (Linksklick, BP_REQ_ACTIVATE) auf weniger als 3 Felder: einmal je Knoten
 (Bitmaske NODE_*, gespeichert) maximales Mana + ((5 + Mystik)/10) + 3. Im Godot-Client eine schwebende, leuchtende
-Kugel. Abweichungen: die Knoten in I9 (Steinkreis), Canyon2 und den Badlands entstehen im Original durch Rätsel bzw.
+Kugel. Abweichungen: die Knoten in I9 (Steinkreis) und Canyon2 entstehen im Original durch Rätsel bzw.
 Zeitgeber und fehlen; verfluchte/tote Knoten und das Lösen bei Tod gibt es nicht.

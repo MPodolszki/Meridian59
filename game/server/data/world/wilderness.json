@@ -1817,6 +1817,19 @@
       "genPercent": 100,
       "npcs": [
         {
+          "kodClass": "ManaNode",
+          "name": "Manaknoten",
+          "icon": "node.bgf",
+          "role": "Manaknoten",
+          "nodeNum": 8,
+          "description": "Eine Ballung mystischer Energie: hier pulsiert rohes Mana und stärkt jeden Zauberkundigen, der mit ihm verschmelzen kann.",
+          "row": 63,
+          "col": 46,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 2048
+        },
+        {
           "kodClass": "FarenPriestess",
           "name": "Priesterin Tenuv'vyal",
           "icon": "farnprst.bgf",
