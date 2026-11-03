@@ -1197,6 +1197,7 @@
       "constant": "RID_MAR_CRYPT3A",
       "kodClass": "MarionCrypt3a",
       "name": "Affirmation of the Forsaken",
+      "puzzle": "marioncrypt3a",
       "roo": "res00001.roo",
       "music": "song10.mid",
       "baseLight": 84,

@@ -93,6 +93,10 @@ public sealed class Room(RoomDefinition definition)
     public DateTime NextSpawn { get; set; }
     /// <summary>Raumrätsel (Mausoleum von Raza), sonst null.</summary>
     public Mausoleum? Puzzle { get; set; }
+    /// <summary>Gruft 3a von Marion (WorldCrypt3a.cs).</summary>
+    public Crypt3a? Crypt3a { get; set; }
+    /// <summary>Sektorhöhen, die vom .roo-Ausgangszustand abweichen (für neu Eintretende).</summary>
+    public Dictionary<int, (byte Animation, int Height)> SectorState { get; } = new();
 
     /// <summary>KOD-Feinkoordinate für die Mitte eines Grid-Felds.</summary>
     public static ushort Fine(int cell, int fine = 32) => (ushort)(cell * 64 + fine);
@@ -531,6 +535,8 @@ public sealed partial class World
             var d = room.Definition;
             if (d.Puzzle is "mausoleum" or "marioncrypt" or "marioncrypt2")
                 room.Puzzle = new Mausoleum { Kind = d.Puzzle };
+            if (d.Puzzle == Crypt3a.Kind)
+                room.Crypt3a = new Crypt3a();
             foreach (var f in d.FixedMonsters)
                 SpawnMonsterLocked(room, MonsterKind.ByKey(f.Kind), new GridPos(f.Row, f.Col));
             if (d.Monsters.Count == 0)
@@ -646,6 +652,8 @@ public sealed partial class World
         }
         if (m.Kind.Peaceful)
             return;   // Kühe stehen nur herum
+        if (SleepTick(m))
+            return;
         // Zauberwirkungen (docs/magic.md): festgehalten = nichts tun; geblendet = kein Ziel, kein Kampf.
         if (now < m.HeldUntil)
             return;
@@ -869,6 +877,7 @@ public sealed partial class World
                     : "Kein Ziel.");
                 return;
             }
+            m.Asleep = false;   // ein angegriffener Schläfer wacht auf
             if (Distance(avatar.Row, avatar.Col, m.Row, m.Col) > CombatRules.MeleeRange)
             {
                 Tell(avatar, $"{Article(m.Kind, capital: true)} ist zu weit weg.");
@@ -936,6 +945,8 @@ public sealed partial class World
         PracticeDefense(killer, m);
         killer.KillTarget = null;
         CreateTreasure(m);
+        if (m.Room.Crypt3a is { } crypt)
+            Crypt3aKill(m.Room, crypt, killer, m, now);
         MonsterKilled(m.Room);
     }
 

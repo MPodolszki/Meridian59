@@ -90,6 +90,7 @@ rooms = [
      "monsters": [{"kind": "skeleton", "weight": 80}, {"kind": "batteredskeleton", "weight": 20}], "maxMonsters": 25,
      "npcs": [sign("Warnung!", SIGNS["warning"], 38, 27)]},
     {"id": 2602, "constant": "RID_MAR_CRYPT3A", "kodClass": "MarionCrypt3a", "name": "Affirmation of the Forsaken",
+     "puzzle": "marioncrypt3a",   # marcry3a.kod: Fallen mit schlafenden Dreschern, Endbeute (WorldCrypt3a.cs)
      "roo": "res00001.roo", "music": "song10.mid", "baseLight": VERY_DARK, "outsideFactor": 0,
      "teleport": {"row": 18, "col": 21},
      "exits": exits([30, 17, 2601, 37, 27, "NONE"], [30, 18, 2601, 37, 27, "NONE"]),

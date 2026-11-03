@@ -147,6 +147,22 @@ public sealed class RazaTests : IAsyncDisposable
     }
 
     [Fact]
+    public async Task MarionCrypt3a_KillingTheSleepingThrasherInATrapOpensIt()
+    {
+        var (c, events) = await EnterAsync(2602);
+        var room = _server!.World.Rooms.Single(r => r.Definition.Id == 2602);
+        var me = room.Avatars.Values.Single();
+        // Sechs schlafende Drescher in den drei Fallen (1 + 2 + 3).
+        Assert.Equal(6, room.Monsters.Count(m => m.Asleep));
+        var sleeper = room.Monsters.Single(m => m.Asleep && m.Row / 64 == 23 && m.Col / 64 == 19);
+        await c.MoveAsync(Room.Fine(24), Room.Fine(22), false);
+        await WaitForAsync(c, events, _ => me.Row / 64 == 24);
+        _server.World.KillForTest(me, sleeper);
+        await WaitForAsync(c, events, e => e is ClientEvent.SectorMoved { Sector: 1, Height: 1824 });
+        Assert.True(room.Crypt3a!.Open[0]);
+    }
+
+    [Fact]
     public void Marion_ExitsLeadIntoExistingRooms_AndCryptsHaveMonsters()
     {
         var world = WorldDefinition.LoadAll(Data("world"));

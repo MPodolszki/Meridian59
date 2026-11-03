@@ -49,8 +49,19 @@ derzeit führt es also immer ins Gasthaus von Marion (Ankunft 11/6).
   Durchgang verschlossen. Ist niemand mehr im Endbereich, setzt sich alles zurück.
 - Gruft 2 (marcryp2.kod, umgesetzt 2026-11-03): beim ersten Betreten 37 lebende Statuen an ihren festen Plätzen und
   die Tür zu Gruft 3a (Sektor 5) zu; fällt die letzte Statue, hebt sich die Tür, vorher ist der Durchgang verschlossen.
-- Noch nicht: Fallen, schlafende Drescher und die Truhe in Gruft
-  3a, Martyrs' Battleground (nur mit PvP), Totenbeschwörer-Tür (Passwort nur für Spielleiter).
+- Gruft 3a (marcry3a.kod, umgesetzt 2026-11-03, `WorldCrypt3a.cs`): drei Fallenbereiche mit schlafenden Dreschern
+  (Falle 1: Zeilen 23–25 × Spalten 17–26, ein Drescher auf 23/19; Falle 2: 6–7×3–4, 8–10×3–9, 11–14×8–9, zwei auf 10/3
+  und 10/7; Falle 3: 29×31–32 und 30–34×28–34 plus Truhennische 30–33×23–27, drei auf 32/29, 30/34, 33/34). Schläfer
+  stehen still und wachen auf, wenn ein Spieler auf 7 Felder herankommt oder sie angreift. Tötet ein Spieler, der selbst
+  im Bereich steht, den letzten Drescher darin, öffnet sich die Falle: Sektor 1 Boden 1824 (zu 1864) für 15 s; Sektoren
+  2/3 Decke 1958/1864 (zu 1910/1816) für 30 s; Sektor 5 Decke 2022 (zu 1960) für 45 s. Solange jemand im Bereich steht,
+  bleibt sie offen, danach schließt sie und neue Schläfer erscheinen. Falle 3 wirft die Endbeute aus (N = Random(1,
+  Spieler im Bereich), ab sechs Random(3,5) Würfe in die Liste von ResetTreasureList: Waffen, Plattenrüstung, Reagenzien in
+  großen Mengen, 25000 Schillinge …). Erdbeben ist hier verboten.
+  Abweichungen: Beute liegt vor der Truhe auf dem Boden (es gibt noch keine Behälter); Opfergaben, Prisma, Laute, Rose
+  und die Zusatzkräfte der Waffen (Blender, Lähmer …) fehlen; Drescher ohne Drehangriff, Zweitschlag und Zusatzwaffe;
+  Sichtlinie beim Aufwachen nicht geprüft; die verbotene Tür (31/8) bestraft nicht.
+- Noch nicht: Martyrs' Battleground (nur mit PvP), Totenbeschwörer-Tür (Passwort nur für Spielleiter).
 - Fehlende Beute (Katalog): Nerudit-Pfeil, Zwietrachtrolle, Identifizierstab, Dunkelengelfeder, Schuppenpanzer,
   Nachtsichttrank, Berserkerring; Zusatzbeute der Drescher.
 - Sprüche Ausbessern (Colhorr), Destillieren (Aftyn), Waffenstillstand (Ran) und Aftyns Tränke fehlen; ebenso

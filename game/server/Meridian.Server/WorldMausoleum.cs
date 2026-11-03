@@ -129,6 +129,7 @@ public sealed partial class World
     {
         if (room.Puzzle is { } puzzle)
             puzzle.Sectors[sector] = (animation, height);
+        room.SectorState[sector] = (animation, height);
         BroadcastRoom(room, GameReplies.SectorMove(animation, (ushort)sector, (ushort)height, speed));
         if (room.Grid?.Tags.GetValueOrDefault(sector) is not { } cells)
             return;
@@ -142,14 +143,14 @@ public sealed partial class World
     public IReadOnlyList<byte[]> SectorPackets(Room room)
     {
         lock (_gate)
-            return room.Puzzle is { } p
-                ? p.Sectors.Select(kv => GameReplies.SectorMove(kv.Value.Animation, (ushort)kv.Key, (ushort)kv.Value.Height, 0)).ToList()
-                : [];
+            return room.SectorState.Select(kv => GameReplies.SectorMove(kv.Value.Animation, (ushort)kv.Key, (ushort)kv.Value.Height, 0)).ToList();
     }
 
     /// <summary>Zeitgeber des Rätsels (SlamTimer, FightTimer).</summary>
     private void TickPuzzle(Room room, DateTime now)
     {
+        if (room.Crypt3a is { } crypt)
+            TickCrypt3a(room, crypt, now);
         if (room.Puzzle is not { DoorDue: { } due } puzzle || now < due)
             return;
         puzzle.DoorDue = null;
@@ -232,6 +233,8 @@ public sealed partial class World
     /// <summary>FirstUserEntered: eine Mumie in die Grube, Endbereich neu besetzen.</summary>
     private void FirstUserEntered(Room room)
     {
+        if (room.Crypt3a is { } crypt3a)
+            CreateThrashers(room, crypt3a);
         if (room.Puzzle is { Statues: true } crypt2)
         {
             // PlaceStatues (nur wenn keine mehr da sind) und CloseSecondaryDoorDown.

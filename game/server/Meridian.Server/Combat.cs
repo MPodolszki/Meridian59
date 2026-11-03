@@ -294,6 +294,8 @@ public sealed class Monster(uint id, MonsterKind kind, Room room, GridPos home)
     public DateTime NextCast { get; set; }
     /// <summary>Unter der Erde (Erdwurm): für Spieler unsichtbar, bis er auftaucht; seit wann ohne Ziel.</summary>
     public bool Submerged { get; set; }
+    /// <summary>Schläft (Drescher in Gruft 3a): steht still, kämpft nicht, bis ein Spieler nah kommt.</summary>
+    public bool Asleep { get; set; }
     public DateTime IdleSince { get; set; }
     public Avatar? TurnedBy { get; set; }
     public DateTime TurnedUntil { get; set; }

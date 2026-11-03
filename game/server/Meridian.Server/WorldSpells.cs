@@ -68,6 +68,9 @@ public sealed partial class World
             case "relay" when target is not null && target.State.Vigor >= 150:
                 Tell(a, $"{target.Name} kann keine weitere Ausdauer aufnehmen.");
                 return false;
+            case "earthquake" when a.Room.Crypt3a is not null:
+                Tell(a, "Dieser Ort sieht viel zu instabil für ein Erdbeben aus. Du brichst den Zauber klugerweise ab.");
+                return false;
             case "weaponenchant" when Weapon(a) is null:
                 Tell(a, "Du musst eine Waffe in der Hand halten, um sie zu weihen.");
                 return false;
