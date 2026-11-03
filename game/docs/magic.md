@@ -168,3 +168,26 @@ Kräfte des Lichts für Shal'ille-Sprüche fehlt.
 - **Angriffsarten**: Ein Waffentreffer trägt wie im Original seine Waffenart plus `nonmagic` (gewöhnliche Waffe) bzw.
   `magic` (verzaubert/magische Waffe), dazu ggf. `holy`/`unholy`; die Resistenz ist wie in battler.kod größter
   positiver plus kleinster negativer Wert über alle passenden Einträge. Geister widerstehen gewöhnlichen Waffen zu 90 %.
+
+## Jala-Lieder (2026-11-03, `WorldJala.cs`)
+Wie jala.kod: Ein Instrument muss getragen werden (Laute 20, edle/wahre Laute 30, Halskette der Jala 5; Platz
+„Instrument“ bzw. „Hals“). Jala-Stärke: Fähigkeit/2 + Instrument (bis 40) + maximale Lebenspunkte/12 (bis 10). Das Lied
+liegt auf dem Raum, nur eines; ein neues muss lauter sein (Lautstärke = Stärke × Manazahlung). Alle 5 s kostet es
+Mana (viManaDrain); es endet, wenn der Barde sich bewegt, kämpft, einen anderen Spruch wirkt, den Raum verlässt, stirbt
+oder weniger als das Doppelte der Zahlung an Mana hat.
+
+| Lied | Stufe | Mana (Start/5 s) | Wirkung |
+|---|---|---|---|
+| Wahrheit, Höflichkeit, Versöhnung, Heilige/Unheilige Resonanz, Missklang | 1–4 | 5/3 | Erfolgschance der Riija-/Faren-/Kraanan-/Qor-/Shal'ille-/Jala-Sprüche im Raum − Random(Stärke/2, 2×Stärke/3), 5..95 |
+| Frohsinn / Schwermut | 1 | 2/2 | jeder Anwesende (auch Neuankömmlinge) mit Stärke % Chance: gegen böse (Frohsinn) bzw. gute (Schwermut) Monster Treffer + 100, Schaden + Random(1, 5) |
+| Belebung | 1 | 5/1 | Ausdauer-Takt × (200 − Stärke)/200 |
+| Zeitverzerrung | 2 | 5/5 | Trancezeiten × (100 + Stärke)/100 |
+| Zauberbann | 3 | 12/8 | schwächere Sprüche scheitern, Monster zaubern nicht (Gegenstände ausgenommen) |
+| Wiederherstellung | 3 | 5/3 | Lebenspunkte-Takt × (400 − (40 + Stärke))/400, 0,67–60 s |
+| Manakonvergenz | 5 | 10/9 | Spruchstärke + Stärke/2 + 25 für jeden Spruch im Raum |
+| Verjüngung | 5 | 5/8 | Mana-Takt × (200 − Stärke)/200, 0,5–60 s |
+
+Lehrer: Spielmann Parrin Aragone (wandernd, docs/wanderers.md) acht Lieder; Heilige Resonanz die Priesterin der
+Shal'ille, Unheilige die der Qor. Lauten gibt es auf dem Festland nur als Beute (verkauft werden sie auf Ko'catan).
+Noch nicht: Tanz (Jig), Destillieren, Mana kristallisieren; Lautstärke ohne Einfluss der Instrumentenqualität; Musik
+des Liedes im Client; Stimmung der NPCs.

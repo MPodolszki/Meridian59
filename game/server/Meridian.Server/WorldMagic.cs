@@ -171,8 +171,13 @@ public sealed partial class World
             case 4:   // Faren: Raumbonus, Ausdauer/20
                 secondary = a.State.Vigor / 20;
                 break;
+            case 6:   // Jala: Instrument (bis 40), maximale Lebenspunkte/12
+                primary = InstrumentLevel(a);
+                secondary = a.MaxHp / 12;
+                break;
         }
-        int power = ability / 2 + Math.Clamp(primary, 0, 30) + Math.Clamp(secondary, 0, 10);
+        int power = ability / 2 + Math.Clamp(primary, 0, s.School == 6 ? 40 : 30) + Math.Clamp(secondary, 0, 10);
+        power += ConvergenceBonus(a.Room);
         power -= RoomEnchantState(a.Room, "antimagic");   // antimag.kod: − (Stärke/2 + 25) für jeden Spruch im Raum
         return Math.Clamp(power, MagicRules.SpellPowerMin, MagicRules.SpellPowerMax);
     }
@@ -217,7 +222,14 @@ public sealed partial class World
             if (!CanPayCosts(a, spell, target, power) || !CanTarget(a, spell, target, victim))
                 return;
 
-            var trance = MagicRules.TranceTime(spell, power);
+            if (SpellBanned(a.Room, power))
+            {
+                Tell(a, $"Ein Lied übertönt deinen Zauber {spell.Name}.");
+                return;
+            }
+            if (spell.School != 6)
+                StopSinging(a);
+            var trance = WarpTrance(a.Room, MagicRules.TranceTime(spell, power));
             if (trance == TimeSpan.Zero)
             {
                 Complete(a, spell, target, power, victim);
@@ -297,7 +309,7 @@ public sealed partial class World
             return;
 
         int cost = MagicRules.ManaCost(spell, power);
-        if (_random.Next(1, 101) > MagicRules.SuccessChance(spell, a.State.Attributes, power))
+        if (_random.Next(1, 101) > SongChance(a, spell, MagicRules.SuccessChance(spell, a.State.Attributes, power)))
         {
             // SpellFailed: halbe Manakosten, halbe Anstrengung, keine Reagenzien.
             ChangeMana(a, -cost / 2);
@@ -369,6 +381,10 @@ public sealed partial class World
                 break;
             case "purify":
                 Purify(a, spell, power);
+                break;
+            case "songbane" or "mirth" or "melancholy" or "warptime" or "spellbane" or "restorate" or "invigorate"
+                or "rejuvenate" or "manaconvergence":
+                StartSong(a, spell, power);
                 break;
             case "discordance":
                 Discordance(a, spell, power);
@@ -482,6 +498,7 @@ public sealed partial class World
     private void BreakTrance(Avatar a)
     {
         EndManaFocus(a);
+        StopSinging(a);
         if (a.Casting is not { } c)
             return;
         a.Casting = null;

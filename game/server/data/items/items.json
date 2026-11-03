@@ -2066,6 +2066,62 @@
       "number": true,
       "plural": "Fläschchen Schamanenblut",
       "description": "Die Magie der Avar-Schamanen fließt in ihren Adern – und lässt sich ausleihen."
+    },
+    {
+      "key": "lute",
+      "kodClass": "Lute",
+      "name": "Laute",
+      "icon": "basiclute.bgf",
+      "value": 800,
+      "types": [
+        "instrument"
+      ],
+      "article": "eine",
+      "slot": "instrument",
+      "instrumentLevel": 20,
+      "description": "Die schlichte Laute ist das Instrument der Barden von Meridian. Ihr Rosenholz klingt in den Händen eines Meisters voll und warm."
+    },
+    {
+      "key": "finelute",
+      "kodClass": "FineLute",
+      "name": "edle Laute",
+      "icon": "music.bgf",
+      "value": 1600,
+      "types": [
+        "instrument"
+      ],
+      "article": "eine",
+      "slot": "instrument",
+      "instrumentLevel": 30,
+      "description": "Eine Laute von besonderer Güte, makellos gebaut und meisterhaft gebeizt; ihr Kiefernholz klingt reicher als die üblichen Rosenholzlauten."
+    },
+    {
+      "key": "truelute",
+      "kodClass": "TrueLute",
+      "name": "wahre Laute",
+      "icon": "truelute.bgf",
+      "value": 2500,
+      "types": [
+        "instrument"
+      ],
+      "article": "eine",
+      "slot": "instrument",
+      "instrumentLevel": 30,
+      "description": "Die vollkommenste Laute, die du je gesehen hast. Man sagt, Jala selbst habe eine genau gleiche besessen. Sie verleiht den Liedern eines Barden mehr Kraft."
+    },
+    {
+      "key": "jalanecklace",
+      "kodClass": "JalaNecklace",
+      "name": "Halskette der Jala",
+      "icon": "jalaneck.bgf",
+      "value": 2000,
+      "types": [
+        "instrument"
+      ],
+      "article": "eine",
+      "slot": "neck",
+      "instrumentLevel": 5,
+      "description": "Eine eng anliegende Halskette mit einer goldenen Musiknote – für jemanden, der sich Barde nennt, sicher von Wert."
     }
   ],
   "treasure": {
@@ -2345,6 +2401,10 @@
       {
         "item": "money",
         "weight": 10
+      },
+      {
+        "item": "lute",
+        "weight": 5
       },
       {
         "item": "purifywand",
@@ -2743,6 +2803,10 @@
         "weight": 10
       },
       {
+        "item": "finelute",
+        "weight": 9
+      },
+      {
         "item": "scimitar",
         "weight": 7
       },
@@ -2977,8 +3041,16 @@
         "weight": 4
       },
       {
+        "item": "finelute",
+        "weight": 3
+      },
+      {
         "item": "resistacidpotion",
         "weight": 3
+      },
+      {
+        "item": "jalanecklace",
+        "weight": 1
       },
       {
         "item": "discordscroll",
@@ -3237,6 +3309,10 @@
       {
         "item": "flask",
         "weight": 4
+      },
+      {
+        "item": "lute",
+        "weight": 3
       },
       {
         "item": "polishedseraphym",

@@ -195,6 +195,21 @@ public sealed class SpellTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task JalaSong_NeedsAnInstrument_LiesOnTheRoom_EndsWhenTheBardMoves()
+    {
+        var (c, events, me) = await EnterAsync(176);   // Wiederherstellung
+        GiveReagents(me, ("diamond", 20), ("herbs", 100), ("lute", 1));
+        await c.CastAsync(Spell.ObjectIdBase + 176, []);
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat { Text: "Du brauchst ein Instrument!" });
+        await c.UseAsync(me.State.Inventory.First(i => i.Kind.Key == "lute").Id);
+        await CastUntilAsync(c, events, me, 176, 0, t => t.Contains("heilsames Lied"));
+        var room = _server.World.Rooms.Single();
+        Assert.Equal("restorate", room.Song!.Spell.Effect);
+        await c.MoveAsync(Room.Fine(9), Room.Fine(9), false);
+        await WaitForAsync(c, events, _ => room.Song is null);
+    }
+
+    [Fact]
     public void MonsterSpells_HaveTheOriginalValues()
     {
         var book = SpellBook.Load(Data("spells", "spells.json"));

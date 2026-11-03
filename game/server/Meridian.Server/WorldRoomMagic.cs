@@ -218,9 +218,9 @@ public sealed partial class World
         Tell(a, "Du hast deinen Manafokus verloren.");
     }
 
-    private TimeSpan FocusedManaTime(Avatar a, TimeSpan normal) => a.ManaFocus is { } sp
+    private TimeSpan FocusedManaTime(Avatar a, TimeSpan normal) => SongRegen(a.Room, "rejuvenate", a.ManaFocus is { } sp
         ? TimeSpan.FromMilliseconds(Math.Clamp(normal.TotalMilliseconds * (200 - sp) / 200, 500, 60000))
-        : normal;
+        : normal);
 
     private static int ManaFocusBonus(Avatar a) => a.ManaFocus is { } state ? state * 5 / 99 + 1 : 0;
 

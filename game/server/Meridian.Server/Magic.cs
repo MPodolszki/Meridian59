@@ -31,6 +31,9 @@ public sealed record SpellDefinition(string Key, int Sid, string Name, string Ic
     /// <summary>Widerstand (resist.kod GetResistanceStrength): Stärke/2 + Basis, gegen <see cref="AttackType"/>.</summary>
     public int ResistBase { get; init; } = 1;
     public string? HitText { get; init; }
+    /// <summary>Jala-Lied: Mana alle 5 s (viManaDrain) und Schule, gegen die es wirkt (Lieder gegen eine Schule).</summary>
+    public int SongDrain { get; init; } = 3;
+    public int TargetSchool { get; init; }
 
     /// <summary>Objekt-ID des Spruchs im Protokoll (BP_SPELLS, BP_REQ_CAST).</summary>
     public uint ObjectId => Spell.ObjectIdBase + (uint)Sid;

@@ -97,6 +97,8 @@ public sealed class Room(RoomDefinition definition)
     public Crypt3a? Crypt3a { get; set; }
     /// <summary>Sektorhöhen, die vom .roo-Ausgangszustand abweichen (für neu Eintretende).</summary>
     public Dictionary<int, (byte Animation, int Height)> SectorState { get; } = new();
+    /// <summary>Jala-Lied auf dem Raum (WorldJala.cs).</summary>
+    public RoomSong? Song { get; set; }
 
     /// <summary>KOD-Feinkoordinate für die Mitte eines Grid-Felds.</summary>
     public static ushort Fine(int cell, int fine = 32) => (ushort)(cell * 64 + fine);
@@ -561,6 +563,7 @@ public sealed partial class World
             {
                 TickSpawns(room, now);
                 TickRoomEnchantments(room, now);
+                TickSong(room, now);
                 TickPuzzle(room, now);
                 TickOffers(room, now);
                 foreach (var monster in room.Monsters.ToList())
@@ -832,10 +835,10 @@ public sealed partial class World
         if (a.Hp < a.MaxHp && a.Hp > 0)
         {
             if (a.NextRegen == default)
-                a.NextRegen = now + CombatRules.HealthTime(a.State.Vigor, a.MaxHp);
+                a.NextRegen = now + SongRegen(a.Room, "restorate", CombatRules.HealthTime(a.State.Vigor, a.MaxHp));
             else if (now >= a.NextRegen)
             {
-                a.NextRegen = now + CombatRules.HealthTime(a.State.Vigor, a.MaxHp);
+                a.NextRegen = now + SongRegen(a.Room, "restorate", CombatRules.HealthTime(a.State.Vigor, a.MaxHp));
                 a.Hp++;
                 a.Session.SendHealth();
             }
@@ -846,10 +849,10 @@ public sealed partial class World
         if (a.State.Vigor < CombatRules.VigorRestThreshold)
         {
             if (a.NextRest == default)
-                a.NextRest = now + CombatRules.RestTime;
+                a.NextRest = now + SongRegen(a.Room, "invigorate", CombatRules.RestTime);
             else if (now >= a.NextRest)
             {
-                a.NextRest = now + CombatRules.RestTime;
+                a.NextRest = now + SongRegen(a.Room, "invigorate", CombatRules.RestTime);
                 a.State.Vigor++;
                 a.Session.SendVigor();
             }
@@ -910,7 +913,9 @@ public sealed partial class World
             }
 
             // battler.kod TryAttack: Offensive gegen Defensive des Monsters.
-            bool hit = CombatRules.HitChance(PlayerOffense(avatar), m.Kind.Defense) >= _random.Next(1, 101);
+            var (songHit, songDamage) = SongCombat(avatar, m);
+            StopSinging(avatar);
+            bool hit = CombatRules.HitChance(PlayerOffense(avatar) + songHit, m.Kind.Defense) >= _random.Next(1, 101);
             if (BerserkRing(avatar) is { } berserk)
                 WearRing(avatar, berserk, "Der Berserkerring zerspringt!");
             PracticeStrike(avatar, m, hit);
@@ -920,7 +925,7 @@ public sealed partial class World
                 return;
             }
             var touchSpell = avatar.Touch?.Spell;
-            int damage = PlayerDamage(avatar, m, out _);
+            int damage = PlayerDamage(avatar, m, out _) + songDamage;
             if (touchSpell is not null && avatar.Touch is not null)
             {
                 if (touchSpell.HitText is { } hitText)
@@ -1001,6 +1006,10 @@ public sealed partial class World
     {
         if (room.Avatars.Count == 0)
             FirstUserEntered(room);
+        if (avatar.Room is { Song: { } leftSong } && leftSong.Singer == avatar && avatar.Room != room)
+            EndSong(avatar.Room, leftSong, quiet: false);
+        if (room.Song is { } song)
+            SongTouches(song, avatar);
         avatar.Room = room;
         avatar.Row = row;
         avatar.Col = col;

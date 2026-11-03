@@ -32,6 +32,8 @@ public sealed partial class World
             return false;
         if (now < m.NextCast)
             return false;
+        if (SpellBanned(m.Room, 101))   // Zauberbann: zum Schweigen zu bringende Monster zaubern gar nicht
+            return false;
         if (_random.Next(cast.OneIn) != 0)
             return false;
         int roll = _random.Next(1, 101);

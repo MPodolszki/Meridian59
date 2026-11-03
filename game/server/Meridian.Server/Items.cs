@@ -64,6 +64,8 @@ public sealed record ItemKind(string Key, string Name, string Icon, int Value)
     public bool Berserk { get; init; }
     /// <summary>Ring der Unsichtbarkeit (ringinv.kod): unsichtbar, solange getragen; jede Minute eine Ladung.</summary>
     public bool Invisible { get; init; }
+    /// <summary>Instrument (instrum.kod viInstrument_strength): Laute 20, edle/wahre Laute 30, Jala-Halskette 5.</summary>
+    public int InstrumentLevel { get; init; }
     public int PowerMin { get; init; } = 30;
     public int PowerMax { get; init; } = 60;
     public int ChargesMin { get; init; } = 1;

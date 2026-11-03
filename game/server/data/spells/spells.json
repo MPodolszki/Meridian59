@@ -1354,6 +1354,347 @@
       ],
       "effect": "manabomb",
       "description": "Dein gesamtes Mana explodiert: Spieler in der Nähe verlieren einen Teil ihres Manas, Monster können eine Weile nicht zaubern. Braucht Saphire."
+    },
+    {
+      "key": "truth",
+      "sid": 88,
+      "name": "Wahrheit",
+      "icon": "itruth.bgf",
+      "school": 6,
+      "level": 1,
+      "mana": 5,
+      "chanceToIncrease": 10,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "ruby",
+          "number": 1
+        },
+        {
+          "item": "rainbowfern",
+          "number": 2
+        }
+      ],
+      "effect": "songbane",
+      "songDrain": 3,
+      "description": "Ein Lied, das Riijas Täuschungen schwächt: Riija-Sprüche im Raum gelingen seltener.",
+      "castText": "Ein klares, ehrliches Lied erklingt.",
+      "offText": "Das Lied verklingt.",
+      "targetSchool": 5
+    },
+    {
+      "key": "invigorate",
+      "sid": 175,
+      "name": "Belebung",
+      "icon": "iinvigor.bgf",
+      "school": 6,
+      "level": 1,
+      "mana": 5,
+      "chanceToIncrease": 20,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "diamond",
+          "number": 1
+        },
+        {
+          "item": "snack",
+          "number": 1
+        }
+      ],
+      "effect": "invigorate",
+      "songDrain": 1,
+      "description": "Alle im Raum erholen ihre Ausdauer schneller, solange das Lied erklingt.",
+      "castText": "Ein munteres Lied macht alle im Raum frisch.",
+      "offText": "Das Lied verklingt."
+    },
+    {
+      "key": "mirth",
+      "sid": 179,
+      "name": "Frohsinn",
+      "icon": "imirth.bgf",
+      "school": 6,
+      "level": 1,
+      "mana": 2,
+      "chanceToIncrease": 25,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "sapphire",
+          "number": 1
+        }
+      ],
+      "effect": "mirth",
+      "songDrain": 2,
+      "description": "Ein fröhliches Lied: wen es erfasst, der kämpft besser gegen böse Wesen.",
+      "castText": "Ein fröhliches Lied erfüllt den Raum.",
+      "offText": "Das Lied verklingt."
+    },
+    {
+      "key": "melancholy",
+      "sid": 180,
+      "name": "Schwermut",
+      "icon": "imlnchly.bgf",
+      "school": 6,
+      "level": 1,
+      "mana": 2,
+      "chanceToIncrease": 25,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "sapphire",
+          "number": 1
+        }
+      ],
+      "effect": "melancholy",
+      "songDrain": 2,
+      "description": "Ein trauriges Lied: wen es erfasst, der kämpft grimmiger gegen gute Wesen.",
+      "castText": "Ein schwermütiges Lied erfüllt den Raum.",
+      "offText": "Das Lied verklingt."
+    },
+    {
+      "key": "warptime",
+      "sid": 122,
+      "name": "Zeitverzerrung",
+      "icon": "iwarptim.bgf",
+      "school": 6,
+      "level": 2,
+      "mana": 5,
+      "chanceToIncrease": 8,
+      "targets": 0,
+      "reagents": [],
+      "effect": "warptime",
+      "songDrain": 5,
+      "description": "Die Zeit dehnt sich: alle Zaubertrancen im Raum dauern länger.",
+      "castText": "Ein seltsam schleppendes Lied lässt die Zeit zerfließen.",
+      "offText": "Das Lied verklingt."
+    },
+    {
+      "key": "civility",
+      "sid": 170,
+      "name": "Höflichkeit",
+      "icon": "icivilty.bgf",
+      "school": 6,
+      "level": 2,
+      "mana": 5,
+      "chanceToIncrease": 10,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "ruby",
+          "number": 1
+        },
+        {
+          "item": "mushroom",
+          "number": 1
+        }
+      ],
+      "effect": "songbane",
+      "songDrain": 3,
+      "description": "Ein Lied gegen Farens Ungestüm: Faren-Sprüche im Raum gelingen seltener.",
+      "castText": "Ein gesittetes Lied erklingt.",
+      "offText": "Das Lied verklingt.",
+      "targetSchool": 4
+    },
+    {
+      "key": "conciliation",
+      "sid": 171,
+      "name": "Versöhnung",
+      "icon": "iconcil.bgf",
+      "school": 6,
+      "level": 2,
+      "mana": 5,
+      "chanceToIncrease": 10,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "ruby",
+          "number": 1
+        },
+        {
+          "item": "elderberry",
+          "number": 1
+        }
+      ],
+      "effect": "songbane",
+      "songDrain": 3,
+      "description": "Ein Lied gegen Kraanans Kampfeslust: Kraanan-Sprüche im Raum gelingen seltener.",
+      "castText": "Ein versöhnliches Lied erklingt.",
+      "offText": "Das Lied verklingt.",
+      "targetSchool": 3
+    },
+    {
+      "key": "spellbane",
+      "sid": 120,
+      "name": "Zauberbann",
+      "icon": "ispebane.bgf",
+      "school": 6,
+      "level": 3,
+      "mana": 12,
+      "chanceToIncrease": 8,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "polishedseraphym",
+          "number": 1
+        }
+      ],
+      "effect": "spellbane",
+      "songDrain": 8,
+      "description": "Solange das Lied erklingt, scheitern alle schwächeren Zauber im Raum, und Monster können nicht zaubern.",
+      "castText": "Ein mächtiges Lied legt sich über alle Magie im Raum.",
+      "offText": "Das Lied verklingt."
+    },
+    {
+      "key": "sacredresonance",
+      "sid": 172,
+      "name": "Heilige Resonanz",
+      "icon": "isacrres.bgf",
+      "school": 6,
+      "level": 3,
+      "mana": 5,
+      "chanceToIncrease": 10,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "ruby",
+          "number": 1
+        },
+        {
+          "item": "entrootberry",
+          "number": 1
+        }
+      ],
+      "effect": "songbane",
+      "songDrain": 3,
+      "description": "Ein heiliges Lied: Qor-Sprüche im Raum gelingen seltener.",
+      "castText": "Eine heilige Resonanz erfüllt den Raum.",
+      "offText": "Das Lied verklingt.",
+      "targetSchool": 2
+    },
+    {
+      "key": "profaneresonance",
+      "sid": 173,
+      "name": "Unheilige Resonanz",
+      "icon": "iprofres.bgf",
+      "school": 6,
+      "level": 3,
+      "mana": 5,
+      "chanceToIncrease": 10,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "ruby",
+          "number": 1
+        },
+        {
+          "item": "herbs",
+          "number": 1
+        }
+      ],
+      "effect": "songbane",
+      "songDrain": 3,
+      "description": "Ein unheiliges Lied: Shal'ille-Sprüche im Raum gelingen seltener.",
+      "castText": "Eine unheilige Resonanz erfüllt den Raum.",
+      "offText": "Das Lied verklingt.",
+      "targetSchool": 1
+    },
+    {
+      "key": "restorate",
+      "sid": 176,
+      "name": "Wiederherstellung",
+      "icon": "irestor.bgf",
+      "school": 6,
+      "level": 3,
+      "mana": 5,
+      "chanceToIncrease": 20,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "diamond",
+          "number": 1
+        },
+        {
+          "item": "herbs",
+          "number": 5
+        }
+      ],
+      "effect": "restorate",
+      "songDrain": 3,
+      "description": "Alle im Raum heilen schneller, solange das Lied erklingt.",
+      "castText": "Ein heilsames Lied erklingt.",
+      "offText": "Das Lied verklingt."
+    },
+    {
+      "key": "disharmony",
+      "sid": 174,
+      "name": "Missklang",
+      "icon": "idisharm.bgf",
+      "school": 6,
+      "level": 4,
+      "mana": 5,
+      "chanceToIncrease": 10,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "ruby",
+          "number": 1
+        }
+      ],
+      "effect": "songbane",
+      "songDrain": 3,
+      "description": "Ein schräges Lied gegen andere Barden: Jala-Lieder im Raum gelingen seltener.",
+      "castText": "Ein schriller Missklang erfüllt den Raum.",
+      "offText": "Das Lied verklingt.",
+      "targetSchool": 6
+    },
+    {
+      "key": "manaconvergence",
+      "sid": 131,
+      "name": "Manakonvergenz",
+      "icon": "imanacon.bgf",
+      "school": 6,
+      "level": 5,
+      "mana": 10,
+      "chanceToIncrease": 8,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "polishedseraphym",
+          "number": 1
+        }
+      ],
+      "effect": "manaconvergence",
+      "songDrain": 9,
+      "description": "Alle Zauber im Raum werden stärker, solange das Lied erklingt.",
+      "castText": "Das Mana des Raums bündelt sich zu einem Lied.",
+      "offText": "Das Lied verklingt."
+    },
+    {
+      "key": "rejuvenate",
+      "sid": 177,
+      "name": "Verjüngung",
+      "icon": "irejuven.bgf",
+      "school": 6,
+      "level": 5,
+      "mana": 5,
+      "chanceToIncrease": 20,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "diamond",
+          "number": 1
+        },
+        {
+          "item": "uncutseraphym",
+          "number": 1
+        }
+      ],
+      "effect": "rejuvenate",
+      "songDrain": 8,
+      "description": "Alle im Raum gewinnen ihr Mana schneller zurück, solange das Lied erklingt.",
+      "castText": "Ein erfrischendes Lied erklingt.",
+      "offText": "Das Lied verklingt."
     }
   ],
   "startingSpells": [

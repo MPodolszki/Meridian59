@@ -16,6 +16,11 @@ public sealed partial class World
     private bool CanTarget(Avatar a, SpellDefinition spell, Avatar? target, Monster? victim)
     {
         string e = spell.Effect;
+        if (spell.School == 6 && InstrumentLevel(a) == 0)
+        {
+            Tell(a, "Du brauchst ein Instrument!");   // jala.kod jala_need_instrument
+            return false;
+        }
         if ((MonsterEffects.Contains(e) || RoomAttackEffects.Contains(e)) && a.Room.Definition.NoCombat)
         {
             Tell(a, "Hier ist kein Kampf erlaubt.");
