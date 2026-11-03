@@ -14,6 +14,15 @@ public sealed class MonsterCatalogTests
     }
 
     [Fact]
+    public void Ghost_ShrugsOffOrdinaryWeapons_ButNotEnchantedOnes()
+    {
+        var ghost = MonsterKind.ByKey("ghost");
+        Assert.Equal(90, ghost.ResistanceTo(["slash", "nonmagic"]));     // gewöhnliche Waffe
+        Assert.Equal(-50, ghost.ResistanceTo(["slash", "magic"]));       // Waffe verzaubern
+        Assert.Equal(40, ghost.ResistanceTo(["slash", "nonmagic", "holy"]));   // Heilige Waffe: 90 + (−50)
+    }
+
+    [Fact]
     public void Values_FollowMonsterKod()
     {
         var rat = MonsterKind.ByKey("giantrat");       // Stufe 30, Schwierigkeit 1, SPEED_FAST

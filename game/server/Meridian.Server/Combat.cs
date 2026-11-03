@@ -120,11 +120,17 @@ public sealed record MonsterKind(
 
     /// <summary>Resistenz gegen eine Angriffsart (battler.kod): größter positiver plus kleinster negativer Wert aller
     /// passenden Einträge; „weapon_all“/„spell_all“ passen auf jede Waffen- bzw. Zauberart.</summary>
-    public int ResistanceTo(string attackType)
+    public int ResistanceTo(string attackType) => ResistanceTo([attackType]);
+
+    /// <summary>battler.kod: über alle passenden Einträge (Angriffsarten des Treffers plus weapon_all/spell_all)
+    /// größter positiver plus kleinster negativer Wert.</summary>
+    public int ResistanceTo(IReadOnlyCollection<string> attackTypes)
     {
-        string all = SpellTypes.Contains(attackType) ? "spell_all" : "weapon_all";
+        var keys = new HashSet<string>(attackTypes);
+        foreach (string t in attackTypes)
+            keys.Add(SpellTypes.Contains(t) ? "spell_all" : "weapon_all");
         int max = 0, min = 0;
-        foreach (string k in new[] { attackType, all })
+        foreach (string k in keys)
             if (Resistances.TryGetValue(k, out int r))
             {
                 max = Math.Max(max, r);

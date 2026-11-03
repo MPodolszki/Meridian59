@@ -5,6 +5,7 @@
       "markup": 3,
       "spells": [
         "minorheal",
+        "holyweapon",
         "holytouch",
         "curepoison",
         "rescue",
@@ -23,6 +24,7 @@
       "markup": 3,
       "spells": [
         "bless",
+        "enchantweapon",
         "superstrength",
         "nightvision",
         "createweapon",
@@ -41,6 +43,7 @@
         "darkness",
         "acidtouch",
         "karaholscurse",
+        "unholyweapon",
         "enfeeble",
         "hold",
         "invisibility"

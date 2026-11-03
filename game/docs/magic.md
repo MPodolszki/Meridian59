@@ -159,3 +159,12 @@ Kräfte des Lichts für Shal'ille-Sprüche fehlt.
   Braucht einen polierten Seraphym.
 - **Winde** (winds.kod, Faren 3): Zielen aller Spieler im Raum − Stärke/4 (Treffer − 4 × das), immer 60 s; die
   Fehlschusschance für Fernwaffen fehlt (es gibt noch keine).
+
+## Waffenweihen; Angriffsarten der Waffen (2026-11-03)
+- **Waffe verzaubern** (enchwp.kod, Kraanan 2), **Heilige Waffe** (holywp.kod, Shal'ille 2), **Unheilige Waffe**
+  (unholywp.kod, Qor 2): die geführte Waffe gilt (Random(1, 4) + Stärke/3) Stunden als magisch bzw. trifft zusätzlich
+  heilig/unheilig. Zauberzeit 30 s. Abweichung: Ziel ist immer die Waffe in der Hand; die Weihe wird noch nicht
+  gespeichert (endet beim Ausloggen).
+- **Angriffsarten**: Ein Waffentreffer trägt wie im Original seine Waffenart plus `nonmagic` (gewöhnliche Waffe) bzw.
+  `magic` (verzaubert/magische Waffe), dazu ggf. `holy`/`unholy`; die Resistenz ist wie in battler.kod größter
+  positiver plus kleinster negativer Wert über alle passenden Einträge. Geister widerstehen gewöhnlichen Waffen zu 90 %.

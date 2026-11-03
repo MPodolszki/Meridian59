@@ -1254,6 +1254,87 @@
       "castText": "Heftige Winde fegen plötzlich durch die Gegend und zerren an deinen Gliedern.",
       "offText": "Die Winde lassen nach und legen sich.",
       "unnecessary": "Hier wehen bereits magische Winde."
+    },
+    {
+      "key": "enchantweapon",
+      "sid": 61,
+      "name": "Waffe verzaubern",
+      "icon": "ienchant.bgf",
+      "school": 3,
+      "attackType": "magic",
+      "reagents": [
+        {
+          "item": "elderberry",
+          "number": 3
+        },
+        {
+          "item": "orctooth",
+          "number": 1
+        }
+      ],
+      "description": "Weiht die Waffe in deiner Hand für einige Stunden Kraanan: sie gilt als magisch und trifft auch Wesen, denen gewöhnliche Waffen nichts anhaben. Braucht Holunderbeeren und einen Orkzahn.",
+      "castText": "{0} ist nun Kraanan geweiht.",
+      "level": 2,
+      "mana": 17,
+      "exertion": 20,
+      "castTime": 30000,
+      "chanceToIncrease": 20,
+      "targets": 0,
+      "effect": "weaponenchant"
+    },
+    {
+      "key": "holyweapon",
+      "sid": 60,
+      "name": "Heilige Waffe",
+      "icon": "iholywpn.bgf",
+      "school": 1,
+      "attackType": "holy",
+      "reagents": [
+        {
+          "item": "fairywing",
+          "number": 3
+        },
+        {
+          "item": "orctooth",
+          "number": 1
+        }
+      ],
+      "description": "Weiht die Waffe in deiner Hand für einige Stunden Shal'ille: ihre Treffer richten heiligen Schaden an, besonders gegen Untote. Braucht Feenflügel und einen Orkzahn.",
+      "castText": "{0} ist nun Shal'ille geweiht.",
+      "level": 2,
+      "mana": 17,
+      "exertion": 20,
+      "castTime": 30000,
+      "chanceToIncrease": 20,
+      "targets": 0,
+      "effect": "weaponenchant"
+    },
+    {
+      "key": "unholyweapon",
+      "sid": 59,
+      "name": "Unheilige Waffe",
+      "icon": "iunholyw.bgf",
+      "school": 2,
+      "attackType": "unholy",
+      "reagents": [
+        {
+          "item": "fairywing",
+          "number": 3
+        },
+        {
+          "item": "orctooth",
+          "number": 1
+        }
+      ],
+      "description": "Weiht die Waffe in deiner Hand für einige Stunden Qor: ihre Treffer richten unheiligen Schaden an. Braucht Feenflügel und einen Orkzahn.",
+      "castText": "{0} ist nun Qor geweiht.",
+      "level": 2,
+      "mana": 17,
+      "exertion": 20,
+      "castTime": 30000,
+      "chanceToIncrease": 20,
+      "targets": 0,
+      "effect": "weaponenchant"
     }
   ],
   "startingSpells": [

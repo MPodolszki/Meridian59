@@ -364,6 +364,14 @@ public sealed partial class World
             case "discordance":
                 Discordance(a, spell, power);
                 break;
+            case "weaponenchant":
+            {
+                // enchwp/holywp/unholywp.kod: (Random(1, 4) + Stärke/3) Stunden.
+                var weapon = Weapon(a)!;
+                weapon.WeaponEnchant = (spell.AttackType ?? "magic", DateTime.UtcNow.AddHours(_random.Next(1, 5) + power / 3));
+                Tell(a, string.Format(spell.CastText ?? "{0} ist nun geweiht.", Capitalize(weapon.Describe())));
+                break;
+            }
             default:
                 CastSchoolSpell(a, spell, target, victim, power);
                 break;

@@ -75,6 +75,15 @@ public sealed partial class World
             int profBonus = (SkillOf(a, weapon.Kind.Proficiency) + 1) * 5 / 100;
             d = profBonus + (100 + mightBonus) * d / 100;
             attackType = weapon.Kind.WeaponType ?? "slash";
+            // ATCK_WEAP_NONMAGIC bzw. _MAGIC (verzauberte Waffe), dazu die Weihe heilig/unheilig.
+            var types = new List<string> { attackType };
+            var ench = WeaponEnchantOf(a, weapon);
+            types.Add(ench == "magic" || weapon.Kind.WeaponQuality == "magic" ? "magic" : "nonmagic");
+            if (ench is "holy" or "unholy")
+                types.Add(ench);
+            d += BlessDamage(a) + KillingFieldsBonus(a) + KaraholDamage(a);
+            d = CombatRules.Resist(d, m.Kind.ResistanceTo(types));
+            return Math.Max(d, 1);
         }
         else
         {
@@ -87,6 +96,18 @@ public sealed partial class World
         d += KaraholDamage(a);
         d = CombatRules.Resist(d, m.Kind.ResistanceTo(attackType));
         return Math.Max(d, 1);
+    }
+
+    /// <summary>Weihe der Waffe, sofern noch nicht abgelaufen (sonst endet sie mit Meldung).</summary>
+    private string? WeaponEnchantOf(Avatar a, Item weapon)
+    {
+        if (weapon.WeaponEnchant is not { } e)
+            return null;
+        if (DateTime.UtcNow < e.Until)
+            return e.Type;
+        weapon.WeaponEnchant = null;
+        Tell(a, $"{Capitalize(weapon.Describe())} wirkt plötzlich wieder ganz gewöhnlich.");
+        return null;
     }
 
     /// <summary>player.kod AssessDamage: Rüstung/Schild mindern, mind. 1, höchstens (Grund-LP+2)/3 solange

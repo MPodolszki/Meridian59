@@ -119,6 +119,9 @@ public sealed class Item(uint id, ItemKind kind, int number = 1)
     public int Number { get; set; } = kind.Number ? number : 1;
     /// <summary>Ausgerüstet/benutzt (KOD poOwner-Liste plUsing).</summary>
     public bool Used { get; set; }
+    /// <summary>Waffenweihe (enchwp/holywp/unholywp.kod, WA_ENCHANTED/WA_ATTACKSPELLTYPE): "magic", "holy" oder
+    /// "unholy" bis zum Ablauf; wird noch nicht gespeichert.</summary>
+    public (string Type, DateTime Until)? WeaponEnchant { get; set; }
 
     /// <summary>Wert wie KOD GetValue: Mengen-Gegenstände Anzahl × Wert.</summary>
     public int Value => Kind.Number ? Number * Kind.Value : Kind.Value;

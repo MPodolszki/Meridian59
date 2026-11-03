@@ -68,6 +68,12 @@ public sealed partial class World
             case "relay" when target is not null && target.State.Vigor >= 150:
                 Tell(a, $"{target.Name} kann keine weitere Ausdauer aufnehmen.");
                 return false;
+            case "weaponenchant" when Weapon(a) is null:
+                Tell(a, "Du musst eine Waffe in der Hand halten, um sie zu weihen.");
+                return false;
+            case "weaponenchant" when Weapon(a)!.WeaponEnchant is { } we && we.Until > DateTime.UtcNow:
+                Tell(a, $"{Capitalize(Weapon(a)!.Describe())} ist bereits geweiht.");
+                return false;
             case "curepoison" when target is not null && !target.Poisoned:
                 Tell(a, target == a ? "Du bist nicht vergiftet." : $"{target.Name} ist nicht vergiftet.");
                 return false;
