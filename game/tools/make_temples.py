@@ -90,7 +90,7 @@ for cls, (file, name, room_class, row, col, *_rest) in PRIESTS.items():
     text, entry = kod_npc(cls)
     if room_class:
         room = by_class[room_class]
-        room.setdefault("npcs", []).append(entry)
+        room["npcs"] = [n for n in room.get("npcs", []) if n["kodClass"] != cls] + [entry]
         room["noCombat"] = True
     known, missing = priest_spells(text)
     shops[cls] = {"markup": 3, "spells": known}

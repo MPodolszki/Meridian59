@@ -20,7 +20,7 @@ Wald, Kanalisation, Mietzimmer: 39 Räume) und die Orkhöhlen (orccave1–6, Erw
 
 ## Reihenfolge
 1. ~~Wildnis und Tempel~~ erledigt (2026-11-03, `docs/wilderness.md`): 53 Wildnis-Räume, Tempel Shal'ille, Kraanan, Qor, Faren-Priesterin.
-2. Kanalisationen Barloque und Jasper.
+2. ~~Kanalisationen Barloque und Jasper~~ erledigt (`docs/areas.md`), mit Lupogg-König und Assassinen-Versteck.
 3. Burgen und Herzog.
 4. Nekropolis, Lich-Labyrinth, Unterwelt, Spinnennest.
 5. Wohnen: Gildenhallen, Mietzimmer, Gästehäuser (braucht Gilden und Lager).

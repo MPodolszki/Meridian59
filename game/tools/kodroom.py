@@ -46,8 +46,19 @@ def resource(text, name):
 
 
 def prop(text, name):
-    m = re.search(rf"^\s*{name}\s*=\s*([\w$]+)", text, re.M | re.I)
-    return value(m.group(1)) if m else None
+    """Eigenschaft/Klassenvariable; Ausdrücke aus Konstanten und + - * / werden ausgerechnet."""
+    m = re.search(rf"^\s*{name}\s*=\s*([^%\n]+)", text, re.M | re.I)
+    if not m:
+        return None
+    raw = m.group(1).strip()
+    if raw == "$":
+        return None
+    expr = re.sub(r"[A-Za-z_]\w*", lambda t: str(CONST.get(t.group(0).upper(), "None")), raw)
+    try:
+        v = eval(expr.replace("/", "//"), {})
+        return int(v) if v is not None else None
+    except Exception:
+        return None
 
 
 def symbol(text, name):
@@ -188,8 +199,8 @@ def room_of(path):
     room = {"id": CONST[rid_sym.upper()], "constant": rid_sym.upper(), "kodClass": cls, "name": name, "roo": roo.lower()}
     if music:
         room["music"] = music
-    light = symbol(text, "piBaseLight")
-    room["baseLight"] = CONST.get(light.upper(), 164) if light else 164
+    light = prop(text, "piBaseLight")
+    room["baseLight"] = 164 if light is None else light
     outside = prop(text, "piOutside_factor")
     room["outsideFactor"] = 8 if outside is None else outside
     room["outdoors"] = room["outsideFactor"] > 0
@@ -223,7 +234,75 @@ def room_of(path):
             room["initCountMin"] = lo
         if hi is not None:
             room["initCountMax"] = hi
+    # Bossräume (bossroom.kod): Boss und Gefolge einmal fest (plBossTemplate, plHenchmenTemplate)
+    fixed = []
+    for lst in ("plBossTemplate", "plHenchmenTemplate"):
+        b = re.search(rf"{lst}\s*=\s*\[(.*?)\]\s*;", text, re.S)
+        for cls, r, c in re.findall(r"\[\s*&(\w+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\]", b.group(1)) if b else []:
+            key = kinds.get(cls.lower())
+            if key is None:
+                missing_kinds.add(cls)
+            else:
+                fixed.append({"kind": key, "row": int(r), "col": int(c)})
+    found = npcs(text)
+    if found:
+        room["npcs"] = found
+    if fixed:
+        room["fixedMonsters"] = fixed
+        room["boss"] = True
     room["objects"] = trees(text)
     return room
 
 
+
+
+_mobs = None
+
+
+def mob_classes():
+    """Klassenname (klein) → Text aller Monster/NPC-Klassen unter nomoveon/battler/monster."""
+    global _mobs
+    if _mobs is None:
+        _mobs = {}
+        for f in (repo / "kod/object/active/holder/nomoveon/battler/monster").rglob("*.kod"):
+            t = f.read_text(encoding="latin-1")
+            m = re.search(r"^(\w+)\s+is\s+(\w+)", t, re.M)
+            if m:
+                _mobs[m.group(1).lower()] = (m.group(1), t)
+    return _mobs
+
+
+ANGLES = {"EAST": 0, "SOUTH_EAST": 512, "SOUTH": 1024, "SOUTH_WEST": 1536, "WEST": 2048, "NORTH_WEST": 2560,
+          "NORTH": 3072, "NORTH_EAST": 3584}
+
+
+def npcs(text):
+    """Friedliche Bewohner (MOB_NOFIGHT) und Schilder aus Create(&Klasse …) mit #new_row/#new_col."""
+    out = []
+    for m in re.finditer(r"Create\(\s*&(\w+)([^)]*)\)\s*,\s*(#[^;]*?)\)\s*;", text, re.S | re.I):
+        cls, inner, place = m.group(1), m.group(2), m.group(3)
+        args = dict(re.findall(r"#(\w+)\s*=\s*(\w+)", place))
+        if "new_row" not in args or value(args["new_row"]) is None:
+            continue
+        pos = {"row": value(args["new_row"]), "col": value(args["new_col"]),
+               "fineRow": value(args.get("fine_row", "32")), "fineCol": value(args.get("fine_col", "32")),
+               "angle": ANGLES.get(args.get("new_angle", "")[6:], 0) if args.get("new_angle", "").startswith("ANGLE_") else 0}
+        if cls.lower() == "sign":
+            iargs = dict(re.findall(r"#(\w+)\s*=\s*(\w+)", inner))
+            name = resource(text, iargs.get("name", "")) or "Schild"
+            desc = resource(text, iargs.get("desc", "")) or ""
+            out.append(dict(kodClass="Sign", name=name, icon="razsign1.bgf", role="Schild", description=desc, **pos))
+            continue
+        mob = mob_classes().get(cls.lower())
+        if not mob:
+            continue
+        real, mt = mob
+        attrs = re.search(r"viAttributes\s*=\s*([^\n]+)", mt)
+        if not attrs or "MOB_NOFIGHT" not in attrs.group(1):
+            continue
+        name_sym = symbol(mt, "vrName")
+        icon_sym = symbol(mt, "vrIcon")
+        name = resource(mt, name_sym) if name_sym else real
+        icon = resource(mt, icon_sym) if icon_sym else None
+        out.append(dict(kodClass=real, name=name or real, icon=(icon or "").lower() or None, role="Bewohner", **pos))
+    return out

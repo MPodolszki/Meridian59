@@ -1,0 +1,1025 @@
+{
+  "source": "monsroom/barlsew.kod, monsroom/barlsew2.kod, monsroom/barlsew3.kod, monsroom/jassew1.kod, monsroom/jassew2.kod, monsroom/jassew3.kod, monsroom/bossroom/sewking.kod, barlqrm/asshq.kod",
+  "startRoom": 108,
+  "rooms": [
+    {
+      "id": 108,
+      "constant": "RID_BAR_SEWER",
+      "kodClass": "BarlSewer",
+      "name": "The Sewers of Barloque",
+      "roo": "barlsew.roo",
+      "music": "cave.mid",
+      "baseLight": 0,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "sewers",
+      "teleport": {
+        "row": 58,
+        "col": 11
+      },
+      "exits": [
+        {
+          "row": 56,
+          "col": 8,
+          "to": 101,
+          "toConstant": "RID_BAR_NORTH",
+          "toRow": 47,
+          "toCol": 40,
+          "rotate": "NONE"
+        },
+        {
+          "row": 21,
+          "col": 37,
+          "to": 110,
+          "toConstant": "RID_ASSHQ",
+          "toRow": 13,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 5,
+          "col": 42,
+          "to": 708,
+          "toConstant": "RID_GUILDH8",
+          "toRow": 26,
+          "toCol": 8,
+          "rotate": "NONE"
+        },
+        {
+          "row": 5,
+          "col": 43,
+          "to": 708,
+          "toConstant": "RID_GUILDH8",
+          "toRow": 26,
+          "toCol": 9,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 111,
+          "toConstant": "RID_BAR_SEWER2",
+          "toRow": 34,
+          "toCol": 62,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 562,
+          "toConstant": "RID_F2",
+          "toRow": 7,
+          "toCol": 106,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "giantrat",
+          "weight": 94
+        },
+        {
+          "kind": "lupogg",
+          "weight": 6
+        }
+      ],
+      "generators": [
+        {
+          "row": 14,
+          "col": 39
+        },
+        {
+          "row": 8,
+          "col": 45
+        },
+        {
+          "row": 15,
+          "col": 44
+        },
+        {
+          "row": 15,
+          "col": 35
+        },
+        {
+          "row": 19,
+          "col": 23
+        },
+        {
+          "row": 25,
+          "col": 32
+        },
+        {
+          "row": 31,
+          "col": 38
+        },
+        {
+          "row": 29,
+          "col": 42
+        },
+        {
+          "row": 43,
+          "col": 44
+        },
+        {
+          "row": 51,
+          "col": 43
+        },
+        {
+          "row": 54,
+          "col": 40
+        },
+        {
+          "row": 58,
+          "col": 33
+        },
+        {
+          "row": 48,
+          "col": 33
+        },
+        {
+          "row": 69,
+          "col": 23
+        },
+        {
+          "row": 62,
+          "col": 8
+        }
+      ],
+      "maxMonsters": 25,
+      "genTime": 60000,
+      "genPercent": 80,
+      "initCountMin": 4,
+      "initCountMax": 6,
+      "objects": [],
+      "rows": 71,
+      "cols": 50
+    },
+    {
+      "id": 110,
+      "constant": "RID_ASSHQ",
+      "kodClass": "AssassinHeadQuarters",
+      "name": "A shadowy corner",
+      "roo": "asshq.roo",
+      "music": "cave.mid",
+      "baseLight": 80,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "cave",
+      "teleport": {
+        "row": 13,
+        "col": 2
+      },
+      "exits": [
+        {
+          "row": 12,
+          "col": 2,
+          "to": 108,
+          "toConstant": "RID_BAR_SEWER",
+          "toRow": 22,
+          "toCol": 37,
+          "rotate": "NONE"
+        },
+        {
+          "row": 54,
+          "col": 31,
+          "to": 593,
+          "toConstant": "RID_I3",
+          "toRow": 7,
+          "toCol": 12,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "npcs": [
+        {
+          "kodClass": "Sign",
+          "name": "rules of the game",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "Are you a true assassin, able to use guile, stealth and deception ",
+          "row": 8,
+          "col": 2,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "Sign",
+          "name": "rules of the game",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "+ If you join the proceedings, you will be given a dagger.  ",
+          "row": 5,
+          "col": 4,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "Sign",
+          "name": "rules of the game",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "+ I laugh at Shal'ille's protective magics.  While wielding a black dagger, ",
+          "row": 2,
+          "col": 6,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "Sign",
+          "name": "rules of the game",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "+ The same magic that makes a black dagger so deadly to whoever's name is ",
+          "row": 2,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "kodClass": "Sign",
+          "name": "rules of the game",
+          "icon": "razsign1.bgf",
+          "role": "Schild",
+          "description": "+ We cannot have the game polluted by people who join in and then do not log on ",
+          "row": 5,
+          "col": 14,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "kodClass": "Assassin",
+          "name": "Roq",
+          "icon": "assassin.bgf",
+          "role": "Bewohner",
+          "row": 13,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 2560
+        }
+      ],
+      "objects": [],
+      "rows": 14,
+      "cols": 21
+    },
+    {
+      "id": 111,
+      "constant": "RID_BAR_SEWER2",
+      "kodClass": "BarlSewer2",
+      "name": "The Sewers of Barloque",
+      "roo": "barlsew2.roo",
+      "music": "cave.mid",
+      "baseLight": 0,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "sewers",
+      "teleport": {
+        "row": 26,
+        "col": 33
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 108,
+          "toConstant": "RID_BAR_SEWER",
+          "toRow": 23,
+          "toCol": 1,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 112,
+          "toConstant": "RID_BAR_SEWER3",
+          "toRow": 29,
+          "toCol": 48,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "giantrat",
+          "weight": 55
+        },
+        {
+          "kind": "lupogg",
+          "weight": 45
+        }
+      ],
+      "generators": [
+        {
+          "row": 4,
+          "col": 32
+        },
+        {
+          "row": 13,
+          "col": 8
+        },
+        {
+          "row": 11,
+          "col": 27
+        },
+        {
+          "row": 21,
+          "col": 21
+        },
+        {
+          "row": 23,
+          "col": 12
+        },
+        {
+          "row": 40,
+          "col": 10
+        },
+        {
+          "row": 47,
+          "col": 14
+        },
+        {
+          "row": 47,
+          "col": 5
+        },
+        {
+          "row": 40,
+          "col": 26
+        },
+        {
+          "row": 27,
+          "col": 32
+        },
+        {
+          "row": 17,
+          "col": 33
+        },
+        {
+          "row": 6,
+          "col": 46
+        },
+        {
+          "row": 12,
+          "col": 52
+        },
+        {
+          "row": 22,
+          "col": 56
+        },
+        {
+          "row": 17,
+          "col": 41
+        },
+        {
+          "row": 42,
+          "col": 46
+        },
+        {
+          "row": 31,
+          "col": 40
+        },
+        {
+          "row": 45,
+          "col": 36
+        }
+      ],
+      "maxMonsters": 25,
+      "genTime": 70000,
+      "genPercent": 80,
+      "initCountMin": 4,
+      "initCountMax": 6,
+      "objects": [],
+      "rows": 50,
+      "cols": 62
+    },
+    {
+      "id": 112,
+      "constant": "RID_BAR_SEWER3",
+      "kodClass": "BarlSewer3",
+      "name": "The Sewers of Barloque",
+      "roo": "barlsew3.roo",
+      "music": "cave.mid",
+      "baseLight": 0,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "sewers",
+      "teleport": {
+        "row": 12,
+        "col": 34
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 111,
+          "toConstant": "RID_BAR_SEWER2",
+          "toRow": 18,
+          "toCol": 1,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 380,
+          "toConstant": "RID_SEWER_KING",
+          "toRow": 15,
+          "toCol": 58,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "giantrat",
+          "weight": 20
+        },
+        {
+          "kind": "lupogg",
+          "weight": 80
+        }
+      ],
+      "generators": [
+        {
+          "row": 5,
+          "col": 17
+        },
+        {
+          "row": 5,
+          "col": 8
+        },
+        {
+          "row": 22,
+          "col": 20
+        },
+        {
+          "row": 44,
+          "col": 9
+        },
+        {
+          "row": 25,
+          "col": 13
+        },
+        {
+          "row": 21,
+          "col": 6
+        },
+        {
+          "row": 35,
+          "col": 3
+        },
+        {
+          "row": 41,
+          "col": 26
+        },
+        {
+          "row": 43,
+          "col": 39
+        },
+        {
+          "row": 35,
+          "col": 42
+        },
+        {
+          "row": 17,
+          "col": 29
+        },
+        {
+          "row": 8,
+          "col": 30
+        },
+        {
+          "row": 4,
+          "col": 40
+        },
+        {
+          "row": 11,
+          "col": 43
+        },
+        {
+          "row": 22,
+          "col": 39
+        },
+        {
+          "row": 30,
+          "col": 30
+        }
+      ],
+      "maxMonsters": 25,
+      "genTime": 50000,
+      "genPercent": 80,
+      "initCountMin": 7,
+      "initCountMax": 9,
+      "objects": [],
+      "rows": 49,
+      "cols": 48
+    },
+    {
+      "id": 377,
+      "constant": "RID_JAS_SEWER1",
+      "kodClass": "JasSewer1",
+      "name": "The Sewers of Jasper",
+      "roo": "jassew1.roo",
+      "music": "cave.mid",
+      "baseLight": 0,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "sewers",
+      "teleport": {
+        "row": 21,
+        "col": 31
+      },
+      "exits": [
+        {
+          "row": 30,
+          "col": 5,
+          "to": 382,
+          "toConstant": "RID_JASWEST",
+          "toRow": 35,
+          "toCol": 28,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 378,
+          "toConstant": "RID_JAS_SEWER2",
+          "toRow": 7,
+          "toCol": 1,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "giantrat",
+          "weight": 95
+        },
+        {
+          "kind": "lupogg",
+          "weight": 5
+        }
+      ],
+      "generators": [
+        {
+          "row": 32,
+          "col": 14
+        },
+        {
+          "row": 32,
+          "col": 23
+        },
+        {
+          "row": 23,
+          "col": 26
+        },
+        {
+          "row": 30,
+          "col": 29
+        },
+        {
+          "row": 16,
+          "col": 21
+        },
+        {
+          "row": 6,
+          "col": 18
+        },
+        {
+          "row": 9,
+          "col": 33
+        },
+        {
+          "row": 16,
+          "col": 8
+        },
+        {
+          "row": 17,
+          "col": 35
+        },
+        {
+          "row": 28,
+          "col": 39
+        },
+        {
+          "row": 36,
+          "col": 31
+        },
+        {
+          "row": 42,
+          "col": 31
+        },
+        {
+          "row": 42,
+          "col": 31
+        },
+        {
+          "row": 44,
+          "col": 16
+        },
+        {
+          "row": 33,
+          "col": 45
+        },
+        {
+          "row": 38,
+          "col": 46
+        },
+        {
+          "row": 21,
+          "col": 16
+        },
+        {
+          "row": 26,
+          "col": 20
+        }
+      ],
+      "maxMonsters": 25,
+      "genTime": 80000,
+      "genPercent": 80,
+      "initCountMin": 6,
+      "initCountMax": 7,
+      "objects": [],
+      "rows": 49,
+      "cols": 49
+    },
+    {
+      "id": 378,
+      "constant": "RID_JAS_SEWER2",
+      "kodClass": "JasSewer2",
+      "name": "The Sewers of Jasper",
+      "roo": "jassew2.roo",
+      "music": "cave.mid",
+      "baseLight": 0,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "sewers",
+      "teleport": {
+        "row": 18,
+        "col": 25
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 377,
+          "toConstant": "RID_JAS_SEWER1",
+          "toRow": 40,
+          "toCol": 49,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 379,
+          "toConstant": "RID_JAS_SEWER3",
+          "toRow": 43,
+          "toCol": 1,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "EAST",
+          "to": 379,
+          "toConstant": "RID_JAS_SEWER3",
+          "toRow": 54,
+          "toCol": 1,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "giantrat",
+          "weight": 39
+        },
+        {
+          "kind": "lupogg",
+          "weight": 60
+        }
+      ],
+      "generators": [
+        {
+          "row": 10,
+          "col": 14
+        },
+        {
+          "row": 10,
+          "col": 19
+        },
+        {
+          "row": 10,
+          "col": 29
+        },
+        {
+          "row": 5,
+          "col": 36
+        },
+        {
+          "row": 19,
+          "col": 24
+        },
+        {
+          "row": 27,
+          "col": 28
+        },
+        {
+          "row": 34,
+          "col": 26
+        },
+        {
+          "row": 27,
+          "col": 15
+        },
+        {
+          "row": 19,
+          "col": 10
+        },
+        {
+          "row": 37,
+          "col": 6
+        },
+        {
+          "row": 41,
+          "col": 14
+        },
+        {
+          "row": 43,
+          "col": 24
+        },
+        {
+          "row": 41,
+          "col": 37
+        },
+        {
+          "row": 38,
+          "col": 50
+        },
+        {
+          "row": 25,
+          "col": 48
+        },
+        {
+          "row": 15,
+          "col": 43
+        }
+      ],
+      "maxMonsters": 25,
+      "genTime": 55000,
+      "genPercent": 80,
+      "initCountMin": 5,
+      "initCountMax": 7,
+      "objects": [],
+      "rows": 50,
+      "cols": 51
+    },
+    {
+      "id": 379,
+      "constant": "RID_JAS_SEWER3",
+      "kodClass": "JasSewer3",
+      "name": "The Sewers of Jasper",
+      "roo": "jassew3.roo",
+      "music": "cave.mid",
+      "baseLight": 0,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "sewers",
+      "teleport": {
+        "row": 58,
+        "col": 11
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 378,
+          "toConstant": "RID_JAS_SEWER2",
+          "toRow": 28,
+          "toCol": 51,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "WEST",
+          "to": 378,
+          "toConstant": "RID_JAS_SEWER2",
+          "toRow": 38,
+          "toCol": 51,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "NORTH",
+          "to": 380,
+          "toConstant": "RID_SEWER_KING",
+          "toRow": 50,
+          "toCol": 3,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "giantrat",
+          "weight": 15
+        },
+        {
+          "kind": "lupogg",
+          "weight": 85
+        }
+      ],
+      "generators": [
+        {
+          "row": 45,
+          "col": 8
+        },
+        {
+          "row": 61,
+          "col": 4
+        },
+        {
+          "row": 45,
+          "col": 20
+        },
+        {
+          "row": 52,
+          "col": 11
+        },
+        {
+          "row": 45,
+          "col": 32
+        },
+        {
+          "row": 55,
+          "col": 24
+        },
+        {
+          "row": 45,
+          "col": 40
+        },
+        {
+          "row": 36,
+          "col": 7
+        },
+        {
+          "row": 30,
+          "col": 3
+        },
+        {
+          "row": 15,
+          "col": 7
+        },
+        {
+          "row": 20,
+          "col": 32
+        },
+        {
+          "row": 11,
+          "col": 30
+        },
+        {
+          "row": 7,
+          "col": 34
+        },
+        {
+          "row": 10,
+          "col": 43
+        },
+        {
+          "row": 23,
+          "col": 43
+        },
+        {
+          "row": 30,
+          "col": 40
+        },
+        {
+          "row": 28,
+          "col": 36
+        },
+        {
+          "row": 33,
+          "col": 28
+        },
+        {
+          "row": 9,
+          "col": 20
+        },
+        {
+          "row": 19,
+          "col": 20
+        },
+        {
+          "row": 8,
+          "col": 5
+        },
+        {
+          "row": 29,
+          "col": 20
+        }
+      ],
+      "maxMonsters": 25,
+      "genTime": 35000,
+      "genPercent": 80,
+      "initCountMin": 5,
+      "initCountMax": 7,
+      "objects": [],
+      "rows": 64,
+      "cols": 49
+    },
+    {
+      "id": 380,
+      "constant": "RID_SEWER_KING",
+      "kodClass": "SewerKingLair",
+      "name": "The Ancient Smuggler's Crossing",
+      "roo": "sewking.roo",
+      "baseLight": 42,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "sewers",
+      "teleport": {
+        "row": 38,
+        "col": 33
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 112,
+          "toConstant": "RID_BAR_SEWER3",
+          "toRow": 35,
+          "toCol": 1,
+          "rotate": "NONE"
+        },
+        {
+          "edge": "SOUTH",
+          "to": 379,
+          "toConstant": "RID_JAS_SEWER3",
+          "toRow": 2,
+          "toCol": 19,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "lupogg",
+          "weight": 100
+        }
+      ],
+      "generators": [
+        {
+          "row": 19,
+          "col": 19
+        },
+        {
+          "row": 23,
+          "col": 44
+        },
+        {
+          "row": 23,
+          "col": 31
+        }
+      ],
+      "maxMonsters": 15,
+      "genTime": 25000,
+      "genPercent": 80,
+      "initCountMin": 7,
+      "initCountMax": 9,
+      "fixedMonsters": [
+        {
+          "kind": "lupoggking",
+          "row": 6,
+          "col": 32
+        },
+        {
+          "kind": "lupogg",
+          "row": 14,
+          "col": 32
+        },
+        {
+          "kind": "lupogg",
+          "row": 7,
+          "col": 41
+        },
+        {
+          "kind": "lupogg",
+          "row": 13,
+          "col": 26
+        }
+      ],
+      "boss": true,
+      "objects": [],
+      "rows": 50,
+      "cols": 59
+    }
+  ]
+}

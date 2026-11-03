@@ -82,6 +82,20 @@ public sealed class WildernessTests : IAsyncDisposable
         Assert.Single(r["Badland1"].Npcs, n => n.KodClass == "FarenPriestess");
     }
 
+    [Fact]
+    public void Sewers_ConnectBarloqueAndJasper_ThroughTheLupoggKingsLair()
+    {
+        var world = WorldDefinition.LoadAll(Data("world"));
+        var r = world.Rooms.ToDictionary(x => x.KodClass ?? "");
+        Assert.Contains(r["BarloqueNorth"].Exits, e => e.To == r["BarlSewer"].Id);
+        Assert.Contains(r["JasperWest"].Exits, e => e.To == r["JasSewer1"].Id);
+        var lair = r["SewerKingLair"];
+        Assert.Contains(lair.EdgeExits, e => e.To == r["BarlSewer3"].Id);
+        Assert.Contains(lair.EdgeExits, e => e.To == r["JasSewer3"].Id);
+        Assert.Contains(lair.FixedMonsters, m => m.Kind == "lupoggking");
+        Assert.Equal(["giantrat", "lupogg"], r["BarlSewer"].Monsters.Select(m => m.Kind));
+    }
+
     private async Task<(ClientSession, List<ClientEvent>)> EnterAsync(int startRoom)
     {
         var accounts = AccountStore.Open(_db);

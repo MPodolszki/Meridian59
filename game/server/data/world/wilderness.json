@@ -1756,7 +1756,6 @@
       "maxMonsters": 10,
       "genTime": 20000,
       "genPercent": 100,
-      "objects": [],
       "npcs": [
         {
           "kodClass": "FarenPriestess",
@@ -1770,6 +1769,7 @@
           "angle": 2048
         }
       ],
+      "objects": [],
       "rows": 77,
       "cols": 80
     },
@@ -1780,7 +1780,7 @@
       "name": "Martyr's Battleground",
       "roo": "canyons2.roo",
       "music": "walk1.mid",
-      "baseLight": 164,
+      "baseLight": 255,
       "outsideFactor": 0,
       "outdoors": false,
       "terrain": "mountain",
@@ -7773,6 +7773,19 @@
       "genPercent": 60,
       "initCountMin": 1,
       "initCountMax": 3,
+      "npcs": [
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 21,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "objects": [],
       "rows": 41,
       "cols": 24

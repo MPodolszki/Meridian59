@@ -30,7 +30,6 @@
       ],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
       "npcs": [
         {
           "kodClass": "ShalillePriestess",
@@ -44,6 +43,7 @@
           "angle": 0
         }
       ],
+      "objects": [],
       "noCombat": true,
       "rows": 26,
       "cols": 32
@@ -76,7 +76,6 @@
       ],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
       "npcs": [
         {
           "kodClass": "KraananPriestess",
@@ -90,6 +89,7 @@
           "angle": 1024
         }
       ],
+      "objects": [],
       "noCombat": true,
       "rows": 49,
       "cols": 50
@@ -122,7 +122,6 @@
       ],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
       "npcs": [
         {
           "kodClass": "QorPriestess",
@@ -136,6 +135,7 @@
           "angle": 1024
         }
       ],
+      "objects": [],
       "noCombat": true,
       "rows": 39,
       "cols": 49
