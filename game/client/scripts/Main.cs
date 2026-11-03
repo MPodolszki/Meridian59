@@ -459,8 +459,8 @@ public partial class Main : Node3D
         float darkness = Mathf.Clamp((180f - light) / 100f, 0f, 1f);
         // Nachtsicht (BP_LIGHT_PLAYER 51..149): deutlich hellerer, weiterer Schein, auch bei Tag ein wenig.
         float own = _ownLight / 150f;
-        _playerGlow.LightEnergy = 2.2f * darkness + 3f * own;
-        _playerGlow.OmniRange = 9f + 5f * darkness + 14f * own;
+        _playerGlow.LightEnergy = 3.5f * darkness + 3f * own;
+        _playerGlow.OmniRange = 9f + 9f * darkness + 14f * own;
         darkness = Mathf.Max(darkness, own);
         _playerGlow.Visible = darkness > 0.01f;
     }

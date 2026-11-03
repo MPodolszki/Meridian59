@@ -11,7 +11,7 @@
       "music": "temple.mid",
       "baseLight": 164,
       "outsideFactor": 3,
-      "outdoors": true,
+      "outdoors": false,
       "terrain": "temple",
       "teleport": {
         "row": 18,
@@ -57,7 +57,7 @@
       "music": "temple.mid",
       "baseLight": 164,
       "outsideFactor": 3,
-      "outdoors": true,
+      "outdoors": false,
       "terrain": "temple",
       "teleport": {
         "row": 47,
@@ -352,7 +352,7 @@
       "music": "temple.mid",
       "baseLight": 164,
       "outsideFactor": 3,
-      "outdoors": true,
+      "outdoors": false,
       "terrain": "temple",
       "teleport": {
         "row": 26,

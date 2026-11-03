@@ -44,7 +44,7 @@
       "baseLight": 84,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "lair",
+      "terrain": "cave",
       "teleport": {
         "row": 32,
         "col": 7
@@ -222,8 +222,8 @@
       "music": "nec03.mid",
       "baseLight": 84,
       "outsideFactor": 3,
-      "outdoors": true,
-      "terrain": "necropolis",
+      "outdoors": false,
+      "terrain": "cave",
       "teleport": {
         "row": 9,
         "col": 37
@@ -302,7 +302,7 @@
       "baseLight": 124,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "necropolis",
+      "terrain": "cave",
       "teleport": {
         "row": 6,
         "col": 18
@@ -361,7 +361,7 @@
       "baseLight": 84,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "necropolis",
+      "terrain": "cave",
       "teleport": {
         "row": 10,
         "col": 15
@@ -899,7 +899,7 @@
       "baseLight": 0,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "necropolis",
+      "terrain": "cave",
       "teleport": {
         "row": 15,
         "col": 19
@@ -1194,7 +1194,7 @@
       "baseLight": 0,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "necropolis",
+      "terrain": "cave",
       "teleport": {
         "row": 10,
         "col": 24
@@ -1353,7 +1353,7 @@
       "baseLight": 0,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "necropolis",
+      "terrain": "cave",
       "teleport": {
         "row": 10,
         "col": 3
@@ -1639,7 +1639,7 @@
       "baseLight": 0,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "necropolis",
+      "terrain": "cave",
       "teleport": {
         "row": 3,
         "col": 6
@@ -1732,7 +1732,7 @@
       "baseLight": 0,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "necropolis",
+      "terrain": "cave",
       "teleport": {
         "row": 6,
         "col": 6

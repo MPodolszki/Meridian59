@@ -1181,7 +1181,7 @@
       "music": "song.mid",
       "baseLight": 0,
       "outsideFactor": 2,
-      "outdoors": true,
+      "outdoors": false,
       "terrain": "cave",
       "teleport": {
         "row": 23,
@@ -1629,7 +1629,7 @@
       "roo": "canyons.roo",
       "music": "walk1.mid",
       "baseLight": 164,
-      "outsideFactor": 8,
+      "outsideFactor": 10,
       "outdoors": true,
       "terrain": "mountain",
       "teleport": {
@@ -1736,7 +1736,7 @@
       "roo": "badland1.roo",
       "music": "walk5.mid",
       "baseLight": 164,
-      "outsideFactor": 8,
+      "outsideFactor": 10,
       "outdoors": true,
       "terrain": "badlands",
       "teleport": {
@@ -7797,7 +7797,7 @@
       "roo": "i9.roo",
       "music": "walk4.mid",
       "baseLight": 124,
-      "outsideFactor": 8,
+      "outsideFactor": 10,
       "outdoors": true,
       "terrain": "mountain",
       "teleport": {

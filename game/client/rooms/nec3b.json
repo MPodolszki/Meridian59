@@ -1,4 +1,4 @@
-{"source": "nec3b.roo", "rows": 8, "cols": 7, "ceiling": 185, "exits": [[5, 5, "Decaying City of Brax"]], "locked": [], "terrain": "necropolis", "outdoors": false, "floor": [
+{"source": "nec3b.roo", "rows": 8, "cols": 7, "ceiling": 185, "exits": [[5, 5, "Decaying City of Brax"]], "locked": [], "terrain": "cave", "outdoors": false, "floor": [
     [-1,253,202,151,100,100,100],
     [-1,228,177,126,74,100,100],
     [-1,202,151,100,49,100,100],

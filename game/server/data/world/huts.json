@@ -108,7 +108,7 @@
       "roo": "univ.roo",
       "music": "main.mid",
       "baseLight": 164,
-      "outsideFactor": 8,
+      "outsideFactor": 10,
       "outdoors": true,
       "terrain": "mystical",
       "teleport": {

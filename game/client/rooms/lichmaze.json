@@ -1,4 +1,4 @@
-{"source": "lichmaze.roo", "rows": 46, "cols": 52, "ceiling": 200, "exits": [[1, 44, "Ruins of Castle Brax"], [1, 45, "Ruins of Castle Brax"], [43, 27, "Inner Sanctum of Queen Venya'cyr"], [43, 28, "Inner Sanctum of Queen Venya'cyr"]], "locked": [], "terrain": "necropolis", "outdoors": true, "edges": ["NORTH"], "floor": [
+{"source": "lichmaze.roo", "rows": 46, "cols": 52, "ceiling": 200, "exits": [[1, 44, "Ruins of Castle Brax"], [1, 45, "Ruins of Castle Brax"], [43, 27, "Inner Sanctum of Queen Venya'cyr"], [43, 28, "Inner Sanctum of Queen Venya'cyr"]], "locked": [], "terrain": "cave", "outdoors": false, "edges": ["NORTH"], "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,-1,-1,-1,-1,-1,-1,-1,100,100,100,-1,-1,-1,-1,-1,-1,-1],
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,-1,-1,-1,-1,-1,100,100,100,-1,-1,-1,-1,-1,-1,-1],
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,-1,-1,-1,-1,100,100,100,90,70,50,30,0,0,49],

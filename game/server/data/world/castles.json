@@ -84,7 +84,7 @@
       "music": "castle2.mid",
       "baseLight": 124,
       "outsideFactor": 3,
-      "outdoors": true,
+      "outdoors": false,
       "terrain": "castle",
       "teleport": {
         "row": 13,
@@ -351,7 +351,7 @@
       "music": "castle.mid",
       "baseLight": 124,
       "outsideFactor": 3,
-      "outdoors": true,
+      "outdoors": false,
       "terrain": "castle",
       "teleport": {
         "row": 8,
@@ -490,7 +490,7 @@
       "baseLight": 42,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "lair",
+      "terrain": "cave",
       "teleport": {
         "row": 10,
         "col": 5
@@ -708,7 +708,7 @@
       "baseLight": 80,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "sewers",
+      "terrain": "cave",
       "teleport": {
         "row": 13,
         "col": 2
@@ -813,7 +813,7 @@
       "music": "castle.mid",
       "baseLight": 124,
       "outsideFactor": 3,
-      "outdoors": true,
+      "outdoors": false,
       "terrain": "castle",
       "teleport": {
         "row": 8,
@@ -1105,7 +1105,7 @@
       "music": "castle.mid",
       "baseLight": 124,
       "outsideFactor": 3,
-      "outdoors": true,
+      "outdoors": false,
       "terrain": "castle",
       "teleport": {
         "row": 8,
@@ -1760,7 +1760,7 @@
       "music": "castle.mid",
       "baseLight": 124,
       "outsideFactor": 3,
-      "outdoors": true,
+      "outdoors": false,
       "terrain": "castle",
       "teleport": {
         "row": 8,
@@ -1903,7 +1903,7 @@
       "music": "castle.mid",
       "baseLight": 124,
       "outsideFactor": 3,
-      "outdoors": true,
+      "outdoors": false,
       "terrain": "castle",
       "teleport": {
         "row": 7,

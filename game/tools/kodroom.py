@@ -199,9 +199,36 @@ def locked_doors(text):
 
 
 TERRAIN = {"FOREST": "forest", "GRASS": "forest", "FIELD": "forest", "PLAINS": "forest", "SWAMP": "forest",
-           "MOUNTAIN": "mountain", "BADLANDS": "badlands", "DESERT": "badlands", "CAVES": "cave", "SNOW": "snow"}
+           "MOUNTAIN": "mountain", "BADLANDS": "badlands", "DESERT": "badlands", "CAVES": "cave", "SNOW": "snow",
+           "SEWERS": "cave", "NECROPOLIS": "cave", "LAIR": "cave", "DUNGEON": "cave"}
 kinds = {v["class"].lower(): k for k, v in json.loads((root / "server/data/monsters/monsters.json").read_text())["monsters"].items()}
 missing_kinds = set()
+
+
+_classes = None
+
+
+def ancestors(text):
+    """Texte der Elternklassen (ohne room.kod selbst), nächste zuerst."""
+    global _classes
+    if _classes is None:
+        _classes = classes()
+    out = []
+    m = re.search(r"^\w+\s+is\s+(\w+)", text, re.M)
+    while m and m.group(1).lower() in _classes and m.group(1).lower() != "room":
+        t = _classes[m.group(1).lower()][1]
+        out.append(t)
+        m = re.search(r"^\w+\s+is\s+(\w+)", t, re.M)
+    return out
+
+
+def inherited(fn, text, name):
+    """Wert aus der Klasse oder, falls dort nicht gesetzt, aus der nächsten Elternklasse."""
+    for t in [text] + ancestors(text):
+        v = fn(t, name)
+        if v is not None:
+            return v
+    return None
 
 
 def room_of(path):
@@ -218,12 +245,12 @@ def room_of(path):
     room = {"id": CONST[rid_sym.upper()], "constant": rid_sym.upper(), "kodClass": cls, "name": name, "roo": roo.lower()}
     if music:
         room["music"] = music
-    light = prop(text, "piBaseLight")
+    light = inherited(prop, text, "piBaseLight")
     room["baseLight"] = 164 if light is None else light
-    outside = prop(text, "piOutside_factor")
-    room["outsideFactor"] = 8 if outside is None else outside
-    room["outdoors"] = room["outsideFactor"] > 0
-    terrain = symbol(text, "viTerrain_type")
+    outside = inherited(prop, text, "piOutside_factor")
+    room["outsideFactor"] = 10 if outside is None else outside     # room.kod: OUTDOORS_COMPLETE
+    room["outdoors"] = room["outsideFactor"] >= 5                 # Gebäude 3, Grüfte 0, Wildnis 8–10
+    terrain = inherited(symbol, text, "viTerrain_type")
     if terrain and terrain.startswith("TERRAIN_"):
         room["terrain"] = TERRAIN.get(terrain[8:], terrain[8:].lower())
     room["teleport"] = {"row": prop(text, "viTeleport_row") or 1, "col": prop(text, "viTeleport_col") or 1}

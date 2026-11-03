@@ -9,8 +9,9 @@
       "name": "Mercenary Alley",
       "roo": "guildh1.roo",
       "baseLight": 164,
-      "outsideFactor": 8,
-      "outdoors": true,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "guildhall",
       "teleport": {
         "row": 18,
         "col": 14
@@ -97,8 +98,8 @@
       "name": "The Hall of Explorers",
       "roo": "guildh2.roo",
       "baseLight": 164,
-      "outsideFactor": 8,
-      "outdoors": true,
+      "outsideFactor": 0,
+      "outdoors": false,
       "terrain": "city",
       "teleport": {
         "row": 18,
@@ -227,8 +228,8 @@
       "name": "The Den of Shadows",
       "roo": "guildh3.roo",
       "baseLight": 164,
-      "outsideFactor": 8,
-      "outdoors": true,
+      "outsideFactor": 0,
+      "outdoors": false,
       "terrain": "cave",
       "teleport": {
         "row": 5,
@@ -845,8 +846,8 @@
       "name": "The Old Dwarven Hall",
       "roo": "guildh7.roo",
       "baseLight": 164,
-      "outsideFactor": 8,
-      "outdoors": true,
+      "outsideFactor": 0,
+      "outdoors": false,
       "terrain": "city",
       "teleport": {
         "row": 5,
@@ -1394,9 +1395,9 @@
       "name": "The Sewer Hideout",
       "roo": "guildh8.roo",
       "baseLight": 164,
-      "outsideFactor": 8,
-      "outdoors": true,
-      "terrain": "sewers",
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "cave",
       "teleport": {
         "row": 24,
         "col": 9
@@ -1544,6 +1545,7 @@
       "baseLight": 164,
       "outsideFactor": 0,
       "outdoors": false,
+      "terrain": "guildhall",
       "teleport": {
         "row": 19,
         "col": 11
@@ -1606,8 +1608,8 @@
       "name": "The Ivory Chapel",
       "roo": "guildh6.roo",
       "baseLight": 164,
-      "outsideFactor": 8,
-      "outdoors": true,
+      "outsideFactor": 0,
+      "outdoors": false,
       "terrain": "city",
       "teleport": {
         "row": 11,
@@ -2004,8 +2006,8 @@
       "roo": "guildh15.roo",
       "music": "nec03.mid",
       "baseLight": 164,
-      "outsideFactor": 8,
-      "outdoors": true,
+      "outsideFactor": 0,
+      "outdoors": false,
       "terrain": "guildhall",
       "teleport": {
         "row": 13,

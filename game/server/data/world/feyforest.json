@@ -12,6 +12,7 @@
       "baseLight": 164,
       "outsideFactor": 8,
       "outdoors": true,
+      "terrain": "forest",
       "teleport": {
         "row": 32,
         "col": 32
@@ -167,6 +168,7 @@
       "baseLight": 164,
       "outsideFactor": 8,
       "outdoors": true,
+      "terrain": "forest",
       "teleport": {
         "row": 10,
         "col": 2
@@ -306,6 +308,7 @@
       "baseLight": 164,
       "outsideFactor": 8,
       "outdoors": true,
+      "terrain": "forest",
       "teleport": {
         "row": 38,
         "col": 51
@@ -513,6 +516,7 @@
       "baseLight": 164,
       "outsideFactor": 8,
       "outdoors": true,
+      "terrain": "forest",
       "teleport": {
         "row": 26,
         "col": 54
@@ -690,6 +694,7 @@
       "baseLight": 164,
       "outsideFactor": 8,
       "outdoors": true,
+      "terrain": "forest",
       "teleport": {
         "row": 15,
         "col": 13
@@ -1025,6 +1030,7 @@
       "baseLight": 164,
       "outsideFactor": 8,
       "outdoors": true,
+      "terrain": "forest",
       "teleport": {
         "row": 24,
         "col": 33
@@ -1182,6 +1188,7 @@
       "baseLight": 164,
       "outsideFactor": 8,
       "outdoors": true,
+      "terrain": "forest",
       "teleport": {
         "row": 14,
         "col": 35
@@ -1369,6 +1376,7 @@
       "baseLight": 164,
       "outsideFactor": 8,
       "outdoors": true,
+      "terrain": "forest",
       "teleport": {
         "row": 32,
         "col": 32

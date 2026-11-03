@@ -12,7 +12,7 @@
       "baseLight": 0,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "sewers",
+      "terrain": "cave",
       "teleport": {
         "row": 58,
         "col": 11
@@ -355,7 +355,7 @@
       "baseLight": 0,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "sewers",
+      "terrain": "cave",
       "teleport": {
         "row": 26,
         "col": 33
@@ -484,7 +484,7 @@
       "baseLight": 0,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "sewers",
+      "terrain": "cave",
       "teleport": {
         "row": 12,
         "col": 34
@@ -622,7 +622,7 @@
       "baseLight": 0,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "sewers",
+      "terrain": "cave",
       "teleport": {
         "row": 21,
         "col": 31
@@ -772,7 +772,7 @@
       "baseLight": 0,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "sewers",
+      "terrain": "cave",
       "teleport": {
         "row": 18,
         "col": 25
@@ -903,7 +903,7 @@
       "baseLight": 0,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "sewers",
+      "terrain": "cave",
       "teleport": {
         "row": 58,
         "col": 11
@@ -1057,7 +1057,7 @@
       "baseLight": 42,
       "outsideFactor": 0,
       "outdoors": false,
-      "terrain": "sewers",
+      "terrain": "cave",
       "teleport": {
         "row": 38,
         "col": 33
