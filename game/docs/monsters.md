@@ -28,3 +28,23 @@ verweisen darauf (`"kind": "giantrat"`). Namen und Beschreibungen sind eigene Ü
 Monsterzauber (Tabellen stehen unter `special.spellcasting`), Lähmung/Demenz/Ausdauerentzug beim Treffer,
 Fernangriffe, Eingraben der Erdwürmer, Dunkelheit, Doppel- und Wirbelangriff, Beschwörung, Zauberresistenz,
 Hass-Werte mit Zielwechsel, Sammeln bei Verbündeten, Karma des Siegers.
+
+## Zaubernde Monster (2026-11-03)
+`monsters.json` "casting" (tools/make_monsters.py CASTING, aus special.spellcasting): Chance 1/n je Angriffsgelegenheit
+statt eines Schlags, Spruch nach Wurf 1..100, Mana (Start = Maximum, +1/s), Reichweite. Umgesetzt in
+`WorldMonsterMagic.cs`:
+
+| Monster | Chance | Sprüche (im Spiel) |
+|---|---|---|
+| Avar-Schamane | 1/12, Stärke 75, Mana 10 | Festhalten, Manabombe, Erdbeben (Sandsturm, Zersplittern fehlen) |
+| Ork-Zauberer | 1/10, Stärke 75, Mana 10 | Schlachtfeld, Manabombe (Schlitterblitz, Läuterung, Vergessen fehlen) |
+| Dunkler Engel | 1/3 außerhalb der Nahkampfreichweite bis 10 Felder | Blindheit, Festhalten, Zwietracht, Schwächen (Böser Zwilling, Spiegelbild, Vergessen fehlen) |
+| Geist | 1/4, Stärke 75 | Feuerball |
+| Ent, böser Ent | 1/10 bis 25 Felder | Blitz |
+| Yeti | 1/2, nur wenn der Raum verzaubert ist | Zwietracht |
+
+Fehlt ein Spruch, schlägt das Monster in dieser Runde normal zu. Wirkungen auf Spieler: Angriffssprüche mit Widerstand
+(Art bzw. Magie widerstehen), Festhalten (EFFECT_PARALYZE), Blindheit (EFFECT_BLIND/SEE, im Godot-Client ein
+schwarzer Schleier), Schwächen (Treffer und Schaden × 3/4, Abweichung: im Original Stärkeverlust), Erdbeben (alle Spieler
+nach Abstand), Manabombe (Manaverlust). Die Manabombe eines Spielers hindert Monster 10 s am Zaubern. Läutern heilt
+auch Blindheit und Schwäche.

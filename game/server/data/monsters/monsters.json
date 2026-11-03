@@ -216,6 +216,33 @@
             }
           ]
         }
+      },
+      "casting": {
+        "oneIn": 12,
+        "power": 75,
+        "mana": 10,
+        "spells": [
+          {
+            "spell": "hold",
+            "upTo": 39,
+            "mana": 5
+          },
+          {
+            "spell": "manabomb",
+            "upTo": 69,
+            "mana": 6
+          },
+          {
+            "spell": "skip",
+            "upTo": 89,
+            "mana": 4
+          },
+          {
+            "spell": "earthquake",
+            "upTo": 100,
+            "mana": 10
+          }
+        ]
       }
     },
     "centipede": {
@@ -356,6 +383,42 @@
         },
         "ranged": "Angriffsreichweite 7, Fernangriff Feuer (ATCK_WEAP_MAGIC + ATCK_SPELL_FIRE) als Projektil.",
         "magicResist": "50% gegen schädliche Sprüche (x1.6 gegen Dazzle/Blind/Hold), Spellpower < 40 immer resistiert"
+      },
+      "casting": {
+        "oneIn": 3,
+        "power": 99,
+        "range": 10,
+        "minRange": true,
+        "spells": [
+          {
+            "spell": "blind",
+            "upTo": 19
+          },
+          {
+            "spell": "skip",
+            "upTo": 29
+          },
+          {
+            "spell": "hold",
+            "upTo": 39
+          },
+          {
+            "spell": "skip",
+            "upTo": 59
+          },
+          {
+            "spell": "discordance",
+            "upTo": 69
+          },
+          {
+            "spell": "enfeeble",
+            "upTo": 79
+          },
+          {
+            "spell": "skip",
+            "upTo": 100
+          }
+        ]
       }
     },
     "deathspider": {
@@ -591,6 +654,17 @@
             }
           ]
         }
+      },
+      "casting": {
+        "oneIn": 10,
+        "power": 50,
+        "range": 25,
+        "spells": [
+          {
+            "spell": "lightning",
+            "upTo": 100
+          }
+        ]
       }
     },
     "evilfairy": {
@@ -682,6 +756,17 @@
             }
           ]
         }
+      },
+      "casting": {
+        "oneIn": 10,
+        "power": 50,
+        "range": 25,
+        "spells": [
+          {
+            "spell": "lightning",
+            "upTo": 100
+          }
+        ]
       }
     },
     "eviltwin": {
@@ -897,6 +982,16 @@
             }
           ]
         }
+      },
+      "casting": {
+        "oneIn": 4,
+        "power": 75,
+        "spells": [
+          {
+            "spell": "fireball",
+            "upTo": 100
+          }
+        ]
       }
     },
     "giantrat": {
@@ -1666,6 +1761,38 @@
             }
           ]
         }
+      },
+      "casting": {
+        "oneIn": 10,
+        "power": 75,
+        "mana": 10,
+        "spells": [
+          {
+            "spell": "skip",
+            "upTo": 39,
+            "mana": 5
+          },
+          {
+            "spell": "killingfields",
+            "upTo": 49,
+            "mana": 10
+          },
+          {
+            "spell": "skip",
+            "upTo": 84,
+            "mana": 4
+          },
+          {
+            "spell": "manabomb",
+            "upTo": 89,
+            "mana": 6
+          },
+          {
+            "spell": "skip",
+            "upTo": 100,
+            "mana": 4
+          }
+        ]
       }
     },
     "redant": {
@@ -2387,6 +2514,17 @@
             }
           ]
         }
+      },
+      "casting": {
+        "oneIn": 2,
+        "power": 50,
+        "ifRoomEnchanted": true,
+        "spells": [
+          {
+            "spell": "discordance",
+            "upTo": 100
+          }
+        ]
       }
     },
     "zombie": {

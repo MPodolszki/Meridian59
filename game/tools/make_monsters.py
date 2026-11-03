@@ -83,6 +83,25 @@ TEXT = {
 }
 
 # Abweichungen von den Klassenwerten (bisher im Code festgelegt bzw. Fehler im Original)
+# Zaubernde Monster (monster.kod/Unterklassen, special.spellcasting maschinenlesbar): Chance 1/oneIn je Angriffsgelegenheit,
+# Spruchstärke, Mana (Start = Maximum, +1/s); Sprüche nach Wurf 1..100 ("upTo"). "skip" = Spruch gibt es noch nicht,
+# das Monster schlägt dann normal zu. range: Höchstabstand in Feldern; minRange: nur wenn außer Nahkampfreichweite.
+CASTING = {
+    "avarshaman": {"oneIn": 12, "power": 75, "mana": 10, "spells": [
+        {"spell": "hold", "upTo": 39, "mana": 5}, {"spell": "manabomb", "upTo": 69, "mana": 6},
+        {"spell": "skip", "upTo": 89, "mana": 4}, {"spell": "earthquake", "upTo": 100, "mana": 10}]},
+    "orcwizard": {"oneIn": 10, "power": 75, "mana": 10, "spells": [
+        {"spell": "skip", "upTo": 39, "mana": 5}, {"spell": "killingfields", "upTo": 49, "mana": 10},
+        {"spell": "skip", "upTo": 84, "mana": 4}, {"spell": "manabomb", "upTo": 89, "mana": 6}, {"spell": "skip", "upTo": 100, "mana": 4}]},
+    "darkangel": {"oneIn": 3, "power": 99, "range": 10, "minRange": True, "spells": [
+        {"spell": "blind", "upTo": 19}, {"spell": "skip", "upTo": 29}, {"spell": "hold", "upTo": 39}, {"spell": "skip", "upTo": 59},
+        {"spell": "discordance", "upTo": 69}, {"spell": "enfeeble", "upTo": 79}, {"spell": "skip", "upTo": 100}]},
+    "ghost": {"oneIn": 4, "power": 75, "spells": [{"spell": "fireball", "upTo": 100}]},
+    "ent": {"oneIn": 10, "power": 50, "range": 25, "spells": [{"spell": "lightning", "upTo": 100}]},
+    "evilent": {"oneIn": 10, "power": 50, "range": 25, "spells": [{"spell": "lightning", "upTo": 100}]},
+    "yeti": {"oneIn": 2, "power": 50, "ifRoomEnchanted": True, "spells": [{"spell": "discordance", "upTo": 100}]},
+}
+
 OVERRIDE = {
     # Iceperson: plResistances mit ATCK_SPELL_* ohne Minus – das Original wertet sie als Waffentypen. Übernommen wie
     # gemeint (Zaubertypen), siehe docs/monsters-original.md §9.
@@ -164,6 +183,8 @@ for m in catalog:
             special[k] = sp[k]
     if special:
         entry["special"] = special
+    if key in CASTING:
+        entry["casting"] = CASTING[key]
     entry.update({k: v for k, v in OVERRIDE.get(key, {}).items() if k != "resistancesFix"})
     out[key] = entry
 

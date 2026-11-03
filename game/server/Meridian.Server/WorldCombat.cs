@@ -39,6 +39,8 @@ public sealed partial class World
         off += ForcesOfLightBonus(a);       // forceslt.kod ModifyHitRoll
         off += KaraholHit(a);
         off -= WindsPenalty(a);
+        if (a.PalsyUntil is not null)
+            off = off * 3 / 4;
         return Math.Clamp(off, 1, 1000);
     }
 
@@ -82,6 +84,8 @@ public sealed partial class World
             if (ench is "holy" or "unholy")
                 types.Add(ench);
             d += BlessDamage(a) + KillingFieldsBonus(a) + KaraholDamage(a);
+            if (a.PalsyUntil is not null)
+                d = d * 3 / 4;
             d = CombatRules.Resist(d, m.Kind.ResistanceTo(types));
             return Math.Max(d, 1);
         }

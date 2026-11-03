@@ -311,6 +311,12 @@ public partial class Main : Node3D
             case ClientEvent.Effect { Code: GameReplies.EffectRelease }:
                 _paralyzed = false;
                 break;
+            case ClientEvent.Effect { Code: GameReplies.EffectBlind }:
+                SetBlind(true);
+                break;
+            case ClientEvent.Effect { Code: GameReplies.EffectSee }:
+                SetBlind(false);
+                break;
             case ClientEvent.PlayerLight pl:
                 _ownLight = pl.Light;
                 UpdatePlayerGlow(_lastLight);
@@ -416,6 +422,22 @@ public partial class Main : Node3D
             sky.SkyHorizonColor = new Color(0.05f, 0.06f, 0.12f).Lerp(new Color(0.65f, 0.67f, 0.7f), t);
             sky.GroundHorizonColor = sky.SkyHorizonColor;
         }
+    }
+
+    private ColorRect? _blindness;
+
+    /// <summary>EFFECT_BLIND/SEE: fast schwarzer Schleier über der Welt (die Oberfläche bleibt bedienbar).</summary>
+    private void SetBlind(bool blind)
+    {
+        if (_blindness is null)
+        {
+            var layer = new CanvasLayer { Layer = -1 };
+            AddChild(layer);
+            _blindness = new ColorRect { Color = new Color(0, 0, 0, 0.94f), MouseFilter = Control.MouseFilterEnum.Ignore };
+            _blindness.SetAnchorsPreset(Control.LayoutPreset.FullRect);
+            layer.AddChild(_blindness);
+        }
+        _blindness.Visible = blind;
     }
 
     private OmniLight3D? _playerGlow;

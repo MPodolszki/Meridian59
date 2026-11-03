@@ -44,6 +44,9 @@ public sealed class Avatar(uint id, string name, Session session)
     public DateTime? RescueAt { get; set; }
     /// <summary>Gelähmt bis (Kara'hols Fluch danach, hold.kod): keine Bewegung, kein Angriff, kein Zaubern.</summary>
     public DateTime? HeldUntil { get; set; }
+    /// <summary>Geblendet bis (EFFECT_BLIND) bzw. geschwächt bis (Schwächen eines Monsters: Treffer und Schaden × 3/4).</summary>
+    public DateTime? BlindUntil { get; set; }
+    public DateTime? PalsyUntil { get; set; }
     /// <summary>Manafokus (focus.kod): Spruchstärke beim Wirken, solange die Trance hält.</summary>
     public int? ManaFocus { get; set; }
     public DateTime NextMana { get; set; }
@@ -555,6 +558,7 @@ public sealed partial class World
                     TickPoison(avatar, now);
                     TickRescue(avatar, now);
                     TickHeld(avatar, now);
+                    TickAfflictions(avatar, now);
                 }
             }
         }
@@ -687,6 +691,9 @@ public sealed partial class World
             }
         }
 
+        if (m.Target is { } caster && now >= m.NextAttack && m.Kind.Casting is { } cast && now >= m.ManaBombUntil
+            && TryMonsterCast(m, caster, cast, inRange, now))
+            return;
         if (inRange && now >= m.NextAttack && m.Target is { } victim)
         {
             m.NextAttack = now + m.Kind.RollAttackTime(_random);

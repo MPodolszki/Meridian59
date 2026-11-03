@@ -37,9 +37,10 @@ public sealed partial class World
         return false;
     }
 
-    private void EnchantRoom(Avatar a, SpellDefinition spell, int power)
+    private void EnchantRoom(Avatar a, SpellDefinition spell, int power) => EnchantRoom(a.Room, spell, power);
+
+    private void EnchantRoom(Room room, SpellDefinition spell, int power)
     {
-        var room = a.Room;
         // Dauer (s) und Zustand je Spruch: light.kod, darkness.kod, killing.kod, forceslt.kod.
         var (state, seconds) = spell.Effect switch
         {
@@ -147,13 +148,36 @@ public sealed partial class World
         TickRoomEnchantments(room, DateTime.UtcNow);
     }
 
+    /// <summary>manabomb.kod: das eigene Mana explodiert; Spieler im Umkreis 6 + Stärke/20 Felder verlieren
+    /// M/2 + (M/2) × Stärke/100, Monster dort können 10 s nicht zaubern.</summary>
+    private void ManaBomb(Avatar a, SpellDefinition spell, int power)
+    {
+        int m = a.State.Mana;
+        int radius = (6 + power / 20) * 64;
+        foreach (var other in a.Room.Avatars.Values)
+            Tell(other, $"Das Mana von {a.Name} explodiert mit Gewalt!");
+        ChangeMana(a, -m);
+        Tell(a, "Dein gesamtes Mana verbrennt in einer magischen Kettenreaktion!");
+        int loss = m / 2 + m / 2 * power / 100;
+        foreach (var other in a.Room.Avatars.Values.Where(o => o != a && Distance(a.Row, a.Col, o.Row, o.Col) <= radius))
+        {
+            Tell(other, "Du spürst, wie Mana aus deinem Körper gerissen wird und in einer magischen Kettenreaktion verbrennt.");
+            ChangeMana(other, -Math.Min(loss, other.State.Mana));
+        }
+        foreach (var mon in a.Room.Monsters.Where(x => x.Alive && Distance(a.Row, a.Col, x.Row, x.Col) <= radius))
+        {
+            mon.ManaBombUntil = DateTime.UtcNow.AddSeconds(10);
+            mon.Target ??= a;
+        }
+    }
+
     // ------------------------------------------------------------------ Läutern
 
     /// <summary>purify.kod: jede schädliche persönliche Wirkung verschwindet mit Stärke % Chance – hier Gift und
     /// Lähmung (andere schädliche Verzauberungen auf Spielern gibt es noch nicht).</summary>
     private void Purify(Avatar a, SpellDefinition spell, int power)
     {
-        bool any = a.Poisoned || a.HeldUntil is not null;
+        bool any = a.Poisoned || a.HeldUntil is not null || a.BlindUntil is not null || a.PalsyUntil is not null;
         if (!any)
         {
             Tell(a, "Du stehst unter keinem schädlichen Zauber.");
@@ -164,6 +188,10 @@ public sealed partial class World
             CurePoison(a);
         if (a.HeldUntil is not null && power > _random.Next(1, 101))
             Release(a);
+        if (a.BlindUntil is not null && power > _random.Next(1, 101))
+            Unblind(a);
+        if (a.PalsyUntil is not null && power > _random.Next(1, 101))
+            a.PalsyUntil = DateTime.UtcNow;
     }
 
     // ------------------------------------------------------------------ Manafokus

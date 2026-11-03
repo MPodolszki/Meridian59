@@ -1335,6 +1335,25 @@
       "chanceToIncrease": 20,
       "targets": 0,
       "effect": "weaponenchant"
+    },
+    {
+      "key": "manabomb",
+      "sid": 68,
+      "name": "Manabombe",
+      "icon": "imanabom.bgf",
+      "school": 3,
+      "level": 4,
+      "mana": 0,
+      "chanceToIncrease": 20,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "sapphire",
+          "number": 2
+        }
+      ],
+      "effect": "manabomb",
+      "description": "Dein gesamtes Mana explodiert: Spieler in der Nähe verlieren einen Teil ihres Manas, Monster können eine Weile nicht zaubern. Braucht Saphire."
     }
   ],
   "startingSpells": [

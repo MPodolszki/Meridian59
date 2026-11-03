@@ -110,6 +110,8 @@ public sealed record MonsterKind(
     public IReadOnlySet<string> Behavior { get; init; } = new HashSet<string>();
     /// <summary>Gift beim Treffer (poison.kod): Chance 1/n, Verlust lossRate/1000 LP alle 10 s, Dauer.</summary>
     public PoisonAttack? Poison { get; init; }
+    /// <summary>Zaubern (monsters.json "casting", WorldMonsterMagic.cs); null = zaubert nicht.</summary>
+    public MonsterCasting? Casting { get; init; }
 
     /// <summary>Untot (Heiliges Symbol, Letzte Riten wirken).</summary>
     public bool Undead { get; init; }
@@ -223,6 +225,8 @@ public sealed record MonsterKind(
                 Karma = e.GetProperty("karma").GetInt32(), Wimpy = e.GetProperty("wimpy").GetInt32(),
                 Treasure = Str("treasure"), AlwaysDrops = Str("alwaysDrops"), Gender = Str("gender") ?? "m",
                 Description = Str("description"), Behavior = behavior, Poison = poison,
+                Casting = e.TryGetProperty("casting", out var ca) ? System.Text.Json.JsonSerializer.Deserialize<MonsterCasting>(ca.GetRawText(),
+                    new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true }) : null,
                 Undead = e.TryGetProperty("undead", out var ud) && ud.GetBoolean(),
                 DrawFlags = e.TryGetProperty("drawFlags", out var df) ? df.GetUInt32() : 0,
                 Resistances = e.GetProperty("resistances").EnumerateObject().ToDictionary(r => r.Name, r => r.Value.GetInt32()),
@@ -232,6 +236,19 @@ public sealed record MonsterKind(
         }
         return result;
     }
+}
+
+/// <summary>Zauberspruch eines Monsters: Spruchschlüssel ("skip" = noch nicht vorhanden), Wurf bis einschließlich UpTo, Mana.</summary>
+public sealed record MonsterSpell(string Spell, int UpTo, int Mana = 0);
+
+/// <summary>Zaubern wie die Monsterklassen: Chance 1/OneIn je Angriffsgelegenheit, Spruchstärke, Mana (0 = unbegrenzt),
+/// Reichweite in Feldern, MinRange = nur außerhalb der Nahkampfreichweite, IfRoomEnchanted (Yeti: Zwietracht).</summary>
+public sealed record MonsterCasting(int OneIn, int Power, IReadOnlyList<MonsterSpell> Spells)
+{
+    public int Mana { get; init; }
+    public int Range { get; init; } = 10;
+    public bool MinRange { get; init; }
+    public bool IfRoomEnchanted { get; init; }
 }
 
 /// <summary>Giftbiss eines Monsters (poison.kod MakePoisoned): Chance 1/<paramref name="OneIn"/> je Treffer.</summary>
@@ -263,6 +280,11 @@ public sealed class Monster(uint id, MonsterKind kind, Room room, GridPos home)
     public DateTime HeldUntil { get; set; }
     public DateTime BlindUntil { get; set; }
     public DateTime PalsyUntil { get; set; }
+    /// <summary>Mana zaubernder Monster (−1 = noch nicht gesetzt) und letzte Erholung.</summary>
+    public int Mana { get; set; } = -1;
+    public DateTime ManaTick { get; set; }
+    /// <summary>Manabombe (ENCH_MANA_BOMB): bis dahin kein Zaubern.</summary>
+    public DateTime ManaBombUntil { get; set; }
     public Avatar? TurnedBy { get; set; }
     public DateTime TurnedUntil { get; set; }
     public bool Alive => DiedAt is null;

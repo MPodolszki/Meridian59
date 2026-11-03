@@ -364,6 +364,9 @@ public sealed partial class World
             case "discordance":
                 Discordance(a, spell, power);
                 break;
+            case "manabomb":
+                ManaBomb(a, spell, power);
+                break;
             case "weaponenchant":
             {
                 // enchwp/holywp/unholywp.kod: (Random(1, 4) + Stärke/3) Stunden.

@@ -137,6 +137,17 @@ public sealed class SpellTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task Ghost_CastsFireballAtThePlayer()
+    {
+        var (c, events, me) = await EnterAsync(2);
+        me.Hp = me.MaxHp = 500;
+        var ghost = _server.World.SpawnMonster(1, MonsterKind.ByKey("ghost"), new GridPos(5, 8));
+        ghost.Target = me;
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.Contains("wirkt Feuerball"));
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.StartsWith("Feuerball trifft dich"));
+    }
+
+    [Fact]
     public void MonsterSpells_HaveTheOriginalValues()
     {
         var book = SpellBook.Load(Data("spells", "spells.json"));
