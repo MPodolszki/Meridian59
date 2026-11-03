@@ -1,0 +1,144 @@
+{
+  "source": "kod/object/active/holder/room/temple.kod, tempkra.kod, tempqor.kod",
+  "startRoom": 48,
+  "rooms": [
+    {
+      "id": 48,
+      "constant": "RID_TEMPLE",
+      "kodClass": "Temple",
+      "name": "The Temple of Shal'ille",
+      "roo": "temple.roo",
+      "music": "temple.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "outdoors": true,
+      "terrain": "temple",
+      "teleport": {
+        "row": 18,
+        "col": 7
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 534,
+          "toConstant": "RID_C4",
+          "toRow": 20,
+          "toCol": 15,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "npcs": [
+        {
+          "kodClass": "ShalillePriestess",
+          "name": "Priesterin Xiana",
+          "icon": "shalprst.bgf",
+          "role": "Priesterin der Shal'ille",
+          "row": 17,
+          "col": 2,
+          "fineRow": 24,
+          "fineCol": 24,
+          "angle": 0
+        }
+      ],
+      "noCombat": true,
+      "rows": 26,
+      "cols": 32
+    },
+    {
+      "id": 801,
+      "constant": "RID_TEMPLE_KRAANAN",
+      "kodClass": "TempleKraanan",
+      "name": "The Temple of Kraanan",
+      "roo": "tempkra.roo",
+      "music": "temple.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "outdoors": true,
+      "terrain": "temple",
+      "teleport": {
+        "row": 47,
+        "col": 40
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "SOUTH",
+          "to": 579,
+          "toConstant": "RID_G9",
+          "toRow": 43,
+          "toCol": 3,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "npcs": [
+        {
+          "kodClass": "KraananPriestess",
+          "name": "Priesterin Qerti'nya",
+          "icon": "kranprst.bgf",
+          "role": "Priesterin des Kraanan",
+          "row": 13,
+          "col": 20,
+          "fineRow": 24,
+          "fineCol": 32,
+          "angle": 1024
+        }
+      ],
+      "noCombat": true,
+      "rows": 49,
+      "cols": 50
+    },
+    {
+      "id": 802,
+      "constant": "RID_TEMPLE_QOR",
+      "kodClass": "TempleQor",
+      "name": "The Temple of Qor",
+      "roo": "tempqor.roo",
+      "music": "temple.mid",
+      "baseLight": 164,
+      "outsideFactor": 3,
+      "outdoors": true,
+      "terrain": "temple",
+      "teleport": {
+        "row": 26,
+        "col": 15
+      },
+      "exits": [],
+      "edgeExits": [
+        {
+          "edge": "SOUTH",
+          "to": 598,
+          "toConstant": "RID_I8",
+          "toRow": 32,
+          "toCol": 25,
+          "rotate": "NORTH_WEST"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "npcs": [
+        {
+          "kodClass": "QorPriestess",
+          "name": "Priesterin Zuxana",
+          "icon": "qorprst.bgf",
+          "role": "Priesterin der Qor",
+          "row": 16,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 1024
+        }
+      ],
+      "noCombat": true,
+      "rows": 39,
+      "cols": 49
+    }
+  ]
+}

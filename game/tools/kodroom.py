@@ -2,8 +2,11 @@
 Ankunftspunkt, Ausgänge (plExits, plEdge_Exits), Zonen-Übergänge (SomethingMoved → UtilGoNearSquare), Monster
 (plMonsters, plGenerators, piGen_*, piMonster_count_max) und Bäume. Benutzt von make_wilderness.py und
 add_region_exits.py."""
+import json
 import re
 from pathlib import Path
+
+from roo2layout import read_roo
 
 root = Path(__file__).resolve().parent.parent
 repo = root.parent
@@ -165,3 +168,62 @@ def locked_doors(text):
                 d["message"] = resource(text, parts[3])
             out.append(d)
     return out
+
+
+TERRAIN = {"FOREST": "forest", "GRASS": "forest", "FIELD": "forest", "PLAINS": "forest", "SWAMP": "forest",
+           "MOUNTAIN": "mountain", "BADLANDS": "badlands", "DESERT": "badlands", "CAVES": "cave", "SNOW": "snow"}
+kinds = {v["class"].lower(): k for k, v in json.loads((root / "server/data/monsters/monsters.json").read_text())["monsters"].items()}
+missing_kinds = set()
+
+
+def room_of(path):
+    text = path.read_text(encoding="latin-1")
+    cls = re.search(r"^(\w+)\s+is\s+(\w+)", text, re.M).group(1)
+    roo = resource(text, f"room_{cls}") or resource(text, symbol(text, "prRoom") or "")
+    name_sym = symbol(text, "vrName")
+    name = resource(text, name_sym) if name_sym else cls
+    music_sym = symbol(text, "prMusic")
+    music = resource(text, music_sym) if music_sym else None
+    rid_sym = symbol(text, "piRoom_num")
+    room = {"id": CONST[rid_sym.upper()], "constant": rid_sym.upper(), "kodClass": cls, "name": name, "roo": roo.lower()}
+    if music:
+        room["music"] = music
+    light = symbol(text, "piBaseLight")
+    room["baseLight"] = CONST.get(light.upper(), 164) if light else 164
+    outside = prop(text, "piOutside_factor")
+    room["outsideFactor"] = 8 if outside is None else outside
+    room["outdoors"] = room["outsideFactor"] > 0
+    terrain = symbol(text, "viTerrain_type")
+    if terrain and terrain.startswith("TERRAIN_"):
+        room["terrain"] = TERRAIN.get(terrain[8:], terrain[8:].lower())
+    room["teleport"] = {"row": prop(text, "viTeleport_row") or 1, "col": prop(text, "viTeleport_col") or 1}
+    room["exits"] = exits(text)
+    room["edgeExits"] = edge_exits(text)
+    room["lockedDoors"] = locked_doors(text)
+    src = repo / "resource/rooms" / roo
+    if src.exists():
+        cols, rows, _, _ = read_roo(src)
+        room["regionExits"] = region_exits(text, rows, cols)
+    table, gens = monsters(text)
+    mons = []
+    for kod_class, weight in table:
+        key = kinds.get(kod_class.lower())
+        if key is None:
+            missing_kinds.add(kod_class)
+            continue
+        mons.append({"kind": key, "weight": weight})
+    if mons and gens:
+        room["monsters"] = mons
+        room["generators"] = [{"row": r, "col": c} for r, c in gens]
+        room["maxMonsters"] = prop(text, "piMonster_count_max") or 10
+        room["genTime"] = prop(text, "piGen_time") or 20000
+        room["genPercent"] = prop(text, "piGen_percent") or 100
+        lo, hi = prop(text, "piInit_count_min"), prop(text, "piInit_count_max")
+        if lo is not None:
+            room["initCountMin"] = lo
+        if hi is not None:
+            room["initCountMax"] = hi
+    room["objects"] = trees(text)
+    return room
+
+

@@ -89,5 +89,6 @@ Godot-Client: Arme korrekt (Gliedmaßen nach Quellrichtung), 29 Clips inkl. Sitz
 Monster datengetrieben: alle 62 Arten des Originals in server/data/monsters/monsters.json (tools/make_monsters.py aus docs/kod/monsters_catalog.json), Aggression/Karma, Flucht, Gift, alle Beutetabellen (docs/monsters.md).
 Monster-Modelle: 46 eigene prozedurale Modelle mit Animationen (tools/blender/make_creature.py, creatures.py), Datei = Name der Original-Grafik; verschmolzene Körper per Distanzfeld (sdf.py) mit Hautrelief, Zeichnung, Gesichtstypen. Fremde Monster-Pakete verworfen (Quaternius zu niedlich, Sketchfab nicht gewünscht).
 Zauberschulen Teil 1: 37 von ~150 Sprüchen (Angriff, Schwächung, Fläche, Heilung, Gift heilen; docs/magic.md). Katalog aller Sprüche: docs/kod/spells_catalog.json, docs/spells-original.md (Reihenfolge dort).
-Offen (Magie): Tempel als Lehrer (liegen in der Wildnis), restliche Sprüche (Raumzauber, Wände, Gegenstände, Riija-Illusionen, Jala-Lieder), Monster zaubern, PvP.
-Offen: Wildnis zwischen den Städten, Tempel, Kanalisationen (Jasper, Barloque), Heimatstadt je Spieler, Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.
+Wildnis (53 Räume, automatisch aus dem KOD: tools/kodroom.py, make_wilderness.py) und Tempel Shal'ille/Kraanan/Qor + Faren-Priesterin als Spruchlehrer (make_temples.py, docs/wilderness.md); Zonen-Übergänge und Spawnzeiten wie im Original. Alle Städte zu Fuß verbunden. Übersicht des Rests: docs/world-remaining.md.
+Offen (Magie): restliche Sprüche (Raumzauber, Wände, Gegenstände, Riija-Illusionen, Jala-Lieder), Monster zaubern, PvP.
+Offen: Kanalisationen (Jasper, Barloque), Heimatstadt je Spieler, Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.

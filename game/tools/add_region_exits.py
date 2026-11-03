@@ -14,7 +14,7 @@ for f in sorted((root / "server/data/world").glob("*.json")):
     changed = 0
     for room in world["rooms"]:
         entry = kod.get(room["kodClass"].lower())
-        if not entry or "rows" not in room:
+        if not entry or "rows" not in room or "regionExits" in room and f.stem in ("wilderness", "temples"):
             continue
         found = region_exits(entry[1], room["rows"], room["cols"])
         if found or room.get("regionExits"):

@@ -1757,6 +1757,19 @@
       "genTime": 20000,
       "genPercent": 100,
       "objects": [],
+      "npcs": [
+        {
+          "kodClass": "FarenPriestess",
+          "name": "Priesterin Tenuv'vyal",
+          "icon": "farnprst.bgf",
+          "role": "Priesterin des Faren",
+          "row": 44,
+          "col": 59,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 2048
+        }
+      ],
       "rows": 77,
       "cols": 80
     },
@@ -6932,7 +6945,18 @@
         }
       ],
       "lockedDoors": [],
-      "regionExits": [],
+      "regionExits": [
+        {
+          "to": 802,
+          "toConstant": "RID_TEMPLE_QOR",
+          "toRow": 33,
+          "toCol": 14,
+          "angle": "NORTH",
+          "rects": [
+            [26, 12, 26, 12]
+          ]
+        }
+      ],
       "monsters": [
         {
           "kind": "orc",
@@ -7446,7 +7470,18 @@
         }
       ],
       "lockedDoors": [],
-      "regionExits": [],
+      "regionExits": [
+        {
+          "to": 802,
+          "toConstant": "RID_TEMPLE_QOR",
+          "toRow": 33,
+          "toCol": 14,
+          "angle": "NORTH",
+          "rects": [
+            [38, 26, 38, 26]
+          ]
+        }
+      ],
       "monsters": [
         {
           "kind": "troll",

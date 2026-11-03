@@ -19,7 +19,7 @@ Wald, Kanalisation, Mietzimmer: 39 Räume) und die Orkhöhlen (orccave1–6, Erw
 | Verwaltung/Test | 7 | godroom, profileroom, outofgrace, mockersroom, gallery, bazmansroom, oldbarloque*/oldjasper/oldmarion | Admin- und Altlasten, werden nicht gebaut |
 
 ## Reihenfolge
-1. Wildnis und Tempel: verbindet die Städte und macht die Schulsprüche lernbar.
+1. ~~Wildnis und Tempel~~ erledigt (2026-11-03, `docs/wilderness.md`): 53 Wildnis-Räume, Tempel Shal'ille, Kraanan, Qor, Faren-Priesterin.
 2. Kanalisationen Barloque und Jasper.
 3. Burgen und Herzog.
 4. Nekropolis, Lich-Labyrinth, Unterwelt, Spinnennest.

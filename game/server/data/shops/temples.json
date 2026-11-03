@@ -1,0 +1,51 @@
+{
+  "_hinweis": "Priesterinnen der Tempel (kod/.../monster/temples): plFor_sale Liste 3 = lehrbare Sprüche; nur Sprüche, die es im Spiel schon gibt (spells.json). Preis wie spell.kod GetValue.",
+  "shops": {
+    "ShalillePriestess": {
+      "markup": 3,
+      "spells": [
+        "minorheal",
+        "holytouch",
+        "curepoison",
+        "majorheal",
+        "holysymbol",
+        "finalrites",
+        "breathoflife",
+        "resistacid",
+        "dazzle"
+      ]
+    },
+    "KraananPriestess": {
+      "markup": 3,
+      "spells": [
+        "bless",
+        "superstrength",
+        "createweapon",
+        "createfood",
+        "relay"
+      ]
+    },
+    "QorPriestess": {
+      "markup": 3,
+      "spells": [
+        "acidtouch",
+        "enfeeble",
+        "hold"
+      ]
+    },
+    "FarenPriestess": {
+      "markup": 3,
+      "spells": [
+        "zap",
+        "resistfire",
+        "resistcold",
+        "resistshock",
+        "touchofflame",
+        "icyfingers",
+        "fireball",
+        "earthquake",
+        "mystictouch"
+      ]
+    }
+  }
+}

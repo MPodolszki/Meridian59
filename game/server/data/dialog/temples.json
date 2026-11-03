@@ -1,0 +1,100 @@
+{
+  "_hinweis": "Priesterinnen der Tempel, Texte sinngemäß nach dem Original.",
+  "npcs": {
+    "ShalillePriestess": {
+      "title": "Priesterin der Shal'ille",
+      "description": "Sauber und ordentlich, diese Priesterin des friedvollen Gleichmuts spricht nur freundliche Worte. Sie wünscht sogar denen von Qor Frieden und betet für ihre Erlösung.",
+      "greeting": "Friede sei mit dir. Shal'ille heilt, die sie darum bitten.",
+      "topics": [
+        {
+          "keywords": [
+            "lernen",
+            "zauber",
+            "spruch",
+            "heilen",
+            "learn"
+          ],
+          "reply": "Ich lehre die Gaben Shal'illes: Heilung, Schutz und das Licht gegen die Finsternis. Sieh, was ich dir beibringen kann (B)."
+        },
+        {
+          "keywords": [
+            "qor"
+          ],
+          "reply": "Auch die Diener Qors können Erlösung finden. Ich bete für sie."
+        }
+      ]
+    },
+    "KraananPriestess": {
+      "title": "Priesterin des Kraanan",
+      "description": "Eine kräftige Frau in schlichter Rüstung. Die Priesterin des Kriegsgottes mustert jeden Besucher, als schätze sie ab, wie lange er sich im Kampf halten würde.",
+      "greeting": "Kraanan ehrt die Tapferen. Was führt dich in sein Haus?",
+      "topics": [
+        {
+          "keywords": [
+            "lernen",
+            "zauber",
+            "spruch",
+            "kampf",
+            "learn"
+          ],
+          "reply": "Stärke, Segen für die Waffe, Schutz vor Magie – die Gaben des Kriegsgottes. Wähle (B)."
+        },
+        {
+          "keywords": [
+            "waffen",
+            "rüstung"
+          ],
+          "reply": "Die Waffen an den Wänden sind Opfergaben der Tapferen. Rühr sie nicht an."
+        }
+      ]
+    },
+    "QorPriestess": {
+      "title": "Priesterin der Qor",
+      "description": "Die Priesterin der Finsternis lächelt kalt. In ihren Augen spiegelt sich das Glimmen der Kohlebecken.",
+      "greeting": "Du hast also den Weg in Qors Haus gefunden. Was suchst du in der Dunkelheit?",
+      "topics": [
+        {
+          "keywords": [
+            "lernen",
+            "zauber",
+            "spruch",
+            "dunkel",
+            "learn"
+          ],
+          "reply": "Flüche, Gift, Schwäche und Dunkelheit – Qor lehrt, wie man Feinde zerbricht. Wähle (B)."
+        },
+        {
+          "keywords": [
+            "shal'ille",
+            "shalille"
+          ],
+          "reply": "Shal'ille? Ihre Schwäche nennt sie Gnade."
+        }
+      ]
+    },
+    "FarenPriestess": {
+      "title": "Priesterin des Faren",
+      "description": "Wind zerrt an der Robe der Priesterin, die hier draußen in den Badlands den Elementen dient. Um sie herum scheint die Luft zu knistern.",
+      "greeting": "Die Elemente grüßen dich, Wanderer.",
+      "topics": [
+        {
+          "keywords": [
+            "lernen",
+            "zauber",
+            "spruch",
+            "feuer",
+            "learn"
+          ],
+          "reply": "Feuer, Eis, Blitz und Erde – die Kräfte Farens. Wähle, was du lernen willst (B)."
+        },
+        {
+          "keywords": [
+            "badlands",
+            "tempel"
+          ],
+          "reply": "Farens Tempel ist der offene Himmel. Hier draußen hört er mich am besten."
+        }
+      ]
+    }
+  }
+}
