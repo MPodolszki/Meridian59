@@ -5,6 +5,8 @@ namespace Meridian.Server;
 /// <summary>Weltbeschreibung aus JSON (z. B. data/world/tos.json, aus den KOD-Quellen abgeleitet).</summary>
 public sealed record WorldDefinition(int StartRoom, IReadOnlyList<RoomDefinition> Rooms)
 {
+    /// <summary>Wandernde NPCs (wanderer.kod), aus world/wanderers.json.</summary>
+    public IReadOnlyList<WandererDefinition> Wanderers { get; init; } = [];
     /// <summary>Diese Gebietsdatei bestimmt den Startraum neuer Charaktere, wenn mehrere zusammengeführt werden.</summary>
     public bool Start { get; init; }
     /// <summary>Hier erwacht man nach dem Tod, sofern der Raum nichts anderes sagt (Standard: Startraum).</summary>
@@ -31,10 +33,12 @@ public sealed record WorldDefinition(int StartRoom, IReadOnlyList<RoomDefinition
         if (parts.Count == 0)
             throw new InvalidDataException($"{fileOrDirectory}: keine Gebietsdateien");
         var rooms = parts.SelectMany(p => p.Rooms).ToList();
+        var wanderers = parts.SelectMany(p => p.Wanderers).ToList();
         if (rooms.GroupBy(r => r.Id).FirstOrDefault(g => g.Count() > 1) is { } dup)
             throw new InvalidDataException($"Raum {dup.Key} ist in mehreren Gebietsdateien definiert");
-        return new WorldDefinition((parts.FirstOrDefault(p => p.Start) ?? parts[0]).StartRoom, rooms)
+        return new WorldDefinition((parts.FirstOrDefault(p => p.Start) ?? parts.FirstOrDefault(p => p.Rooms.Count > 0) ?? parts[0]).StartRoom, rooms)
         {
+            Wanderers = wanderers,
             RespawnRoom = parts.Select(p => p.RespawnRoom).FirstOrDefault(r => r is not null),
         };
     }
@@ -50,6 +54,9 @@ public sealed record WorldDefinition(int StartRoom, IReadOnlyList<RoomDefinition
 }
 
 public sealed record GridPos(int Row, int Col);
+
+/// <summary>Wandernder NPC: Ziele [Raum, Zeile, Spalte(, Feinzeile, Feinspalte)].</summary>
+public sealed record WandererDefinition(string KodClass, string Name, string? Icon, IReadOnlyList<int[]> Destinations);
 
 /// <summary>Raum. Koordinaten sind Grid-Zeile/-Spalte wie in KOD (1-basiert).</summary>
 public sealed record RoomDefinition(int Id, string Name, string Roo)

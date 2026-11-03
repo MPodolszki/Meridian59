@@ -142,6 +142,7 @@ public sealed partial class World
         SetUpMonsterRooms();
         SetUpAreaMonsters();
         SetUpMerchants(shops ?? ShopFile.Empty);
+        SetUpWanderers(definition.Wanderers, shops ?? ShopFile.Empty, dialogs ?? DialogFile.Empty);
         SetUpTreasure(_items.Treasure);
         StartRoom = _rooms.TryGetValue(definition.StartRoom, out var start)
             ? start
@@ -555,6 +556,7 @@ public sealed partial class World
         lock (_gate)
         {
             TickHour(now);
+            TickWanderers(now);
             foreach (var room in _rooms.Values)
             {
                 TickSpawns(room, now);

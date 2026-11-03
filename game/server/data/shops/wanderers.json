@@ -1,0 +1,24 @@
+{
+  "_hinweis": "Wandernde NPCs (towns/wanderer): plFor_sale Liste 2/3 = lehrbare Fertigkeiten/Sprüche, nur vorhandene.",
+  "shops": {
+    "DarkWizard": {
+      "markup": 3,
+      "spells": [
+        "shockingfury",
+        "blastoffire",
+        "explosivefrost",
+        "splashofacid",
+        "vampiricdrain"
+      ]
+    },
+    "JealousGeneral": {
+      "markup": 3,
+      "spells": [
+        "haste"
+      ],
+      "skills": [
+        "block"
+      ]
+    }
+  }
+}

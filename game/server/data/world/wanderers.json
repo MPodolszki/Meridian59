@@ -1,0 +1,76 @@
+{
+  "source": "kod/object/active/holder/nomoveon/battler/monster/towns/wanderer",
+  "rooms": [],
+  "wanderers": [
+    {
+      "kodClass": "DarkWizard",
+      "name": "Maleval",
+      "icon": "wndarkwi.bgf",
+      "destinations": [
+        [802, 22, 14],
+        [952, 13, 20],
+        [53, 2, 6, 32, 32],
+        [200, 78, 38],
+        [950, 19, 16]
+      ]
+    },
+    {
+      "kodClass": "Heretic",
+      "name": "Miriana",
+      "icon": "wnhereti.bgf",
+      "destinations": [
+        [511, 24, 46],
+        [567, 4, 16],
+        [516, 20, 32],
+        [597, 32, 7]
+      ]
+    },
+    {
+      "kodClass": "HunterGhost",
+      "name": "Tendrath",
+      "icon": "nnm01.bgf",
+      "destinations": [
+        [578, 38, 38],
+        [599, 25, 56],
+        [39, 8, 3],
+        [615, 45, 23]
+      ]
+    },
+    {
+      "kodClass": "Izzio",
+      "name": "Izzio",
+      "icon": "wnizzio.bgf",
+      "destinations": [
+        [575, 4, 42],
+        [535, 16, 40],
+        [593, 9, 34],
+        [48, 24, 23],
+        [568, 11, 42]
+      ]
+    },
+    {
+      "kodClass": "JealousGeneral",
+      "name": "Jonas D'Accor",
+      "icon": "wngenera.bgf",
+      "destinations": [
+        [375, 8, 12],
+        [801, 15, 21, 48, 48],
+        [371, 13, 5],
+        [103, 10, 15],
+        [153, 2, 9, 32, 32]
+      ]
+    },
+    {
+      "kodClass": "Minstrel",
+      "name": "Parrin Aragone",
+      "icon": "wnminstr.bgf",
+      "destinations": [
+        [952, 13, 21],
+        [150, 16, 39, 48, 16],
+        [371, 11, 9],
+        [103, 20, 7],
+        [852, 31, 23]
+      ]
+    }
+  ]
+}

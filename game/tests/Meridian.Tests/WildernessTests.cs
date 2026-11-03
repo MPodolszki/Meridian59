@@ -151,6 +151,18 @@ public sealed class WildernessTests : IAsyncDisposable
         await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.StartsWith("Du hast dich bereits"));
     }
 
+    [Fact]
+    public async Task Wanderers_StandAtOneOfTheirDestinations_DarkWizardTeaches()
+    {
+        await EnterAsync(50);
+        var world = _server!.World;
+        var wizard = world.Rooms.SelectMany(r => r.Npcs.Select(n => (Room: r, Npc: n))).Single(x => x.Npc.Definition.KodClass == "DarkWizard");
+        Assert.Contains(wizard.Room.Definition.Id, new[] { 802, 952, 53, 200, 950 });
+        Assert.Contains("shockingfury", wizard.Npc.Merchant!.Definition.Spells);
+        Assert.Equal(6, world.Rooms.Sum(r => r.Npcs.Count(n => n.Definition.KodClass is "DarkWizard" or "Heretic" or "HunterGhost"
+            or "Izzio" or "JealousGeneral" or "Minstrel")));
+    }
+
     private async Task<(ClientSession, List<ClientEvent>)> EnterAsync(int startRoom)
     {
         var accounts = AccountStore.Open(_db);
@@ -164,8 +176,8 @@ public sealed class WildernessTests : IAsyncDisposable
             Items = ItemCatalog.Load(Data("items", "items.json")),
             Spells = SpellBook.Load(Data("spells", "spells.json")),
             Skills = SkillBook.Load(Data("skills", "skills.json")),
-            Shops = ShopFile.Merge(new[] { "tos", "marion", "temples" }.Select(a => ShopFile.Load(Data("shops", a + ".json")))),
-            Dialogs = DialogFile.Merge(new[] { "tos", "marion", "temples" }.Select(a => DialogFile.Load(Data("dialog", a + ".json")))),
+            Shops = ShopFile.Merge(new[] { "tos", "marion", "temples", "wanderers" }.Select(a => ShopFile.Load(Data("shops", a + ".json")))),
+            Dialogs = DialogFile.Merge(new[] { "tos", "marion", "temples", "wanderers" }.Select(a => DialogFile.Load(Data("dialog", a + ".json")))),
             Database = _db,
         }, accounts);
         _server.Start();

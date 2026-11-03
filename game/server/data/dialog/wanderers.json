@@ -1,0 +1,61 @@
+{
+  "_hinweis": "Wandernde NPCs, Texte sinngemäß nach dem Original.",
+  "npcs": {
+    "DarkWizard": {
+      "title": "Hexenmeister",
+      "description": "Du spürst die Gegenwart eines mächtigen Hexenmeisters. Aufdringliche Magie lastet schwer in der Luft um diesen wandernden Zauberer.",
+      "greeting": "Du suchst Macht? Dann bist du bei mir richtig – wenn du sie zu tragen vermagst.",
+      "topics": [
+        {
+          "keywords": [
+            "lernen",
+            "zauber",
+            "spruch",
+            "learn"
+          ],
+          "reply": "Feuer, Frost, Säure und der Durst nach fremdem Leben – ich lehre, was die Tempel verschweigen (B)."
+        }
+      ]
+    },
+    "Heretic": {
+      "title": "Ketzerin",
+      "description": "Wegen ihrer gotteslästerlichen Ansichten aus der Gemeinschaft der Gläubigen verstoßen, zieht diese Frau allein durch die Wildnis.",
+      "greeting": "Die Götter? Ach, die Götter. Was willst du?",
+      "topics": []
+    },
+    "HunterGhost": {
+      "title": "Geist eines Druiden",
+      "description": "Dieser druidische Magier wirkt so ruhig und friedlich, dass man sich fragt, warum sein geisterhafter Schatten noch auf dieser Ebene wandelt.",
+      "greeting": "Friede, Wanderer. Die Jagd ist noch nicht zu Ende.",
+      "topics": []
+    },
+    "Izzio": {
+      "title": "Kräutersammler",
+      "description": "Izzio trägt seinen riesigen Sack und seinen prallen Bauch mit erstaunlicher Leichtigkeit. Ein seliges Lächeln zeugt von seiner schlichten Freude an der Natur.",
+      "greeting": "Ah, was für ein herrlicher Tag, um durch die Wälder zu streifen!",
+      "topics": []
+    },
+    "JealousGeneral": {
+      "title": "General",
+      "description": "Erst einfacher Soldat an vorderster Front, später ein weiser General: Jonas D'Accor hat jedes Übel bekämpft, das die Städte von Meridian bedrängt hat.",
+      "greeting": "Steh gerade, wenn du mit mir sprichst!",
+      "topics": [
+        {
+          "keywords": [
+            "lernen",
+            "zauber",
+            "blocken",
+            "learn"
+          ],
+          "reply": "Schnelligkeit und ein guter Schild retten mehr Leben als jedes Gebet. Ich zeige es dir (B)."
+        }
+      ]
+    },
+    "Minstrel": {
+      "title": "Spielmann",
+      "description": "Parrin ist im ganzen Land bekannt, doch selten im Guten. So begabt er mit der Leier ist, so boshaft sind seine Verse.",
+      "greeting": "Ein Lied gefällig? Nein? Dann eben ein Spottvers über dich!",
+      "topics": []
+    }
+  }
+}
