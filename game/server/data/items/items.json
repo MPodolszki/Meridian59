@@ -1358,6 +1358,423 @@
       "number": true,
       "plural": "polierte Seraphyme",
       "description": "Ein vollkommen geschliffener Seraphym. Man sagt, er könne das Licht der Götter selbst einfangen."
+    },
+    {
+      "key": "curepoisonpotion",
+      "kodClass": "CurePoisonPotion",
+      "name": "Trank gegen Gift",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke gegen Gift",
+      "description": "Ein bitterer Kräutersud, der Gift aus dem Körper treibt.",
+      "spell": "curepoison",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "hastepotion",
+      "kodClass": "HastePotion",
+      "name": "Trank der Eile",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der Eile",
+      "description": "Ein Glasfläschchen mit sandfarbener Flüssigkeit. Es riecht frisch und belebend.",
+      "spell": "haste",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "karaholscursepotion",
+      "kodClass": "KaraholsCursePotion",
+      "name": "Kara'hols verfluchtes Elixier",
+      "icon": "potion01.bgf",
+      "value": 120,
+      "types": [
+        "potion"
+      ],
+      "plural": "Kara'hols verfluchte Elixiere",
+      "description": "Ein brodelndes, schwarzrotes Elixier. Schon der Geruch lässt das Blut kochen.",
+      "spell": "karaholscurse",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "nightvisionpotion",
+      "kodClass": "NightVisionPotion",
+      "name": "Katzenaugensaft",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Fläschchen Katzenaugensaft",
+      "description": "Eine schimmernde, grünliche Flüssigkeit. Wer sie trinkt, sieht im Dunkeln wie eine Katze.",
+      "spell": "nightvision",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "purifypotion",
+      "kodClass": "PurifyPotion",
+      "name": "Trank der Läuterung",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der Läuterung",
+      "description": "Eine klare, beinahe leuchtende Flüssigkeit.",
+      "spell": "purify",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "resistacidpotion",
+      "kodClass": "ResistAcidPotion",
+      "name": "Trank gegen Säure",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke gegen Säure",
+      "description": "Eine kalkige, milchige Flüssigkeit.",
+      "spell": "resistacid",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "resistcoldpotion",
+      "kodClass": "ResistColdPotion",
+      "name": "Trank gegen Kälte",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke gegen Kälte",
+      "description": "Eine wärmende, würzige Flüssigkeit.",
+      "spell": "resistcold",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "rescuepotion",
+      "kodClass": "RescuePotion",
+      "name": "Trank der Errettung",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der Errettung",
+      "description": "Ein goldener Trank. Wer ihn trinkt, wird von Shal'ille in Sicherheit gebracht.",
+      "spell": "rescue",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "resistfirepotion",
+      "kodClass": "ResistFirePotion",
+      "name": "saftige Salbe",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tiegel saftiger Salbe",
+      "description": "Eine kühle, fettige Salbe gegen Feuer.",
+      "spell": "resistfire",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "resistmagicpotion",
+      "kodClass": "ResistMagicPotion",
+      "name": "Elixier der Magieabwehr",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Elixiere der Magieabwehr",
+      "description": "Ein blau schimmerndes Elixier, das leicht nach Gewitter riecht.",
+      "spell": "resistmagic",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "resistshockpotion",
+      "kodClass": "ResistShockPotion",
+      "name": "Trank der Nichtleitung",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der Nichtleitung",
+      "description": "Eine zähe, gummiartige Flüssigkeit, die vor Blitzen schützt.",
+      "spell": "resistshock",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "strengthpotion",
+      "kodClass": "StrengthPotion",
+      "name": "Trank der Stärke",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der Stärke",
+      "description": "Eine dicke, rötliche Flüssigkeit, die nach Eisen riecht.",
+      "spell": "superstrength",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "darknessscroll",
+      "kodClass": "DarknessScroll",
+      "name": "Schriftrolle der Dunkelheit",
+      "icon": "scr06.bgf",
+      "value": 120,
+      "types": [
+        "scroll"
+      ],
+      "plural": "Schriftrollen der Dunkelheit",
+      "description": "Eine Schriftrolle mit Qors finsteren Zeichen.",
+      "spell": "darkness",
+      "powerMin": 30,
+      "powerMax": 60
+    },
+    {
+      "key": "discordscroll",
+      "kodClass": "DiscordScroll",
+      "name": "Schriftrolle der Zwietracht",
+      "icon": "scr05.bgf",
+      "value": 120,
+      "types": [
+        "scroll"
+      ],
+      "plural": "Schriftrollen der Zwietracht",
+      "description": "Eine Schriftrolle, deren Zeichen zu flackern scheinen.",
+      "spell": "discordance",
+      "powerMin": 30,
+      "powerMax": 60
+    },
+    {
+      "key": "earthquakescroll",
+      "kodClass": "EarthquakeScroll",
+      "name": "Schriftrolle des Erdbebens",
+      "icon": "scr08.bgf",
+      "value": 120,
+      "types": [
+        "scroll"
+      ],
+      "plural": "Schriftrollen des Erdbebens",
+      "description": "Eine schwere Schriftrolle mit Farens Zeichen der Erde.",
+      "spell": "earthquake",
+      "powerMin": 30,
+      "powerMax": 60
+    },
+    {
+      "key": "finalritesscroll",
+      "kodClass": "FinalRitesScroll",
+      "name": "Schriftrolle der Letzten Riten",
+      "icon": "scr07.bgf",
+      "value": 120,
+      "types": [
+        "scroll"
+      ],
+      "plural": "Schriftrollen der Letzten Riten",
+      "description": "Eine Schriftrolle mit Shal'illes Gebet für die Toten.",
+      "spell": "finalrites",
+      "powerMin": 30,
+      "powerMax": 60
+    },
+    {
+      "key": "flashscroll",
+      "kodClass": "FlashScroll",
+      "name": "Schriftrolle des Blitzlichts",
+      "icon": "scr09.bgf",
+      "value": 120,
+      "types": [
+        "scroll"
+      ],
+      "plural": "Schriftrollen des Blitzlichts",
+      "description": "Eine Schriftrolle, die im Licht glitzert.",
+      "spell": "flash",
+      "powerMin": 30,
+      "powerMax": 60
+    },
+    {
+      "key": "forcesoflightscroll",
+      "kodClass": "ForcesOfLightScroll",
+      "name": "Schriftrolle der Kräfte des Lichts",
+      "icon": "scr07.bgf",
+      "value": 120,
+      "types": [
+        "scroll"
+      ],
+      "plural": "Schriftrollen der Kräfte des Lichts",
+      "description": "Eine Schriftrolle mit goldenen Zeichen Shal'illes.",
+      "spell": "forcesoflight",
+      "powerMin": 30,
+      "powerMax": 60
+    },
+    {
+      "key": "killingfieldscroll",
+      "kodClass": "KillingFieldScroll",
+      "name": "Schriftrolle des Schlachtfelds",
+      "icon": "scr05.bgf",
+      "value": 120,
+      "types": [
+        "scroll"
+      ],
+      "plural": "Schriftrollen des Schlachtfelds",
+      "description": "Eine Schriftrolle mit blutroten Zeichen Kraanans.",
+      "spell": "killingfields",
+      "powerMin": 30,
+      "powerMax": 60
+    },
+    {
+      "key": "lightscroll",
+      "kodClass": "LightScroll",
+      "name": "Schriftrolle des Lichts",
+      "icon": "scr08.bgf",
+      "value": 120,
+      "types": [
+        "scroll"
+      ],
+      "plural": "Schriftrollen des Lichts",
+      "description": "Eine Schriftrolle, deren Zeichen sanft leuchten.",
+      "spell": "light",
+      "powerMin": 30,
+      "powerMax": 60
+    },
+    {
+      "key": "windscroll",
+      "kodClass": "WindScroll",
+      "name": "Schriftrolle der Winde",
+      "icon": "scr08.bgf",
+      "value": 120,
+      "types": [
+        "scroll"
+      ],
+      "plural": "Schriftrollen der Winde",
+      "description": "Eine Schriftrolle, die im Wind flattert, auch wenn keiner weht.",
+      "spell": "winds",
+      "powerMin": 30,
+      "powerMax": 60
+    },
+    {
+      "key": "blindwand",
+      "kodClass": "BlindWand",
+      "name": "Zauberstab der Blendung",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Zauberstäbe der Blendung",
+      "description": "Ein schlanker Stab aus dunklem Holz.",
+      "spell": "blind",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 4,
+      "chargesMax": 9
+    },
+    {
+      "key": "enfeeblewand",
+      "kodClass": "EnfeebleWand",
+      "name": "Zauberstab der Schwäche",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Zauberstäbe der Schwäche",
+      "description": "Ein krummer, knorriger Stab.",
+      "spell": "enfeeble",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 4,
+      "chargesMax": 9
+    },
+    {
+      "key": "holdwand",
+      "kodClass": "HoldWand",
+      "name": "Zauberstab der Erstarrung",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Zauberstäbe der Erstarrung",
+      "description": "Ein kalter, steifer Stab.",
+      "spell": "hold",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 4,
+      "chargesMax": 9
+    },
+    {
+      "key": "hospicewand",
+      "kodClass": "HospiceWand",
+      "name": "Zauberstab der Erquickung",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Zauberstäbe der Erquickung",
+      "description": "Ein heller Stab, der sich warm anfühlt.",
+      "spell": "hospice",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 4,
+      "chargesMax": 9
+    },
+    {
+      "key": "lightningwand",
+      "kodClass": "LightningWand",
+      "name": "Blitzstab",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Blitzstäbe",
+      "description": "Ein Stab, an dessen Spitze kleine Funken knistern.",
+      "spell": "lightning",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 4,
+      "chargesMax": 9
+    },
+    {
+      "key": "purifywand",
+      "kodClass": "PurifyWand",
+      "name": "Zauberstab der Reinigung",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Zauberstäbe der Reinigung",
+      "description": "Ein weißer Stab, glatt wie Elfenbein.",
+      "spell": "purify",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 4,
+      "chargesMax": 9
     }
   ],
   "treasure": {
@@ -1581,6 +1998,10 @@
       {
         "item": "knightshield",
         "weight": 5
+      },
+      {
+        "item": "discordscroll",
+        "weight": 1
       }
     ],
     "thrasher": [
@@ -1609,6 +2030,10 @@
         "weight": 5
       },
       {
+        "item": "nightvisionpotion",
+        "weight": 5
+      },
+      {
         "item": "money",
         "weight": 4
       },
@@ -1621,9 +2046,25 @@
       {
         "item": "money",
         "weight": 10
+      },
+      {
+        "item": "purifywand",
+        "weight": 3
+      },
+      {
+        "item": "killingfieldscroll",
+        "weight": 1
       }
     ],
     "avar_shaman": [
+      {
+        "item": "curepoisonpotion",
+        "weight": 4
+      },
+      {
+        "item": "purifypotion",
+        "weight": 4
+      },
       {
         "item": "polishedseraphym",
         "weight": 3
@@ -1677,7 +2118,19 @@
         "weight": 2
       },
       {
+        "item": "curepoisonpotion",
+        "weight": 2
+      },
+      {
+        "item": "purifypotion",
+        "weight": 2
+      },
+      {
         "item": "knightshield",
+        "weight": 1
+      },
+      {
+        "item": "flashscroll",
         "weight": 1
       }
     ],
@@ -1703,7 +2156,48 @@
         "weight": 5
       }
     ],
-    "black_spider": [],
+    "black_spider": [
+      {
+        "item": "nightvisionpotion",
+        "weight": 9
+      },
+      {
+        "item": "strengthpotion",
+        "weight": 3
+      },
+      {
+        "item": "resistshockpotion",
+        "weight": 3
+      },
+      {
+        "item": "resistmagicpotion",
+        "weight": 3
+      },
+      {
+        "item": "resistfirepotion",
+        "weight": 3
+      },
+      {
+        "item": "resistcoldpotion",
+        "weight": 3
+      },
+      {
+        "item": "karaholscursepotion",
+        "weight": 3
+      },
+      {
+        "item": "curepoisonpotion",
+        "weight": 3
+      },
+      {
+        "item": "hastepotion",
+        "weight": 3
+      },
+      {
+        "item": "purifypotion",
+        "weight": 3
+      }
+    ],
     "dragonfly": [
       {
         "item": "dragonflyeye",
@@ -1742,6 +2236,10 @@
       {
         "item": "purplemushroom",
         "weight": 3
+      },
+      {
+        "item": "lightningwand",
+        "weight": 2
       }
     ],
     "fairy": [
@@ -1828,6 +2326,14 @@
       {
         "item": "ruby",
         "weight": 5
+      },
+      {
+        "item": "lightningwand",
+        "weight": 5
+      },
+      {
+        "item": "holdwand",
+        "weight": 2
       }
     ],
     "high_human": [
@@ -1906,6 +2412,10 @@
       {
         "item": "mysticsword",
         "weight": 5
+      },
+      {
+        "item": "blindwand",
+        "weight": 5
       }
     ],
     "low_human": [
@@ -1970,6 +2480,14 @@
       {
         "item": "mysticsword",
         "weight": 4
+      },
+      {
+        "item": "resistacidpotion",
+        "weight": 3
+      },
+      {
+        "item": "discordscroll",
+        "weight": 1
       }
     ],
     "medium_tough": [
@@ -2024,6 +2542,10 @@
       {
         "item": "chainarmor",
         "weight": 1
+      },
+      {
+        "item": "lightscroll",
+        "weight": 1
       }
     ],
     "medium_human": [
@@ -2074,6 +2596,22 @@
       {
         "item": "darkangelfeather",
         "weight": 15
+      },
+      {
+        "item": "nightvisionpotion",
+        "weight": 10
+      },
+      {
+        "item": "karaholscursepotion",
+        "weight": 10
+      },
+      {
+        "item": "resistshockpotion",
+        "weight": 5
+      },
+      {
+        "item": "resistmagicpotion",
+        "weight": 5
       }
     ],
     "orc_chief": [
@@ -2092,6 +2630,14 @@
       {
         "item": "money",
         "weight": 2
+      },
+      {
+        "item": "holdwand",
+        "weight": 1
+      },
+      {
+        "item": "blindwand",
+        "weight": 1
       }
     ],
     "orc": [
@@ -2122,6 +2668,10 @@
       {
         "item": "money",
         "weight": 2
+      },
+      {
+        "item": "darknessscroll",
+        "weight": 1
       }
     ],
     "orc_wizard": [
@@ -2250,6 +2800,18 @@
       {
         "item": "inkycap",
         "weight": 5
+      },
+      {
+        "item": "windscroll",
+        "weight": 1
+      },
+      {
+        "item": "killingfieldscroll",
+        "weight": 1
+      },
+      {
+        "item": "enfeeblewand",
+        "weight": 1
       }
     ],
     "spider_queen": [
@@ -2312,7 +2874,15 @@
         "weight": 5
       },
       {
+        "item": "holdwand",
+        "weight": 2
+      },
+      {
         "item": "mysticsword",
+        "weight": 1
+      },
+      {
+        "item": "earthquakescroll",
         "weight": 1
       }
     ],

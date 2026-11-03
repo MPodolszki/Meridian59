@@ -38,7 +38,11 @@ public sealed record SavedEnchantment(int State, long RemainingMs);
 public sealed record SavedProfile(string? Name, string Description, Appearance Appearance, bool Created);
 
 /// <summary>Gegenstand per Schlüssel aus dem Katalog; Objekt-IDs werden beim Laden neu vergeben.</summary>
-public sealed record SavedItem(string Item, int Number = 1, bool Used = false);
+public sealed record SavedItem(string Item, int Number = 1, bool Used = false)
+{
+    /// <summary>Restladungen eines Zauberstabs (null = noch nicht ausgewürfelt).</summary>
+    public int? Charges { get; init; }
+}
 
 /// <summary>
 /// Accounts und Spielstand in einer SQLite-Datenbank (eine Datei, kein Datenbankserver, läuft auch auf dem Pi).
@@ -47,7 +51,7 @@ public sealed record SavedItem(string Item, int Number = 1, bool Used = false);
 /// </summary>
 public sealed class GameStore
 {
-    public const int SchemaVersion = 5;
+    public const int SchemaVersion = 6;
 
     private readonly string _connectionString;
     private readonly object _write = new();
@@ -143,6 +147,12 @@ public sealed class GameStore
             Execute(c, "ALTER TABLE characters ADD COLUMN profile TEXT; PRAGMA user_version = 5;", tx);
             tx.Commit();
         }
+        if (version < 6)
+        {
+            using var tx = c.BeginTransaction();
+            Execute(c, "ALTER TABLE inventory ADD COLUMN charges INTEGER; PRAGMA user_version = 6;", tx);
+            tx.Commit();
+        }
     }
 
     // ---------------------------------------------------------------- Accounts
@@ -197,9 +207,9 @@ public sealed class GameStore
                     ("$magic", ch.Magic is null ? null : System.Text.Json.JsonSerializer.Serialize(ch.Magic)),
                     ("$profile", ch.Profile is null ? null : System.Text.Json.JsonSerializer.Serialize(ch.Profile)), ("$at", now.ToString("O")));
                 for (int slot = 0; slot < ch.Inventory.Count; slot++)
-                    Execute(c, "INSERT INTO inventory (character_id, slot, item, number, used) VALUES ($id, $slot, $item, $number, $used)", tx,
+                    Execute(c, "INSERT INTO inventory (character_id, slot, item, number, used, charges) VALUES ($id, $slot, $item, $number, $used, $charges)", tx,
                         ("$id", id), ("$slot", slot), ("$item", ch.Inventory[slot].Item), ("$number", ch.Inventory[slot].Number),
-                        ("$used", ch.Inventory[slot].Used ? 1 : 0));
+                        ("$used", ch.Inventory[slot].Used ? 1 : 0), ("$charges", ch.Inventory[slot].Charges));
                 foreach (var (bank, amount) in ch.Bank)
                     Execute(c, "INSERT INTO bank_accounts (character_id, bank, amount) VALUES ($id, $bank, $amount)", tx,
                         ("$id", id), ("$bank", bank), ("$amount", amount));
@@ -229,12 +239,12 @@ public sealed class GameStore
                     Profile = r.IsDBNull(9) ? null : System.Text.Json.JsonSerializer.Deserialize<SavedProfile>(r.GetString(9)),
                 };
         }
-        using (var cmd = Command(c, "SELECT character_id, item, number, used FROM inventory ORDER BY character_id, slot"))
+        using (var cmd = Command(c, "SELECT character_id, item, number, used, charges FROM inventory ORDER BY character_id, slot"))
         using (var r = cmd.ExecuteReader())
         {
             while (r.Read())
                 if (result.TryGetValue((uint)r.GetInt64(0), out var ch))
-                    ch.Inventory.Add(new SavedItem(r.GetString(1), r.GetInt32(2), r.GetInt32(3) != 0));
+                    ch.Inventory.Add(new SavedItem(r.GetString(1), r.GetInt32(2), r.GetInt32(3) != 0) { Charges = r.IsDBNull(4) ? null : r.GetInt32(4) });
         }
         using (var cmd = Command(c, "SELECT character_id, bank, amount FROM bank_accounts"))
         using (var r = cmd.ExecuteReader())

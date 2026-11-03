@@ -187,6 +187,11 @@ public sealed partial class World
                 Eat(avatar, item);
                 return;
             }
+            if (item.Kind.Spell is not null)
+            {
+                UseSpellItem(avatar, item);
+                return;
+            }
             if (item.Kind.Slot is not { } slot)
             {
                 Tell(avatar, $"Mit {item.Describe()} kannst du nichts anfangen.");
@@ -1030,7 +1035,7 @@ public sealed partial class World
         Col = c.Col,
         Angle = c.Angle,
         Hp = c.Hp,
-        Inventory = c.Inventory.Select(i => new SavedItem(i.Kind.Key, i.Number, i.Used)).ToList(),
+        Inventory = c.Inventory.Select(i => new SavedItem(i.Kind.Key, i.Number, i.Used) { Charges = i.Charges }).ToList(),
         Vigor = c.Vigor,
         Stomach = (int)c.Stomach,
         Profile = new SavedProfile(c.Name, c.Description, c.Appearance, c.Created),
@@ -1067,7 +1072,7 @@ public sealed partial class World
                 foreach (var item in saved.Inventory)
                 {
                     if (_items.TryGet(item.Item, out var kind))
-                        state.Inventory.Add(new Item(++_nextItemId, kind, item.Number) { Used = item.Used && kind.Slot is not null });
+                        state.Inventory.Add(new Item(++_nextItemId, kind, item.Number) { Used = item.Used && kind.Slot is not null, Charges = item.Charges });
                     else
                         Log.Warn($"Charakter {id}: unbekannter Gegenstand '{item.Item}' im Spielstand – entfällt");
                 }

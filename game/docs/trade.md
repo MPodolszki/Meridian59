@@ -82,3 +82,13 @@ Daten: `server/data/items/items.json`, `server/data/shops/tos.json`; Client: `cl
 ## Client
 - **I** Inventar (Ablegen, dem nächsten Händler anbieten), **B** Ladenliste des nächsten Händlers, **G** Gegenstand
   aufheben. Gegenangebote erscheinen als Dialog „Annehmen/Ablehnen“.
+
+## Tränke, Schriftrollen, Zauberstäbe (2026-11-03)
+`tools/make_spellitems.py` übernimmt aus `kod/object/item/passitem/spelitem` alle Spruchgegenstände, deren Spruch es
+schon gibt (27: 12 Tränke, 9 Schriftrollen, 6 Stäbe), Schlüssel = Klassenname wie in den Beutetabellen. Benutzen
+(Doppelklick/BP_REQ_USE) wirkt den Spruch wie spelitem.kod mit Spruchstärke Random(20 bzw. 30, 60), ohne Mana und
+Reagenzien: Tränke auf den Trinkenden, Schriftrollen wie gezaubert, Zauberstäbe auf das nächste Monster, das einen
+angreift (sonst das nächste in 10 Feldern) bzw. bei hilfreichen Sprüchen auf einen selbst. Stäbe haben
+viHits_init_min/max Ladungen (gespeichert, Schema v6) und zerfallen leer.
+Abweichungen: Tränke sind immer beschriftet (im Original oft unbekannt) und verderben nicht; Zauberstäbe kann man
+noch nicht auf ein bestimmtes Ziel richten.

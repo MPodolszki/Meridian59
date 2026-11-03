@@ -52,6 +52,13 @@ public sealed record ItemKind(string Key, string Name, string Icon, int Value)
 
     /// <summary>Lichtquelle, wenn benutzt (Fackel).</summary>
     public bool Light { get; init; }
+    /// <summary>Spruchgegenstand (spelitem.kod): Trank, Schriftrolle oder Zauberstab mit diesem Spruch (Schlüssel aus
+    /// spells.json), Spruchstärke zwischen PowerMin und PowerMax, Ladungen (Stäbe) zwischen ChargesMin und ChargesMax.</summary>
+    public string? Spell { get; init; }
+    public int PowerMin { get; init; } = 30;
+    public int PowerMax { get; init; } = 60;
+    public int ChargesMin { get; init; } = 1;
+    public int ChargesMax { get; init; } = 1;
     /// <summary>Essen (food.kod): Nährwert (→ Ausdauer) und Sättigung; Getränk für die Meldungen.</summary>
     public int Nutrition { get; init; }
     public int Filling { get; init; }
@@ -119,6 +126,8 @@ public sealed class Item(uint id, ItemKind kind, int number = 1)
     public int Number { get; set; } = kind.Number ? number : 1;
     /// <summary>Ausgerüstet/benutzt (KOD poOwner-Liste plUsing).</summary>
     public bool Used { get; set; }
+    /// <summary>Restladungen eines Zauberstabs (piHits); null = noch nicht ausgewürfelt.</summary>
+    public int? Charges { get; set; }
     /// <summary>Waffenweihe (enchwp/holywp/unholywp.kod, WA_ENCHANTED/WA_ATTACKSPELLTYPE): "magic", "holy" oder
     /// "unholy" bis zum Ablauf; wird noch nicht gespeichert.</summary>
     public (string Type, DateTime Until)? WeaponEnchant { get; set; }

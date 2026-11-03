@@ -310,7 +310,16 @@ public sealed partial class World
         foreach (var r in spell.Reagents)
             if (_items.TryGet(r.Item, out var kind) && a.State.Find(kind) is { } stack)
                 TakeNumber(a, stack, r.Number);
+        ApplySpell(a, spell, target, victim, power);
+        a.State.SchoolCasts[spell.School] = a.State.SchoolCasts.GetValueOrDefault(spell.School) + 1;
+        if (spell.Effect != "touchattack")
+            ImproveAbility(a, spell, null);
+    }
 
+    /// <summary>Wirkung eines Spruchs (CastSpell) ohne Kosten und Erfolgswurf – auch für Tränke, Schriftrollen und
+    /// Zauberstäbe (spelitem.kod, bItemCast).</summary>
+    private void ApplySpell(Avatar a, SpellDefinition spell, Avatar? target, Monster? victim, int power)
+    {
         switch (spell.Effect)
         {
             case "heal":
@@ -387,9 +396,6 @@ public sealed partial class World
                 break;
             }
         }
-        a.State.SchoolCasts[spell.School] = a.State.SchoolCasts.GetValueOrDefault(spell.School) + 1;
-        if (spell.Effect != "touchattack")
-            ImproveAbility(a, spell, null);
     }
 
     private void Heal(Avatar caster, Avatar target, int amount, SpellDefinition spell)

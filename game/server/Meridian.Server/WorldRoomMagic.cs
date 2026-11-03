@@ -223,4 +223,44 @@ public sealed partial class World
         : normal;
 
     private static int ManaFocusBonus(Avatar a) => a.ManaFocus is { } state ? state * 5 / 99 + 1 : 0;
+
+    // ------------------------------------------------------------------ Tränke, Schriftrollen, Zauberstäbe
+
+    /// <summary>spelitem.kod: der Spruch wirkt mit Stärke Random(min, max) ohne Mana und Reagenzien. Tränke wirken auf
+    /// den Trinkenden, Schriftrollen wie gezaubert (Raum/selbst), Zauberstäbe auf das nächste Monster, das einen
+    /// angreift bzw. in der Nähe ist (schädliche Sprüche), sonst auf einen selbst; leere Stäbe zerfallen.</summary>
+    private void UseSpellItem(Avatar a, Item item)
+    {
+        if (IsHeld(a) || _spells[item.Kind.Spell!] is not { } spell)
+            return;
+        int power = _random.Next(item.Kind.PowerMin, item.Kind.PowerMax + 1);
+        bool wand = item.Kind.Is("wand");
+        Monster? victim = null;
+        if (MonsterEffects.Contains(spell.Effect))
+        {
+            victim = a.Room.Monsters.Where(m => m.Alive && Distance(a.Row, a.Col, m.Row, m.Col) <= 10 * 64)
+                .OrderBy(m => m.Target == a ? 0 : 1).ThenBy(m => Distance(a.Row, a.Col, m.Row, m.Col)).FirstOrDefault();
+            if (victim is null)
+            {
+                Tell(a, "Hier ist nichts, worauf du das richten könntest.");
+                return;
+            }
+        }
+        if (IsRoomEnchantment(spell) && !CanEnchantRoom(a, spell))
+            return;
+        Tell(a, item.Kind.Is("potion") ? $"Du trinkst {item.Describe()}."
+            : wand ? $"Du richtest {item.Describe()} aus." : $"Du liest {item.Describe()}.");
+        if (wand)
+        {
+            item.Charges ??= _random.Next(item.Kind.ChargesMin, item.Kind.ChargesMax + 1);
+            item.Charges--;
+        }
+        ApplySpell(a, spell, victim is null ? a : null, victim, power);
+        if (!wand || item.Charges <= 0)
+        {
+            if (wand)
+                Tell(a, $"{Capitalize(item.Describe())} zerfällt zu Staub.");
+            TakeNumber(a, item, 1);
+        }
+    }
 }

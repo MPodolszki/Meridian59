@@ -148,6 +148,24 @@ public sealed class SpellTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task HastePotion_Hastens_LightningWand_StrikesAMonster()
+    {
+        var (c, events, me) = await EnterAsync(2);
+        GiveReagents(me, ("hastepotion", 1), ("lightningwand", 1));
+        var potion = me.State.Inventory.First(i => i.Kind.Key == "hastepotion");
+        await c.UseAsync(potion.Id);
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.StartsWith("Du trinkst"));
+        Assert.Contains(116, me.State.Enchantments.Keys);   // Eile
+        Assert.DoesNotContain(me.State.Inventory, i => i.Kind.Key == "hastepotion");
+        var m = _server.World.SpawnMonster(1, Dummy, new GridPos(5, 8));
+        var wand = me.State.Inventory.First(i => i.Kind.Key == "lightningwand");
+        await c.UseAsync(wand.Id);
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.StartsWith("Du richtest"));
+        Assert.True(m.Hp < m.MaxHp);
+        Assert.True(wand.Charges is >= 3);
+    }
+
+    [Fact]
     public void MonsterSpells_HaveTheOriginalValues()
     {
         var book = SpellBook.Load(Data("spells", "spells.json"));
