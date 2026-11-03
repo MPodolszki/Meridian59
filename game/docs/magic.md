@@ -113,8 +113,8 @@ Ziel im Godot-Client: die zuletzt angeklickte Figur bzw. das mit F angegriffene 
 Abweichungen: Spieler als Ziel schädlicher Sprüche gibt es noch nicht (kein PvP); das Erdbeben verschont andere
 Spieler, und der Wirker fällt nicht unter 1 LP. Geschosse (Feuerball, Blitz) treffen sofort, ohne sichtbares
 Projektil. Hilfreiche Sprüche mit einem Monster als Ziel wirken auf den Zaubernden (Komfort für den neuen Client).
-Lernen: die Lehrer sind die Tempelpriester in der Wildnis – bis Tempel und Wildnis existieren, sind diese Sprüche
-nicht erlernbar (nur bei der Charaktererstellung, sofern Stufe ≤ 2).
+Lernen: bei den Tempelpriesterinnen (Shal'ille, Kraanan, Qor, Faren in den Badlands; docs/wilderness.md), jeweils die
+Sprüche ihrer Liste, die es im Spiel schon gibt.
 
 ## Noch nicht umgesetzt
 Weitere Verzauberungen (Entdecken, Unsichtbarkeit, Nachtsicht …), Raumzauber (Licht, Dunkelheit, Nebel), Wände, Riija/Jala,
