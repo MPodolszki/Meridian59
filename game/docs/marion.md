@@ -42,8 +42,13 @@ Das Portal würfelt wie `SetRandomHomeroom` (Marion 3, Cor 4, Jasper 3 von 10) �
 derzeit führt es also immer ins Gasthaus von Marion (Ankunft 11/6).
 
 ## Noch nicht umgesetzt / Abweichungen
-- Gruft: Hebelrätsel der Gruft 1 mit lebender Statue und Ausgängen (Sektoren 6/7), lebende Statuen in Gruft 2 und die
-  Tür zu Gruft 3a, Fallen, schlafende Drescher und die Truhe in Gruft 3a, Martyrs' Battleground. Die Durchgänge sind offen.
+- Gruft 1 (marcryp1.kod, umgesetzt 2026-11-03, gleiche Mechanik wie das Mausoleum in Raza): zwei Hebel (27/4, 27/9);
+  einer hebt die Tür halb und sie schlägt nach 2 s zu, beide öffnen den Endbereich und schließen den Weg nach unten.
+  Ist der Endbereich leer, wird er beim Umlegen mit einer lebenden Statue (32/7) und fünf Gespenstermumien besetzt.
+  Sind alle besiegt und steht ein Spieler darin, öffnet sich der Weg zur zweiten Gruft (Sektoren 6/7); vorher ist der
+  Durchgang verschlossen. Ist niemand mehr im Endbereich, setzt sich alles zurück.
+- Noch nicht: lebende Statuen in Gruft 2 und die Tür zu Gruft 3a, Fallen, schlafende Drescher und die Truhe in Gruft
+  3a, Martyrs' Battleground (nur mit PvP), Totenbeschwörer-Tür (Passwort nur für Spielleiter).
 - Fehlende Beute (Katalog): Nerudit-Pfeil, Zwietrachtrolle, Identifizierstab, Dunkelengelfeder, Schuppenpanzer,
   Nachtsichttrank, Berserkerring; Zusatzbeute der Drescher.
 - Sprüche Ausbessern (Colhorr), Destillieren (Aftyn), Waffenstillstand (Ran) und Aftyns Tränke fehlen; ebenso

@@ -434,6 +434,9 @@ public sealed partial class World
             if (def.LockedDoors.FirstOrDefault(d => d.Row == cellRow && d.Col == cellCol) is { } door)
                 return new MoveResult.Blocked(door.Message ?? "This door is locked.");
 
+            // Gruft von Marion: der Weg zur zweiten Gruft ist zu, bis der Endkampf gewonnen ist (Sektoren 6/7).
+            if (avatar.Room.Puzzle is { Marion: true, DoorDownOpen: false } && def.Exits.Any(e => e.Row == cellRow && e.Col == cellCol && e.To == 2601))
+                return new MoveResult.Blocked("Der Durchgang ist verschlossen.");
             if (def.Exits.FirstOrDefault(e => e.Row == cellRow && e.Col == cellCol) is not { } exit)
                 return new MoveResult.Blocked("Hier ist kein Durchgang.");
 
@@ -525,8 +528,8 @@ public sealed partial class World
         foreach (var room in _rooms.Values)
         {
             var d = room.Definition;
-            if (d.Puzzle == "mausoleum")
-                room.Puzzle = new Mausoleum();
+            if (d.Puzzle is "mausoleum" or "marioncrypt")
+                room.Puzzle = new Mausoleum { Kind = d.Puzzle };
             foreach (var f in d.FixedMonsters)
                 SpawnMonsterLocked(room, MonsterKind.ByKey(f.Kind), new GridPos(f.Row, f.Col));
             if (d.Monsters.Count == 0)

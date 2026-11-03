@@ -21,7 +21,16 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Skull",
+          "row": 16,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "rows": 32,
       "cols": 30
     },
@@ -46,7 +55,12 @@
       "regionExits": [
         {
           "rects": [
-            [26, 14, 26, 14]
+            [
+              26,
+              14,
+              26,
+              14
+            ]
           ],
           "to": 27,
           "toConstant": "RID_CAVE2",
@@ -55,7 +69,12 @@
         },
         {
           "rects": [
-            [2, 19, 2, 19]
+            [
+              2,
+              19,
+              2,
+              19
+            ]
           ],
           "to": 27,
           "toConstant": "RID_CAVE2",
@@ -401,7 +420,472 @@
       "genPercent": 80,
       "initCountMin": 7,
       "initCountMax": 9,
-      "objects": [],
+      "objects": [
+        {
+          "type": "Skull",
+          "row": 18,
+          "col": 12,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Skull",
+          "row": 13,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Skull",
+          "row": 11,
+          "col": 9,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Skull",
+          "row": 7,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "OO_HALFSKULL",
+          "row": 18,
+          "col": 7,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_HALFSKULL",
+          "row": 7,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_HALFSKULL",
+          "row": 17,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_HALFSKULL",
+          "row": 17,
+          "col": 23,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_HALFSKULL",
+          "row": 8,
+          "col": 23,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_HALFSKULL",
+          "row": 17,
+          "col": 31,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_HALFSKULL",
+          "row": 7,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_HALFSKULL",
+          "row": 7,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_HALFSKULL",
+          "row": 27,
+          "col": 33,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_HALFSKULL",
+          "row": 24,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_HALFSKULL",
+          "row": 28,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_SKULL8",
+          "row": 27,
+          "col": 31,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_SKULL8",
+          "row": 16,
+          "col": 17,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_SKULL8",
+          "row": 19,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_SKULL8",
+          "row": 7,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_SKULL8",
+          "row": 6,
+          "col": 32,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_SKULL8",
+          "row": 14,
+          "col": 31,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_SKULL8",
+          "row": 18,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_SKULL9",
+          "row": 9,
+          "col": 31,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE1",
+          "row": 12,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE1",
+          "row": 12,
+          "col": 28,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE1",
+          "row": 23,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE1",
+          "row": 26,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE2",
+          "row": 12,
+          "col": 34,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE2",
+          "row": 12,
+          "col": 37,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE2",
+          "row": 9,
+          "col": 37,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE2",
+          "row": 9,
+          "col": 28,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE2",
+          "row": 17,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE2",
+          "row": 16,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE3",
+          "row": 17,
+          "col": 11,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE3",
+          "row": 16,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE3",
+          "row": 8,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECGRAVE3",
+          "row": 23,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE1",
+          "row": 17,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE2",
+          "row": 13,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE2",
+          "row": 4,
+          "col": 15,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE2",
+          "row": 7,
+          "col": 18,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE2",
+          "row": 8,
+          "col": 12,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE2",
+          "row": 11,
+          "col": 18,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE2",
+          "row": 9,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE4",
+          "row": 25,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE4",
+          "row": 10,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE4",
+          "row": 5,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 12,
+          "col": 31,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 15,
+          "col": 10,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 7,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 26,
+          "col": 34,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 10,
+          "col": 31,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 25,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 14,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 14,
+          "col": 11,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 9,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 11,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECVASE3",
+          "row": 14,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "rows": 29,
       "cols": 40
     },
@@ -630,7 +1114,73 @@
       "genPercent": 80,
       "initCountMin": 7,
       "initCountMax": 9,
-      "objects": [],
+      "objects": [
+        {
+          "type": "Skull",
+          "row": 6,
+          "col": 21,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_HALFSKULL",
+          "row": 17,
+          "col": 15,
+          "fineRow": 0,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE1",
+          "row": 14,
+          "col": 10,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE2",
+          "row": 14,
+          "col": 20,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE4",
+          "row": 5,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 17,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 18,
+          "col": 12,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Light",
+          "row": 14,
+          "col": 20,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0,
+          "intensity": 50
+        }
+      ],
       "rows": 29,
       "cols": 45
     },
@@ -740,7 +1290,56 @@
       "genPercent": 80,
       "initCountMin": 7,
       "initCountMax": 9,
-      "objects": [],
+      "objects": [
+        {
+          "type": "OO_NECSLIME",
+          "row": 9,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 13,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 15,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 9,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 11,
+          "col": 49,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 14,
+          "col": 49,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "rows": 26,
       "cols": 51
     },
@@ -921,7 +1520,112 @@
       "genPercent": 80,
       "initCountMin": 7,
       "initCountMax": 9,
-      "objects": [],
+      "objects": [
+        {
+          "type": "OO_NECTREE1",
+          "row": 13,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE1",
+          "row": 9,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECTREE4",
+          "row": 13,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 10,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 12,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 13,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECSLIME",
+          "row": 9,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 10,
+          "col": 29,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 13,
+          "col": 29,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 10,
+          "col": 20,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Lamp",
+          "row": 13,
+          "col": 20,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECVASE",
+          "row": 7,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECVASE2",
+          "row": 9,
+          "col": 34,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ],
       "rows": 32,
       "cols": 38
     },
@@ -997,7 +1701,24 @@
       "genPercent": 80,
       "initCountMin": 7,
       "initCountMax": 9,
-      "objects": [],
+      "objects": [
+        {
+          "type": "OO_NECVASE",
+          "row": 4,
+          "col": 9,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_NECVASE2",
+          "row": 5,
+          "col": 9,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ],
       "rows": 8,
       "cols": 9
     },

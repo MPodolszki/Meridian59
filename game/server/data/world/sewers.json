@@ -154,7 +154,24 @@
       "genPercent": 80,
       "initCountMin": 4,
       "initCountMax": 6,
-      "objects": [],
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 59,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 58,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ],
       "rows": 71,
       "cols": 50
     },
@@ -269,7 +286,62 @@
           "angle": 2560
         }
       ],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Light",
+          "row": 5,
+          "col": 14,
+          "fineRow": 0,
+          "fineCol": 16,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 2,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 16,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 1,
+          "col": 6,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 4,
+          "col": 4,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 7,
+          "col": 2,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 13,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0,
+          "intensity": 30
+        }
+      ],
       "rows": 14,
       "cols": 21
     },
@@ -519,7 +591,24 @@
       "genPercent": 80,
       "initCountMin": 7,
       "initCountMax": 9,
-      "objects": [],
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 59,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 58,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ],
       "rows": 49,
       "cols": 48
     },
@@ -650,7 +739,26 @@
       "genPercent": 80,
       "initCountMin": 6,
       "initCountMax": 7,
-      "objects": [],
+      "objects": [
+        {
+          "type": "Light",
+          "row": 30,
+          "col": 8,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0,
+          "intensity": 25
+        },
+        {
+          "type": "Light",
+          "row": 25,
+          "col": 8,
+          "fineRow": 50,
+          "fineCol": 0,
+          "angle": 0,
+          "intensity": 25
+        }
+      ],
       "rows": 49,
       "cols": 49
     },
@@ -1023,7 +1131,24 @@
         }
       ],
       "boss": true,
-      "objects": [],
+      "objects": [
+        {
+          "type": "Skull",
+          "row": 20,
+          "col": 36,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_BONES",
+          "row": 21,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 55,
+          "angle": 0
+        }
+      ],
       "rows": 50,
       "cols": 59
     }

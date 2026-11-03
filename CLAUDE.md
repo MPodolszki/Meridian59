@@ -94,4 +94,4 @@ Weitere Gebiete automatisch aus dem KOD (tools/make_areas.py, docs/areas.md): Ka
 Sprüche: 60 von ~150 (Raumzauber, Schutz, Waffenweihen, Kara'hol, Nachtsicht, Manabombe …; docs/magic.md).
 Offen (Magie): Wände, Riija-Illusionen, Jala-Lieder, PvP-Sprüche, Leichen/Séance, Flüche/Krankheiten.
 Heimatstadt je Spieler wie im Original (Ahnenhalle Cor Noth, docs/cor.md); zaubernde Monster (docs/monsters.md).
-Offen: Ko'catan, Orkhöhlen, Gruft-Rätsel in Marion, fehlende Gegenstände (Tränke, Zauberstäbe, Ringe, Rüstungen), Gilden, Mietzimmer, PvP, Rätsel der Wildnis.
+Offen: Ko'catan, Orkhöhlen, Gruft 2/3a in Marion, fehlende Gegenstände (Tränke, Zauberstäbe, Ringe, Rüstungen), Gilden, Mietzimmer, PvP, Rätsel der Wildnis.

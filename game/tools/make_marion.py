@@ -69,9 +69,13 @@ rooms = [
      "generators": [{"row": r, "col": c} for r, c in
                     [(5, 21), (5, 36), (9, 28), (17, 35), (21, 23), (25, 11), (29, 18), (37, 35), (38, 19)]],
      "monsters": [{"kind": "spectralmummy", "weight": 100}], "maxMonsters": 10,
+     # Hebelrätsel (marcryp1.kod CreateLevers, LeverChanged, CheckAllDeadMonsters, OpenDoorDown)
+     "puzzle": "marioncrypt",
      "npcs": [dict(sign("Mumifizierte Leiche", SIGNS["corpse"], r, c), icon="mummyX.bgf") for r, c in
               [(19, 18), (23, 8), (25, 14), (32, 14), (30, 40), (27, 33), (19, 32), (17, 40), (13, 40),
-               (9, 34), (4, 28), (2, 26), (2, 40)]]},
+               (9, 34), (4, 28), (2, 26), (2, 40)]]
+             + [dict(npc("GuestLever", "Hebel", "lever.bgf", "Hebel", 27, c),
+                     description="Dieser Hebel sieht alt und abgenutzt aus, muss aber noch etwas bewegen.") for c in (4, 9)]},
     {"id": 2601, "constant": "RID_MAR_CRYPT2", "kodClass": "MarionCrypt2", "name": "Resting place of Marion's ancestors",
      "roo": "MarDun02.roo", "music": "Song.mid", "baseLight": DARK, "outsideFactor": 0,
      "teleport": {"row": 17, "col": 18},

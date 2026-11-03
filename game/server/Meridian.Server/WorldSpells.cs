@@ -288,6 +288,17 @@ public sealed partial class World
     }
 
     /// <summary>Nur für Tests: Gegenstände ins Inventar legen.</summary>
+    /// <summary>Für Tests: ein Monster sofort besiegen (wie ein tödlicher Treffer).</summary>
+    internal void KillForTest(Avatar killer, Monster m)
+    {
+        lock (_gate)
+            if (m.Alive)
+            {
+                m.Hp = 0;
+                KillMonster(killer, m, DateTime.UtcNow);
+            }
+    }
+
     internal void GiveItemsForTest(Avatar a, IEnumerable<(string Key, int Number)> items)
     {
         lock (_gate)

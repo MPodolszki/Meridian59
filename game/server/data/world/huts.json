@@ -31,7 +31,59 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Table",
+          "row": 2,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Stool",
+          "row": 3,
+          "col": 1,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 1,
+          "col": 2,
+          "fineRow": 48,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Light",
+          "row": 4,
+          "col": 4,
+          "fineRow": 0,
+          "fineCol": 57,
+          "angle": 0,
+          "intensity": 5
+        },
+        {
+          "type": "Light",
+          "row": 6,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 25,
+          "angle": 0,
+          "intensity": 5
+        },
+        {
+          "type": "Light",
+          "row": 6,
+          "col": 3,
+          "fineRow": 28,
+          "fineCol": 25,
+          "angle": 0,
+          "intensity": 5
+        }
+      ],
       "npcs": [
         {
           "kodClass": "OneCouncilor",
@@ -86,7 +138,24 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Candelabra",
+          "row": 4,
+          "col": 6,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Candelabra",
+          "row": 4,
+          "col": 9,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "rows": 18,
       "cols": 14
     }

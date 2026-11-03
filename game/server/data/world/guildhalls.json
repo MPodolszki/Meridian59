@@ -29,7 +29,64 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Table",
+          "row": 17,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 7,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 11,
+          "col": 9,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 11,
+          "col": 12,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 12,
+          "col": 3,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 15,
+          "col": 3,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Chest",
+          "row": 2,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 10,
+          "angle": 1024
+        }
+      ],
       "rows": 28,
       "cols": 21
     },
@@ -70,7 +127,96 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Skull",
+          "row": 9,
+          "col": 24,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 20,
+          "col": 25,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 1024
+        },
+        {
+          "type": "Table",
+          "row": 20,
+          "col": 28,
+          "fineRow": 48,
+          "fineCol": 16,
+          "angle": 1024
+        },
+        {
+          "type": "Firepit",
+          "row": 18,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 8,
+          "col": 21,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 8,
+          "col": 25,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 9,
+          "col": 26,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 9,
+          "col": 29,
+          "fineRow": 48,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 12,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 12,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Chest",
+          "row": 8,
+          "col": 19,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 1024
+        }
+      ],
       "rows": 21,
       "cols": 33
     },
@@ -111,7 +257,144 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Table",
+          "row": 13,
+          "col": 14,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 14,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 7,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 4,
+          "col": 7,
+          "fineRow": 16,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 6,
+          "col": 7,
+          "fineRow": 48,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 9,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 9,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 15,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 22,
+          "col": 8,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 23,
+          "col": 18,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 17,
+          "col": 6,
+          "fineRow": 40,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 14,
+          "col": 6,
+          "fineRow": 24,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 29,
+          "col": 17,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Chest",
+          "row": 29,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 3584
+        },
+        {
+          "type": "Chest",
+          "row": 26,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 512
+        }
+      ],
       "rows": 29,
       "cols": 21
     },
@@ -142,7 +425,416 @@
       ],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Table",
+          "row": 31,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 31,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 33,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 36,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 36,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 34,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 40,
+          "col": 21,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 40,
+          "col": 29,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 43,
+          "col": 23,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 43,
+          "col": 26,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 34,
+          "col": 21,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 34,
+          "col": 29,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 30,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 30,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 28,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 28,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 28,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 30,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 28,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 30,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 23,
+          "col": 21,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 23,
+          "col": 29,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 6,
+          "col": 9,
+          "fineRow": 48,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 10,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 14,
+          "col": 9,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 14,
+          "col": 40,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 10,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 6,
+          "col": 40,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 6,
+          "col": 24,
+          "fineRow": 56,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 6,
+          "col": 25,
+          "fineRow": 56,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 6,
+          "col": 23,
+          "fineRow": 56,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 6,
+          "col": 21,
+          "fineRow": 56,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 6,
+          "col": 26,
+          "fineRow": 56,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 6,
+          "col": 28,
+          "fineRow": 56,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 35,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 35,
+          "col": 40,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 40,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 40,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 44,
+          "col": 36,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 44,
+          "col": 30,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 31,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 25,
+          "col": 10,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 23,
+          "col": 12,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 24,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 23,
+          "col": 38,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 23,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 45,
+          "col": 27,
+          "fineRow": 24,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 35,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Chest",
+          "row": 43,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 40,
+          "angle": 3072
+        },
+        {
+          "type": "Chest",
+          "row": 43,
+          "col": 12,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 3584
+        },
+        {
+          "type": "Chest",
+          "row": 43,
+          "col": 18,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 2560
+        }
+      ],
       "rows": 51,
       "cols": 49
     },
@@ -192,7 +884,136 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Table",
+          "row": 10,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 12,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 21,
+          "col": 7,
+          "fineRow": 0,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 20,
+          "col": 4,
+          "fineRow": 40,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 16,
+          "col": 11,
+          "fineRow": 44,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 5,
+          "col": 8,
+          "fineRow": 12,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 2,
+          "col": 9,
+          "fineRow": 0,
+          "fineCol": 4,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 7,
+          "col": 19,
+          "fineRow": 54,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 1,
+          "col": 20,
+          "fineRow": 44,
+          "fineCol": 60,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 4,
+          "col": 20,
+          "fineRow": 60,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 12,
+          "col": 27,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 17,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 13,
+          "col": 33,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 16,
+          "col": 33,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Chest",
+          "row": 13,
+          "col": 37,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 1024
+        },
+        {
+          "type": "Chest",
+          "row": 14,
+          "col": 37,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 2048
+        }
+      ],
       "rows": 30,
       "cols": 38
     },
@@ -235,11 +1056,331 @@
       "regionExits": [],
       "objects": [
         {
-          "type": "TREE_OAK",
+          "type": "Chest",
+          "row": 5,
+          "col": 18,
+          "fineRow": 24,
+          "fineCol": 16,
+          "angle": 1024
+        },
+        {
+          "type": "Brazier",
+          "row": 24,
+          "col": 29,
+          "fineRow": 32,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 18,
+          "col": 29,
+          "fineRow": 32,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 12,
+          "col": 29,
+          "fineRow": 32,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 12,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 18,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 24,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 33,
+          "col": 17,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 33,
+          "col": 19,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 25,
+          "col": 23,
+          "fineRow": 8,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 25,
+          "col": 20,
+          "fineRow": 8,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 25,
+          "col": 16,
+          "fineRow": 8,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 25,
+          "col": 13,
+          "fineRow": 8,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 24,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 21,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 18,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 15,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 12,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 11,
+          "col": 23,
+          "fineRow": 56,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 11,
+          "col": 20,
+          "fineRow": 56,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 11,
+          "col": 16,
+          "fineRow": 56,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 11,
+          "col": 13,
+          "fineRow": 56,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 12,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 15,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 18,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 21,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 24,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 10,
+          "col": 10,
+          "fineRow": 40,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 6,
+          "col": 10,
+          "fineRow": 56,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 6,
+          "col": 26,
+          "fineRow": 56,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 10,
+          "col": 26,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 28,
+          "col": 17,
+          "fineRow": 56,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 28,
+          "col": 18,
+          "fineRow": 56,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 29,
+          "col": 17,
+          "fineRow": 40,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 29,
+          "col": 18,
+          "fineRow": 40,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
           "row": 29,
           "col": 18,
           "fineRow": 16,
           "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 13,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 13,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 15,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 17,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 17,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
           "angle": 0
         }
       ],
@@ -283,7 +1424,64 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Table",
+          "row": 8,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 12,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 8,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 17,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 21,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 13,
+          "col": 18,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Chest",
+          "row": 13,
+          "col": 27,
+          "fineRow": 48,
+          "fineCol": 16,
+          "angle": 1024
+        }
+      ],
       "rows": 30,
       "cols": 31
     },
@@ -324,7 +1522,16 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Chest",
+          "row": 6,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 24,
+          "angle": 512
+        }
+      ],
       "rows": 29,
       "cols": 28
     },
@@ -355,7 +1562,40 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Chest",
+          "row": 15,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 12,
+          "col": 15,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 12,
+          "col": 17,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 13,
+          "col": 17,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ],
       "rows": 20,
       "cols": 20
     },
@@ -387,7 +1627,48 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Chest",
+          "row": 6,
+          "col": 2,
+          "fineRow": 20,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 4,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 12,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 12,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 4,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "rows": 19,
       "cols": 23
     },
@@ -428,7 +1709,72 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Chest",
+          "row": 29,
+          "col": 29,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 3072
+        },
+        {
+          "type": "Chest",
+          "row": 29,
+          "col": 30,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 1536
+        },
+        {
+          "type": "Table",
+          "row": 25,
+          "col": 8,
+          "fineRow": 0,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 23,
+          "col": 10,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 23,
+          "col": 6,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 4,
+          "col": 19,
+          "fineRow": 16,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 11,
+          "col": 7,
+          "fineRow": 48,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 7,
+          "col": 19,
+          "fineRow": 24,
+          "fineCol": 56,
+          "angle": 0
+        }
+      ],
       "rows": 29,
       "cols": 30
     },
@@ -461,7 +1807,192 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Chest",
+          "row": 20,
+          "col": 4,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 3072
+        },
+        {
+          "type": "Chest",
+          "row": 18,
+          "col": 2,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Chest",
+          "row": 18,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 2048
+        },
+        {
+          "type": "Candelabra",
+          "row": 15,
+          "col": 9,
+          "fineRow": 26,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 11,
+          "col": 8,
+          "fineRow": 16,
+          "fineCol": 26,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 2,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 7,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 12,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 17,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 9,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 9,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 9,
+          "col": 22,
+          "fineRow": 40,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 11,
+          "col": 37,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 16,
+          "col": 37,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 13,
+          "col": 25,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 13,
+          "col": 23,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 14,
+          "col": 22,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 16,
+          "col": 22,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 17,
+          "col": 23,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 17,
+          "col": 25,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 16,
+          "col": 26,
+          "fineRow": 0,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 14,
+          "col": 26,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 13,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "rows": 49,
       "cols": 52
     },
@@ -569,7 +2100,64 @@
         }
       ],
       "boss": true,
-      "objects": [],
+      "objects": [
+        {
+          "type": "OO_SACRIFICIALBOWL",
+          "row": 4,
+          "col": 14,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_SKULL10",
+          "row": 4,
+          "col": 15,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_SACRIFICIALBOWL",
+          "row": 4,
+          "col": 13,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "OO_GOATHEAD",
+          "row": 6,
+          "col": 42,
+          "fineRow": 8,
+          "fineCol": 8,
+          "angle": 1024
+        },
+        {
+          "type": "OO_GOATHEAD",
+          "row": 20,
+          "col": 42,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 3072
+        },
+        {
+          "type": "OO_GOATHEAD",
+          "row": 3,
+          "col": 10,
+          "fineRow": 16,
+          "fineCol": 24,
+          "angle": 512
+        },
+        {
+          "type": "Chest",
+          "row": 23,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 3072
+        }
+      ],
       "rows": 27,
       "cols": 51
     }

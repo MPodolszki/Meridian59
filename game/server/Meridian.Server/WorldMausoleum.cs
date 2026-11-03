@@ -9,6 +9,12 @@ namespace Meridian.Server;
 /// </summary>
 public sealed class Mausoleum
 {
+    /// <summary>Variante: "mausoleum" (Raza, guest6/newb6.kod) oder "marioncrypt" (Gruft von Marion, marcryp1.kod).</summary>
+    public string Kind { get; init; } = "mausoleum";
+    public bool Marion => Kind == "marioncrypt";
+    /// <summary>Gruft von Marion: Ausgang nach unten (Sektoren 6/7) offen.</summary>
+    public bool DoorDownOpen { get; set; }
+    public const int SectorExit1 = 6, SectorExit2 = 7;
     public const string LeverClass = "GuestLever";
     public const int SectorDoor = 3, SectorNode1 = 4, SectorNode2 = 5;
     /// <summary>Türhöhen (Decke): zu 84, halb 128 (ein Hebel), offen 172 (beide). Boden der Tür 84.</summary>
@@ -25,15 +31,18 @@ public sealed class Mausoleum
     /// <summary>Aktuelle Sektorhöhen, die vom .roo-Ausgangszustand abweichen (für neu Eintretende).</summary>
     public Dictionary<int, (byte Animation, int Height)> Sectors { get; } = new();
 
-    /// <summary>CountInFinal: Endbereich Zeilen 28–40 × Spalten 1–9, Gang 16–28 × 1–2, oder Spalte &lt; 3 ab Zeile 16.</summary>
-    public static bool InFinal(int row, int col) =>
-        row is >= 28 and <= 40 && col is >= 1 and <= 9
-        || row is >= 16 and <= 28 && col is >= 1 and <= 2
-        || col < 3 && row > 15;
+    /// <summary>CountInFinal: Endbereich Zeilen 28–40 × Spalten 1–9, Gang 16–28 × 1–2, oder Spalte &lt; 3 ab Zeile 16;
+    /// Gruft von Marion: Zeilen 28–38 × Spalten 1–10 oder Spalte &lt; 3 ab Zeile 16.</summary>
+    public bool InFinal(int row, int col) => Marion
+        ? row is >= 28 and <= 38 && col is >= 1 and <= 10 || col < 3 && row > 15
+        : row is >= 28 and <= 40 && col is >= 1 and <= 9
+          || row is >= 16 and <= 28 && col is >= 1 and <= 2
+          || col < 3 && row > 15;
 
     /// <summary>ResetMonstersInFinal löscht nur im Endbereich ohne den Gang (MIN/MAX_FINAL oder Spalte &lt; 3 ab Zeile 16).</summary>
-    public static bool InFinalForReset(int row, int col) =>
-        row is >= 28 and <= 40 && col is >= 1 and <= 9 || col < 3 && row > 15;
+    public bool InFinalForReset(int row, int col) => Marion
+        ? InFinal(row, col)
+        : row is >= 28 and <= 40 && col is >= 1 and <= 9 || col < 3 && row > 15;
 }
 
 public sealed partial class World
@@ -93,7 +102,12 @@ public sealed partial class World
             SetSector(room, GameReplies.AnimateCeilingLift, Mausoleum.SectorDoor, Mausoleum.DoorOpen, 16);
             puzzle.DoorDue = now + Mausoleum.FightTime;
             puzzle.DoorFight = true;
+            if (puzzle.Marion)
+                CloseDoorDown(room, puzzle);   // erst kämpfen, dann geht es hinunter
         }
+        // marcryp1.kod: ist der Endbereich leer, wird er beim Umlegen neu besetzt.
+        if (puzzle.Marion && CountInFinal(room, players: false) == 0)
+            ResetMonstersInFinal(room);
     }
 
     /// <summary>SetSector: an alle im Raum senden und das Raster anpassen (Tür sperrt, Säule ändert die Bodenhöhe).</summary>
@@ -141,12 +155,37 @@ public sealed partial class World
     }
 
     private int CountInFinal(Room room, bool players) => players
-        ? room.Avatars.Values.Count(a => Mausoleum.InFinal(a.Row / 64, a.Col / 64))
-        : room.Monsters.Count(m => m.Alive && Mausoleum.InFinal(m.Row / 64, m.Col / 64));
+        ? room.Avatars.Values.Count(a => room.Puzzle!.InFinal(a.Row / 64, a.Col / 64))
+        : room.Monsters.Count(m => m.Alive && room.Puzzle!.InFinal(m.Row / 64, m.Col / 64));
+
+    /// <summary>marcryp1.kod OpenDoorDown/CloseDoorDown: Ausgang zur zweiten Gruft (Sektoren 6/7).</summary>
+    private void OpenDoorDown(Room room, Mausoleum puzzle)
+    {
+        puzzle.DoorDownOpen = true;
+        SetSector(room, GameReplies.AnimateCeilingLift, Mausoleum.SectorDoor, Mausoleum.DoorClosed, 16);
+        SetSector(room, GameReplies.AnimateCeilingLift, Mausoleum.SectorExit1, 273, 4);
+        SetSector(room, GameReplies.AnimateCeilingLift, Mausoleum.SectorExit2, 161, 4);
+    }
+
+    private void CloseDoorDown(Room room, Mausoleum puzzle)
+    {
+        puzzle.DoorDownOpen = false;
+        SetSector(room, GameReplies.AnimateCeilingLift, Mausoleum.SectorExit1, 200, 16);
+        SetSector(room, GameReplies.AnimateCeilingLift, Mausoleum.SectorExit2, 88, 16);
+    }
 
     private void ResetFinal(Room room, Mausoleum puzzle)
     {
         puzzle.DoorDue = null;
+        if (puzzle.Marion)
+        {
+            foreach (var lever in Levers(room))
+                SetLever(room, lever, false);
+            CloseDoorDown(room, puzzle);
+            SetSector(room, GameReplies.AnimateCeilingLift, Mausoleum.SectorDoor, Mausoleum.DoorClosed, 32);
+            ResetMonstersInFinal(room);
+            return;
+        }
         puzzle.ColumnDown = false;
         SetSector(room, GameReplies.AnimateFloorLift, Mausoleum.SectorNode1, 500, 0);
         SetSector(room, GameReplies.AnimateFloorLift, Mausoleum.SectorNode2, 519, 0);
@@ -159,10 +198,18 @@ public sealed partial class World
     /// <summary>Endbereich leeren und neu besetzen: vier Mumien und eine Schattenmumie (Zeilen 29–37, Spalten 3–8).</summary>
     private void ResetMonstersInFinal(Room room)
     {
-        foreach (var m in room.Monsters.Where(m => Mausoleum.InFinalForReset(m.Row / 64, m.Col / 64)).ToList())
+        foreach (var m in room.Monsters.Where(m => room.Puzzle!.InFinalForReset(m.Row / 64, m.Col / 64)).ToList())
         {
             room.Monsters.Remove(m);
             BroadcastRoom(room, GameReplies.Remove(m.Id));
+        }
+        if (room.Puzzle!.Marion)
+        {
+            // Lebende Statue (32/7, nach Norden) und fünf Gespenstermumien (Zeilen 29–34, Spalten 4–9).
+            SpawnMonsterLocked(room, MonsterKind.ByKey("livingstatue"), new GridPos(32, 7)).Angle = 3072;
+            for (int i = 0; i < 5; i++)
+                SpawnMonsterLocked(room, MonsterKind.ByKey("spectralmummy"), new GridPos(_random.Next(29, 35), _random.Next(4, 10)));
+            return;
         }
         foreach (var kind in new[] { MonsterKind.Mummy, MonsterKind.Mummy, MonsterKind.Mummy, MonsterKind.Mummy, MonsterKind.BlackMummy })
             SpawnMonsterLocked(room, kind, new GridPos(_random.Next(29, 38), _random.Next(3, 9)));
@@ -171,7 +218,7 @@ public sealed partial class World
     /// <summary>FirstUserEntered: eine Mumie in die Grube, Endbereich neu besetzen.</summary>
     private void FirstUserEntered(Room room)
     {
-        if (room.Puzzle is null)
+        if (room.Puzzle is null or { Marion: true })
             return;
         if (PitMummies(room) < Mausoleum.PitMax)
             SpawnMonsterLocked(room, MonsterKind.MummyNoTreasure, Mausoleum.Pit);
@@ -183,7 +230,7 @@ public sealed partial class World
     /// <summary>ReqNewHold: Mumien ohne Beute nur in der Grube (höchstens zwei), andere nie dort. null = verweigert.</summary>
     private GridPos? PuzzleSpawnPoint(Room room, MonsterKind kind, GridPos at)
     {
-        if (room.Puzzle is null)
+        if (room.Puzzle is null or { Marion: true })
             return at;
         bool pit = at == Mausoleum.Pit;
         if (kind == MonsterKind.MummyNoTreasure)
@@ -198,6 +245,16 @@ public sealed partial class World
         if (room.Puzzle is not { ColumnDown: false } puzzle
             || CountInFinal(room, players: false) != 0 || CountInFinal(room, players: true) == 0)
             return;
+        if (puzzle.Marion)
+        {
+            // CheckAllDeadMonsters: Endbereich frei → der Weg hinunter öffnet sich (pbDoorDownActive).
+            if (puzzle.DoorDownOpen)
+                return;
+            OpenDoorDown(room, puzzle);
+            puzzle.DoorDue = DateTime.UtcNow + Mausoleum.FightTime;
+            puzzle.DoorFight = true;
+            return;
+        }
         puzzle.ColumnDown = true;
         DropReward(room, "elderberry", _random.Next(5, 11), 34, 4, 48, 48);
         DropReward(room, "herbs", _random.Next(10, 16), 34, 5, 48, 16);

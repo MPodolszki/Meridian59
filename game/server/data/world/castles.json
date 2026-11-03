@@ -542,7 +542,144 @@
       "maxMonsters": 10,
       "genTime": 20000,
       "genPercent": 100,
-      "objects": [],
+      "objects": [
+        {
+          "type": "Throne",
+          "row": 1,
+          "col": 5,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Pillar",
+          "row": 16,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 13,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 10,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 7,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 4,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 1,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 16,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 13,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 10,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 7,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 4,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Pillar",
+          "row": 1,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 11,
+          "col": 3,
+          "fineRow": 56,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 5,
+          "col": 3,
+          "fineRow": 56,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 11,
+          "col": 7,
+          "fineRow": 56,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 5,
+          "col": 7,
+          "fineRow": 56,
+          "fineCol": 8,
+          "angle": 0
+        }
+      ],
       "rows": 23,
       "cols": 10
     },
@@ -575,7 +712,80 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Light",
+          "row": 26,
+          "col": 5,
+          "fineRow": 48,
+          "fineCol": 62,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 26,
+          "col": 23,
+          "fineRow": 48,
+          "fineCol": 34,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 5,
+          "col": 21,
+          "fineRow": 1,
+          "fineCol": 48,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 2,
+          "col": 18,
+          "fineRow": 31,
+          "fineCol": 48,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 1,
+          "col": 6,
+          "fineRow": 47,
+          "fineCol": 34,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 4,
+          "col": 4,
+          "fineRow": 47,
+          "fineCol": 29,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 7,
+          "col": 2,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 0,
+          "intensity": 30
+        },
+        {
+          "type": "Light",
+          "row": 26,
+          "col": 2,
+          "fineRow": 47,
+          "fineCol": 32,
+          "angle": 0,
+          "intensity": 30
+        }
+      ],
       "rows": 27,
       "cols": 25
     },
@@ -756,52 +966,116 @@
       ],
       "objects": [
         {
-          "type": "TREE_OAK",
+          "type": "TREE",
           "row": 7,
           "col": 14,
           "fineRow": 32,
           "fineCol": 32,
-          "angle": 0
+          "angle": 1024
         },
         {
-          "type": "TREE_OAK",
+          "type": "TREE",
           "row": 7,
           "col": 17,
           "fineRow": 32,
           "fineCol": 32,
-          "angle": 0
+          "angle": 1024
         },
         {
-          "type": "TREE_OAK",
+          "type": "TREE",
           "row": 7,
           "col": 11,
           "fineRow": 32,
           "fineCol": 32,
-          "angle": 0
+          "angle": 1024
         },
         {
-          "type": "TREE_OAK",
+          "type": "TREE",
           "row": 15,
           "col": 10,
           "fineRow": 32,
           "fineCol": 32,
-          "angle": 0
+          "angle": 1024
         },
         {
-          "type": "TREE_OAK",
+          "type": "TREE",
           "row": 12,
           "col": 7,
           "fineRow": 32,
           "fineCol": 32,
-          "angle": 0
+          "angle": 1024
         },
         {
-          "type": "TREE_OAK",
+          "type": "TREE",
           "row": 16,
           "col": 7,
           "fineRow": 32,
           "fineCol": 32,
-          "angle": 0
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 7,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 14,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 18,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 19,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 16,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 13,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 11,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Fountain",
+          "row": 10,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 1024
         }
       ],
       "rows": 30,
@@ -1137,7 +1411,328 @@
           "angle": 0
         }
       ],
-      "objects": [],
+      "objects": [
+        {
+          "type": "SHRUB",
+          "row": 4,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 4,
+          "col": 32,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 4,
+          "col": 38,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 4,
+          "col": 44,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 4,
+          "col": 50,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 4,
+          "col": 56,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 4,
+          "col": 29,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 4,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 4,
+          "col": 47,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 4,
+          "col": 41,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 4,
+          "col": 53,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 4,
+          "col": 59,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 7,
+          "col": 61,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 13,
+          "col": 61,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 10,
+          "col": 61,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 28,
+          "col": 61,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 34,
+          "col": 61,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 40,
+          "col": 61,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 31,
+          "col": 61,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 37,
+          "col": 61,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 43,
+          "col": 61,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 43,
+          "col": 58,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 44,
+          "col": 38,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 44,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 40,
+          "col": 31,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 48,
+          "col": 57,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 30,
+          "col": 41,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 14,
+          "col": 57,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 9,
+          "col": 50,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 9,
+          "col": 44,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 12,
+          "col": 40,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 25,
+          "col": 58,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 30,
+          "col": 54,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 16,
+          "col": 58,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 11,
+          "col": 54,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 9,
+          "col": 46,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 30,
+          "col": 26,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 36,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 40,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "SHRUB",
+          "row": 38,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        }
+      ],
       "rows": 48,
       "cols": 85
     },
@@ -1263,7 +1858,24 @@
           "angle": 3072
         }
       ],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Throne",
+          "row": 33,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 48,
+          "angle": 3072
+        },
+        {
+          "type": "Throne",
+          "row": 33,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 48,
+          "angle": 3072
+        }
+      ],
       "rows": 45,
       "cols": 38
     },
@@ -1663,7 +2275,32 @@
           "angle": 0
         }
       ],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Quill",
+          "row": 14,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Table",
+          "row": 16,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "type": "Table",
+          "row": 16,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        }
+      ],
       "rows": 35,
       "cols": 30
     },
@@ -1727,7 +2364,24 @@
           "angle": 0
         }
       ],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Stool",
+          "row": 8,
+          "col": 3,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Stool",
+          "row": 7,
+          "col": 4,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ],
       "rows": 10,
       "cols": 17
     },
@@ -1892,7 +2546,56 @@
           "angle": 3584
         }
       ],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Firepit",
+          "row": 14,
+          "col": 28,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 14,
+          "col": 31,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 23,
+          "col": 34,
+          "fineRow": 56,
+          "fineCol": 56,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 23,
+          "col": 24,
+          "fineRow": 56,
+          "fineCol": 8,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 23,
+          "col": 31,
+          "fineRow": 56,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 23,
+          "col": 28,
+          "fineRow": 56,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ],
       "rows": 44,
       "cols": 57
     },
@@ -2037,7 +2740,56 @@
           "angle": 512
         }
       ],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Firepit",
+          "row": 41,
+          "col": 17,
+          "fineRow": 8,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "Firepit",
+          "row": 41,
+          "col": 14,
+          "fineRow": 8,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 28,
+          "col": 19,
+          "fineRow": 40,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 25,
+          "col": 19,
+          "fineRow": 24,
+          "fineCol": 40,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 25,
+          "col": 12,
+          "fineRow": 24,
+          "fineCol": 24,
+          "angle": 0
+        },
+        {
+          "type": "SHRUB",
+          "row": 28,
+          "col": 12,
+          "fineRow": 40,
+          "fineCol": 24,
+          "angle": 0
+        }
+      ],
       "rows": 42,
       "cols": 30
     },
@@ -2088,7 +2840,48 @@
       "edgeExits": [],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Brazier",
+          "row": 9,
+          "col": 18,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 9,
+          "col": 22,
+          "fineRow": 48,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 21,
+          "col": 22,
+          "fineRow": 48,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 21,
+          "col": 18,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Throne",
+          "row": 10,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        }
+      ],
       "npcs": [
         {
           "kodClass": "DukeLiege",
@@ -2297,7 +3090,112 @@
           "angle": 3072
         }
       ],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Candelabra",
+          "row": 10,
+          "col": 19,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Candelabra",
+          "row": 10,
+          "col": 11,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Candelabra",
+          "row": 15,
+          "col": 11,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Candelabra",
+          "row": 20,
+          "col": 11,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Candelabra",
+          "row": 20,
+          "col": 19,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Candelabra",
+          "row": 15,
+          "col": 6,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 11,
+          "col": 27,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 20,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 28,
+          "col": 15,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 28,
+          "col": 4,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 14,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 3,
+          "col": 17,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        }
+      ],
       "rows": 28,
       "cols": 28
     },
@@ -2459,7 +3357,56 @@
           "angle": 2048
         }
       ],
-      "objects": [],
+      "objects": [
+        {
+          "type": "Candelabra",
+          "row": 23,
+          "col": 15,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 19,
+          "col": 1,
+          "fineRow": 16,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 10,
+          "col": 1,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 1,
+          "col": 15,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 10,
+          "col": 27,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "type": "Brazier",
+          "row": 26,
+          "col": 24,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 0
+        }
+      ],
       "rows": 29,
       "cols": 27
     }

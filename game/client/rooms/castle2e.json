@@ -1,4 +1,4 @@
-{"source": "castle2e.roo", "rows": 10, "cols": 17, "ceiling": 268, "exits": [[2, 15, "Banquet Hall of the Bourgeois Castle"], [3, 15, "Banquet Hall of the Bourgeois Castle"]], "locked": [[10, 9], [10, 10]], "terrain": "castle", "outdoors": true, "floor": [
+{"source": "castle2e.roo", "rows": 10, "cols": 17, "ceiling": 268, "exits": [[2, 15, "Banquet Hall of the Bourgeois Castle"], [3, 15, "Banquet Hall of the Bourgeois Castle"]], "locked": [[10, 9], [10, 10]], "terrain": "castle", "outdoors": true, "props": [["Stool", 8, 3, 32, 32, 0, 0], ["Stool", 7, 4, 0, 0, 0, 0]], "floor": [
     [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,78,78,78,78,78,78,78,78,78,78,78,78,78,78,-1,-1],
     [-1,78,78,78,78,78,78,78,78,78,78,78,78,78,78,-1,-1],

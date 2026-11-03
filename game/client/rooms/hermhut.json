@@ -1,4 +1,4 @@
-{"source": "hermhut.roo", "rows": 8, "cols": 8, "ceiling": 96, "tags": [{"id": 1, "floor": 0, "ceiling": 96, "cells": [[2, 1], [2, 2]]}], "exits": [[8, 6, "The Twisted Wood"]], "locked": [], "terrain": "residence", "outdoors": true, "floor": [
+{"source": "hermhut.roo", "rows": 8, "cols": 8, "ceiling": 96, "tags": [{"id": 1, "floor": 0, "ceiling": 96, "cells": [[2, 1], [2, 2]]}], "exits": [[8, 6, "The Twisted Wood"]], "locked": [], "terrain": "residence", "outdoors": true, "props": [["Table", 2, 6, 32, 32, 1024, 0], ["Stool", 3, 1, 0, 32, 0, 0], ["Firepit", 1, 2, 48, 16, 0, 0], ["Light", 4, 4, 0, 57, 0, 5], ["Light", 6, 6, 32, 25, 0, 5], ["Light", 6, 3, 28, 25, 0, 5]], "floor": [
     [0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0],

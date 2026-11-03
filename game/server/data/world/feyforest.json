@@ -29,7 +29,64 @@
       ],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "TREE",
+          "row": 43,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 45,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 47,
+          "col": 31,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 21,
+          "col": 46,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 24,
+          "col": 42,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 37,
+          "col": 42,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 37,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "monsters": [
         {
           "kind": "fairy",
@@ -135,7 +192,32 @@
       ],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "TREE",
+          "row": 8,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 9,
+          "col": 51,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 13,
+          "col": 39,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "monsters": [
         {
           "kind": "fairy",
@@ -249,7 +331,104 @@
       ],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "TREE",
+          "row": 3,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 7,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 14,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 12,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 24,
+          "col": 48,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 17,
+          "col": 47,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 3,
+          "col": 40,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 40,
+          "col": 46,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 13,
+          "col": 38,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 18,
+          "col": 31,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 31,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 24,
+          "col": 17,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "monsters": [
         {
           "kind": "fairy",
@@ -377,7 +556,64 @@
       ],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "TREE",
+          "row": 14,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 20,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 26,
+          "col": 48,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 25,
+          "col": 53,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 10,
+          "col": 69,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 12,
+          "col": 73,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 18,
+          "col": 71,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "monsters": [
         {
           "kind": "fairy",
@@ -471,7 +707,232 @@
       ],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "TREE",
+          "row": 22,
+          "col": 44,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 25,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 25,
+          "col": 36,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 21,
+          "col": 37,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 16,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 16,
+          "col": 37,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 28,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 30,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 32,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 29,
+          "col": 22,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 32,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 34,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 23,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 19,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 40,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 19,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 41,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 17,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 22,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 26,
+          "col": 16,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 14,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 10,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 5,
+          "col": 31,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 13,
+          "col": 35,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 31,
+          "col": 41,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 50,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 48,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 51,
+          "col": 32,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "monsters": [
         {
           "kind": "fairy",
@@ -599,7 +1060,40 @@
       ],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "TREE",
+          "row": 9,
+          "col": 50,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 9,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 25,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 28,
+          "col": 48,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "monsters": [
         {
           "kind": "fairy",
@@ -713,7 +1207,80 @@
       ],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "TREE",
+          "row": 33,
+          "col": 19,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 29,
+          "col": 43,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 14,
+          "col": 34,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 6,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 14,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 40,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 32,
+          "col": 27,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 44,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 38,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "monsters": [
         {
           "kind": "fairy",
@@ -827,7 +1394,64 @@
       ],
       "lockedDoors": [],
       "regionExits": [],
-      "objects": [],
+      "objects": [
+        {
+          "type": "TREE",
+          "row": 21,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 28,
+          "col": 6,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 26,
+          "col": 12,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 8,
+          "col": 24,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 6,
+          "col": 32,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 11,
+          "col": 30,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE",
+          "row": 34,
+          "col": 32,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "monsters": [
         {
           "kind": "fairy",

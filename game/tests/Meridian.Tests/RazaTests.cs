@@ -100,6 +100,36 @@ public sealed class RazaTests : IAsyncDisposable
     }
 
     [Fact]
+    public async Task MarionCrypt_BothLeversOpenTheFinalDoor_TheWayDownOpensAfterTheFight()
+    {
+        var (c, events) = await EnterAsync(2600);
+        var room = _server!.World.Rooms.Single(r => r.Definition.Id == 2600);
+        var me = room.Avatars.Values.Single();
+        // Der Weg zur zweiten Gruft ist zu.
+        await c.MoveAsync(Room.Fine(38), Room.Fine(6), false);
+        await c.GoAsync();
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat { Text: "Der Durchgang ist verschlossen." });
+
+        var levers = events.OfType<ClientEvent.ObjectAdded>().Select(e => e.Object).Where(o => c.Resolve(o.NameRsc) == "Hebel").OrderBy(o => o.Col).ToList();
+        Assert.Equal(2, levers.Count);
+        await c.MoveAsync(Room.Fine(27), Room.Fine(5), false);
+        await c.ActivateAsync(levers[0].Id);
+        await c.MoveAsync(Room.Fine(27), Room.Fine(8), false);
+        await c.ActivateAsync(levers[1].Id);
+        await WaitForAsync(c, events, e => e is ClientEvent.SectorMoved { Sector: 3, Height: 172 });
+        // Endbereich: lebende Statue und Gespenstermumien; ohne sie und mit einem Spieler darin öffnet sich der Weg.
+        Assert.Contains(room.Monsters, m => m.Kind.Key == "livingstatue");
+        await c.MoveAsync(Room.Fine(33), Room.Fine(5), false);
+        await WaitForAsync(c, events, _ => me.Row / 64 == 33);
+        foreach (var m in room.Monsters.Where(m => m.Row / 64 >= 28).ToList())
+            _server.World.KillForTest(me, m);
+        await WaitForAsync(c, events, e => e is ClientEvent.SectorMoved { Sector: 6, Height: 273 });
+        await c.MoveAsync(Room.Fine(38), Room.Fine(6), false);
+        await c.GoAsync();
+        await WaitForAsync(c, events, e => e is ClientEvent.EnteredRoom { RoomName: "Resting place of Marion's ancestors" });
+    }
+
+    [Fact]
     public void Marion_ExitsLeadIntoExistingRooms_AndCryptsHaveMonsters()
     {
         var world = WorldDefinition.LoadAll(Data("world"));

@@ -178,7 +178,12 @@
       "regionExits": [
         {
           "rects": [
-            [1, 67, 31, 93]
+            [
+              1,
+              67,
+              31,
+              93
+            ]
           ],
           "to": 534,
           "toConstant": "RID_C4",
@@ -188,7 +193,12 @@
         },
         {
           "rects": [
-            [84, 49, 88, 93]
+            [
+              84,
+              49,
+              88,
+              93
+            ]
           ],
           "to": 535,
           "toConstant": "RID_C5",
@@ -774,6 +784,7 @@
         }
       ],
       "maxMonsters": 10,
+      "puzzle": "marioncrypt",
       "npcs": [
         {
           "kodClass": "Sign",
@@ -917,6 +928,30 @@
           "col": 40,
           "fineRow": 32,
           "fineCol": 32
+        },
+        {
+          "kodClass": "GuestLever",
+          "name": "Hebel",
+          "icon": "lever.bgf",
+          "role": "Hebel",
+          "row": 27,
+          "col": 4,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0,
+          "description": "Dieser Hebel sieht alt und abgenutzt aus, muss aber noch etwas bewegen."
+        },
+        {
+          "kodClass": "GuestLever",
+          "name": "Hebel",
+          "icon": "lever.bgf",
+          "role": "Hebel",
+          "row": 27,
+          "col": 9,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0,
+          "description": "Dieser Hebel sieht alt und abgenutzt aus, muss aber noch etwas bewegen."
         }
       ],
       "rows": 39,

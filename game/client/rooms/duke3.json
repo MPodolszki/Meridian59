@@ -1,4 +1,4 @@
-{"source": "duke3.roo", "rows": 21, "cols": 25, "ceiling": 692, "exits": [[21, 19, "Blackstone Keep"], [21, 20, "Blackstone Keep"], [21, 21, "Blackstone Keep"]], "locked": [], "terrain": "castle", "outdoors": true, "floor": [
+{"source": "duke3.roo", "rows": 21, "cols": 25, "ceiling": 692, "exits": [[21, 19, "Blackstone Keep"], [21, 20, "Blackstone Keep"], [21, 21, "Blackstone Keep"]], "locked": [], "terrain": "castle", "outdoors": true, "props": [["Brazier", 9, 18, 48, 48, 0, 0], ["Brazier", 9, 22, 48, 16, 0, 0], ["Brazier", 21, 22, 48, 16, 0, 0], ["Brazier", 21, 18, 48, 48, 0, 0], ["Throne", 10, 20, 32, 32, 1024, 0]], "floor": [
     [470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470],
     [470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470],
     [470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470,470],
