@@ -38,7 +38,7 @@ def value(token):
 
 
 def resource(text, name):
-    m = re.search(rf"^\s*{re.escape(name)}\s*=\s*(.+?)\s*$", text, re.M)
+    m = re.search(rf"^\s*{re.escape(name)}\s*=\s*(.+?)\s*$", text, re.M | re.I)
     if not m:
         return None
     v = m.group(1)
@@ -192,7 +192,7 @@ def room_of(path):
     cls = re.search(r"^(\w+)\s+is\s+(\w+)", text, re.M).group(1)
     roo = resource(text, f"room_{cls}") or resource(text, symbol(text, "prRoom") or "")
     name_sym = symbol(text, "vrName")
-    name = resource(text, name_sym) if name_sym else cls
+    name = (resource(text, name_sym) if name_sym else None) or cls
     music_sym = symbol(text, "prMusic")
     music = resource(text, music_sym) if music_sym else None
     rid_sym = symbol(text, "piRoom_num")

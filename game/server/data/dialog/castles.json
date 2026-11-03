@@ -1,0 +1,43 @@
+{
+  "_hinweis": "Bewohner der Burgen (Blackstone Keep, Castle Victoria, Bourgeois-Burg), Texte sinngemäß nach dem Original.",
+  "npcs": {
+    "DukeLiege": {
+      "title": "Herzog",
+      "description": "Obwohl erst sechzehn Jahre alt, hat sich Herzog Akardius geschickt in die Nachfolge seines ermordeten Onkels manövriert. Der junge Herzog strahlt Selbstvertrauen und Macht aus. Man munkelt, er sei ein eifriger Anhänger Riijas – sein listiges Lächeln passt zum Gott der Täuschung.",
+      "greeting": "Ihr steht vor dem Herzog von Meridian. Sprecht, aber fasst Euch kurz.",
+      "topics": [
+        {"keywords": ["prinzessin", "kateriina"], "reply": "Meine Base hält sich für eine Herrscherin. Sie träumt lieber von Zauberbüchern als von Politik."},
+        {"keywords": ["onkel", "kalior", "mord"], "reply": "Mein Onkel wurde ermordet. Die Schuldigen werden gefunden – verlasst Euch darauf."}
+      ]
+    },
+    "PrincessLiege": {
+      "title": "Prinzessin",
+      "description": "Die Jahre haben Prinzessin Kateriina stärker und selbstsicherer gemacht, ihre Gutgläubigkeit aber kaum gemildert. Für den Herzog und alle politischen Ränke hat sie nur Verachtung übrig. Die Magie fasziniert sie, und manchmal träumt sie davon, fortzulaufen und die arkanen Künste zu studieren.",
+      "greeting": "Willkommen in der Ratskammer. Wer gerecht herrscht, braucht keine Ränke.",
+      "topics": [
+        {"keywords": ["herzog", "akardius"], "reply": "Mein Vetter spinnt seine Intrigen. Ich halte mich davon fern."},
+        {"keywords": ["magie", "zauber"], "reply": "Ach, die Magie … Wäre ich keine Prinzessin, ich säße Tag und Nacht über alten Büchern."}
+      ]
+    },
+    "PrincessGuard": {
+      "title": "Wache",
+      "description": "Dieser Wächter bemüht sich, so würdevoll auszusehen wie die Herrscherin, die er beschützt, und trägt seine Uniform mit Stolz. In seiner Nähe fühlt man sich sicher.",
+      "greeting": "Ruhe bewahren, Bürger. Die Prinzessin steht unter unserem Schutz."
+    },
+    "fourCouncilor": {
+      "title": "Ratsherr",
+      "description": "Ein weiser Heiler, von dem es heißt, er habe die Selbstheilung seines Körpers vervollkommnet. Alt und wettergegerbt, doch vollkommen fit. Er glaubt, das Volk solle bestimmen, wer es führt, und lässt sein Bündnis zwischen den Herrschern wechseln.",
+      "greeting": "Die Stimme des Volkes entscheidet, wer herrscht – vergesst das nicht."
+    },
+    "Barloquetailor": {
+      "title": "Schneiderin",
+      "description": "Madelia ist den verfeinerten Geschmack des Adels gewohnt und überwacht ihr Handwerk peinlich genau. Am liebsten verbringt sie viel zu viel Zeit an einem einzigen Gewand für die Mächtigen bei Hofe. Ihr anderes Steckenpferd: die Herzen der Männer – derzeit hat sie gleich mehrere Liebschaften.",
+      "greeting": "Ein Gewand für den Hof? Dann seid Ihr hier richtig."
+    },
+    "BasicInnKeeper": {
+      "title": "Wirt",
+      "description": "Der jüngere, etwas zimperliche und weniger fähige Bruder von Paddock lümmelt hinter der Theke. Er nippt am Kelch (den kleinen Finger abgespreizt) und wippt langsam im Takt der Musik.",
+      "greeting": "Willkommen im Ballsaal des Herzogs. Ein Schlückchen gefällig?"
+    }
+  }
+}

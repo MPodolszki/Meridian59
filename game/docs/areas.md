@@ -22,3 +22,16 @@ Zugang: Barloque Nord (47/41) und Jasper West, die Kanalisationen beider Städte
 Nicht umgesetzt: Hebel, Schleusentore und Flutung im Versteck (Ertrinken), Bossschatz (Opfergabe, Langbogen,
 mystisches Schwert, Jüngerrobe) und das Zurücksetzen nach 30 Minuten; Rebellentruppe (RebelTroop) in Jaspers
 Kanalisation, die es als Monster noch nicht gibt; Assassinen-Gilde.
+
+## Burgen (`castles.json`)
+| RID | Raum | Bewohner / Monster |
+|---|---|---|
+| 950–954 | Blackstone Keep: Hof, Burg, Gemächer des Herzogs, Festhalle, großer Ballsaal (Zugang Tos 12/18) | Herzog Akardius (Gemächer), Wachen, Wirt Rycksher (Ballsaal) |
+| 850–853, 856 | Bourgeois-Burg: Bankettsaal, Burg, Ratskammer, Bibliothek, Madelias Schneiderei (Zugang J3) | Prinzessin Kateriina (Ratskammer), Wachen, Schneiderin Madelia |
+| 2, 38–41 | Castle Victoria: Vorplatz, Burg, Obergeschoss, Thronsaal, Kerker (Zugang I9) | Skelette, Zombies, Hauer-Skelette; Ratsherr Drechx (Vorplatz) |
+
+Fraktionsführer stehen wie in `factions.kod` (`viHomeroom`, `viMyRow/Col`) in ihrem Raum.
+
+Nicht umgesetzt: Fraktionen (Herzog, Prinzessin, Rebellen), Ratsherren und Fahnen, Madelias Laden, Thron und
+Kohlebecken als Zierobjekte, Sonderlogik der Bibliothek (castle2d) und des Ballsaals (duke5), Mockers- und
+Bazmans-Raum (Verwaltung).

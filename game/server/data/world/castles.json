@@ -1,0 +1,2467 @@
+{
+  "source": "duke1.kod, duke2.kod, duke3.kod, monsroom/objroom/duke4.kod, monsroom/objroom/duke5.kod, monsroom/objroom/castle1.kod, monsroom/castle1b.kod, castle1c.kod, monsroom/throne1.kod, dungeon.kod, castle2a.kod, monsroom/castle2b.kod, monsroom/castle2c.kod, castle2d.kod, castle2e.kod",
+  "startRoom": 2,
+  "rooms": [
+    {
+      "id": 2,
+      "constant": "RID_CASTLE1C",
+      "kodClass": "Castle1c",
+      "name": "Outside Castle Victoria",
+      "roo": "castle1c.roo",
+      "music": "castle.mid",
+      "baseLight": 124,
+      "outsideFactor": 10,
+      "outdoors": true,
+      "terrain": "mountain",
+      "teleport": {
+        "row": 7,
+        "col": 24
+      },
+      "exits": [
+        {
+          "row": 3,
+          "col": 44,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 15,
+          "toCol": 17,
+          "rotate": "270"
+        },
+        {
+          "row": 4,
+          "col": 44,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 15,
+          "toCol": 17,
+          "rotate": "270"
+        },
+        {
+          "row": 5,
+          "col": 44,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 15,
+          "toCol": 17,
+          "rotate": "270"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "WEST",
+          "to": 599,
+          "toConstant": "RID_I9",
+          "toRow": 2,
+          "toCol": 27,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "npcs": [
+        {
+          "kodClass": "fourCouncilor",
+          "name": "Drechx",
+          "icon": "fourcon.bgf",
+          "role": "Bewohner",
+          "row": 7,
+          "col": 34,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 3584
+        }
+      ],
+      "rows": 25,
+      "cols": 44
+    },
+    {
+      "id": 38,
+      "constant": "RID_CASTLE1",
+      "kodClass": "CASTLE1",
+      "name": "Castle Victoria",
+      "roo": "castle1.roo",
+      "music": "castle2.mid",
+      "baseLight": 124,
+      "outsideFactor": 3,
+      "outdoors": true,
+      "terrain": "castle",
+      "teleport": {
+        "row": 13,
+        "col": 18
+      },
+      "exits": [
+        {
+          "row": 6,
+          "col": 17,
+          "to": 40,
+          "toConstant": "RID_THRONE1",
+          "toRow": 22,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 6,
+          "col": 18,
+          "to": 40,
+          "toConstant": "RID_THRONE1",
+          "toRow": 22,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 6,
+          "col": 19,
+          "to": 40,
+          "toConstant": "RID_THRONE1",
+          "toRow": 22,
+          "toCol": 6,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 17,
+          "to": 39,
+          "toConstant": "RID_CASTLE1B",
+          "toRow": 8,
+          "toCol": 23,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 17,
+          "to": 39,
+          "toConstant": "RID_CASTLE1B",
+          "toRow": 8,
+          "toCol": 23,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 19,
+          "to": 39,
+          "toConstant": "RID_CASTLE1B",
+          "toRow": 8,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 19,
+          "to": 39,
+          "toConstant": "RID_CASTLE1B",
+          "toRow": 8,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 16,
+          "col": 16,
+          "to": 2,
+          "toConstant": "RID_CASTLE1C",
+          "toRow": 4,
+          "toCol": 43,
+          "rotate": "90"
+        },
+        {
+          "row": 16,
+          "col": 17,
+          "to": 2,
+          "toConstant": "RID_CASTLE1C",
+          "toRow": 4,
+          "toCol": 43,
+          "rotate": "90"
+        },
+        {
+          "row": 16,
+          "col": 18,
+          "to": 2,
+          "toConstant": "RID_CASTLE1C",
+          "toRow": 4,
+          "toCol": 43,
+          "rotate": "90"
+        },
+        {
+          "row": 16,
+          "col": 19,
+          "to": 2,
+          "toConstant": "RID_CASTLE1C",
+          "toRow": 4,
+          "toCol": 43,
+          "rotate": "90"
+        },
+        {
+          "row": 9,
+          "col": 4,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 7,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 8,
+          "col": 4,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 10,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 9,
+          "col": 10,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 7,
+          "toCol": 10,
+          "rotate": "NONE"
+        },
+        {
+          "row": 8,
+          "col": 10,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 10,
+          "toCol": 10,
+          "rotate": "NONE"
+        },
+        {
+          "row": 9,
+          "col": 26,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 7,
+          "toCol": 26,
+          "rotate": "NONE"
+        },
+        {
+          "row": 8,
+          "col": 26,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 10,
+          "toCol": 26,
+          "rotate": "NONE"
+        },
+        {
+          "row": 9,
+          "col": 32,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 7,
+          "toCol": 32,
+          "rotate": "NONE"
+        },
+        {
+          "row": 8,
+          "col": 32,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 10,
+          "toCol": 32,
+          "rotate": "NONE"
+        },
+        {
+          "row": 4,
+          "col": 33,
+          "to": 41,
+          "toConstant": "RID_DUNGEON",
+          "toRow": 24,
+          "toCol": 2,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "skeleton",
+          "weight": 40
+        },
+        {
+          "kind": "zombie",
+          "weight": 20
+        }
+      ],
+      "generators": [
+        {
+          "row": 13,
+          "col": 3
+        },
+        {
+          "row": 14,
+          "col": 7
+        },
+        {
+          "row": 12,
+          "col": 12
+        },
+        {
+          "row": 13,
+          "col": 8
+        },
+        {
+          "row": 14,
+          "col": 24
+        },
+        {
+          "row": 12,
+          "col": 27
+        },
+        {
+          "row": 13,
+          "col": 30
+        },
+        {
+          "row": 12,
+          "col": 37
+        },
+        {
+          "row": 19,
+          "col": 40
+        },
+        {
+          "row": 15,
+          "col": 44
+        },
+        {
+          "row": 6,
+          "col": 3
+        },
+        {
+          "row": 7,
+          "col": 32
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 20000,
+      "genPercent": 100,
+      "objects": [],
+      "rows": 23,
+      "cols": 49
+    },
+    {
+      "id": 39,
+      "constant": "RID_CASTLE1B",
+      "kodClass": "Castle1B",
+      "name": "Upstairs in Castle Victoria",
+      "roo": "castle1b.roo",
+      "music": "castle.mid",
+      "baseLight": 124,
+      "outsideFactor": 3,
+      "outdoors": true,
+      "terrain": "castle",
+      "teleport": {
+        "row": 8,
+        "col": 13
+      },
+      "exits": [
+        {
+          "row": 8,
+          "col": 24,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 1,
+          "toCol": 18,
+          "rotate": "NONE"
+        },
+        {
+          "row": 9,
+          "col": 24,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 1,
+          "toCol": 18,
+          "rotate": "NONE"
+        },
+        {
+          "row": 8,
+          "col": 27,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 1,
+          "toCol": 18,
+          "rotate": "NONE"
+        },
+        {
+          "row": 9,
+          "col": 27,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 1,
+          "toCol": 18,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "zombie",
+          "weight": 40
+        },
+        {
+          "kind": "batteredskeleton",
+          "weight": 60
+        }
+      ],
+      "generators": [
+        {
+          "row": 6,
+          "col": 8
+        },
+        {
+          "row": 6,
+          "col": 16
+        },
+        {
+          "row": 6,
+          "col": 22
+        },
+        {
+          "row": 6,
+          "col": 29
+        },
+        {
+          "row": 6,
+          "col": 36
+        },
+        {
+          "row": 6,
+          "col": 42
+        },
+        {
+          "row": 10,
+          "col": 31
+        },
+        {
+          "row": 10,
+          "col": 38
+        },
+        {
+          "row": 10,
+          "col": 42
+        },
+        {
+          "row": 10,
+          "col": 20
+        },
+        {
+          "row": 10,
+          "col": 14
+        },
+        {
+          "row": 10,
+          "col": 8
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 20000,
+      "genPercent": 100,
+      "objects": [],
+      "rows": 17,
+      "cols": 48
+    },
+    {
+      "id": 40,
+      "constant": "RID_THRONE1",
+      "kodClass": "Throne1",
+      "name": "The Throne Room of Victoria Castle",
+      "roo": "throne1.roo",
+      "music": "castle2.mid",
+      "baseLight": 42,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "lair",
+      "teleport": {
+        "row": 10,
+        "col": 5
+      },
+      "exits": [
+        {
+          "row": 23,
+          "col": 4,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 7,
+          "toCol": 18,
+          "rotate": "NONE"
+        },
+        {
+          "row": 23,
+          "col": 5,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 7,
+          "toCol": 19,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "monsters": [
+        {
+          "kind": "zombie",
+          "weight": 20
+        },
+        {
+          "kind": "tuskedskeleton",
+          "weight": 80
+        }
+      ],
+      "generators": [
+        {
+          "row": 5,
+          "col": 3
+        },
+        {
+          "row": 9,
+          "col": 2
+        },
+        {
+          "row": 13,
+          "col": 3
+        },
+        {
+          "row": 5,
+          "col": 9
+        },
+        {
+          "row": 9,
+          "col": 10
+        },
+        {
+          "row": 13,
+          "col": 9
+        }
+      ],
+      "maxMonsters": 10,
+      "genTime": 20000,
+      "genPercent": 100,
+      "objects": [],
+      "rows": 23,
+      "cols": 10
+    },
+    {
+      "id": 41,
+      "constant": "RID_DUNGEON",
+      "kodClass": "DungeonVictoria",
+      "name": "Underbasement of Victoria",
+      "roo": "greeny.roo",
+      "music": "cave.mid",
+      "baseLight": 80,
+      "outsideFactor": 0,
+      "outdoors": false,
+      "terrain": "sewers",
+      "teleport": {
+        "row": 13,
+        "col": 2
+      },
+      "exits": [
+        {
+          "row": 25,
+          "col": 2,
+          "to": 38,
+          "toConstant": "RID_CASTLE1",
+          "toRow": 5,
+          "toCol": 32,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "rows": 27,
+      "cols": 25
+    },
+    {
+      "id": 850,
+      "constant": "RID_CASTLE2A",
+      "kodClass": "Castle2a",
+      "name": "Banquet Hall of the Bourgeois Castle",
+      "roo": "castle2a.roo",
+      "music": "castle.mid",
+      "baseLight": 124,
+      "outsideFactor": 3,
+      "outdoors": true,
+      "terrain": "castle",
+      "teleport": {
+        "row": 8,
+        "col": 13
+      },
+      "exits": [
+        {
+          "row": 6,
+          "col": 15,
+          "to": 851,
+          "toConstant": "RID_CASTLE2B",
+          "toRow": 14,
+          "toCol": 12,
+          "rotate": "NONE"
+        },
+        {
+          "row": 6,
+          "col": 16,
+          "to": 851,
+          "toConstant": "RID_CASTLE2B",
+          "toRow": 14,
+          "toCol": 13,
+          "rotate": "NONE"
+        },
+        {
+          "row": 7,
+          "col": 32,
+          "to": 851,
+          "toConstant": "RID_CASTLE2B",
+          "toRow": 19,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 8,
+          "col": 32,
+          "to": 851,
+          "toConstant": "RID_CASTLE2B",
+          "toRow": 19,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 24,
+          "col": 25,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 2,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 24,
+          "col": 26,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 2,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 23,
+          "col": 26,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 2,
+          "toCol": 4,
+          "rotate": "NONE"
+        },
+        {
+          "row": 25,
+          "col": 14,
+          "to": 856,
+          "toConstant": "RID_CASTLE2E",
+          "toRow": 2,
+          "toCol": 14,
+          "rotate": "NONE"
+        },
+        {
+          "row": 26,
+          "col": 14,
+          "to": 856,
+          "toConstant": "RID_CASTLE2E",
+          "toRow": 2,
+          "toCol": 14,
+          "rotate": "NONE"
+        },
+        {
+          "row": 27,
+          "col": 15,
+          "to": 855,
+          "toConstant": "RID_BAZMANS_ROOM",
+          "toRow": 25,
+          "toCol": 7,
+          "rotate": "180"
+        },
+        {
+          "row": 27,
+          "col": 16,
+          "to": 855,
+          "toConstant": "RID_BAZMANS_ROOM",
+          "toRow": 25,
+          "toCol": 7,
+          "rotate": "180"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [
+        {
+          "row": 30,
+          "col": 2
+        },
+        {
+          "row": 30,
+          "col": 3
+        },
+        {
+          "row": 30,
+          "col": 4
+        },
+        {
+          "row": 25,
+          "col": 17
+        },
+        {
+          "row": 26,
+          "col": 17
+        }
+      ],
+      "regionExits": [],
+      "npcs": [
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 24,
+          "col": 13,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 24,
+          "col": 18,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 22,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "objects": [
+        {
+          "type": "TREE_OAK",
+          "row": 7,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 7,
+          "col": 17,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 7,
+          "col": 11,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 15,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 12,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "type": "TREE_OAK",
+          "row": 16,
+          "col": 7,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
+      "rows": 30,
+      "cols": 33
+    },
+    {
+      "id": 851,
+      "constant": "RID_CASTLE2B",
+      "kodClass": "Castle2b",
+      "name": "Bourgeois Castle",
+      "roo": "castle2b.roo",
+      "music": "castle.mid",
+      "baseLight": 124,
+      "outsideFactor": 3,
+      "outdoors": true,
+      "terrain": "castle",
+      "teleport": {
+        "row": 8,
+        "col": 13
+      },
+      "exits": [
+        {
+          "row": 15,
+          "col": 12,
+          "to": 850,
+          "toConstant": "RID_CASTLE2A",
+          "toRow": 7,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 15,
+          "col": 13,
+          "to": 850,
+          "toConstant": "RID_CASTLE2A",
+          "toRow": 7,
+          "toCol": 16,
+          "rotate": "NONE"
+        },
+        {
+          "row": 19,
+          "col": 27,
+          "to": 850,
+          "toConstant": "RID_CASTLE2A",
+          "toRow": 7,
+          "toCol": 31,
+          "rotate": "NONE"
+        },
+        {
+          "row": 20,
+          "col": 27,
+          "to": 850,
+          "toConstant": "RID_CASTLE2A",
+          "toRow": 7,
+          "toCol": 31,
+          "rotate": "NONE"
+        },
+        {
+          "row": 40,
+          "col": 47,
+          "to": 852,
+          "toConstant": "RID_CASTLE2C",
+          "toRow": 2,
+          "toCol": 23,
+          "rotate": "NONE"
+        },
+        {
+          "row": 40,
+          "col": 48,
+          "to": 852,
+          "toConstant": "RID_CASTLE2C",
+          "toRow": 2,
+          "toCol": 23,
+          "rotate": "NONE"
+        },
+        {
+          "row": 40,
+          "col": 49,
+          "to": 852,
+          "toConstant": "RID_CASTLE2C",
+          "toRow": 2,
+          "toCol": 23,
+          "rotate": "NONE"
+        },
+        {
+          "row": 41,
+          "col": 27,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 13,
+          "toCol": 12,
+          "rotate": "NONE"
+        },
+        {
+          "row": 41,
+          "col": 28,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 13,
+          "toCol": 12,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [
+        {
+          "edge": "EAST",
+          "to": 603,
+          "toConstant": "RID_J3",
+          "toRow": 37,
+          "toCol": 2,
+          "rotate": "NONE"
+        }
+      ],
+      "lockedDoors": [
+        {
+          "row": 7,
+          "col": 9
+        },
+        {
+          "row": 7,
+          "col": 10
+        },
+        {
+          "row": 7,
+          "col": 11
+        },
+        {
+          "row": 7,
+          "col": 12
+        },
+        {
+          "row": 7,
+          "col": 13
+        },
+        {
+          "row": 7,
+          "col": 14
+        },
+        {
+          "row": 8,
+          "col": 6
+        },
+        {
+          "row": 9,
+          "col": 6
+        },
+        {
+          "row": 10,
+          "col": 6
+        },
+        {
+          "row": 11,
+          "col": 6
+        },
+        {
+          "row": 12,
+          "col": 6
+        },
+        {
+          "row": 8,
+          "col": 7
+        },
+        {
+          "row": 9,
+          "col": 7
+        },
+        {
+          "row": 10,
+          "col": 7
+        },
+        {
+          "row": 11,
+          "col": 7
+        },
+        {
+          "row": 12,
+          "col": 7
+        },
+        {
+          "row": 12,
+          "col": 8
+        },
+        {
+          "row": 12,
+          "col": 9
+        },
+        {
+          "row": 13,
+          "col": 8
+        },
+        {
+          "row": 13,
+          "col": 9
+        },
+        {
+          "row": 11,
+          "col": 14
+        },
+        {
+          "row": 11,
+          "col": 15
+        },
+        {
+          "row": 34,
+          "col": 26
+        },
+        {
+          "row": 35,
+          "col": 26
+        }
+      ],
+      "regionExits": [],
+      "npcs": [
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 40,
+          "col": 45,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 40,
+          "col": 51,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 21,
+          "col": 27,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 18,
+          "col": 62,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 18,
+          "col": 64,
+          "fineRow": 16,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 23,
+          "col": 62,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 23,
+          "col": 64,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 45,
+          "col": 63,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 3,
+          "col": 63,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 23,
+          "col": 64,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 23,
+          "col": 64,
+          "fineRow": 48,
+          "fineCol": 48,
+          "angle": 0
+        }
+      ],
+      "objects": [],
+      "rows": 48,
+      "cols": 85
+    },
+    {
+      "id": 852,
+      "constant": "RID_CASTLE2C",
+      "kodClass": "Castle2c",
+      "name": "The Assembly Chamber",
+      "roo": "castle2c.roo",
+      "music": "castle.mid",
+      "baseLight": 124,
+      "outsideFactor": 3,
+      "outdoors": true,
+      "terrain": "castle",
+      "teleport": {
+        "row": 8,
+        "col": 13
+      },
+      "exits": [
+        {
+          "row": 1,
+          "col": 22,
+          "to": 851,
+          "toConstant": "RID_CASTLE2B",
+          "toRow": 39,
+          "toCol": 48,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 23,
+          "to": 851,
+          "toConstant": "RID_CASTLE2B",
+          "toRow": 39,
+          "toCol": 48,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 24,
+          "to": 851,
+          "toConstant": "RID_CASTLE2B",
+          "toRow": 39,
+          "toCol": 48,
+          "rotate": "NONE"
+        },
+        {
+          "row": 35,
+          "col": 19,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 28,
+          "toCol": 26,
+          "rotate": "NONE"
+        },
+        {
+          "row": 35,
+          "col": 27,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 28,
+          "toCol": 29,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "npcs": [
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 34,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 34,
+          "col": 26,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 2,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 2,
+          "col": 21,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessLiege",
+          "name": "Princess Kateriina",
+          "icon": "princess.bgf",
+          "role": "Bewohner",
+          "row": 33,
+          "col": 23,
+          "fineRow": 16,
+          "fineCol": 16,
+          "angle": 3072
+        }
+      ],
+      "objects": [],
+      "rows": 45,
+      "cols": 38
+    },
+    {
+      "id": 853,
+      "constant": "RID_CASTLE2D",
+      "kodClass": "Castle2d",
+      "name": "Royal Library of the Bourgeois Castle",
+      "roo": "castle2d.roo",
+      "music": "castle.mid",
+      "baseLight": 124,
+      "outsideFactor": 3,
+      "outdoors": true,
+      "terrain": "castle",
+      "teleport": {
+        "row": 7,
+        "col": 6
+      },
+      "exits": [
+        {
+          "row": 29,
+          "col": 20,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 31,
+          "toCol": 22,
+          "rotate": "NONE"
+        },
+        {
+          "row": 29,
+          "col": 21,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 31,
+          "toCol": 22,
+          "rotate": "NONE"
+        },
+        {
+          "row": 30,
+          "col": 20,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 31,
+          "toCol": 22,
+          "rotate": "NONE"
+        },
+        {
+          "row": 30,
+          "col": 21,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 31,
+          "toCol": 22,
+          "rotate": "NONE"
+        },
+        {
+          "row": 31,
+          "col": 22,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 29,
+          "toCol": 20,
+          "rotate": "NONE"
+        },
+        {
+          "row": 30,
+          "col": 22,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 29,
+          "toCol": 20,
+          "rotate": "NONE"
+        },
+        {
+          "row": 31,
+          "col": 21,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 29,
+          "toCol": 20,
+          "rotate": "NONE"
+        },
+        {
+          "row": 30,
+          "col": 24,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 29,
+          "toCol": 26,
+          "rotate": "NONE"
+        },
+        {
+          "row": 31,
+          "col": 24,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 29,
+          "toCol": 26,
+          "rotate": "NONE"
+        },
+        {
+          "row": 31,
+          "col": 25,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 29,
+          "toCol": 26,
+          "rotate": "NONE"
+        },
+        {
+          "row": 29,
+          "col": 25,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 31,
+          "toCol": 24,
+          "rotate": "NONE"
+        },
+        {
+          "row": 29,
+          "col": 26,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 31,
+          "toCol": 24,
+          "rotate": "NONE"
+        },
+        {
+          "row": 30,
+          "col": 25,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 31,
+          "toCol": 24,
+          "rotate": "NONE"
+        },
+        {
+          "row": 30,
+          "col": 26,
+          "to": 853,
+          "toConstant": "RID_CASTLE2D",
+          "toRow": 31,
+          "toCol": 24,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "to": 850,
+          "toConstant": "RID_CASTLE2A",
+          "toRow": 23,
+          "toCol": 25,
+          "rotate": "NONE"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "to": 850,
+          "toConstant": "RID_CASTLE2A",
+          "toRow": 23,
+          "toCol": 25,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "to": 850,
+          "toConstant": "RID_CASTLE2A",
+          "toRow": 23,
+          "toCol": 25,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 11,
+          "to": 851,
+          "toConstant": "RID_CASTLE2B",
+          "toRow": 40,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 12,
+          "to": 851,
+          "toConstant": "RID_CASTLE2B",
+          "toRow": 40,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 12,
+          "col": 13,
+          "to": 851,
+          "toConstant": "RID_CASTLE2B",
+          "toRow": 40,
+          "toCol": 28,
+          "rotate": "NONE"
+        },
+        {
+          "row": 27,
+          "col": 26,
+          "to": 852,
+          "toConstant": "RID_CASTLE2C",
+          "toRow": 34,
+          "toCol": 19,
+          "rotate": "NONE"
+        },
+        {
+          "row": 27,
+          "col": 29,
+          "to": 852,
+          "toConstant": "RID_CASTLE2C",
+          "toRow": 34,
+          "toCol": 27,
+          "rotate": "NONE"
+        },
+        {
+          "row": 31,
+          "col": 20,
+          "to": 854,
+          "toConstant": "RID_MOCKERS_ROOM",
+          "toRow": 12,
+          "toCol": 10,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [
+        {
+          "row": 3,
+          "col": 9
+        },
+        {
+          "row": 4,
+          "col": 9
+        },
+        {
+          "row": 5,
+          "col": 9
+        },
+        {
+          "row": 3,
+          "col": 10
+        },
+        {
+          "row": 4,
+          "col": 10
+        },
+        {
+          "row": 5,
+          "col": 10
+        },
+        {
+          "row": 27,
+          "col": 21
+        },
+        {
+          "row": 27,
+          "col": 22
+        },
+        {
+          "row": 28,
+          "col": 21
+        },
+        {
+          "row": 28,
+          "col": 22
+        },
+        {
+          "row": 3,
+          "col": 36
+        },
+        {
+          "row": 3,
+          "col": 36
+        },
+        {
+          "row": 3,
+          "col": 36
+        },
+        {
+          "row": 3,
+          "col": 36
+        }
+      ],
+      "regionExits": [],
+      "npcs": [
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 28,
+          "col": 10,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 28,
+          "col": 14,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 18,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 22,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 11,
+          "col": 5,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 11,
+          "col": 8,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 28,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 28,
+          "col": 25,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 28,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "PrincessGuard",
+          "name": "Keep Guard",
+          "icon": "pringard.bgf",
+          "role": "Bewohner",
+          "row": 28,
+          "col": 28,
+          "fineRow": 32,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ],
+      "objects": [],
+      "rows": 35,
+      "cols": 30
+    },
+    {
+      "id": 856,
+      "constant": "RID_CASTLE2E",
+      "kodClass": "Castle2E",
+      "name": "Madelia's Fine Peacockeries",
+      "roo": "castle2e.roo",
+      "music": "smithy.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "outdoors": true,
+      "terrain": "castle",
+      "teleport": {
+        "row": 9,
+        "col": 14
+      },
+      "exits": [
+        {
+          "row": 2,
+          "col": 15,
+          "to": 850,
+          "toConstant": "RID_CASTLE2A",
+          "toRow": 26,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 3,
+          "col": 15,
+          "to": 850,
+          "toConstant": "RID_CASTLE2A",
+          "toRow": 26,
+          "toCol": 15,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [
+        {
+          "row": 10,
+          "col": 9
+        },
+        {
+          "row": 10,
+          "col": 10
+        }
+      ],
+      "regionExits": [],
+      "npcs": [
+        {
+          "kodClass": "Barloquetailor",
+          "name": "Madelia",
+          "icon": "bqtailor.bgf",
+          "role": "Bewohner",
+          "row": 6,
+          "col": 8,
+          "fineRow": 32,
+          "fineCol": 16,
+          "angle": 0
+        }
+      ],
+      "objects": [],
+      "rows": 10,
+      "cols": 17
+    },
+    {
+      "id": 950,
+      "constant": "RID_DUKE1",
+      "kodClass": "Duke1",
+      "name": "The Courtyard of Blackstone Keep",
+      "roo": "duke1.roo",
+      "music": "area01.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "castle",
+      "teleport": {
+        "row": 33,
+        "col": 27
+      },
+      "exits": [
+        {
+          "row": 43,
+          "col": 29,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 13,
+          "toCol": 18,
+          "rotate": "NONE"
+        },
+        {
+          "row": 44,
+          "col": 29,
+          "to": 50,
+          "toConstant": "RID_TOS",
+          "toRow": 13,
+          "toCol": 18,
+          "rotate": "NONE"
+        },
+        {
+          "row": 13,
+          "col": 28,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 39,
+          "toCol": 16,
+          "rotate": "NONE"
+        },
+        {
+          "row": 13,
+          "col": 29,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 39,
+          "toCol": 16,
+          "rotate": "NONE"
+        },
+        {
+          "row": 13,
+          "col": 30,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 39,
+          "toCol": 16,
+          "rotate": "NONE"
+        },
+        {
+          "row": 14,
+          "col": 15,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 41,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 14,
+          "col": 16,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 41,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 15,
+          "col": 15,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 41,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 15,
+          "col": 16,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 41,
+          "toCol": 2,
+          "rotate": "NONE"
+        },
+        {
+          "row": 14,
+          "col": 42,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 41,
+          "toCol": 29,
+          "rotate": "NONE"
+        },
+        {
+          "row": 14,
+          "col": 43,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 41,
+          "toCol": 29,
+          "rotate": "NONE"
+        },
+        {
+          "row": 15,
+          "col": 42,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 41,
+          "toCol": 29,
+          "rotate": "NONE"
+        },
+        {
+          "row": 15,
+          "col": 43,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 41,
+          "toCol": 29,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "npcs": [
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Bewohner",
+          "row": 42,
+          "col": 32,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 2560
+        },
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Bewohner",
+          "row": 42,
+          "col": 27,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 3584
+        }
+      ],
+      "objects": [],
+      "rows": 44,
+      "cols": 57
+    },
+    {
+      "id": 951,
+      "constant": "RID_DUKE2",
+      "kodClass": "Duke2",
+      "name": "Blackstone Keep",
+      "roo": "duke2.roo",
+      "music": "area01.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "castle",
+      "teleport": {
+        "row": 39,
+        "col": 16
+      },
+      "exits": [
+        {
+          "row": 40,
+          "col": 15,
+          "to": 950,
+          "toConstant": "RID_DUKE1",
+          "toRow": 14,
+          "toCol": 29,
+          "rotate": "NONE"
+        },
+        {
+          "row": 40,
+          "col": 16,
+          "to": 950,
+          "toConstant": "RID_DUKE1",
+          "toRow": 14,
+          "toCol": 29,
+          "rotate": "NONE"
+        },
+        {
+          "row": 42,
+          "col": 2,
+          "to": 950,
+          "toConstant": "RID_DUKE1",
+          "toRow": 15,
+          "toCol": 16,
+          "rotate": "NONE"
+        },
+        {
+          "row": 42,
+          "col": 3,
+          "to": 950,
+          "toConstant": "RID_DUKE1",
+          "toRow": 15,
+          "toCol": 16,
+          "rotate": "NONE"
+        },
+        {
+          "row": 42,
+          "col": 28,
+          "to": 950,
+          "toConstant": "RID_DUKE1",
+          "toRow": 15,
+          "toCol": 44,
+          "rotate": "NONE"
+        },
+        {
+          "row": 42,
+          "col": 29,
+          "to": 950,
+          "toConstant": "RID_DUKE1",
+          "toRow": 15,
+          "toCol": 44,
+          "rotate": "NONE"
+        },
+        {
+          "row": 9,
+          "col": 13,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 9,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 10,
+          "col": 13,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 10,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 15,
+          "to": 952,
+          "toConstant": "RID_DUKE3",
+          "toRow": 20,
+          "toCol": 20,
+          "rotate": "NONE"
+        },
+        {
+          "row": 2,
+          "col": 16,
+          "to": 952,
+          "toConstant": "RID_DUKE3",
+          "toRow": 20,
+          "toCol": 20,
+          "rotate": "NONE"
+        },
+        {
+          "row": 9,
+          "col": 9,
+          "to": 953,
+          "toConstant": "RID_DUKE4",
+          "toRow": 15,
+          "toCol": 24,
+          "rotate": "NONE"
+        },
+        {
+          "row": 10,
+          "col": 9,
+          "to": 953,
+          "toConstant": "RID_DUKE4",
+          "toRow": 15,
+          "toCol": 24,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "npcs": [
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Bewohner",
+          "row": 9,
+          "col": 9,
+          "fineRow": 0,
+          "fineCol": 32,
+          "angle": 512
+        }
+      ],
+      "objects": [],
+      "rows": 42,
+      "cols": 30
+    },
+    {
+      "id": 952,
+      "constant": "RID_DUKE3",
+      "kodClass": "Duke3",
+      "name": "The Chambers of Duke Akardius",
+      "roo": "duke3.roo",
+      "music": "area01.mid",
+      "baseLight": 164,
+      "outsideFactor": 8,
+      "outdoors": true,
+      "terrain": "castle",
+      "teleport": {
+        "row": 19,
+        "col": 18
+      },
+      "exits": [
+        {
+          "row": 21,
+          "col": 19,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 3,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 21,
+          "col": 20,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 3,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 21,
+          "col": 21,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 3,
+          "toCol": 15,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "objects": [],
+      "npcs": [
+        {
+          "kodClass": "DukeLiege",
+          "name": "Duke Akardius",
+          "icon": "dukeneph.bgf",
+          "role": "Bewohner",
+          "row": 11,
+          "col": 20,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        }
+      ],
+      "rows": 21,
+      "cols": 25
+    },
+    {
+      "id": 953,
+      "constant": "RID_DUKE4",
+      "kodClass": "Duke4",
+      "name": "The Duke's Feast Hall",
+      "roo": "duke4.roo",
+      "music": "bar.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "outdoors": true,
+      "terrain": "castle",
+      "teleport": {
+        "row": 8,
+        "col": 23
+      },
+      "exits": [
+        {
+          "row": 15,
+          "col": 24,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 9,
+          "toCol": 10,
+          "rotate": "NONE"
+        },
+        {
+          "row": 15,
+          "col": 25,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 9,
+          "toCol": 10,
+          "rotate": "NONE"
+        },
+        {
+          "row": 16,
+          "col": 25,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 9,
+          "toCol": 10,
+          "rotate": "NONE"
+        },
+        {
+          "row": 16,
+          "col": 24,
+          "to": 951,
+          "toConstant": "RID_DUKE2",
+          "toRow": 9,
+          "toCol": 10,
+          "rotate": "NONE"
+        },
+        {
+          "row": 3,
+          "col": 15,
+          "to": 954,
+          "toConstant": "RID_DUKE5",
+          "toRow": 26,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 3,
+          "col": 16,
+          "to": 954,
+          "toConstant": "RID_DUKE5",
+          "toRow": 26,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 5,
+          "col": 10,
+          "to": 954,
+          "toConstant": "RID_DUKE5",
+          "toRow": 28,
+          "toCol": 9,
+          "rotate": "NONE"
+        },
+        {
+          "row": 5,
+          "col": 11,
+          "to": 954,
+          "toConstant": "RID_DUKE5",
+          "toRow": 28,
+          "toCol": 9,
+          "rotate": "NONE"
+        },
+        {
+          "row": 6,
+          "col": 10,
+          "to": 954,
+          "toConstant": "RID_DUKE5",
+          "toRow": 28,
+          "toCol": 9,
+          "rotate": "NONE"
+        },
+        {
+          "row": 6,
+          "col": 11,
+          "to": 954,
+          "toConstant": "RID_DUKE5",
+          "toRow": 28,
+          "toCol": 9,
+          "rotate": "NONE"
+        },
+        {
+          "row": 5,
+          "col": 19,
+          "to": 954,
+          "toConstant": "RID_DUKE5",
+          "toRow": 28,
+          "toCol": 20,
+          "rotate": "NONE"
+        },
+        {
+          "row": 5,
+          "col": 20,
+          "to": 954,
+          "toConstant": "RID_DUKE5",
+          "toRow": 28,
+          "toCol": 20,
+          "rotate": "NONE"
+        },
+        {
+          "row": 6,
+          "col": 19,
+          "to": 954,
+          "toConstant": "RID_DUKE5",
+          "toRow": 28,
+          "toCol": 20,
+          "rotate": "NONE"
+        },
+        {
+          "row": 6,
+          "col": 20,
+          "to": 954,
+          "toConstant": "RID_DUKE5",
+          "toRow": 28,
+          "toCol": 20,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "npcs": [
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Bewohner",
+          "row": 11,
+          "col": 25,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 2048
+        },
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Bewohner",
+          "row": 19,
+          "col": 25,
+          "fineRow": 48,
+          "fineCol": 0,
+          "angle": 2048
+        },
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Bewohner",
+          "row": 5,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 48,
+          "angle": 1024
+        },
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Bewohner",
+          "row": 26,
+          "col": 15,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 3072
+        }
+      ],
+      "objects": [],
+      "rows": 28,
+      "cols": 28
+    },
+    {
+      "id": 954,
+      "constant": "RID_DUKE5",
+      "kodClass": "Duke5",
+      "name": "The Duke's Grand Ballroom",
+      "roo": "duke5.roo",
+      "music": "bar.mid",
+      "baseLight": 164,
+      "outsideFactor": 5,
+      "outdoors": true,
+      "terrain": "castle",
+      "teleport": {
+        "row": 10,
+        "col": 16
+      },
+      "exits": [
+        {
+          "row": 27,
+          "col": 14,
+          "to": 953,
+          "toConstant": "RID_DUKE4",
+          "toRow": 3,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 27,
+          "col": 15,
+          "to": 953,
+          "toConstant": "RID_DUKE4",
+          "toRow": 3,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 27,
+          "col": 16,
+          "to": 953,
+          "toConstant": "RID_DUKE4",
+          "toRow": 3,
+          "toCol": 15,
+          "rotate": "NONE"
+        },
+        {
+          "row": 29,
+          "col": 9,
+          "to": 953,
+          "toConstant": "RID_DUKE4",
+          "toRow": 6,
+          "toCol": 11,
+          "rotate": "NONE"
+        },
+        {
+          "row": 29,
+          "col": 10,
+          "to": 953,
+          "toConstant": "RID_DUKE4",
+          "toRow": 6,
+          "toCol": 11,
+          "rotate": "NONE"
+        },
+        {
+          "row": 29,
+          "col": 20,
+          "to": 953,
+          "toConstant": "RID_DUKE4",
+          "toRow": 6,
+          "toCol": 20,
+          "rotate": "NONE"
+        },
+        {
+          "row": 29,
+          "col": 21,
+          "to": 953,
+          "toConstant": "RID_DUKE4",
+          "toRow": 6,
+          "toCol": 20,
+          "rotate": "NONE"
+        },
+        {
+          "row": 18,
+          "col": 19,
+          "to": 954,
+          "toConstant": "RID_DUKE5",
+          "toRow": 18,
+          "toCol": 22,
+          "rotate": "NONE"
+        },
+        {
+          "row": 18,
+          "col": 22,
+          "to": 954,
+          "toConstant": "RID_DUKE5",
+          "toRow": 18,
+          "toCol": 18,
+          "rotate": "NONE"
+        }
+      ],
+      "edgeExits": [],
+      "lockedDoors": [],
+      "regionExits": [],
+      "npcs": [
+        {
+          "kodClass": "BasicInnKeeper",
+          "name": "Rycksher",
+          "icon": "basicinn.bgf",
+          "role": "Bewohner",
+          "row": 25,
+          "col": 24,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 1024
+        },
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Bewohner",
+          "row": 19,
+          "col": 2,
+          "fineRow": 16,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Bewohner",
+          "row": 10,
+          "col": 2,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 0
+        },
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Bewohner",
+          "row": 2,
+          "col": 15,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 1024
+        },
+        {
+          "kodClass": "DukeGuard",
+          "name": "Keep Guard",
+          "icon": "dukegard.bgf",
+          "role": "Bewohner",
+          "row": 10,
+          "col": 25,
+          "fineRow": 48,
+          "fineCol": 32,
+          "angle": 2048
+        }
+      ],
+      "objects": [],
+      "rows": 29,
+      "cols": 27
+    }
+  ]
+}

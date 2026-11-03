@@ -96,6 +96,18 @@ public sealed class WildernessTests : IAsyncDisposable
         Assert.Equal(["giantrat", "lupogg"], r["BarlSewer"].Monsters.Select(m => m.Kind));
     }
 
+    [Fact]
+    public void Castles_DukeInBlackstoneKeep_PrincessInTheAssemblyChamber()
+    {
+        var world = WorldDefinition.LoadAll(Data("world"));
+        var r = world.Rooms.ToDictionary(x => x.KodClass ?? "");
+        Assert.Contains(r["Tos"].Exits, e => e.To == r["Duke1"].Id);
+        Assert.Contains(r["Duke3"].Npcs, n => n.Name == "Duke Akardius");
+        Assert.Contains(r["Castle2c"].Npcs, n => n.Name == "Princess Kateriina");
+        Assert.Contains(r["Castle2b"].Exits.Select(e => e.To).Concat(r["Castle2b"].EdgeExits.Select(e => e.To)), to => to == r["OutdoorsJ3"].Id);
+        Assert.Equal(["skeleton", "zombie"], r["CASTLE1"].Monsters.Select(m => m.Kind));
+    }
+
     private async Task<(ClientSession, List<ClientEvent>)> EnterAsync(int startRoom)
     {
         var accounts = AccountStore.Open(_db);
