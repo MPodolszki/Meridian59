@@ -52,3 +52,7 @@ auch Blindheit und Schwäche.
 Eisgestalt (iceper.kod): wirft außerhalb der Nahkampfreichweite mit Chance 1/5 einen Eisspeer bis Abstand² < 666
 (etwa 25 Felder), danach 10 s Pause; der Wurf trifft wie ein Schlag (Kälte). Feen schießen im Original nur optisch ein
 Geschoss bei normaler Angriffsreichweite – hier ein normaler Schockangriff.
+
+Erdwürmer (Larve, Wurm, Königin; groundwm.kod pbSurfaced): entstehen unter der Erde und sind für Spieler unsichtbar;
+haben sie ein Ziel in Angriffsreichweite, brechen sie aus dem Boden hervor (Create + Meldung) und kämpfen; ohne Ziel
+tauchen sie nach 5 s wieder ab. Abweichung: keine Auftauch-Animation und keine Schleimspur.

@@ -110,6 +110,8 @@ public sealed record MonsterKind(
     public IReadOnlySet<string> Behavior { get; init; } = new HashSet<string>();
     /// <summary>Gift beim Treffer (poison.kod): Chance 1/n, Verlust lossRate/1000 LP alle 10 s, Dauer.</summary>
     public PoisonAttack? Poison { get; init; }
+    /// <summary>Gräbt sich ein (Erdwürmer, groundwm.kod pbSurfaced): unsichtbar unter der Erde, taucht zum Angriff auf.</summary>
+    public bool Burrows { get; init; }
     /// <summary>Zaubern (monsters.json "casting", WorldMonsterMagic.cs); null = zaubert nicht.</summary>
     public MonsterCasting? Casting { get; init; }
 
@@ -228,6 +230,7 @@ public sealed record MonsterKind(
                 Casting = e.TryGetProperty("casting", out var ca) ? System.Text.Json.JsonSerializer.Deserialize<MonsterCasting>(ca.GetRawText(),
                     new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true }) : null,
                 Undead = e.TryGetProperty("undead", out var ud) && ud.GetBoolean(),
+                Burrows = e.TryGetProperty("special", out var spb) && spb.TryGetProperty("burrow", out _),
                 DrawFlags = e.TryGetProperty("drawFlags", out var df) ? df.GetUInt32() : 0,
                 Resistances = e.GetProperty("resistances").EnumerateObject().ToDictionary(r => r.Name, r => r.Value.GetInt32()),
                 AttackType = spellAttack.FirstOrDefault(),
@@ -289,6 +292,9 @@ public sealed class Monster(uint id, MonsterKind kind, Room room, GridPos home)
     public DateTime ManaBombUntil { get; set; }
     /// <summary>Nächster Zauber/Wurf frühestens (MonsterCasting.CooldownMs).</summary>
     public DateTime NextCast { get; set; }
+    /// <summary>Unter der Erde (Erdwurm): für Spieler unsichtbar, bis er auftaucht; seit wann ohne Ziel.</summary>
+    public bool Submerged { get; set; }
+    public DateTime IdleSince { get; set; }
     public Avatar? TurnedBy { get; set; }
     public DateTime TurnedUntil { get; set; }
     public bool Alive => DiedAt is null;

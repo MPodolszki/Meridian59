@@ -305,7 +305,7 @@ public sealed partial class World
     public List<Monster> MonstersIn(Room room)
     {
         lock (_gate)
-            return room.Monsters.Where(m => m.Alive).ToList();
+            return room.Monsters.Where(m => m.Alive && !m.Submerged).ToList();
     }
 
     /// <summary>Spieler betritt die Welt im Startraum.</summary>
@@ -616,8 +616,13 @@ public sealed partial class World
     private Monster SpawnMonsterLocked(Room room, MonsterKind kind, GridPos home)
     {
         int hp = kind.RollHitPoints(_random);
-        var monster = new Monster(++_nextMonsterId, kind, room, home) { Angle = (ushort)_random.Next(4096), Hp = hp, MaxHp = hp };
+        var monster = new Monster(++_nextMonsterId, kind, room, home)
+        {
+            Angle = (ushort)_random.Next(4096), Hp = hp, MaxHp = hp, Submerged = kind.Burrows,
+        };
         room.Monsters.Add(monster);
+        if (monster.Submerged)
+            return monster;
         foreach (var a in room.Avatars.Values)
         {
             a.Session.EnsureResource(kind.Name);
@@ -694,13 +699,43 @@ public sealed partial class World
                 m.Angle = AngleTowards(dr, dc);
                 // Bit 7 = in Laufrichtung drehen; speed ≈ Felder pro 10 s
                 byte speed = (byte)Math.Clamp(m.Kind.SpeedFinePerSecond * 10 / 64, 1, 127);
-                BroadcastRoom(room, GameReplies.Move(m.Id, m.Row, m.Col, (byte)(speed | 0x80)));
+                if (!m.Submerged)
+                    BroadcastRoom(room, GameReplies.Move(m.Id, m.Row, m.Col, (byte)(speed | 0x80)));
             }
         }
 
         if (m.Target is { } caster && now >= m.NextAttack && m.Kind.Casting is { } cast && now >= m.ManaBombUntil
             && TryMonsterCast(m, caster, cast, inRange, now))
             return;
+        // Erdwurm: ohne Ziel taucht er nach 5 s ab, mit Ziel in Reichweite taucht er zum Angriff auf (ANIM_POPUPATTACK).
+        if (m.Kind.Burrows)
+        {
+            if (m.Target is null)
+            {
+                if (m.IdleSince == default)
+                    m.IdleSince = now;
+                if (!m.Submerged && now - m.IdleSince > TimeSpan.FromSeconds(5))
+                {
+                    m.Submerged = true;
+                    BroadcastRoom(room, GameReplies.Remove(m.Id));
+                }
+            }
+            else
+            {
+                m.IdleSince = default;
+                if (m.Submerged && inRange)
+                {
+                    m.Submerged = false;
+                    foreach (var a in room.Avatars.Values)
+                    {
+                        a.Session.EnsureResource(m.Kind.Name);
+                        a.Session.EnsureResource(m.Kind.Icon);
+                        a.Session.Post(GameReplies.Create(ToRoomObject(m)));
+                        Tell(a, $"{Article(m.Kind)} bricht aus dem Boden hervor!");
+                    }
+                }
+            }
+        }
         if (inRange && now >= m.NextAttack && m.Target is { } victim)
         {
             m.NextAttack = now + m.Kind.RollAttackTime(_random);
