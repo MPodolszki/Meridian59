@@ -134,11 +134,18 @@ Textfeldern bleibt sie ein Leerzeichen.
 
 ## Monster-Modelle (`tools/blender/make_creature.py`)
 
-Alle Monster des Originals haben eigene, prozedural gebaute Modelle (46 Stück): Grundkörper (Ellipsoide, Röhren,
+Alle Monster des Originals haben eigene, prozedural gebaute Modelle (46 Stück): Teile (Ellipsoide, Röhren,
 Kegel) auf einem Skelett, je Bauplan (Vierbeiner, Insekt, Spinne, Skorpion, Hundertfüßer, Wurm, Geist/Fee, Baum,
 fleischfressende Pflanze, Dornen, Schleim/Pilz, Schnecke, Zweibeiner mit Schnabel/Hauern/Robe/Flügeln) mit den Clips
 Idle, Walk, Run, Attack, Die aus Gangmustern. Maße, Farben und Merkmale stehen in `tools/blender/creatures.py`; der
 Dateiname ist der Name der Original-Grafik (`orc.bgf` → `models/orc.glb`), so braucht der Client keine Tabelle.
+Die Körper sind keine losen Grundkörper mehr: `tools/blender/sdf.py` macht aus allen weichen Teilen einer Gruppe
+(Rumpf, je Glied) ein Distanzfeld, verschmilzt sie weich (smooth-min) und trianguliert mit OpenVDB (bringt Blender
+mit). Gewichte und Farben werden je Eckpunkt aus den nächsten Teilen gemischt (weiche Gelenke, keine Farbkanten),
+Umgebungsverdeckung, Hautrelief (`relief`: Warzen, Schuppen, Fell, Rinde, Falten – auch als Geometrie) und
+Zeichnung (`pattern`: Flecken, Streifen, Binden) landen in den Eckpunktfarben. Augen, Krallen, Zähne, Waffen,
+Rüstung und Flügelfedern bleiben harte Einzelteile. Zweibeiner haben Muskeln, Hände mit Fingern, Zehen und
+Gesichtstypen (`face`: frog, wolf, ape, troll), Roben mit Falten und flachem Saum.
 Schattenmumie (OF_BLACK) wird dunkel, Gespenstermumie (OF_TRANSLUCENT50) halb durchsichtig gezeichnet.
 
 ```bash

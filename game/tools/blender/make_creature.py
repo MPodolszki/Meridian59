@@ -22,6 +22,9 @@ from mathutils import Matrix, Quaternion, Vector
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import numpy as np  # noqa: E402
+from sdf import Field, Part, shade  # noqa: E402
+
 FPS = 24
 
 
@@ -35,6 +38,11 @@ class Creature:
         self.deform = self.bm.verts.layers.deform.verify()
         self.group = {}                       # Knochen → Vertex-Gruppe
         self.materials = []                   # (name, farbe, rauheit, leuchten)
+        self.soft = []                        # weiche Teile (sdf.Part)
+        self.groups = {}                      # Knochen → eigene Fläche (sonst nach LIMBS)
+        self.bump = None                      # Hautrelief (Art, Höhe, Maßstab) für Teile in bump_on-Farben
+        self.bump_on = set()
+        self.pattern = None                   # Fellzeichnung (sdf.pattern)
         self.anim = None                      # fn(kind, t) → (rotationen, wurzelversatz, skalierung)
         self.clips = [("Idle", 2.4), ("Walk", 1.0), ("Run", 0.6), ("Attack", 0.8), ("Die", 1.3)]
 
@@ -60,37 +68,60 @@ class Creature:
             f.material_index = material
             f.smooth = True
 
-    def ell(self, bone, center, radii, color, rot=(0, 0, 0), seg=16, rough=0.75, emit=0.0):
-        """Ellipsoid (Halbachsen radii) um center, gedreht um rot (Grad, XYZ)."""
-        res = bmesh.ops.create_uvsphere(self.bm, u_segments=seg, v_segments=max(6, seg // 2), radius=1.0)
+    def _bump(self, color, bump):
+        if bump is not None:
+            return bump or None
+        if not self.bump_on:
+            return self.bump
+        return self.bump if tuple(round(c, 3) for c in color) in self.bump_on else None
+
+    def skin(self, *colors):
+        """Farben, deren Teile das Hautrelief bekommen."""
+        self.bump_on.update(tuple(round(c, 3) for c in col) for col in colors)
+
+    def ell(self, bone, center, radii, color, rot=(0, 0, 0), seg=16, rough=0.75, emit=0.0, hard=None, bump=None):
+        """Ellipsoid (Halbachsen radii) um center, gedreht um rot (Grad, XYZ). Weich (verschmilzt mit den Nachbarn),
+        außer bei leuchtenden, glänzenden oder sehr dünnen Teilen (Augen, Flügelhäute) oder hard=True."""
         from mathutils import Euler
-        m = (Matrix.Translation(Vector(center)) @ Euler([math.radians(a) for a in rot]).to_matrix().to_4x4()
-             @ Matrix.Diagonal((*radii, 1)))
+        R = Euler([math.radians(a) for a in rot]).to_matrix()
+        if hard is None:
+            hard = emit >= 1.0 or rough <= 0.25 or min(radii) < 0.012
+        if not hard:
+            self.soft.append(Part("ell", bone, color, rough, emit, c=center, R=R, r=radii, bump=self._bump(color, bump)))
+            return
+        res = bmesh.ops.create_uvsphere(self.bm, u_segments=seg, v_segments=max(6, seg // 2), radius=1.0)
+        m = Matrix.Translation(Vector(center)) @ R.to_4x4() @ Matrix.Diagonal((*radii, 1))
         bmesh.ops.transform(self.bm, matrix=m, verts=res["verts"])
         self._add(res["verts"], bone, self.mat(color, rough, emit))
 
-    def tube(self, bone, a, b, r1, r2, color, seg=10, rough=0.75, emit=0.0):
-        """Röhre/Kegel von a (Radius r1) nach b (Radius r2)."""
+    def tube(self, bone, a, b, r1, r2, color, seg=10, rough=0.75, emit=0.0, hard=None, bump=None):
+        """Röhre/Kegel von a (Radius r1) nach b (Radius r2). Weich als abgerundeter Kegel, hart bei Spitzen
+        (r2 = 0: Krallen, Zähne, Hörner), Glanz, Leuchten oder hard=True. Gibt zurück, ob das Teil weich ist."""
         a, b = Vector(a), Vector(b)
         d = b - a
         if d.length < 1e-4:
-            return
+            return False
+        if hard is None:
+            hard = r2 <= 0.0 or emit >= 1.0 or rough <= 0.25
+        if not hard:
+            self.soft.append(Part("cone", bone, color, rough, emit, a=a, b=b, r1=r1, r2=max(r2, 0.003), bump=self._bump(color, bump)))
+            return True
         res = bmesh.ops.create_cone(self.bm, cap_ends=True, segments=seg, radius1=max(r1, 0.001),
                                     radius2=max(r2, 0.0005), depth=d.length)
         rot = d.normalized().to_track_quat('Z', 'Y').to_matrix().to_4x4()
         bmesh.ops.transform(self.bm, matrix=Matrix.Translation((a + b) / 2) @ rot, verts=res["verts"])
         self._add(res["verts"], bone, self.mat(color, rough, emit))
+        return False
 
     def limb(self, bone, a, b, r1, r2, color, joint=True):
-        """Glied mit Gelenkkugel am Anfang."""
-        self.tube(bone, a, b, r1, r2, color)
-        if joint:
-            self.ell(bone, a, (r1 * 1.15,) * 3, color, seg=10)
+        """Glied; als hartes Teil mit Gelenkkugel am Anfang."""
+        if not self.tube(bone, a, b, r1, r2, color) and joint:
+            self.ell(bone, a, (r1 * 1.15,) * 3, color, seg=10, hard=True)
 
     def eyes(self, bone, center, spread, size, color=(0.05, 0.03, 0.02), glow=0.0, forward=0.0):
         for s in (-1, 1):
             c = Vector(center) + Vector((s * spread, -forward, 0))
-            self.ell(bone, c, (size,) * 3, color, seg=10, rough=0.2, emit=glow)
+            self.ell(bone, c, (size,) * 3, color, seg=10, rough=0.2, emit=glow, hard=True)
 
 
 def lighter(c, f=1.25):
@@ -132,66 +163,81 @@ def build_quadruped(c, p):
     hs = p.get("head", 0.22) * L
     c.bone("head", neck_top, neck_top + Vector((0, -hs * 1.6, -hs * 0.2)), "neck")
     c.bone("jaw", neck_top + Vector((0, -hs * 0.4, -hs * 0.35)), neck_top + Vector((0, -hs * 1.5, -hs * 0.45)), "head")
-    # Rumpf
-    c.ell("body", (0, 0, H), (W / 2, L * 0.5, p.get("depth", 0.3) * H + W * 0.2), col)
-    c.ell("body", (0, -L * 0.25, H + 0.02), (W * 0.55, L * 0.3, p.get("depth", 0.3) * H + W * 0.25), col)
-    c.ell("body", (0, 0, H - W * 0.25), (W * 0.42, L * 0.42, W * 0.22), belly)
+    c.skin(col, lighter(col, 1.1), belly)
+    D = p.get("depth", 0.3) * H + W * 0.22           # halbe Rumpfhöhe
+    # Rumpf: Brustkorb, Taille, Hinterteil, Schulterblätter, Bauch
+    c.ell("body", (0, -L * 0.2, H + D * 0.05), (W * 0.55, L * 0.32, D), col)
+    c.ell("body", (0, L * 0.08, H + D * 0.12), (W * 0.45, L * 0.3, D * 0.8), col)
+    c.ell("body", (0, L * 0.3, H + D * 0.1), (W * 0.52, L * 0.21, D * 0.92), col)
+    for sx in (-1, 1):
+        c.ell("body", (sx * W * 0.3, -L * 0.3, H + D * 0.55), (W * 0.2, L * 0.13, D * 0.35), col)
+    c.ell("body", (0, -L * 0.12, H - D * 0.45), (W * 0.4, L * 0.3, D * 0.45), belly)
     if p.get("hump"):
         c.ell("body", (0, -L * 0.2, H + W * 0.45), (W * 0.45, L * 0.25, W * 0.35), col)
     if p.get("mane"):
         for i in range(6):
             y = -L * 0.45 + i * L * 0.12
-            c.tube("body", (0, y, H + W * 0.3), (0, y + L * 0.05, H + W * 0.75), W * 0.12, 0.0, acc, seg=6)
+            c.tube("body", (0, y, H + D * 0.8), (0, y + L * 0.05, H + D * 0.8 + W * 0.45), W * 0.12, 0.0, acc, seg=6)
     if p.get("spikes"):
         for i in range(7):
             y = -L * 0.4 + i * L * 0.13
-            c.tube("body", (0, y, H + W * 0.45), (0, y + L * 0.06, H + W * 0.9), W * 0.08, 0.0, p["spikes"], seg=6)
+            c.tube("body", (0, y, H + D * 0.85), (0, y + L * 0.06, H + D * 0.85 + W * 0.45), W * 0.08, 0.0, p["spikes"], seg=6)
     # Hals und Kopf
-    c.tube("neck", (0, -L * 0.4, H + 0.1 * H), neck_top, W * 0.32, hs * 0.55, col)
-    head_c = neck_top + Vector((0, -hs * 0.5, 0))
-    c.ell("head", head_c, (hs * 0.6, hs * 0.75, hs * 0.55), col)
+    c.tube("neck", (0, -L * 0.38, H + D * 0.3), neck_top, W * 0.36, hs * 0.5, col)
+    head_c = neck_top + Vector((0, -hs * 0.35, 0))
     snout = p.get("snout", 0.9)
-    c.ell("head", head_c + Vector((0, -hs * 0.8 * snout, -hs * 0.12)), (hs * 0.35, hs * 0.6 * snout, hs * 0.3), lighter(col, 1.1))
-    c.ell("head", head_c + Vector((0, -hs * 1.35 * snout, -hs * 0.05)), (hs * 0.13, hs * 0.1, hs * 0.1), (0.08, 0.05, 0.05))
-    c.ell("jaw", head_c + Vector((0, -hs * 0.75 * snout, -hs * 0.38)), (hs * 0.28, hs * 0.55 * snout, hs * 0.12), belly)
+    c.ell("head", head_c, (hs * 0.58, hs * 0.62, hs * 0.52), col)
+    c.ell("head", head_c + Vector((0, -hs * 0.42, hs * 0.3)), (hs * 0.5, hs * 0.22, hs * 0.16), col)          # Stirn
+    tip = head_c + Vector((0, -hs * (0.6 + 0.85 * snout), -hs * 0.12))
+    c.tube("head", head_c + Vector((0, -hs * 0.2, -hs * 0.05)), tip, hs * 0.44, hs * 0.2, lighter(col, 1.1))  # Schnauze
+    for sx in (-1, 1):
+        c.ell("head", head_c + Vector((sx * hs * 0.36, -hs * 0.3, -hs * 0.18)), (hs * 0.24, hs * 0.3, hs * 0.22), col)  # Wangen
+    c.ell("head", tip + Vector((0, -hs * 0.14, hs * 0.06)), (hs * 0.16, hs * 0.1, hs * 0.11), (0.08, 0.05, 0.05), rough=0.3, hard=True)
+    c.tube("jaw", head_c + Vector((0, -hs * 0.15, -hs * 0.35)), tip + Vector((0, hs * 0.08, -hs * 0.2)), hs * 0.3, hs * 0.13, belly)
     if p.get("teeth"):
-        for s in (-1, 1):
-            c.tube("head", head_c + Vector((s * hs * 0.15, -hs * 1.15 * snout, -hs * 0.3)),
-                   head_c + Vector((s * hs * 0.15, -hs * 1.2 * snout, -hs * 0.6)), hs * 0.06, 0, (0.95, 0.92, 0.8), seg=6)
-    c.eyes("head", head_c + Vector((0, -hs * 0.55, hs * 0.22)), hs * 0.32, hs * 0.11,
+        for sx in (-1, 1):
+            c.tube("head", tip + Vector((sx * hs * 0.1, hs * 0.04, -hs * 0.08)),
+                   tip + Vector((sx * hs * 0.1, hs * 0.0, -hs * 0.38)), hs * 0.05, 0, (0.95, 0.92, 0.8), seg=6)
+    c.eyes("head", head_c + Vector((0, -hs * 0.48, hs * 0.16)), hs * 0.34, hs * 0.1,
            p.get("eye", (0.05, 0.03, 0.02)), p.get("eye_glow", 0.0))
     if p.get("ears", True):
         e = p.get("ear_size", 0.5)
-        for s in (-1, 1):
-            c.tube("head", head_c + Vector((s * hs * 0.35, hs * 0.1, hs * 0.35)),
-                   head_c + Vector((s * hs * 0.55, hs * 0.25, hs * (0.35 + e))), hs * 0.18, 0.0, acc, seg=8)
+        for sx in (-1, 1):
+            base = head_c + Vector((sx * hs * 0.38, hs * 0.15, hs * 0.38))
+            c.ell("head", base + Vector((sx * hs * 0.12, hs * 0.05, hs * e * 0.45)), (hs * 0.22, hs * 0.1, hs * e * 0.55), acc,
+                  rot=(10, -sx * 25, 0), hard=hs * 0.1 < 0.012)
     if p.get("horns"):
-        for s in (-1, 1):
-            base = head_c + Vector((s * hs * 0.35, 0, hs * 0.4))
-            c.tube("head", base, base + Vector((s * hs * 0.6, hs * 0.3, hs * 0.5)), hs * 0.14, 0.0, p["horns"], seg=8)
-    # Beine
+        for sx in (-1, 1):
+            base = head_c + Vector((sx * hs * 0.35, 0, hs * 0.4))
+            c.tube("head", base, base + Vector((sx * hs * 0.6, hs * 0.3, hs * 0.5)), hs * 0.14, 0.0, p["horns"], seg=8)
+    # Beine: kräftige Oberschenkel/Oberarme, schlanke Unterläufe, Pfoten mit Zehen
     legs = []
-    for front, y in ((True, -L * 0.36), (False, L * 0.36)):
-        for s in (-1, 1):
-            nm = ("f" if front else "b") + ("l" if s > 0 else "r")
-            hip = Vector((s * W * 0.38, y, H - W * 0.1))
-            knee = Vector((s * W * 0.42, y + (0.05 if front else -0.06) * H, H * 0.48))
-            foot = Vector((s * W * 0.42, y, 0.04 * H))
+    for front, y in ((True, -L * 0.3), (False, L * 0.32)):
+        for sx in (-1, 1):
+            nm = ("f" if front else "b") + ("l" if sx > 0 else "r")
+            hip = Vector((sx * W * 0.36, y, H))
+            knee = Vector((sx * W * 0.4, y + (0.05 if front else -0.1) * H, H * 0.45))
+            foot = Vector((sx * W * 0.4, y + (0.0 if front else 0.02) * H, 0.05 * H))
             c.bone(f"up_{nm}", hip, knee, "body")
             c.bone(f"lo_{nm}", knee, foot, f"up_{nm}")
             r = p.get("leg", 0.17) * W
-            c.limb(f"up_{nm}", hip, knee, r * 1.35, r, col)
-            c.limb(f"lo_{nm}", knee, foot, r, r * 0.8, col)
-            c.ell(f"lo_{nm}", foot + Vector((0, -r * 0.4, 0)), (r * 1.05, r * 1.4, r * 0.6), acc)
-            legs.append((nm, front, s))
+            m = 1.9 if not front else 1.6
+            c.ell(f"up_{nm}", hip.lerp(knee, 0.3) + Vector((0, 0, 0)), (r * m, r * m * 1.1, (knee - hip).length * 0.55), col)
+            c.tube(f"up_{nm}", hip, knee, r * 1.3, r * 0.95, col)
+            c.tube(f"lo_{nm}", knee, foot, r * 0.9, r * 0.7, col)
+            paw = foot + Vector((0, -r * 0.5, -0.02 * H))
+            c.ell(f"lo_{nm}", paw, (r * 1.05, r * 1.35, r * 0.6), acc)
+            for k in range(4):
+                c.ell(f"lo_{nm}", paw + Vector(((k - 1.5) * r * 0.45, -r * 1.05, -r * 0.1)), (r * 0.28, r * 0.38, r * 0.3), acc)
+            legs.append((nm, front, sx))
     # Schwanz
     tl = p.get("tail", 0.5) * L
-    prev, start = "body", Vector((0, L * 0.48, H + 0.05 * H))
+    prev, start = "body", Vector((0, L * 0.48, H + D * 0.3))
     for i in range(3):
         end = start + Vector((0, tl / 3, -tl * 0.15 + p.get("tail_up", 0) * tl / 3))
         c.bone(f"tail{i}", start, end, prev)
-        r = p.get("tail_r", 0.08) * W * (1 - i * 0.25)
-        c.limb(f"tail{i}", start, end, r, r * 0.75, p.get("tail_color", col))
+        r = p.get("tail_r", 0.08) * W * (1 - i * 0.28) + 0.004
+        c.tube(f"tail{i}", start, end, r, r * 0.72, p.get("tail_color", col))
         prev, start = f"tail{i}", end
 
     def anim(kind, t):
@@ -576,43 +622,92 @@ def build_flyer(c, p):
 
 
 def build_spirit(c, p):
-    """Schwebende Gestalt ohne Beine (Geist, Fee, Schatten): Rumpf läuft nach unten spitz aus, Arme, Kopf."""
+    """Schwebende Gestalt (Geist, Fee): Oberkörper mit Armen und Händen, Kopf; der Geist läuft in ein zerfetztes
+    Gewand aus, die Fee trägt ein kurzes Kleid mit baumelnden Beinen und Flügeln."""
     S = p["height"]
     col = p["color"]
     hover = p.get("hover", 0.3)
+    fairy = bool(p.get("wings"))
+    skin = p.get("head_color", col)
+    emit = p.get("glow", 0.0)
+    c.skin(skin)
     c.bone("root", (0, 0, 0), (0, 0, 0.1))
     c.bone("body", (0, 0, hover + S * 0.2), (0, 0, hover + S * 0.7), "root")
     c.bone("head", (0, 0, hover + S * 0.75), (0, 0, hover + S * 0.95), "body")
-    emit = p.get("glow", 0.0)
-    c.tube("body", (0, 0, hover), (0, 0, hover + S * 0.72), S * 0.02, S * 0.17, col, seg=14, emit=emit)
-    c.ell("body", (0, 0, hover + S * 0.62), (S * 0.17, S * 0.12, S * 0.12), col, emit=emit)
-    c.ell("head", (0, -S * 0.02, hover + S * 0.83), (S * 0.1, S * 0.11, S * 0.12), p.get("head_color", col), emit=emit)
-    c.eyes("head", (0, -S * 0.11, hover + S * 0.85), S * 0.04, S * 0.022, p.get("eye", (0.9, 0.9, 0.5)), p.get("eye_glow", 3.0))
-    if p.get("hood"):
-        c.ell("head", (0, S * 0.01, hover + S * 0.86), (S * 0.13, S * 0.13, S * 0.14), darker(col, 0.7), emit=emit)
+    W = S * (0.13 if fairy else 0.17)
+    chest = Vector((0, 0, hover + S * 0.6))
+    c.ell("body", chest, (W * 0.85, W * 0.55, S * 0.09), col, emit=emit)
+    c.ell("body", chest + Vector((0, 0, -S * 0.13)), (W * 0.55, W * 0.42, S * 0.08), col, emit=emit)
+    c.tube("body", chest + Vector((0, 0, S * 0.07)), (0, 0, hover + S * 0.79), W * 0.25, W * 0.2, skin, emit=emit)
+    hc = Vector((0, -S * 0.01, hover + S * 0.85))
+    hs = S * (0.085 if fairy else 0.07)
+    c.ell("head", hc, (hs * 0.9, hs * 1.0, hs * 1.05), skin, emit=emit)
+    c.ell("head", hc + Vector((0, -hs * 0.45, -hs * 0.5)), (hs * 0.62, hs * 0.55, hs * 0.4), skin, emit=emit)
+    if fairy:
+        c.ell("head", hc + Vector((0, hs * 0.2, hs * 0.3)), (hs * 1.0, hs * 0.95, hs * 0.85), p.get("hair", darker(col, 0.7)))
+        c.tube("head", hc + Vector((0, hs * 0.6, hs * 0.1)), hc + Vector((0, hs * 0.9, -hs * 1.4)), hs * 0.55, hs * 0.2, p.get("hair", darker(col, 0.7)))
+        for sx in (-1, 1):
+            c.tube("head", hc + Vector((sx * hs * 0.8, 0, hs * 0.1)), hc + Vector((sx * hs * 1.5, hs * 0.3, hs * 0.7)), hs * 0.18, hs * 0.02, skin)
+        c.eyes("head", hc + Vector((0, -hs * 0.82, hs * 0.05)), hs * 0.34, hs * 0.14, p.get("eye", (0.9, 0.9, 0.5)), p.get("eye_glow", 1.0))
+        # Kleid und baumelnde Beine
+        c.tube("body", chest + Vector((0, 0, -S * 0.12)), (0, 0, hover + S * 0.22), W * 0.5, W * 1.05, col, emit=emit)
+        for k in range(8):
+            ang = 2 * math.pi * (k + 0.5) / 8
+            d = Vector((math.cos(ang), math.sin(ang), 0))
+            c.tube("body", Vector((0, 0, hover + S * 0.4)) + d * W * 0.4, Vector((0, 0, hover + S * 0.2)) + d * W * 1.1,
+                   W * 0.12, W * 0.22, col, emit=emit)
+        for sx in (-1, 1):
+            hip = Vector((sx * W * 0.25, 0, hover + S * 0.32))
+            knee = hip + Vector((sx * W * 0.05, -S * 0.04 * (1 + sx * 0.5), -S * 0.17))
+            foot = knee + Vector((0, S * 0.06, -S * 0.16))
+            c.tube("body", hip, knee, W * 0.16, W * 0.12, skin, emit=emit)
+            c.tube("body", knee, foot, W * 0.12, W * 0.08, skin, emit=emit)
+            c.ell("body", foot + Vector((0, -W * 0.06, -W * 0.02)), (W * 0.08, W * 0.16, W * 0.07), darker(col, 0.8))
+    else:
+        # Kapuze mit dunkler Gesichtsöffnung, zerfetztes Gewand bis zum Schweben
+        if p.get("hood"):
+            hood = darker(col, 0.75)
+            c.ell("head", hc + Vector((0, hs * 0.05, hs * 0.2)), (hs * 1.35, hs * 1.35, hs * 1.45), hood, emit=emit)
+            c.tube("head", hc + Vector((0, hs * 0.8, hs * 0.6)), hc + Vector((0, hs * 1.7, -hs * 0.9)), hs * 0.7, hs * 0.15, hood, emit=emit)
+            c.ell("head", hc + Vector((0, -hs * 1.12, -hs * 0.05)), (hs * 0.68, hs * 0.3, hs * 0.8), (0.02, 0.02, 0.03), rough=0.9, hard=True)
+        c.eyes("head", hc + Vector((0, -hs * 1.3, hs * 0.05)), hs * 0.3, hs * 0.13, p.get("eye", (0.9, 0.9, 0.5)), p.get("eye_glow", 3.0))
+        c.tube("body", chest + Vector((0, 0, -S * 0.05)), (0, 0, hover + S * 0.12), W * 0.8, W * 1.0, col, emit=emit)
+        for k in range(12):
+            ang = 2 * math.pi * (k + 0.3 * (k % 2)) / 12
+            d = Vector((math.cos(ang), math.sin(ang), 0))
+            length = S * (0.12 + 0.12 * ((k * 7) % 5) / 4)
+            top = Vector((0, 0, hover + S * 0.3)) + d * W * 0.75
+            c.tube("body", top, top + d * W * 0.3 + Vector((0, W * 0.15, -length - S * 0.12)), W * 0.22, W * 0.03, col, emit=emit)
     if p.get("crown"):
         for k in range(5):
             a = 2 * math.pi * k / 5
-            base = Vector((math.cos(a) * S * 0.08, math.sin(a) * S * 0.08, hover + S * 0.93))
-            c.tube("head", base, base + Vector((0, 0, S * 0.07)), S * 0.02, 0, p["crown"], seg=5)
+            base = hc + Vector((math.cos(a) * hs * 0.75, math.sin(a) * hs * 0.75, hs * (1.0 if not p.get("hood") else 1.35)))
+            c.tube("head", base, base + Vector((0, 0, hs * 0.6)), hs * 0.14, 0, p["crown"], seg=5)
     arms = []
-    for s in (-1, 1):
-        nm = "l" if s > 0 else "r"
-        sh = Vector((s * S * 0.16, 0, hover + S * 0.66))
-        el = sh + Vector((s * S * 0.1, -S * 0.05, -S * 0.2))
-        ha = el + Vector((s * S * 0.02, -S * 0.12, -S * 0.12))
+    for sx in (-1, 1):
+        nm = "l" if sx > 0 else "r"
+        sh = Vector((sx * W * 0.85, 0, chest.z + S * 0.05))
+        el = sh + Vector((sx * W * 0.35, -S * 0.03, -S * 0.17))
+        ha = el + Vector((sx * W * 0.05, -S * 0.12, -S * 0.09))
         c.bone(f"arm_{nm}", sh, el, "body")
         c.bone(f"fore_{nm}", el, ha, f"arm_{nm}")
-        c.limb(f"arm_{nm}", sh, el, S * 0.04, S * 0.032, col)
-        c.limb(f"fore_{nm}", el, ha, S * 0.032, S * 0.02, col)
-        c.ell(f"fore_{nm}", ha, (S * 0.03,) * 3, p.get("head_color", col), emit=emit)
-        arms.append((nm, s))
-    if p.get("wings"):
-        for s in (-1, 1):
-            nm = f"wing_{'l' if s > 0 else 'r'}"
-            a = Vector((s * S * 0.05, S * 0.08, hover + S * 0.65))
-            c.bone(nm, a, a + Vector((s * S * 0.4, S * 0.1, S * 0.2)), "body")
-            c.ell(nm, a + Vector((s * S * 0.2, S * 0.06, S * 0.12)), (S * 0.2, S * 0.01, S * 0.13), p["wings"], rough=0.2, emit=1.0)
+        r = W * (0.2 if fairy else 0.26)
+        sleeve = col if not fairy else skin
+        c.tube(f"arm_{nm}", sh, el, r * 1.1, r * 0.85, sleeve, emit=emit)
+        c.tube(f"fore_{nm}", el, ha, r * 0.85, r * 0.6, skin, emit=emit)
+        if not fairy:
+            c.tube(f"fore_{nm}", el, el.lerp(ha, 0.75), r * 1.0, r * 1.6, col, emit=emit)
+        _hand(c, f"fore_{nm}", ha, sx, r * 1.1, skin, claws=not fairy)
+        arms.append((nm, sx))
+    if fairy:
+        for sx in (-1, 1):
+            nm = f"wing_{'l' if sx > 0 else 'r'}"
+            a = Vector((sx * W * 0.2, W * 0.5, chest.z + S * 0.02))
+            c.bone(nm, a, a + Vector((sx * S * 0.4, S * 0.1, S * 0.2)), "body")
+            for k, (dz, ln, wd) in enumerate(((0.12, 0.42, 0.16), (-0.06, 0.3, 0.1))):
+                c.ell(nm, a + Vector((sx * S * ln * 0.5, S * 0.06, S * dz)), (S * ln * 0.5, S * 0.008, S * wd), p["wings"],
+                      rot=(0, sx * (25 if k == 0 else -30), 0), rough=0.2, emit=1.0)
+            c.tube(nm, a, a + Vector((sx * S * 0.4, S * 0.06, S * 0.25)), S * 0.006, S * 0.003, darker(p["wings"], 0.6), hard=True)
 
     def anim(kind, t):
         rot, off = {}, Vector()
@@ -696,6 +791,7 @@ def build_flytrap(c, p):
     top = pts[3]
     c.bone("upper", top, top + Vector((0, -S * 0.3, S * 0.05)), prev)
     c.bone("lower", top, top + Vector((0, -S * 0.3, -S * 0.05)), prev)
+    c.groups.update(upper="upper", lower="lower")
     c.ell("upper", top + Vector((0, -S * 0.15, S * 0.04)), (S * 0.16, S * 0.17, S * 0.06), col, rough=0.5)
     c.ell("lower", top + Vector((0, -S * 0.15, -S * 0.04)), (S * 0.16, S * 0.17, S * 0.06), col, rough=0.5)
     inner = p.get("inner", (0.75, 0.15, 0.2))
@@ -737,8 +833,8 @@ def build_blob(c, p):
     col = p["color"]
     c.bone("root", (0, 0, 0), (0, 0, 0.1))
     c.bone("body", (0, 0, 0), (0, 0, S), "root")
-    c.ell("body", (0, 0, S * 0.4), (S * 0.6, S * 0.6, S * 0.42), col, seg=20, rough=0.1, emit=p.get("glow", 0.1))
-    c.ell("body", (0, 0, S * 0.65), (S * 0.35, S * 0.35, S * 0.3), lighter(col, 1.2), seg=16, rough=0.1, emit=p.get("glow", 0.1))
+    c.ell("body", (0, 0, S * 0.4), (S * 0.6, S * 0.6, S * 0.42), col, seg=20, rough=0.1, emit=p.get("glow", 0.1), hard=False)
+    c.ell("body", (0, 0, S * 0.65), (S * 0.35, S * 0.35, S * 0.3), lighter(col, 1.2), seg=16, rough=0.1, emit=p.get("glow", 0.1), hard=False)
     for k in range(5):
         a = k * 2.1
         c.ell("body", (math.cos(a) * S * 0.25, math.sin(a) * S * 0.25, S * 0.35 + k * 0.03 * S), (S * 0.07,) * 3, darker(col, 0.5), seg=8)
@@ -818,118 +914,232 @@ def _biped_anim(c, legs, arms, S, heavy=False, tail=0, weapon_arm="r"):
     c.anim = anim
 
 
+def _hand(c, bone, ha, s, r, skin, claws=False, fingers=4):
+    """Hand am Handgelenk ha: Handteller, Finger nach unten leicht gekrümmt, Daumen nach vorn."""
+    palm = ha + Vector((0, -r * 0.1, -r * 0.55))
+    c.ell(bone, palm, (r * 0.42, r * 0.72, r * 0.82), skin)
+    for k in range(fingers):
+        y = (k - (fingers - 1) / 2) * r * 0.4 - r * 0.05
+        base = palm + Vector((0, y, -r * 0.6))
+        mid = base + Vector((s * r * 0.02, -r * 0.08, -r * 0.5))
+        tip = mid + Vector((-s * r * 0.02, -r * 0.22, -r * 0.3))
+        c.tube(bone, base, mid, r * 0.19, r * 0.16, skin)
+        c.tube(bone, mid, tip, r * 0.16, r * 0.12, skin)
+        if claws:
+            c.tube(bone, tip, tip + Vector((0, -r * 0.25, -r * 0.3)), r * 0.09, 0, (0.92, 0.9, 0.8), seg=5)
+    tb = palm + Vector((-s * r * 0.15, -r * 0.45, -r * 0.1))
+    c.tube(bone, tb, tb + Vector((-s * r * 0.08, -r * 0.35, -r * 0.35)), r * 0.16, r * 0.12, skin)
+
+
 def build_biped(c, p):
     S = p["height"]
     col = p["color"]
     skin, cloth, acc = p.get("skin", col), p.get("cloth", darker(col, 0.5)), p.get("accent", (0.35, 0.3, 0.25))
+    head_col = p.get("head_color", skin)
     bulk = p.get("bulk", 1.0)
     W = S * 0.2 * bulk
     hip_h = S * p.get("legs", 0.48)
-    c.bone("root", (0, 0, 0), (0, 0, 0.1))
-    c.bone("body", (0, 0, hip_h), (0, 0, S * 0.78), "root")
-    c.bone("head", (0, 0, S * 0.8), (0, 0, S), "body")
     hunch = p.get("hunch", 0.0) * S
-    # Rumpf
-    c.ell("body", (0, 0, hip_h + S * 0.04), (W * 0.62, W * 0.42, S * 0.08), cloth)
-    c.ell("body", (0, -hunch * 0.3, hip_h + S * 0.17), (W * 0.62, W * 0.45, S * 0.14), skin)
-    c.ell("body", (0, -hunch * 0.6, S * 0.68), (W * 0.82, W * 0.5, S * 0.12), skin)
-    if p.get("armor"):
-        c.ell("body", (0, -hunch * 0.5, S * 0.6), (W * 0.78, W * 0.55, S * 0.16), p["armor"], rough=0.35)
-    if p.get("belly"):
-        c.ell("body", (0, -W * 0.2, hip_h + S * 0.18), (W * 0.55, W * 0.35, S * 0.11), p["belly"])
-    # Kopf
-    hc = Vector((0, -hunch, S * 0.88))
+    c.bone("root", (0, 0, 0), (0, 0, 0.1))
+    c.bone("body", (0, 0, hip_h), (0, -hunch * 0.5, S * 0.78), "root")
     hs = S * p.get("head", 0.075)
-    c.tube("body", (0, -hunch * 0.8, S * 0.74), hc + Vector((0, 0, -hs * 0.6)), W * 0.22, W * 0.2, skin)
-    c.ell("head", hc, (hs * 1.0, hs * 1.05, hs * 1.15), p.get("head_color", skin))
+    hc = Vector((0, -hunch * 1.5 - W * 0.12 * (hunch > 0), S * 0.885))
+    c.bone("head", hc + Vector((0, 0, -hs * 0.9)), hc + Vector((0, 0, hs * 1.2)), "body")
+    lower = p.get("pants", cloth)
+    c.skin(skin, head_col, p.get("hand", skin), p.get("belly", skin))
+    # Rumpf: Becken, Bauch, Brustkorb, Brustmuskeln, Nacken, Gesäß
+    c.ell("body", (0, 0, hip_h + S * 0.03), (W * 0.6, W * 0.4, S * 0.075), lower)
+    for sx in (-1, 1):
+        c.ell("body", (sx * W * 0.28, W * 0.18, hip_h + S * 0.02), (W * 0.32, W * 0.27, S * 0.07), lower)
+    c.ell("body", (0, -hunch * 0.3, hip_h + S * 0.14), (W * 0.52, W * 0.38, S * 0.1), skin)
+    chest = Vector((0, -hunch * 0.6, S * 0.645))
+    torso = p.get("robe") or skin
+    c.ell("body", chest, (W * 0.76, W * 0.43, S * 0.12), torso)
+    for sx in (-1, 1):
+        c.ell("body", chest + Vector((sx * W * 0.32, -W * 0.3, S * 0.02)), (W * 0.36, W * 0.2, S * 0.065), torso, rot=(0, sx * 12, 0))
+    c.ell("body", chest + Vector((0, W * 0.15, S * 0.09)), (W * 0.6, W * 0.32, S * 0.06), torso)
+    if p.get("belly"):
+        c.ell("body", (0, -W * 0.22, hip_h + S * 0.16), (W * 0.5, W * 0.3, S * 0.12), p["belly"])
+    # Gürtel und Lendenschurz
+    c.ell("body", (0, 0, hip_h + S * 0.075), (W * 0.62, W * 0.43, S * 0.022), darker(lower, 0.6))
+    c.ell("body", (0, -W * 0.36, hip_h - S * 0.05), (W * 0.3, W * 0.06, S * 0.1), lower)
+    if p.get("armor"):
+        c.ell("body", chest + Vector((0, -W * 0.05, -S * 0.02)), (W * 0.84, W * 0.55, S * 0.15), p["armor"], rough=0.35, hard=True)
+    # Hals und Kopf
+    c.tube("body", chest + Vector((0, W * 0.05, S * 0.08)), hc + Vector((0, hs * 0.2, -hs * 0.7)), W * 0.26, W * 0.2, skin)
+    face = p.get("face", "")
+    jaw = p.get("jaw", 1.0)
     snout = p.get("snout", 0.0)
-    if snout:
-        c.ell("head", hc + Vector((0, -hs * (0.8 + snout * 0.6), -hs * 0.3)), (hs * 0.55, hs * (0.6 + snout * 0.5), hs * 0.45), p.get("head_color", skin))
-    c.eyes("head", hc + Vector((0, -hs * 0.85, hs * 0.15)), hs * 0.4, hs * 0.16, p.get("eye", (0.9, 0.85, 0.2)), p.get("eye_glow", 0.6))
+    belly_col = p.get("belly", lighter(skin, 1.2))
+    if face == "frog":
+        # breiter, flacher Kopf ohne Hals, Glubschaugen oben, breites Maul, Kehlsack
+        c.ell("head", hc + Vector((0, -hs * 0.2, -hs * 0.2)), (hs * 1.25, hs * 1.15, hs * 0.72), head_col)
+        c.ell("head", hc + Vector((0, -hs * 0.55, -hs * 0.65)), (hs * 1.05, hs * 0.8, hs * 0.4), belly_col)
+        for sx in (-1, 1):
+            e = hc + Vector((sx * hs * 0.62, -hs * 0.55, hs * 0.38))
+            c.ell("head", e, (hs * 0.36,) * 3, head_col)
+            c.ell("head", e + Vector((0, -hs * 0.18, hs * 0.08)), (hs * 0.24,) * 3, p.get("eye", (0.9, 0.75, 0.1)), rough=0.2,
+                  emit=p.get("eye_glow", 0.0), hard=True)
+            c.ell("head", e + Vector((0, -hs * 0.38, hs * 0.1)), (hs * 0.1, hs * 0.05, hs * 0.14), (0.02, 0.02, 0.02), rough=0.2, hard=True)
+        c.ell("head", hc + Vector((0, -hs * 1.22, -hs * 0.35)), (hs * 1.0, hs * 0.06, hs * 0.05), (0.15, 0.08, 0.06), rough=0.4, hard=True)
+        eyes_done = True
+    else:
+        eyes_done = False
+        c.ell("head", hc, (hs * 0.92, hs * 1.0, hs * 1.02), head_col)
+        brow = 1.4 if face in ("ape", "troll") else 1.0
+        c.ell("head", hc + Vector((0, -hs * 0.72, hs * 0.22)), (hs * 0.82, hs * 0.28 * brow, hs * 0.2 * brow), head_col)  # Stirnwulst
+        c.ell("head", hc + Vector((0, -hs * 0.45, -hs * 0.55)), (hs * 0.72 * jaw, hs * 0.62, hs * 0.42), head_col)  # Kiefer
+        for sx in (-1, 1):
+            c.ell("head", hc + Vector((sx * hs * 0.5, -hs * 0.62, -hs * 0.1)), (hs * 0.28, hs * 0.25, hs * 0.22), head_col)  # Wangen
+    if face == "ape":
+        # vorstehende Mundpartie, breite Nase, Scheitelkamm
+        c.ell("head", hc + Vector((0, -hs * 0.95, -hs * 0.4)), (hs * 0.6, hs * 0.42, hs * 0.38), p.get("muzzle", head_col))
+        c.ell("head", hc + Vector((0, -hs * 1.12, -hs * 0.08)), (hs * 0.3, hs * 0.16, hs * 0.14), darker(p.get("muzzle", head_col), 0.7))
+        c.ell("head", hc + Vector((0, hs * 0.1, hs * 0.85)), (hs * 0.18, hs * 0.75, hs * 0.3), head_col)
+    elif face == "troll":
+        # große Hakennase, hängende Ohren, Unterbiss
+        c.tube("head", hc + Vector((0, -hs * 0.85, hs * 0.15)), hc + Vector((0, -hs * 1.55, -hs * 0.45)), hs * 0.2, hs * 0.2, head_col)
+        c.ell("head", hc + Vector((0, -hs * 1.5, -hs * 0.5)), (hs * 0.28, hs * 0.22, hs * 0.2), head_col)
+        c.ell("head", hc + Vector((0, -hs * 0.75, -hs * 0.95)), (hs * 0.8, hs * 0.5, hs * 0.32), head_col)
+        for sx in (-1, 1):
+            base = hc + Vector((sx * hs * 0.85, 0, hs * 0.1))
+            c.tube("head", base, base + Vector((sx * hs * 0.9, hs * 0.2, -hs * 0.5)), hs * 0.25, hs * 0.05, head_col)
+    elif face == "wolf":
+        # lange Schnauze, aufgestellte Spitzohren, Mähne um Hals und Schultern
+        tip = hc + Vector((0, -hs * 2.0, -hs * 0.35))
+        c.tube("head", hc + Vector((0, -hs * 0.4, -hs * 0.05)), tip, hs * 0.6, hs * 0.26, head_col)
+        c.ell("head", tip + Vector((0, -hs * 0.12, hs * 0.1)), (hs * 0.2, hs * 0.14, hs * 0.14), (0.05, 0.04, 0.04), rough=0.3, hard=True)
+        c.tube("head", hc + Vector((0, -hs * 0.4, -hs * 0.55)), tip + Vector((0, hs * 0.2, -hs * 0.22)), hs * 0.42, hs * 0.18, belly_col)
+        for sx in (-1, 1):
+            base = hc + Vector((sx * hs * 0.5, hs * 0.1, hs * 0.65))
+            c.tube("head", base, base + Vector((sx * hs * 0.3, hs * 0.25, hs * 1.1)), hs * 0.32, hs * 0.04, head_col)
+            c.tube("head", tip + Vector((sx * hs * 0.16, hs * 0.15, -hs * 0.2)), tip + Vector((sx * hs * 0.16, hs * 0.13, -hs * 0.55)),
+                   hs * 0.06, 0, (0.95, 0.92, 0.8), seg=5)
+        for k in range(7):
+            a = math.pi * (k / 6 - 0.5)
+            c.ell("body", chest + Vector((math.sin(a) * W * 0.5, W * 0.32 + math.cos(a) * W * 0.08, S * 0.1 - abs(math.sin(a)) * S * 0.03)),
+                  (W * 0.26, W * 0.26, S * 0.065), p.get("mane", skin))
+    elif snout:
+        tip = hc + Vector((0, -hs * (1.0 + snout * 1.1), -hs * 0.3))
+        c.tube("head", hc + Vector((0, -hs * 0.5, -hs * 0.2)), tip, hs * 0.55, hs * 0.3, head_col)
+        c.ell("head", tip + Vector((0, -hs * 0.18, hs * 0.08)), (hs * 0.2, hs * 0.14, hs * 0.13), (0.06, 0.05, 0.05), rough=0.3, hard=True)
+        c.ell("head", tip + Vector((0, hs * 0.2, -hs * 0.28)), (hs * 0.38, hs * 0.55, hs * 0.14), head_col)    # Unterkiefer
+    elif not p.get("beak") and face != "frog":
+        c.tube("head", hc + Vector((0, -hs * 0.92, hs * 0.1)), hc + Vector((0, -hs * 1.12, -hs * 0.25)), hs * 0.12, hs * 0.17, head_col)  # Nase
+    if not eyes_done:
+        eye_c = hc + Vector((0, -hs * (0.8 if not (snout or face == "wolf") else 0.72), hs * (0.06 if not (snout or face == "wolf") else 0.18)))
+        c.eyes("head", eye_c, hs * 0.36, hs * (0.1 if face == "troll" else 0.13), p.get("eye", (0.9, 0.85, 0.2)), p.get("eye_glow", 0.6))
     if p.get("beak"):
-        c.tube("head", hc + Vector((0, -hs * 0.7, -hs * 0.1)), hc + Vector((0, -hs * 2.0, -hs * 0.5)), hs * 0.4, hs * 0.02, p["beak"], seg=10)
+        c.tube("head", hc + Vector((0, -hs * 0.65, -hs * 0.05)), hc + Vector((0, -hs * 1.6, -hs * 0.45)), hs * 0.42, hs * 0.06, p["beak"], rough=0.4)
+        c.tube("head", hc + Vector((0, -hs * 0.6, -hs * 0.35)), hc + Vector((0, -hs * 1.25, -hs * 0.55)), hs * 0.3, hs * 0.05, darker(p["beak"], 0.8), rough=0.4)
     if p.get("crown"):
         for k in range(6):
             a = 2 * math.pi * k / 6
-            base = hc + Vector((math.cos(a) * hs * 0.7, math.sin(a) * hs * 0.7, hs * 0.9))
+            base = hc + Vector((math.cos(a) * hs * 0.75, math.sin(a) * hs * 0.75, hs * 0.75))
             c.tube("head", base, base + Vector((0, 0, hs * 0.5)), hs * 0.12, 0, p["crown"], seg=5, rough=0.3)
+        c.ell("head", hc + Vector((0, 0, hs * 0.72)), (hs * 0.85, hs * 0.85, hs * 0.12), p["crown"], rough=0.3, hard=True)
     if p.get("tusks"):
         for s in (-1, 1):
-            c.tube("head", hc + Vector((s * hs * 0.4, -hs * 0.8, -hs * 0.5)), hc + Vector((s * hs * 0.5, -hs * 1.0, hs * 0.0)), hs * 0.12, 0, (0.95, 0.9, 0.75), seg=6)
+            c.tube("head", hc + Vector((s * hs * 0.38, -hs * 0.85, -hs * 0.6)), hc + Vector((s * hs * 0.5, -hs * 1.05, -hs * 0.05)), hs * 0.11, 0, (0.95, 0.9, 0.75), seg=6)
     if p.get("ears"):
         for s in (-1, 1):
-            c.tube("head", hc + Vector((s * hs * 0.9, 0, hs * 0.1)), hc + Vector((s * hs * 1.8, hs * 0.4, hs * 0.6)), hs * 0.25, 0, p.get("head_color", skin), seg=6)
+            base = hc + Vector((s * hs * 0.85, hs * 0.05, hs * 0.05))
+            c.tube("head", base, base + Vector((s * hs * 0.9, hs * 0.45, hs * 0.55)), hs * 0.22, hs * 0.03, head_col)
     if p.get("horns"):
         for s in (-1, 1):
             base = hc + Vector((s * hs * 0.6, 0, hs * 0.8))
             c.tube("head", base, base + Vector((s * hs * 0.9, hs * 0.3, hs * 1.0)), hs * 0.22, 0, p["horns"], seg=8)
     if p.get("hair"):
-        c.ell("head", hc + Vector((0, hs * 0.15, hs * 0.45)), (hs * 1.05, hs * 1.0, hs * 0.75), p["hair"])
+        c.ell("head", hc + Vector((0, hs * 0.18, hs * 0.35)), (hs * 1.0, hs * 0.95, hs * 0.8), p["hair"])
     if p.get("hood"):
-        c.ell("head", hc + Vector((0, hs * 0.1, hs * 0.2)), (hs * 1.3, hs * 1.3, hs * 1.4), p["hood"])
+        c.ell("head", hc + Vector((0, hs * 0.2, hs * 0.15)), (hs * 1.08, hs * 1.05, hs * 1.15), p["hood"])
+        c.tube("head", hc + Vector((0, hs * 0.5, hs * 0.5)), hc + Vector((0, hs * 1.4, -hs * 0.2)), hs * 0.6, hs * 0.1, p["hood"])
     if p.get("crest"):
         for k in range(5):
-            c.tube("head", hc + Vector((0, -hs * 0.6 + k * hs * 0.35, hs * 0.9)), hc + Vector((0, -hs * 0.4 + k * hs * 0.4, hs * 1.6)), hs * 0.12, 0, p["crest"], seg=5)
-    if p.get("bandages"):
-        # Binden der Mumie: schräge, flache Ringe um Rumpf und Glieder
-        band = p["bandages"]
-        for k in range(9):
-            z = hip_h + S * 0.04 + k * S * 0.045
-            c.ell("body", (0, -hunch * 0.5 * k / 9, z), (W * 0.86 - abs(k - 5) * W * 0.04, W * 0.55, S * 0.012), band if k % 2 else darker(band, 0.9),
-                  rot=(0, (k % 3 - 1) * 8, 0))
+            c.tube("head", hc + Vector((0, -hs * 0.5 + k * hs * 0.35, hs * 0.85)), hc + Vector((0, -hs * 0.2 + k * hs * 0.45, hs * 1.7 - k * hs * 0.1)),
+                   hs * 0.13, hs * 0.03, p["crest"])
     if p.get("robe"):
-        c.tube("body", (0, 0, hip_h + S * 0.15), (0, 0, S * 0.03), W * 0.6, W * 0.95, p["robe"], seg=14)
+        c.tube("body", chest + Vector((0, 0, -S * 0.05)), (0, 0, -W * 0.6), W * 0.7, W * 1.1, p["robe"])
+        c.ell("body", chest + Vector((0, 0, S * 0.01)), (W * 0.88, W * 0.56, S * 0.14), p["robe"])
+        for k in range(10):                                   # Falten im Rock
+            ang = 2 * math.pi * (k + 0.5) / 10
+            d = Vector((math.cos(ang), math.sin(ang), 0))
+            c.tube("body", Vector((0, 0, hip_h + S * 0.05)) + d * W * 0.5, Vector((0, 0, -W * 0.3)) + d * W * 1.05,
+                   W * 0.1, W * 0.17, p["robe"])
+        c.ell("body", (0, 0, hip_h + S * 0.08), (W * 0.68, W * 0.5, S * 0.025), darker(p["robe"], 0.55))     # Gürtel
     # Arme
     legs, arms = [], []
     arm_len = p.get("arms", 1.0)
     for s in (-1, 1):
         nm = "l" if s > 0 else "r"
-        sh = Vector((s * W * 0.95, -hunch * 0.6, S * 0.74))
+        sh = Vector((s * W * 0.9, -hunch * 0.6, S * 0.735))
         el = sh + Vector((s * W * 0.15, 0, -S * 0.2 * arm_len))
         ha = el + Vector((0, -S * 0.04, -S * 0.19 * arm_len))
         c.bone(f"arm_{nm}", sh, el, "body")
         c.bone(f"fore_{nm}", el, ha, f"arm_{nm}")
         r = W * 0.24 * p.get("arm_r", 1.0)
-        c.limb(f"arm_{nm}", sh, el, r * 1.1, r * 0.9, skin)
-        c.limb(f"fore_{nm}", el, ha, r * 0.9, r * 0.75, skin)
-        c.ell(f"fore_{nm}", ha + Vector((0, 0, -r * 0.6)), (r * 0.8, r * 0.6, r * 1.0), p.get("hand", skin))
-        if p.get("claws"):
-            for k in range(3):
-                c.tube(f"fore_{nm}", ha + Vector(((k - 1) * r * 0.4, -r * 0.3, -r * 1.2)), ha + Vector(((k - 1) * r * 0.4, -r * 0.9, -r * 2.0)), r * 0.15, 0, (0.9, 0.88, 0.8), seg=5)
+        sleeve = p.get("robe") or skin
+        c.ell(f"arm_{nm}", sh + Vector((s * r * 0.1, 0, -r * 0.25)), (r * 1.0, r * 0.95, r * 1.15), sleeve)              # Schulter
+        c.tube(f"arm_{nm}", sh, el, r * 0.85, r * 0.68, sleeve)
+        c.ell(f"arm_{nm}", sh.lerp(el, 0.5) + Vector((0, -r * 0.3, 0)), (r * 0.72, r * 0.75, (el - sh).length * 0.3), sleeve)  # Bizeps
+        c.tube(f"fore_{nm}", el, ha, r * 0.72, r * 0.5, skin)
+        if p.get("robe"):
+            c.tube(f"fore_{nm}", el, el.lerp(ha, 0.8), r * 0.85, r * 1.25, p["robe"])          # weiter Ärmel
+        c.ell(f"fore_{nm}", el.lerp(ha, 0.3), (r * 0.78, r * 0.74, (ha - el).length * 0.33), skin)
+        _hand(c, f"fore_{nm}", ha, s, r, p.get("hand", skin), claws=p.get("claws", False))
         if p.get("shoulder"):
-            c.ell(f"arm_{nm}", sh + Vector((0, 0, r * 0.4)), (r * 1.7, r * 1.6, r * 1.1), p["shoulder"], rough=0.35)
+            c.ell(f"arm_{nm}", sh + Vector((s * r * 0.2, 0, r * 0.4)), (r * 1.7, r * 1.6, r * 1.1), p["shoulder"], rough=0.35, hard=True)
         arms.append((nm, s))
     weapon = p.get("weapon")
     if weapon:
-        ha = Vector((-W * 1.1, -S * 0.04, S * 0.74 - S * 0.39 * arm_len))
+        ha = Vector((-W * 1.1, -S * 0.04 - W * 0.05, S * 0.74 - S * 0.39 * arm_len - W * 0.24 * 0.9))
         if weapon == "club":
-            c.tube("fore_r", ha + Vector((0, 0, S * 0.04)), ha + Vector((0, -S * 0.35, S * 0.15)), S * 0.025, S * 0.06, (0.4, 0.27, 0.15), seg=8)
+            c.tube("fore_r", ha + Vector((0, S * 0.03, S * 0.0)), ha + Vector((0, -S * 0.35, S * 0.15)), S * 0.022, S * 0.055, (0.4, 0.27, 0.15), seg=10, hard=True)
+            c.ell("fore_r", ha + Vector((0, -S * 0.33, S * 0.14)), (S * 0.06,) * 3, (0.36, 0.24, 0.13), seg=10, hard=True)
         elif weapon == "sword":
-            c.tube("fore_r", ha + Vector((0, 0.02, 0)), ha + Vector((0, -S * 0.05, 0.02)), S * 0.02, S * 0.02, (0.3, 0.2, 0.1), seg=6)
-            c.ell("fore_r", ha + Vector((0, -S * 0.06, 0.02)), (S * 0.07, S * 0.012, S * 0.012), (0.6, 0.5, 0.2), rough=0.3)
-            c.tube("fore_r", ha + Vector((0, -S * 0.07, 0.03)), ha + Vector((0, -S * 0.42, S * 0.15)), S * 0.018, S * 0.004, (0.78, 0.78, 0.82), seg=6, rough=0.2)
+            c.tube("fore_r", ha + Vector((0, 0.03, 0)), ha + Vector((0, -S * 0.05, 0.02)), S * 0.017, S * 0.017, (0.3, 0.2, 0.1), seg=8, hard=True)
+            c.ell("fore_r", ha + Vector((0, -S * 0.06, 0.02)), (S * 0.07, S * 0.012, S * 0.014), (0.6, 0.5, 0.2), rough=0.3, hard=True)
+            c.ell("fore_r", ha + Vector((0, -S * 0.25, S * 0.085)), (S * 0.006, S * 0.2, S * 0.025), (0.78, 0.78, 0.82), rot=(-20, 0, 0), rough=0.2, hard=True)
         elif weapon == "staff":
-            c.tube("fore_r", ha + Vector((0, 0, -S * 0.45)), ha + Vector((0, 0, S * 0.55)), S * 0.015, S * 0.015, (0.35, 0.25, 0.15), seg=6)
-            c.ell("fore_r", ha + Vector((0, 0, S * 0.58)), (S * 0.04,) * 3, p.get("orb", (0.4, 0.6, 1.0)), emit=3.0)
+            c.tube("fore_r", ha + Vector((0, 0, -S * 0.45)), ha + Vector((0, 0, S * 0.55)), S * 0.015, S * 0.018, (0.35, 0.25, 0.15), seg=8, hard=True)
+            c.ell("fore_r", ha + Vector((0, 0, S * 0.58)), (S * 0.04,) * 3, p.get("orb", (0.4, 0.6, 1.0)), emit=3.0, hard=True)
         elif weapon == "spear":
-            c.tube("fore_r", ha + Vector((0, S * 0.3, -S * 0.1)), ha + Vector((0, -S * 0.5, S * 0.18)), S * 0.012, S * 0.012, (0.4, 0.3, 0.2), seg=6)
-            c.tube("fore_r", ha + Vector((0, -S * 0.5, S * 0.18)), ha + Vector((0, -S * 0.62, S * 0.22)), S * 0.025, 0, (0.75, 0.75, 0.78), seg=6)
+            c.tube("fore_r", ha + Vector((0, S * 0.3, -S * 0.1)), ha + Vector((0, -S * 0.5, S * 0.18)), S * 0.012, S * 0.012, (0.4, 0.3, 0.2), seg=6, hard=True)
+            c.tube("fore_r", ha + Vector((0, -S * 0.5, S * 0.18)), ha + Vector((0, -S * 0.64, S * 0.23)), S * 0.025, 0, (0.75, 0.75, 0.78), seg=6, hard=True)
     shield = p.get("shield")
     if shield:
         ha = Vector((W * 1.1, -S * 0.08, S * 0.74 - S * 0.39 * arm_len))
-        c.ell("fore_l", ha + Vector((W * 0.25, 0, S * 0.08)), (S * 0.02, S * 0.15, S * 0.17), shield, rough=0.4)
+        c.ell("fore_l", ha + Vector((W * 0.3, 0, S * 0.08)), (S * 0.025, S * 0.15, S * 0.17), shield, rough=0.4, hard=True)
+        c.ell("fore_l", ha + Vector((W * 0.3 + S * 0.02, 0, S * 0.08)), (S * 0.02, S * 0.04, S * 0.04), (0.6, 0.6, 0.62), rough=0.3, hard=True)
     # Beine
     for s in (-1, 1):
         nm = "l" if s > 0 else "r"
+        dig = p.get("digitigrade", 0)
         hip = Vector((s * W * 0.38, 0, hip_h))
-        knee = Vector((s * W * 0.42, -S * 0.02 + p.get("digitigrade", 0) * S * 0.08, hip_h * 0.5))
-        foot = Vector((s * W * 0.42, 0, S * 0.03))
+        knee = Vector((s * W * 0.42, -S * 0.02 - dig * S * 0.06, hip_h * 0.52))
+        foot = Vector((s * W * 0.42, dig * S * 0.06, S * 0.045))
         c.bone(f"thigh_{nm}", hip, knee, "body")
         c.bone(f"shin_{nm}", knee, foot, f"thigh_{nm}")
         r = W * 0.3 * p.get("leg_r", 1.0)
-        c.limb(f"thigh_{nm}", hip, knee, r * 1.1, r * 0.85, p.get("leg_color", skin if not p.get("pants") else p["pants"]))
-        c.limb(f"shin_{nm}", knee, foot, r * 0.85, r * 0.7, p.get("leg_color", skin if not p.get("pants") else p["pants"]))
-        c.ell(f"shin_{nm}", foot + Vector((0, -r * 0.6, -S * 0.005)), (r * 0.8, r * (1.6 + p.get("webbed", 0)), r * 0.45), p.get("foot", acc))
+        leg_col = p.get("leg_color", lower if p.get("pants") else skin)
+        c.tube(f"thigh_{nm}", hip, knee, r * 1.1, r * 0.75, leg_col)
+        c.ell(f"thigh_{nm}", hip.lerp(knee, 0.4) + Vector((0, -r * 0.2, 0)), (r * 0.95, r * 0.95, (knee - hip).length * 0.4), leg_col)
+        c.tube(f"shin_{nm}", knee, foot, r * 0.75, r * 0.45, leg_col)
+        c.ell(f"shin_{nm}", knee.lerp(foot, 0.3) + Vector((0, r * 0.25, 0)), (r * 0.72, r * 0.75, (foot - knee).length * 0.3), leg_col)
+        fc = p.get("foot", leg_col if not p.get("boots") else acc)
+        web = p.get("webbed", 0)
+        if dig:
+            for k in (-1, 0, 1):
+                c.tube(f"shin_{nm}", foot, foot + Vector((k * r * 0.5, -r * 1.6, -S * 0.03)), r * 0.28, r * 0.12, fc)
+            c.tube(f"shin_{nm}", foot, foot + Vector((0, r * 0.8, -S * 0.03)), r * 0.25, r * 0.1, fc)
+        else:
+            c.ell(f"shin_{nm}", foot + Vector((0, -r * 0.5, -S * 0.012)), (r * 0.6, r * (1.15 + web * 0.4), r * 0.4), fc)
+            c.ell(f"shin_{nm}", foot + Vector((0, r * 0.15, -S * 0.005)), (r * 0.5, r * 0.5, r * 0.45), fc)
+            for k in range(4 if not p.get("boots") else 0):
+                t = foot + Vector(((k - 1.5) * r * 0.32, -r * (1.55 + web * 0.5) + abs(k - 1.5) * r * 0.12, -S * 0.016))
+                c.ell(f"shin_{nm}", t, (r * 0.17, r * 0.28, r * 0.17), fc)
+                if p.get("claws"):
+                    c.tube(f"shin_{nm}", t + Vector((0, -r * 0.2, 0)), t + Vector((0, -r * 0.45, -r * 0.1)), r * 0.08, 0, (0.9, 0.88, 0.8), seg=5)
         legs.append((nm, s))
     tail = 0
     if p.get("tail"):
@@ -939,7 +1149,7 @@ def build_biped(c, p):
             end = start + Vector((0, S * p["tail"] / tail, -S * 0.08))
             c.bone(f"tail{i}", start, end, prev)
             r = W * 0.28 * (1 - i * 0.22)
-            c.limb(f"tail{i}", start, end, r, r * 0.75, skin)
+            c.tube(f"tail{i}", start, end, r, r * 0.75, skin)
             prev, start = f"tail{i}", end
     _biped_anim(c, legs, arms, S, heavy=p.get("heavy", False), tail=tail)
 
@@ -952,8 +1162,9 @@ def build_mollusk(c, p):
     c.bone("body", (0, L * 0.4, H * 0.2), (0, -L * 0.4, H * 0.2), "root")
     c.bone("head", (0, -L * 0.35, H * 0.25), (0, -L * 0.6, H * 0.55), "body")
     c.bone("shell", (0, L * 0.05, H * 0.4), (0, L * 0.05, H), "body")
-    c.ell("body", (0, 0, H * 0.15), (L * 0.22, L * 0.5, H * 0.16), col, rough=0.25)
-    c.ell("head", (0, -L * 0.48, H * 0.42), (L * 0.13, L * 0.14, H * 0.2), col, rough=0.25)
+    c.groups["shell"] = "shell"
+    c.ell("body", (0, 0, H * 0.15), (L * 0.22, L * 0.5, H * 0.16), col, rough=0.3)
+    c.ell("head", (0, -L * 0.48, H * 0.42), (L * 0.13, L * 0.14, H * 0.2), col, rough=0.3)
     for s in (-1, 1):
         c.tube("head", (s * L * 0.05, -L * 0.52, H * 0.55), (s * L * 0.1, -L * 0.6, H * 0.85), L * 0.025, L * 0.015, col, seg=6)
         c.ell("head", (s * L * 0.1, -L * 0.6, H * 0.87), (L * 0.035,) * 3, (0.05, 0.05, 0.05), rough=0.2)
@@ -1032,9 +1243,18 @@ def add_wings(c, p):
         a = at + Vector((s * 0.02, 0, 0))
         b = a + Vector((s * span, span * 0.25, span * 0.3))
         c.bone(nm, a, b, bone)
-        mid = (a + b) / 2
-        c.ell(nm, mid, (span * 0.5, span * w.get("depth", 0.22), 0.01), color, rot=(0, -s * 30, 0),
-              rough=w.get("rough", 0.25), emit=w.get("glow", 0.0))
+        # Flügel als Fächer aus Schwungfedern bzw. Hautsegmenten, die vom Flügelbug ausstrahlen
+        depth = w.get("depth", 0.22)
+        c.tube(nm, a, b, span * 0.035, span * 0.015, darker(color, 0.8), rough=0.6, hard=True)
+        for k in range(6):
+            f = k / 5
+            ang = math.radians(-10 - 70 * f)
+            d = Vector((s * math.cos(ang), 0.25 * f, math.sin(ang)))
+            root = a.lerp(b, 0.25 + 0.6 * (1 - f))
+            ln = span * (0.45 + 0.35 * (1 - abs(f - 0.3)))
+            rot = d.normalized().to_track_quat('X', 'Z').to_euler()
+            c.ell(nm, root + d * ln * 0.5, (ln * 0.55, 0.008, span * depth * (0.28 - 0.1 * f)), color if k % 2 == 0 else darker(color, 0.85),
+                  rot=tuple(math.degrees(x) for x in rot), rough=w.get("rough", 0.25), emit=w.get("glow", 0.0), hard=True)
         names.append((nm, s))
     inner = c.anim
     rate = w.get("rate", 4)
@@ -1053,11 +1273,13 @@ def add_extra_arms(c, p):
     """Zusätzliche, nicht zusammenpassende Glieder (Drescher), die unabhängig peitschen."""
     arms = []
     for k, (side, z, length, col) in enumerate(p["extra_arms"]):
-        a = Vector((side * 0.3, 0.05, z))
+        W = p["height"] * 0.2 * p.get("bulk", 1.0)
+        a = Vector((side * W * 0.85, W * 0.25, z))
         b = a + Vector((side * length * 0.5, -length * 0.3, -length * 0.6))
         nm = c.bone(f"extra{k}", a, b, "body")
-        c.limb(nm, a, b, 0.07, 0.04, col)
-        c.ell(nm, b, (0.08, 0.06, 0.1), darker(col))
+        c.tube(nm, a, b, 0.09, 0.06, col)
+        c.ell(nm, a.lerp(b, 0.35), (0.11, 0.11, length * 0.22), col)
+        _hand(c, nm, b, side, 0.09, darker(col, 0.8), claws=True)
         arms.append((nm, side, k))
     inner = c.anim
 
@@ -1088,16 +1310,117 @@ def reset_scene():
     bpy.ops.wm.read_factory_settings(use_empty=True)
 
 
-def make_material(name, color, rough, emit):
+def make_material(name, color, rough, emit, vertex_color=False):
     m = bpy.data.materials.new(name)
     m.use_nodes = True
     bsdf = m.node_tree.nodes.get("Principled BSDF")
     bsdf.inputs["Base Color"].default_value = (*color, 1)
     bsdf.inputs["Roughness"].default_value = rough
+    if vertex_color:
+        attr = m.node_tree.nodes.new("ShaderNodeVertexColor")
+        attr.layer_name = "Col"
+        m.node_tree.links.new(attr.outputs["Color"], bsdf.inputs["Base Color"])
     if emit > 0:
         bsdf.inputs["Emission Color"].default_value = (*color, 1)
         bsdf.inputs["Emission Strength"].default_value = emit
     return m
+
+
+# Knochenketten, die eine eigene Fläche bekommen (Glieder verschmelzen nicht mit dem Rumpf, damit sie frei schwingen)
+LIMBS = ("arm_", "fore_", "thigh_", "shin_", "up_", "lo_", "a_", "b_", "c_", "leg", "wing", "claw", "extra", "stem")
+SOFT_TRIS = 28000      # Dreiecke aller weichen Flächen zusammen
+
+
+def group_of(c, bone, parents):
+    if bone in c.groups:
+        return c.groups[bone]
+    if not bone.startswith(LIMBS):
+        return "trunk"
+    while parents.get(bone) and parents[bone].startswith(LIMBS) and parents[bone] not in c.groups:
+        bone = parents[bone]
+    return bone
+
+
+def apply_modifier(obj, mod):
+    bpy.context.view_layer.objects.active = obj
+    bpy.ops.object.modifier_apply(modifier=mod.name)
+
+
+def soft_objects(c):
+    """Weiche Teile je Gruppe als Distanzfeld vereinigen, triangulieren, ausdünnen, Gewichte und Farben setzen."""
+    if not c.soft:
+        return []
+    lo = np.min([p.lo for p in c.soft], axis=0)
+    hi = np.max([p.hi for p in c.soft], axis=0)
+    size = float((hi - lo).max())
+    parents = {n: par for n, _, _, par in c.bones}
+    bone_index = {n: i for i, (n, _, _, _) in enumerate(c.bones)}
+    groups = {}
+    for part in c.soft:
+        groups.setdefault(group_of(c, part.bone, parents), []).append(part)
+    built = []
+    for g, parts in groups.items():
+        vox = max(min(size / 240, min(p.big for p in parts) / 2.5), size / 700)
+        field = Field(parts, vox)
+        pts, tris, quads = field.polygons()
+        if len(pts) == 0:
+            continue
+        faces = [list(t) for t in tris] + [list(q) for q in quads]
+        # Umlaufsinn so, dass die Normalen nach außen zeigen (Volumen positiv)
+        tri = [f[:3] for f in faces] + [[f[0], f[2], f[3]] for f in faces if len(f) == 4]
+        P = pts[np.array(tri)]
+        if np.einsum("ij,ij->i", P[:, 0], np.cross(P[:, 1], P[:, 2])).sum() < 0:
+            faces = [f[::-1] for f in faces]
+        built.append((g, parts, field, pts, faces))
+    total = sum(sum(len(f) - 2 for f in faces) for *_, faces in built)
+    ratio = min(1.0, SOFT_TRIS / max(total, 1))
+    mats = {}
+    objs = []
+    for g, parts, field, pts, faces in built:
+        mesh = bpy.data.meshes.new(f"{c.name}_{g}")
+        mesh.from_pydata(pts.tolist(), [], faces)
+        obj = bpy.data.objects.new(mesh.name, mesh)
+        bpy.context.scene.collection.objects.link(obj)
+        if ratio < 1.0:
+            mod = obj.modifiers.new("Decimate", 'DECIMATE')
+            mod.ratio = ratio
+            apply_modifier(obj, mod)
+        n = len(mesh.vertices)
+        V = np.zeros(n * 3)
+        mesh.vertices.foreach_get("co", V)
+        V = V.reshape(-1, 3)
+        N = np.zeros(n * 3)
+        mesh.vertices.foreach_get("normal", N)
+        N = N.reshape(-1, 3)
+        top, Bt, col, dom = shade(field, parts, V, N, size, bone_index, c.pattern)
+        names = [b[0] for b in c.bones]
+        vgs = {}
+        for i in range(n):
+            for j in range(Bt.shape[1]):
+                w = float(Bt[i, j])
+                if w > 0.01:
+                    nm = names[top[i, j]]
+                    vg = vgs.get(nm) or vgs.setdefault(nm, obj.vertex_groups.new(name=nm))
+                    vg.add([i], w, 'REPLACE')
+        attr = mesh.color_attributes.new("Col", 'FLOAT_COLOR', 'POINT')
+        attr.data.foreach_set("color", np.hstack([col, np.ones((n, 1))]).ravel())
+        # Material je vorherrschendem Teil (Rauheit, Leuchten)
+        idx = []
+        for j, part in enumerate(parts):
+            key = (round(part.rough, 2), round(part.emit, 2), tuple(part.color) if part.emit > 0 else None)
+            if key not in mats:
+                mats[key] = make_material(f"{c.name}_soft{len(mats)}", part.color if part.emit > 0 else (1, 1, 1),
+                                          part.rough, part.emit, vertex_color=True)
+            if mats[key].name not in mesh.materials:
+                mesh.materials.append(mats[key])
+            idx.append(list(mesh.materials).index(mats[key]))
+        fi = np.zeros(len(mesh.polygons), int)
+        for k, poly in enumerate(mesh.polygons):
+            fi[k] = idx[dom[poly.vertices[0]]]
+        mesh.polygons.foreach_set("material_index", fi)
+        mesh.polygons.foreach_set("use_smooth", np.ones(len(mesh.polygons), bool))
+        objs.append(obj)
+    return objs
 
 
 def realize(c):
@@ -1113,6 +1436,7 @@ def realize(c):
             eb.parent = arm.edit_bones[parent]
     bpy.ops.object.mode_set(mode='OBJECT')
 
+    parts = soft_objects(c)
     mesh = bpy.data.meshes.new(c.name)
     c.bm.to_mesh(mesh)
     c.bm.free()
@@ -1122,6 +1446,15 @@ def realize(c):
         obj.vertex_groups.new(name=name)
     for mname, color, rough, emit in c.materials:
         mesh.materials.append(make_material(mname, color, rough, emit))
+    attr = mesh.color_attributes.new("Col", 'FLOAT_COLOR', 'POINT')
+    attr.data.foreach_set("color", np.ones(len(mesh.vertices) * 4))
+    if parts:
+        bpy.ops.object.select_all(action='DESELECT')
+        for o in parts:
+            o.select_set(True)
+        obj.select_set(True)
+        bpy.context.view_layer.objects.active = obj
+        bpy.ops.object.join()
     obj.parent = rig
     mod = obj.modifiers.new("Armature", 'ARMATURE')
     mod.object = rig
@@ -1160,7 +1493,7 @@ def animate(c, rig):
         rig.animation_data.action = None
 
 
-def render_preview(obj, rig, path, kind="Walk", frame=6):
+def render_preview(obj, rig, path, kind="Idle", frame=0):
     scene = bpy.context.scene
     for track in rig.animation_data.nla_tracks:
         track.mute = True
@@ -1172,7 +1505,7 @@ def render_preview(obj, rig, path, kind="Walk", frame=6):
     center = sum(pts, Vector()) / 8
     cam = bpy.data.objects.new("Cam", bpy.data.cameras.new("Cam"))
     scene.collection.objects.link(cam)
-    cam.location = center + Vector((size * 1.3, -size * 1.6, size * 0.9))
+    cam.location = center + Vector((size * 0.9, -size * 1.5, size * 0.45))
     cam.rotation_euler = (center - cam.location).to_track_quat('-Z', 'Y').to_euler()
     scene.camera = cam
     sun = bpy.data.objects.new("Sun", bpy.data.lights.new("Sun", 'SUN'))
@@ -1183,7 +1516,7 @@ def render_preview(obj, rig, path, kind="Walk", frame=6):
     scene.world.use_nodes = True
     scene.world.node_tree.nodes["Background"].inputs[0].default_value = (0.5, 0.55, 0.6, 1)
     scene.render.engine = 'BLENDER_EEVEE'
-    scene.render.resolution_x = scene.render.resolution_y = 400
+    scene.render.resolution_x = scene.render.resolution_y = 600
     scene.render.filepath = os.path.abspath(path)
     bpy.ops.render.render(write_still=True)
 
@@ -1192,6 +1525,9 @@ def build(key, out_dir, preview_dir=None):
     spec = CREATURES[key]
     reset_scene()
     c = Creature(key.capitalize())
+    if spec.get("relief"):
+        c.bump = tuple(spec["relief"])
+    c.pattern = spec.get("pattern")
     BUILDERS[spec["body"]](c, spec)
     if isinstance(spec.get("wings"), dict):
         add_wings(c, spec)
