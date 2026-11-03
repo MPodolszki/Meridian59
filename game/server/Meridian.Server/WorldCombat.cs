@@ -37,6 +37,7 @@ public sealed partial class World
         }
         off += EnchantState(a, "bless");   // plAttack_modifiers: bless.kod ModifyHitRoll
         off += ForcesOfLightBonus(a);       // forceslt.kod ModifyHitRoll
+        off += KaraholHit(a);
         return Math.Clamp(off, 1, 1000);
     }
 
@@ -81,6 +82,7 @@ public sealed partial class World
         }
         d += BlessDamage(a);   // plAttack_modifiers: bless.kod ModifyDamage
         d += KillingFieldsBonus(a);
+        d += KaraholDamage(a);
         d = CombatRules.Resist(d, m.Kind.ResistanceTo(attackType));
         return Math.Max(d, 1);
     }

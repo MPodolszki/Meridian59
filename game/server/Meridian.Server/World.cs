@@ -42,6 +42,8 @@ public sealed class Avatar(uint id, string name, Session session)
     public TouchAttack? Touch { get; set; }
     /// <summary>Rettung (rescue.kod) läuft bis zu diesem Zeitpunkt.</summary>
     public DateTime? RescueAt { get; set; }
+    /// <summary>Gelähmt bis (Kara'hols Fluch danach, hold.kod): keine Bewegung, kein Angriff, kein Zaubern.</summary>
+    public DateTime? HeldUntil { get; set; }
     /// <summary>Manafokus (focus.kod): Spruchstärke beim Wirken, solange die Trance hält.</summary>
     public int? ManaFocus { get; set; }
     public DateTime NextMana { get; set; }
@@ -342,6 +344,9 @@ public sealed partial class World
     {
         lock (_gate)
         {
+            // Gelähmt: der Client bleibt nach EFFECT_PARALYZE stehen; späte Bewegungen gelten nicht.
+            if (avatar.HeldUntil is not null)
+                return null;
             if (EdgeExit(avatar.Room.Definition, row, col) is { } edge)
             {
                 if (!_rooms.TryGetValue(edge.To, out var target))
@@ -549,6 +554,7 @@ public sealed partial class World
                     TickMagic(avatar, now);
                     TickPoison(avatar, now);
                     TickRescue(avatar, now);
+                    TickHeld(avatar, now);
                 }
             }
         }
@@ -791,6 +797,8 @@ public sealed partial class World
     {
         lock (_gate)
         {
+            if (IsHeld(avatar))
+                return;
             EndManaFocus(avatar);
             if (avatar.Room.Definition.NoCombat)
             {

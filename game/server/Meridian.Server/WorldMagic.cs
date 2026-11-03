@@ -185,6 +185,8 @@ public sealed partial class World
         {
             if (_spells.ByObjectId(spellId) is not { } spell || !a.State.Spells.ContainsKey(spell.Sid))
                 return;
+            if (IsHeld(a))
+                return;
             if (a.Casting is not null)
             {
                 Tell(a, "Du konzentrierst dich bereits auf einen Zauber.");
@@ -342,7 +344,7 @@ public sealed partial class World
                 ChangeMana(target, amount);
                 break;
             }
-            case "bless" or "superstrength" or "haste" or "resist" or "gort" or "resistmagic":
+            case "bless" or "superstrength" or "haste" or "resist" or "gort" or "resistmagic" or "karahol" or "nightvision":
                 Enchant(a, target ?? a, spell, power);
                 break;
             case "roomlight" or "roomdark" or "killingfields" or "forcesoflight":
@@ -353,6 +355,9 @@ public sealed partial class World
                 break;
             case "manafocus":
                 StartManaFocus(a, spell, power);
+                break;
+            case "purify":
+                Purify(a, spell, power);
                 break;
             default:
                 CastSchoolSpell(a, spell, target, victim, power);

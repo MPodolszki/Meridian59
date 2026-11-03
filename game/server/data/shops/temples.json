@@ -8,6 +8,7 @@
         "holytouch",
         "curepoison",
         "rescue",
+        "purify",
         "forcesoflight",
         "majorheal",
         "holysymbol",
@@ -22,6 +23,7 @@
       "spells": [
         "bless",
         "superstrength",
+        "nightvision",
         "createweapon",
         "createfood",
         "killingfields",
@@ -35,6 +37,7 @@
       "spells": [
         "darkness",
         "acidtouch",
+        "karaholscurse",
         "enfeeble",
         "hold"
       ]

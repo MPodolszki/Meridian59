@@ -9,7 +9,8 @@ namespace Meridian.Server;
 /// </summary>
 public sealed partial class World
 {
-    private static bool IsEnchantment(SpellDefinition s) => s.Effect is "bless" or "superstrength" or "haste" or "resist" or "gort" or "resistmagic";
+    private static bool IsEnchantment(SpellDefinition s) =>
+        s.Effect is "bless" or "superstrength" or "haste" or "resist" or "gort" or "resistmagic" or "karahol" or "nightvision";
 
     /// <summary>CanPayCosts: auf sich selbst darf man neu wirken (CanRecastSelfEnchantment = TRUE), auf andere nicht.</summary>
     private bool CanEnchant(Avatar caster, Avatar target, SpellDefinition spell)
@@ -31,6 +32,7 @@ public sealed partial class World
             "superstrength" => power / 5 + 1,                 // AddMight
             "resist" => power / 2 + spell.ResistBase,         // GetResistanceStrength
             "resistmagic" => power / 3 + 7,                   // resmagic.kod
+            "nightvision" => power + 50,                      // nightv.kod GainLight
             _ => power,                                        // Segen, Eile: Spruchstärke
         };
         // haste.kod: 5 + 15 × Stärke / 100 Minuten (ganzzahlig); sonst Basis + Stärke × je Punkt Sekunden.
@@ -38,22 +40,73 @@ public sealed partial class World
             ? (5 + 15 * power / 100) * 60_000
             : (spell.DurationBase + power * spell.DurationPerPower) * 1000;
         // gort.kod: fest (Stärke/8 + 1) Minuten; sonst Random(Dauer/2, Dauer).
-        int ms = spell.Effect == "gort" ? (power / 8 + 1) * 60_000 : _random.Next(duration / 2, duration + 1);
+        int ms = spell.Effect switch
+        {
+            "gort" => (power / 8 + 1) * 60_000,
+            "karahol" => (40 + power / 2) * 1000,            // karahol.kod: fest
+            _ => _random.Next(duration / 2, duration + 1),
+        };
         target.State.Enchantments[spell.Sid] = new Enchantment(state, DateTime.UtcNow.AddMilliseconds(ms));
         Tell(target, spell.CastText ?? "Dein Körper kribbelt vor magischer Energie.");
         if (caster != target)
             Tell(caster, string.Format(spell.HitText ?? "Du verzauberst {0}.", target.Name));
         target.Session.Post(GameReplies.AddEnchantment(ToSpellObject(target.Session, spell)));
+        if (spell.Effect == "nightvision")
+            target.Session.Post(GameReplies.LightPlayer(PlayerLight(target)));
     }
+
+    /// <summary>Eigenes Licht (Nachtsicht) für BP_PLAYER und BP_LIGHT_PLAYER.</summary>
+    public byte PlayerLight(Avatar a) => (byte)Math.Min(EnchantState(a, "nightvision"), 255);
 
     private void EndEnchantment(Avatar a, SpellDefinition spell, bool report)
     {
-        if (!a.State.Enchantments.Remove(spell.Sid))
+        if (!a.State.Enchantments.Remove(spell.Sid, out var old))
             return;
         if (report)
             Tell(a, spell.OffText ?? "Du spürst, wie dein magisches Feld knistert und vergeht.");
         a.Session.Post(GameReplies.RemoveEnchantment(spell.ObjectId));
+        if (spell.Effect == "nightvision")
+            a.Session.Post(GameReplies.LightPlayer(PlayerLight(a)));
+        // karahol.kod EndEnchantment: danach gelähmt für ein Sechstel der Dauer (ohne Schutz durch freie Bewegung).
+        if (spell.Effect == "karahol" && report)
+            Paralyze(a, TimeSpan.FromMilliseconds((40 + old.State / 2) * 1000 / 6));
     }
+
+    private void Paralyze(Avatar a, TimeSpan duration)
+    {
+        a.HeldUntil = DateTime.UtcNow + duration;
+        BreakTrance(a);
+        a.Session.Post(GameReplies.Effect(GameReplies.EffectParalyze));
+    }
+
+    private void TickHeld(Avatar a, DateTime now)
+    {
+        if (a.HeldUntil is not { } until || now < until)
+            return;
+        Release(a);
+    }
+
+    private void Release(Avatar a)
+    {
+        a.HeldUntil = null;
+        a.Session.Post(GameReplies.Effect(GameReplies.EffectRelease));
+        Tell(a, "Du kannst dich wieder bewegen.");
+    }
+
+    /// <summary>Gelähmt: keine Handlung (hold.kod). true = blockiert.</summary>
+    private bool IsHeld(Avatar a)
+    {
+        if (a.HeldUntil is null)
+            return false;
+        Tell(a, "Du bist wie gelähmt und kannst dich nicht rühren.");
+        return true;
+    }
+
+    /// <summary>Kara'hols Fluch (karahol.kod): Treffer + 100 + 2 × Stärke.</summary>
+    private int KaraholHit(Avatar a) => EnchantState(a, "karahol") is > 0 and var s ? 100 + 2 * s : 0;
+
+    /// <summary>Kara'hols Fluch: Schaden + 1 + Random(0, Stärke/20).</summary>
+    private int KaraholDamage(Avatar a) => EnchantState(a, "karahol") is > 0 and var s ? 1 + _random.Next(0, s / 20 + 1) : 0;
 
     /// <summary>Abgelaufene Verzauberungen beenden (Enchantment-Timer).</summary>
     private void TickEnchantments(Avatar a, DateTime now)

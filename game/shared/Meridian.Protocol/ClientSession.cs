@@ -56,6 +56,10 @@ public abstract record ClientEvent
     public sealed record HealthChanged(int Hp, int MaxHp) : ClientEvent;
     /// <summary>Umgebungslicht des Raums 0..255 (BP_PLAYER, BP_LIGHT_AMBIENT; Tageszeit).</summary>
     public sealed record AmbientLight(byte Light) : ClientEvent;
+    /// <summary>BP_EFFECT: Lähmen/Freigeben, Blind/Sehen (GameReplies.Effect*).</summary>
+    public sealed record Effect(ushort Code) : ClientEvent;
+    /// <summary>BP_LIGHT_PLAYER: eigenes Licht (Nachtsicht).</summary>
+    public sealed record PlayerLight(byte Light) : ClientEvent;
     /// <summary>Mana (BP_STAT Gruppe 1, Nr. 2).</summary>
     public sealed record ManaChanged(int Mana, int MaxMana) : ClientEvent;
     /// <summary>Bekannte Sprüche (BP_SPELLS, BP_SPELL_ADD, Fähigkeit aus Stat-Gruppe 3).</summary>
@@ -622,6 +626,12 @@ public sealed class ClientSession : IDisposable
             }
             case GameMessage.LightAmbient:
                 Enqueue(new ClientEvent.AmbientLight(r.U8()));
+                break;
+            case GameMessage.Effect:
+                Enqueue(new ClientEvent.Effect(r.U16()));
+                break;
+            case GameMessage.LightPlayer:
+                Enqueue(new ClientEvent.PlayerLight(r.U8()));
                 break;
             case GameMessage.Use:
             case GameMessage.Unuse:

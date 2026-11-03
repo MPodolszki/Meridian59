@@ -101,6 +101,22 @@ public sealed class SpellTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task KaraholsCurse_EndsInParalysis_NightVisionLightsThePlayer()
+    {
+        var (c, events, me) = await EnterAsync(66);
+        GiveReagents(me, ("entrootberry", 40), ("elderberry", 40));
+        await CastUntilAsync(c, events, me, 66, 0, t => t.Contains("Kara'hols kommt über dich"));
+        Assert.True(_server.World.PlayerOffense(me) > 100);
+        me.State.Enchantments[66] = me.State.Enchantments[66] with { Until = DateTime.UtcNow };
+        await WaitForAsync(c, events, e => e is ClientEvent.Effect { Code: GameReplies.EffectParalyze });
+        Assert.NotNull(me.HeldUntil);
+        me.State.Spells[4] = 99;
+        me.HeldUntil = null;
+        await CastUntilAsync(c, events, me, 4, me.Id, t => t.Contains("Augen brennen"));
+        await WaitForAsync(c, events, e => e is ClientEvent.PlayerLight { Light: > 50 });
+    }
+
+    [Fact]
     public void MonsterSpells_HaveTheOriginalValues()
     {
         var book = SpellBook.Load(Data("spells", "spells.json"));

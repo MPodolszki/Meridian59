@@ -469,7 +469,7 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         PostGame(GameReplies.Player(new PlayerInfo(
             _avatar.Id, res[icon], res[_avatar.Name],
             _avatar.Room.ObjectId, res[room.Roo], res[room.Name], room.Security,
-            light, PlayerLight: 0)));
+            light, PlayerLight: server.World.PlayerLight(_avatar))));
         if (room.Music is { } music)
         {
             EnsureResource(music);

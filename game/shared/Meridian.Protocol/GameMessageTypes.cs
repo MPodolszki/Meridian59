@@ -71,6 +71,7 @@ public enum GameMessage : byte
     RemoveEnchantment = 148,
     Quit = 149,
     Background = 150,
+    Effect = 70,
     PlayerOverlay = 151,
     UserCommand = 155,          // beide
     Admin = 162,

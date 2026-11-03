@@ -1068,6 +1068,76 @@
       "effect": "manafocus",
       "description": "Eine Trance, in der sich dein Mana schneller erholt und Angriffssprüche stärker werden. Jede Bewegung oder ein Schlag beendet sie.",
       "castText": "Neu gebündelte Magie tobt durch deinen Körper."
+    },
+    {
+      "key": "karaholscurse",
+      "sid": 66,
+      "name": "Kara'hols Fluch",
+      "icon": "ikarahol.bgf",
+      "school": 2,
+      "level": 2,
+      "mana": 9,
+      "chanceToIncrease": 45,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "entrootberry",
+          "number": 2
+        }
+      ],
+      "effect": "karahol",
+      "description": "Der Geist Kara'hols bringt dein Blut zum Kochen: deine Schläge treffen viel sicherer und etwas härter. Wenn er dich verlässt, bist du eine Weile wie gelähmt. Braucht Entwurzbeeren.",
+      "castText": "Der Geist Kara'hols kommt über dich, dein Blut kocht und deine Muskeln zucken vor neuer Kraft.",
+      "offText": "Völlige Erschöpfung packt deine Glieder, dein Körper erstarrt.",
+      "unnecessary": "Dein Blut kocht bereits mit Kara'hols Geist!"
+    },
+    {
+      "key": "nightvision",
+      "sid": 4,
+      "name": "Nachtsicht",
+      "icon": "nitvsico.bgf",
+      "school": 3,
+      "level": 3,
+      "mana": 6,
+      "chanceToIncrease": 35,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "elderberry",
+          "number": 3
+        }
+      ],
+      "effect": "nightvision",
+      "durationBase": 1500,
+      "durationPerPower": 25,
+      "description": "Deine Augen glühen vor magischer Kraft und durchdringen die Dunkelheit. Braucht Holunderbeeren.",
+      "castText": "Deine Augen brennen vor magischer Kraft.",
+      "offText": "Deine Sicht wird wieder normal.",
+      "hitText": "Die Augen von {0} glühen vor magischer Kraft."
+    },
+    {
+      "key": "purify",
+      "sid": 72,
+      "name": "Läutern",
+      "icon": "ipurify.bgf",
+      "school": 1,
+      "level": 4,
+      "mana": 10,
+      "chanceToIncrease": 10,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "emerald",
+          "number": 2
+        },
+        {
+          "item": "elderberry",
+          "number": 2
+        }
+      ],
+      "effect": "purify",
+      "description": "Ein heiliges Licht befreit dich mit etwas Glück von Gift und Lähmung. Braucht Smaragde und Holunderbeeren.",
+      "castText": "Ein helles, heiliges Licht versucht, deine Seele von unreinen Einflüssen zu befreien."
     }
   ],
   "startingSpells": [

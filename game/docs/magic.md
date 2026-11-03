@@ -139,3 +139,12 @@ Abweichungen: Magie widerstehen wirkt erst, wenn Monster zaubern (noch nicht); R
 Ko'catan noch nicht; Manafokus endet bei Bewegung oder Nahkampf (im Original bei jeder Trance-brechenden Handlung
 außer Angriffssprüchen); Neuankömmlinge bekommen keinen Hinweis auf die Raumverzauberung; die Schulbonus-Stärke der
 Kräfte des Lichts für Shal'ille-Sprüche fehlt.
+
+## Kara'hols Fluch, Nachtsicht, Läutern; Lähmung von Spielern (2026-11-03)
+- **Kara'hols Fluch** (karahol.kod, Qor 2): fest (40 + Stärke/2) s Treffer + 100 + 2×Stärke, Schaden + 1 + Random(0,
+  Stärke/20); danach gelähmt für ein Sechstel der Dauer.
+- **Nachtsicht** (nightv.kod, Kraanan 3): eigenes Licht Stärke + 50 für Random(D/2, D), D = 1500 + 25×Stärke s;
+  BP_LIGHT_PLAYER, im Godot-Client ein heller, weiter Lichtschein um die Figur.
+- **Läutern** (purify.kod, Shal'ille 4): Gift und Lähmung verschwinden je mit Stärke % Chance.
+- **Lähmung** (hold.kod für Spieler): BP_EFFECT EFFECT_PARALYZE/RELEASE wie im Original; der Godot-Client sperrt
+  dann die Bewegung, der Server lässt Angriff, Zaubern und Bewegung nicht zu.

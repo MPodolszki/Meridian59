@@ -229,6 +229,14 @@ public static class GameReplies
     public const ushort AttackGroup = 2;
     public const ushort DeathGroup = 9;
 
+    /// <summary>BP_EFFECT (effect.c PerformEffect): EFFECT_PARALYZE 3, EFFECT_RELEASE 4, EFFECT_BLIND 5, EFFECT_SEE 6.</summary>
+    public static byte[] Effect(ushort effect) => new PacketWriter((byte)GameMessage.Effect).U16(effect).ToArray();
+
+    public const ushort EffectParalyze = 3, EffectRelease = 4, EffectBlind = 5, EffectSee = 6;
+
+    /// <summary>BP_LIGHT_PLAYER: eigenes Licht des Spielers (Nachtsicht, 0 = keins).</summary>
+    public static byte[] LightPlayer(byte light) => new PacketWriter((byte)GameMessage.LightPlayer).U8(light).ToArray();
+
     /// <summary>BP_LIGHT_AMBIENT: neues Umgebungslicht des Raums (0..255).</summary>
     public static byte[] LightAmbient(byte light) => new PacketWriter((byte)GameMessage.LightAmbient).U8(light).ToArray();
 

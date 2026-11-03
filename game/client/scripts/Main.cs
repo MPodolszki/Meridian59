@@ -305,6 +305,16 @@ public partial class Main : Node3D
             case ClientEvent.AmbientLight light:
                 ApplyAmbientLight(light.Light);
                 break;
+            case ClientEvent.Effect { Code: GameReplies.EffectParalyze }:
+                _paralyzed = true;
+                break;
+            case ClientEvent.Effect { Code: GameReplies.EffectRelease }:
+                _paralyzed = false;
+                break;
+            case ClientEvent.PlayerLight pl:
+                _ownLight = pl.Light;
+                UpdatePlayerGlow(_lastLight);
+                break;
             case ClientEvent.VigorChanged v:
                 _vigor.Visible = _vigorText.Visible = true;
                 _vigor.MaxValue = v.MaxVigor;
@@ -409,6 +419,9 @@ public partial class Main : Node3D
     }
 
     private OmniLight3D? _playerGlow;
+    private bool _paralyzed;
+    /// <summary>Eigenes Licht vom Server (BP_LIGHT_PLAYER, Nachtsicht): verstärkt den Schein um die Figur.</summary>
+    private byte _ownLight;
 
     /// <summary>In dunklen Räumen (Grüfte, Nacht) ein schwacher, warmer Lichtschein um die eigene Figur, damit man
     /// den Weg sieht – das Original zeigt die nähere Umgebung auch im Dunkeln.</summary>
@@ -422,8 +435,11 @@ public partial class Main : Node3D
             self.AddChild(_playerGlow);
         }
         float darkness = Mathf.Clamp((180f - light) / 100f, 0f, 1f);
-        _playerGlow.LightEnergy = 2.2f * darkness;
-        _playerGlow.OmniRange = 9f + 5f * darkness;
+        // Nachtsicht (BP_LIGHT_PLAYER 51..149): deutlich hellerer, weiterer Schein, auch bei Tag ein wenig.
+        float own = _ownLight / 150f;
+        _playerGlow.LightEnergy = 2.2f * darkness + 3f * own;
+        _playerGlow.OmniRange = 9f + 5f * darkness + 14f * own;
+        darkness = Mathf.Max(darkness, own);
         _playerGlow.Visible = darkness > 0.01f;
     }
 

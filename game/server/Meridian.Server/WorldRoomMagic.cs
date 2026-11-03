@@ -122,6 +122,25 @@ public sealed partial class World
         Place(a, home, row, col);
     }
 
+    // ------------------------------------------------------------------ Läutern
+
+    /// <summary>purify.kod: jede schädliche persönliche Wirkung verschwindet mit Stärke % Chance – hier Gift und
+    /// Lähmung (andere schädliche Verzauberungen auf Spielern gibt es noch nicht).</summary>
+    private void Purify(Avatar a, SpellDefinition spell, int power)
+    {
+        bool any = a.Poisoned || a.HeldUntil is not null;
+        if (!any)
+        {
+            Tell(a, "Du stehst unter keinem schädlichen Zauber.");
+            return;
+        }
+        Tell(a, spell.CastText ?? "Ein helles, heiliges Licht versucht, deine Seele von unreinen Einflüssen zu befreien.");
+        if (a.Poisoned && power > _random.Next(1, 101))
+            CurePoison(a);
+        if (a.HeldUntil is not null && power > _random.Next(1, 101))
+            Release(a);
+    }
+
     // ------------------------------------------------------------------ Manafokus
 
     /// <summary>focus.kod: Trance ohne Ende; Mana erholt sich im Takt × (200 − Stärke)/200 (0,5 … 60 s), Angriffssprüche

@@ -88,6 +88,8 @@ public partial class Main
     private (Vector2 Input, float Speed) ReadMovement(float delta)
     {
         var input = Vector2.Zero;
+        if (_paralyzed)   // EFFECT_PARALYZE (Festhalten, Kara'hols Fluch): keine Bewegung
+            return (input, 0f);
         bool rmb = Input.IsMouseButtonPressed(MouseButton.Right);
         bool both = rmb && Input.IsMouseButtonPressed(MouseButton.Left);
         bool forward = Input.IsPhysicalKeyPressed(Key.W) || both;
