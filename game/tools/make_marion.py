@@ -78,6 +78,7 @@ rooms = [
                      description="Dieser Hebel sieht alt und abgenutzt aus, muss aber noch etwas bewegen.") for c in (4, 9)]},
     {"id": 2601, "constant": "RID_MAR_CRYPT2", "kodClass": "MarionCrypt2", "name": "Resting place of Marion's ancestors",
      "roo": "MarDun02.roo", "music": "Song.mid", "baseLight": DARK, "outsideFactor": 0,
+     "puzzle": "marioncrypt2",   # marcryp2.kod: lebende Statuen bewachen die Tür zu Gruft 3a
      "teleport": {"row": 17, "col": 18},
      "exits": exits([2, 26, 2600, 37, 6, "NONE"], [2, 27, 2600, 37, 7, "NONE"],
                     [38, 26, 2602, 31, 17, "NONE"], [38, 27, 2602, 31, 17, "NONE"]),

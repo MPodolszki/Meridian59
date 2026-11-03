@@ -130,6 +130,23 @@ public sealed class RazaTests : IAsyncDisposable
     }
 
     [Fact]
+    public async Task MarionCrypt2_StatuesGuardTheDoorToCrypt3a()
+    {
+        var (c, events) = await EnterAsync(2601);
+        var room = _server!.World.Rooms.Single(r => r.Definition.Id == 2601);
+        var me = room.Avatars.Values.Single();
+        Assert.Equal(37, room.Monsters.Count(m => m.Kind.Key == "livingstatue"));
+        await c.MoveAsync(Room.Fine(38), Room.Fine(26), false);
+        await c.GoAsync();
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat { Text: "Der Durchgang ist verschlossen." });
+        foreach (var m in room.Monsters.Where(m => m.Kind.Key == "livingstatue").ToList())
+            _server.World.KillForTest(me, m);
+        await WaitForAsync(c, events, e => e is ClientEvent.SectorMoved { Sector: 5, Height: 1098 });
+        await c.GoAsync();
+        await WaitForAsync(c, events, e => e is ClientEvent.EnteredRoom er && er.RoomName != "Resting place of Marion's ancestors");
+    }
+
+    [Fact]
     public void Marion_ExitsLeadIntoExistingRooms_AndCryptsHaveMonsters()
     {
         var world = WorldDefinition.LoadAll(Data("world"));

@@ -12,6 +12,20 @@ public sealed class Mausoleum
     /// <summary>Variante: "mausoleum" (Raza, guest6/newb6.kod) oder "marioncrypt" (Gruft von Marion, marcryp1.kod).</summary>
     public string Kind { get; init; } = "mausoleum";
     public bool Marion => Kind == "marioncrypt";
+    /// <summary>Gruft 2 von Marion (marcryp2.kod): Statuen bewachen die Tür zu Gruft 3a (Sektor 5).</summary>
+    public bool Statues => Kind == "marioncrypt2";
+    public const int SectorCrypt3a = 5;
+
+    /// <summary>plStatueLocations: [Zeile, Spalte, Winkel] der lebenden Statuen in Gruft 2.</summary>
+    public static readonly (int Row, int Col, ushort Angle)[] StatueLocations =
+    [
+        (25, 2, 3072), (37, 2, 3072), (37, 4, 3072), (19, 7, 3072), (20, 10, 3072), (21, 35, 3072), (21, 37, 3072),
+        (27, 20, 3072), (37, 42, 3072), (37, 44, 3072),
+        (8, 12, 2048), (31, 10, 2048), (33, 11, 2048), (35, 10, 2048), (11, 18, 2048), (16, 18, 2048), (20, 20, 2048),
+        (22, 20, 2048), (28, 41, 2048), (17, 52, 2048), (8, 47, 2048), (2, 47, 2048), (28, 51, 2048), (26, 51, 2048),
+        (12, 3, 1024), (23, 12, 1024), (2, 50, 1024), (24, 14, 1024), (32, 17, 1024), (32, 19, 1024),
+        (10, 10, 0), (7, 3, 0), (9, 3, 0), (26, 33, 0), (16, 40, 0), (14, 40, 0), (17, 47, 0),
+    ];
     /// <summary>Gruft von Marion: Ausgang nach unten (Sektoren 6/7) offen.</summary>
     public bool DoorDownOpen { get; set; }
     public const int SectorExit1 = 6, SectorExit2 = 7;
@@ -218,6 +232,19 @@ public sealed partial class World
     /// <summary>FirstUserEntered: eine Mumie in die Grube, Endbereich neu besetzen.</summary>
     private void FirstUserEntered(Room room)
     {
+        if (room.Puzzle is { Statues: true } crypt2)
+        {
+            // PlaceStatues (nur wenn keine mehr da sind) und CloseSecondaryDoorDown.
+            if (!room.Monsters.Any(m => m.Alive && m.Kind.Key == "livingstatue"))
+                foreach (var (row, col, angle) in Mausoleum.StatueLocations)
+                    SpawnMonsterLocked(room, MonsterKind.ByKey("livingstatue"), new GridPos(row, col)).Angle = angle;
+            if (crypt2.DoorDownOpen || !crypt2.Sectors.ContainsKey(Mausoleum.SectorCrypt3a))
+            {
+                crypt2.DoorDownOpen = false;
+                SetSector(room, GameReplies.AnimateCeilingLift, Mausoleum.SectorCrypt3a, 1045, 150);
+            }
+            return;
+        }
         if (room.Puzzle is null or { Marion: true })
             return;
         if (PitMummies(room) < Mausoleum.PitMax)
@@ -230,7 +257,7 @@ public sealed partial class World
     /// <summary>ReqNewHold: Mumien ohne Beute nur in der Grube (höchstens zwei), andere nie dort. null = verweigert.</summary>
     private GridPos? PuzzleSpawnPoint(Room room, MonsterKind kind, GridPos at)
     {
-        if (room.Puzzle is null or { Marion: true })
+        if (room.Puzzle is null or { Marion: true } or { Statues: true })
             return at;
         bool pit = at == Mausoleum.Pit;
         if (kind == MonsterKind.MummyNoTreasure)
@@ -242,6 +269,17 @@ public sealed partial class World
     /// Säule senkt sich, Tür schließt, der Kampfzeitgeber läuft.</summary>
     private void MonsterKilled(Room room)
     {
+        // marcryp2.kod SomethingKilled: die letzte Statue fällt → die Tür zu Gruft 3a hebt sich.
+        if (room.Puzzle is { Statues: true, DoorDownOpen: false } crypt2)
+        {
+            if (room.Monsters.Any(m => m.Alive && m.Kind.Key == "livingstatue"))
+                return;
+            crypt2.DoorDownOpen = true;
+            SetSector(room, GameReplies.AnimateCeilingLift, Mausoleum.SectorCrypt3a, 1098, 8);
+            return;
+        }
+        if (room.Puzzle is { Statues: true })
+            return;
         if (room.Puzzle is not { ColumnDown: false } puzzle
             || CountInFinal(room, players: false) != 0 || CountInFinal(room, players: true) == 0)
             return;

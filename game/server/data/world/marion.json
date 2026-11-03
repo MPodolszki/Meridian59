@@ -984,6 +984,7 @@
       "music": "Song.mid",
       "baseLight": 124,
       "outsideFactor": 0,
+      "puzzle": "marioncrypt2",
       "teleport": {
         "row": 17,
         "col": 18

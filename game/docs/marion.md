@@ -47,7 +47,9 @@ derzeit führt es also immer ins Gasthaus von Marion (Ankunft 11/6).
   Ist der Endbereich leer, wird er beim Umlegen mit einer lebenden Statue (32/7) und fünf Gespenstermumien besetzt.
   Sind alle besiegt und steht ein Spieler darin, öffnet sich der Weg zur zweiten Gruft (Sektoren 6/7); vorher ist der
   Durchgang verschlossen. Ist niemand mehr im Endbereich, setzt sich alles zurück.
-- Noch nicht: lebende Statuen in Gruft 2 und die Tür zu Gruft 3a, Fallen, schlafende Drescher und die Truhe in Gruft
+- Gruft 2 (marcryp2.kod, umgesetzt 2026-11-03): beim ersten Betreten 37 lebende Statuen an ihren festen Plätzen und
+  die Tür zu Gruft 3a (Sektor 5) zu; fällt die letzte Statue, hebt sich die Tür, vorher ist der Durchgang verschlossen.
+- Noch nicht: Fallen, schlafende Drescher und die Truhe in Gruft
   3a, Martyrs' Battleground (nur mit PvP), Totenbeschwörer-Tür (Passwort nur für Spielleiter).
 - Fehlende Beute (Katalog): Nerudit-Pfeil, Zwietrachtrolle, Identifizierstab, Dunkelengelfeder, Schuppenpanzer,
   Nachtsichttrank, Berserkerring; Zusatzbeute der Drescher.
