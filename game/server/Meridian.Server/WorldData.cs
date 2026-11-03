@@ -164,6 +164,8 @@ public sealed record NpcDefinition(string KodClass, int Row, int Col)
     public string? Icon { get; init; }
     public int FineRow { get; init; } = 32;
     public int FineCol { get; init; } = 32;
+    /// <summary>Manaknoten (mananode.kod piNode_num, Bitmaske NODE_*).</summary>
+    public int NodeNum { get; init; }
     public int Angle { get; init; }
     /// <summary>Eigener Text beim Anschauen (Schilder); sonst aus dem Dialog der Klasse.</summary>
     public string? Description { get; init; }

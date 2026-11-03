@@ -17,6 +17,7 @@ public static class PropModels
         "bonepile" or "mummyx" => Bones(),   // mummyX.bgf: mumifizierte Leiche (Gruft von Marion)
         "treebot" => Tree(),                 // Mimosenbaum in Marion
         "lever" => Lever(),
+        "node" => ManaNode(),
         _ => null,
     };
 
@@ -57,6 +58,20 @@ public static class PropModels
         veilMaterial.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
         Glow(veil, new Color(0.4f, 0.6f, 1f), 1.2f);
         root.AddChild(new OmniLight3D { Position = new Vector3(0, 1.25f, 0), LightColor = new Color(0.5f, 0.7f, 1f), LightEnergy = 1.5f, OmniRange = 5f });
+        return root;
+    }
+
+    /// <summary>Manaknoten (node.bgf, durchscheinend und flackernd): schwebende Kugel aus bläulichem Licht mit Ring.</summary>
+    private static Node3D ManaNode()
+    {
+        var root = new Node3D { Name = "ManaNode" };
+        var core = Add(root, new SphereMesh { Radius = 0.35f, Height = 0.7f }, new Color(0.55f, 0.75f, 1f, 0.6f), new Vector3(0, 1.3f, 0));
+        ((StandardMaterial3D)core.MaterialOverride).Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
+        Glow(core, new Color(0.45f, 0.7f, 1f), 3f);
+        var ring = Add(root, new TorusMesh { InnerRadius = 0.5f, OuterRadius = 0.56f }, new Color(0.7f, 0.85f, 1f), new Vector3(0, 1.3f, 0));
+        ring.RotationDegrees = new Vector3(70, 0, 20);
+        Glow(ring, new Color(0.6f, 0.8f, 1f), 2f);
+        root.AddChild(new OmniLight3D { Position = new Vector3(0, 1.3f, 0), LightColor = new Color(0.5f, 0.7f, 1f), LightEnergy = 2f, OmniRange = 6f });
         return root;
     }
 

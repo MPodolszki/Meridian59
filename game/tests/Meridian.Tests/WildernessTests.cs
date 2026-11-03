@@ -135,6 +135,22 @@ public sealed class WildernessTests : IAsyncDisposable
         Assert.Equal(-202, me.State.Hometown);
     }
 
+    [Fact]
+    public async Task ManaNode_MeldingRaisesMaximumManaOnce()
+    {
+        var (c, events) = await EnterAsync(515);
+        await WaitForAsync(c, events, e => e is ClientEvent.ObjectAdded o && c.Resolve(o.Object.NameRsc).StartsWith("Manaknoten"));
+        var node = events.OfType<ClientEvent.ObjectAdded>().First(e => c.Resolve(e.Object.NameRsc).StartsWith("Manaknoten")).Object;
+        var me = _server!.World.Rooms.Single(r => r.Definition.Id == 515).Avatars.Values.Single();
+        int before = me.State.MaxMana;
+        await c.MoveAsync(Room.Fine(21), Room.Fine(17), false);
+        await c.ActivateAsync(node.Id);
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.Contains("erfrischt und belebt"));
+        Assert.True(me.State.MaxMana > before);
+        await c.ActivateAsync(node.Id);
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.StartsWith("Du hast dich bereits"));
+    }
+
     private async Task<(ClientSession, List<ClientEvent>)> EnterAsync(int startRoom)
     {
         var accounts = AccountStore.Open(_db);

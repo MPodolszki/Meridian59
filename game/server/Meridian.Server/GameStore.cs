@@ -30,6 +30,8 @@ public sealed record SavedMagic(Attributes Attributes, int Karma, int Mana, int 
     public Dictionary<int, SavedEnchantment> Enchantments { get; init; } = new();
     /// <summary>Heimatstadt (Raum, negativ = fest gewählt); fehlt in älteren Ständen.</summary>
     public int? Hometown { get; init; }
+    /// <summary>Verschmolzene Manaknoten (Bitmaske).</summary>
+    public int Nodes { get; init; }
 }
 
 public sealed record SavedEnchantment(int State, long RemainingMs);

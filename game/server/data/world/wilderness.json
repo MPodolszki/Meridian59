@@ -1285,6 +1285,21 @@
       "maxMonsters": 10,
       "genTime": 45000,
       "genPercent": 80,
+      "npcs": [
+        {
+          "kodClass": "ManaNode",
+          "name": "Manaknoten",
+          "icon": "node.bgf",
+          "role": "Manaknoten",
+          "nodeNum": 16,
+          "description": "Eine Ballung mystischer Energie: hier pulsiert rohes Mana und stärkt jeden Zauberkundigen, der mit ihm verschmelzen kann.",
+          "row": 23,
+          "col": 53,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 2048
+        }
+      ],
       "objects": [],
       "rows": 58,
       "cols": 63
@@ -2088,6 +2103,21 @@
       "genPercent": 80,
       "initCountMin": 5,
       "initCountMax": 7,
+      "npcs": [
+        {
+          "kodClass": "ManaNode",
+          "name": "Manaknoten",
+          "icon": "node.bgf",
+          "role": "Manaknoten",
+          "nodeNum": 32,
+          "description": "Eine Ballung mystischer Energie: hier pulsiert rohes Mana und stärkt jeden Zauberkundigen, der mit ihm verschmelzen kann.",
+          "row": 20,
+          "col": 17,
+          "fineRow": 0,
+          "fineCol": 0,
+          "angle": 0
+        }
+      ],
       "objects": [],
       "rows": 50,
       "cols": 53
@@ -6424,6 +6454,21 @@
       "genPercent": 80,
       "initCountMin": 2,
       "initCountMax": 9,
+      "npcs": [
+        {
+          "kodClass": "ManaNode",
+          "name": "Manaknoten",
+          "icon": "node.bgf",
+          "role": "Manaknoten",
+          "nodeNum": 2,
+          "description": "Eine Ballung mystischer Energie: hier pulsiert rohes Mana und stärkt jeden Zauberkundigen, der mit ihm verschmelzen kann.",
+          "row": 52,
+          "col": 30,
+          "fineRow": 0,
+          "fineCol": 48,
+          "angle": 2048
+        }
+      ],
       "objects": [
         {
           "type": "BookPedestal",
@@ -7184,6 +7229,21 @@
       "genPercent": 80,
       "initCountMin": 8,
       "initCountMax": 12,
+      "npcs": [
+        {
+          "kodClass": "ManaNode",
+          "name": "Manaknoten",
+          "icon": "node.bgf",
+          "role": "Manaknoten",
+          "nodeNum": 1,
+          "description": "Eine Ballung mystischer Energie: hier pulsiert rohes Mana und stärkt jeden Zauberkundigen, der mit ihm verschmelzen kann.",
+          "row": 45,
+          "col": 32,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 2048
+        }
+      ],
       "objects": [],
       "rows": 54,
       "cols": 46
@@ -8189,6 +8249,21 @@
       "genPercent": 100,
       "initCountMin": 6,
       "initCountMax": 8,
+      "npcs": [
+        {
+          "kodClass": "ManaNode",
+          "name": "Manaknoten",
+          "icon": "node.bgf",
+          "role": "Manaknoten",
+          "nodeNum": 64,
+          "description": "Eine Ballung mystischer Energie: hier pulsiert rohes Mana und stärkt jeden Zauberkundigen, der mit ihm verschmelzen kann.",
+          "row": 25,
+          "col": 23,
+          "fineRow": 32,
+          "fineCol": 32,
+          "angle": 0
+        }
+      ],
       "fixedMonsters": [
         {
           "kind": "yeti",

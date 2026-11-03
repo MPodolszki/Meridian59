@@ -46,7 +46,7 @@ public partial class Main
                 continue;
             if (new Vector2(center.X - self.Position.X, center.Z - self.Position.Z).Length() > ActivateReach)
             {
-                _status.Text = "Der Hebel ist zu weit weg.";
+                _status.Text = "Das ist zu weit weg.";
                 return true;
             }
             _ = ActivateAsync(id);

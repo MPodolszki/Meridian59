@@ -67,6 +67,11 @@ public sealed partial class World
         lock (_gate)
         {
             var npc = a.Room.Npcs.FirstOrDefault(n => n.Id == id);
+            if (npc?.Definition.KodClass == "ManaNode")
+            {
+                MeldNode(a, npc);
+                return;
+            }
             if (npc?.Definition.KodClass != Mausoleum.LeverClass || a.Room.Puzzle is not { } puzzle)
             {
                 Tell(a, "Das lässt sich nicht betätigen.");
@@ -86,6 +91,32 @@ public sealed partial class World
             SetLever(a.Room, npc, true);
             LeverChanged(a.Room, puzzle, DateTime.UtcNow);
         }
+    }
+
+    /// <summary>mananode.kod TryActivate/Meld: auf weniger als 3 Felder heran, je Knoten einmal; maximales Mana
+    /// + ((5 + Mystik)/10) + 3.</summary>
+    private void MeldNode(Avatar a, Npc node)
+    {
+        if (Math.Abs(a.Row / 64 - node.Row / 64) >= 3 || Math.Abs(a.Col / 64 - node.Col / 64) >= 3)
+        {
+            Tell(a, "Der Manaknoten ist nicht nah genug, um mit ihm zu verschmelzen.");
+            return;
+        }
+        int bit = node.Definition.NodeNum;
+        if (bit == 0)
+            return;
+        if ((a.State.Nodes & bit) != 0)
+        {
+            Tell(a, "Du hast dich bereits mit diesem Manaknoten verbunden.");
+            return;
+        }
+        a.State.Nodes |= bit;
+        int gain = (5 + a.State.Attributes.Mysticism) / 10 + 3;
+        a.State.MaxMana += gain;
+        Tell(a, "Du schließt die Augen, versetzt dich in Trance und greifst nach dem Knoten, um dich mystisch mit ihm " +
+                "zu verbinden. Die Wirklichkeit dehnt sich, die Zeit fällt in sich zusammen – bis du erfrischt und " +
+                "belebt wieder zu dir kommst.");
+        a.Session.SendMana();
     }
 
     private void SetLever(Room room, Npc lever, bool down)

@@ -250,8 +250,8 @@ public sealed partial class World
 
     private static uint NpcFlags(Npc n)
     {
-        if (n.Definition.KodClass == Mausoleum.LeverClass)
-            return ObjectFlags.Activatable;   // gstlever.kod ACTIVATE_YES
+        if (n.Definition.KodClass is Mausoleum.LeverClass or "ManaNode")
+            return ObjectFlags.Activatable;   // gstlever.kod / mananode.kod ACTIVATE_YES
         if (n.Merchant?.Definition is not { } d)
             return 0;
         return (d.Seller ? ObjectFlags.Buyable : 0) | (d.Buyer || d.Receive ? ObjectFlags.Offerable : 0);

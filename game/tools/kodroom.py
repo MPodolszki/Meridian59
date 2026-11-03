@@ -309,6 +309,13 @@ def npcs(text):
         pos = {"row": value(args["new_row"]), "col": value(args["new_col"]),
                "fineRow": value(args.get("fine_row", "32")), "fineCol": value(args.get("fine_col", "32")),
                "angle": ANGLES.get(args.get("new_angle", "")[6:], 0) if args.get("new_angle", "").startswith("ANGLE_") else 0}
+        if cls.lower() == "mananode":
+            iargs = dict(re.findall(r"#(\w+)\s*=\s*(\w+)", inner))
+            out.append(dict(kodClass="ManaNode", name="Manaknoten", icon="node.bgf", role="Manaknoten",
+                            nodeNum=value(iargs.get("node_num", "0")),
+                            description="Eine Ballung mystischer Energie: hier pulsiert rohes Mana und stärkt jeden "
+                                        "Zauberkundigen, der mit ihm verschmelzen kann.", **pos))
+            continue
         if cls.lower() == "sign":
             iargs = dict(re.findall(r"#(\w+)\s*=\s*(\w+)", inner))
             name = resource(text, iargs.get("name", "")) or "Schild"
