@@ -36,6 +36,7 @@ public sealed partial class World
             off += weapon.Kind.WeaponQuality == "high" ? 50 : 0;
         }
         off += EnchantState(a, "bless");   // plAttack_modifiers: bless.kod ModifyHitRoll
+        off += ForcesOfLightBonus(a);       // forceslt.kod ModifyHitRoll
         return Math.Clamp(off, 1, 1000);
     }
 
@@ -79,6 +80,7 @@ public sealed partial class World
             attackType = "punch";
         }
         d += BlessDamage(a);   // plAttack_modifiers: bless.kod ModifyDamage
+        d += KillingFieldsBonus(a);
         d = CombatRules.Resist(d, m.Kind.ResistanceTo(attackType));
         return Math.Max(d, 1);
     }

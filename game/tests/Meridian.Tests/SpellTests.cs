@@ -75,6 +75,32 @@ public sealed class SpellTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task Light_BrightensTheRoom_KillingFieldsEnchantsIt()
+    {
+        var (c, events, me) = await EnterAsync(30);
+        var room = _server.World.Rooms.Single();
+        byte before = _server.World.RoomLight(room);
+        GiveReagents(me, ("elderberry", 40), ("orctooth", 20));
+        await CastUntilAsync(c, events, me, 30, 0, t => t.Contains("magisches Leuchten"));
+        Assert.True(_server.World.RoomLight(room) > before || before == 255);
+        me.State.Spells[39] = 99;
+        await CastUntilAsync(c, events, me, 39, 0, t => t.Contains("Kampfeswut"));
+        Assert.Contains(39, room.Enchantments.Keys);
+    }
+
+    [Fact]
+    public async Task ArmorOfGort_AndManaFocus_Start()
+    {
+        var (c, events, me) = await EnterAsync(74);
+        GiveReagents(me, ("bluedragonscale", 40));
+        await CastUntilAsync(c, events, me, 74, me.Id, t => t.Contains("Rüstung des Gort um dich"));
+        Assert.Contains(74, me.State.Enchantments.Keys);
+        me.State.Spells[67] = 99;
+        await CastUntilAsync(c, events, me, 67, 0, t => t.Contains("gebündelte Magie"));
+        Assert.NotNull(me.ManaFocus);
+    }
+
+    [Fact]
     public void MonsterSpells_HaveTheOriginalValues()
     {
         var book = SpellBook.Load(Data("spells", "spells.json"));

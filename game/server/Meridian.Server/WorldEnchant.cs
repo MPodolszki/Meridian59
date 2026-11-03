@@ -9,7 +9,7 @@ namespace Meridian.Server;
 /// </summary>
 public sealed partial class World
 {
-    private static bool IsEnchantment(SpellDefinition s) => s.Effect is "bless" or "superstrength" or "haste" or "resist";
+    private static bool IsEnchantment(SpellDefinition s) => s.Effect is "bless" or "superstrength" or "haste" or "resist" or "gort" or "resistmagic";
 
     /// <summary>CanPayCosts: auf sich selbst darf man neu wirken (CanRecastSelfEnchantment = TRUE), auf andere nicht.</summary>
     private bool CanEnchant(Avatar caster, Avatar target, SpellDefinition spell)
@@ -30,13 +30,16 @@ public sealed partial class World
         {
             "superstrength" => power / 5 + 1,                 // AddMight
             "resist" => power / 2 + spell.ResistBase,         // GetResistanceStrength
+            "resistmagic" => power / 3 + 7,                   // resmagic.kod
             _ => power,                                        // Segen, Eile: Spruchstärke
         };
         // haste.kod: 5 + 15 × Stärke / 100 Minuten (ganzzahlig); sonst Basis + Stärke × je Punkt Sekunden.
         int duration = spell.Effect == "haste"
             ? (5 + 15 * power / 100) * 60_000
             : (spell.DurationBase + power * spell.DurationPerPower) * 1000;
-        target.State.Enchantments[spell.Sid] = new Enchantment(state, DateTime.UtcNow.AddMilliseconds(_random.Next(duration / 2, duration + 1)));
+        // gort.kod: fest (Stärke/8 + 1) Minuten; sonst Random(Dauer/2, Dauer).
+        int ms = spell.Effect == "gort" ? (power / 8 + 1) * 60_000 : _random.Next(duration / 2, duration + 1);
+        target.State.Enchantments[spell.Sid] = new Enchantment(state, DateTime.UtcNow.AddMilliseconds(ms));
         Tell(target, spell.CastText ?? "Dein Körper kribbelt vor magischer Energie.");
         if (caster != target)
             Tell(caster, string.Format(spell.HitText ?? "Du verzauberst {0}.", target.Name));

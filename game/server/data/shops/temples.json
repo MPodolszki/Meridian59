@@ -7,6 +7,8 @@
         "minorheal",
         "holytouch",
         "curepoison",
+        "rescue",
+        "forcesoflight",
         "majorheal",
         "holysymbol",
         "finalrites",
@@ -22,12 +24,16 @@
         "superstrength",
         "createweapon",
         "createfood",
+        "killingfields",
+        "resistmagic",
+        "armorofgort",
         "relay"
       ]
     },
     "QorPriestess": {
       "markup": 3,
       "spells": [
+        "darkness",
         "acidtouch",
         "enfeeble",
         "hold"
@@ -36,12 +42,14 @@
     "FarenPriestess": {
       "markup": 3,
       "spells": [
+        "light",
         "zap",
         "resistfire",
         "resistcold",
         "resistshock",
         "touchofflame",
         "icyfingers",
+        "manafocus",
         "fireball",
         "earthquake",
         "mystictouch"

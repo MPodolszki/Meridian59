@@ -83,7 +83,7 @@ public sealed partial class World
             case "attack" or "drain":
             {
                 // atakspel.kod: Random(min, max) × (50 + Stärke/2) / 99, dann Resistenz des Ziels (AssessDamage).
-                int d = _random.Next(spell.MinDamage, spell.MaxDamage + 1) * (50 + power / 2) / 99;
+                int d = _random.Next(spell.MinDamage, spell.MaxDamage + 1) * (50 + power / 2) / 99 + ManaFocusBonus(a);
                 SpellDamage(a, spell, victim!, d, now, drain: spell.Effect == "drain");
                 break;
             }

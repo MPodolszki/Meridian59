@@ -252,6 +252,8 @@ public sealed partial class World
                 return false;
             }
         }
+        if (IsRoomEnchantment(spell) && !CanEnchantRoom(a, spell))
+            return false;
         if (IsEnchantment(spell) && !CanEnchant(a, target ?? a, spell))
             return false;
         if (spell.Effect == "touchattack" && a.Touch is { } t && t.Spell == spell && t.Until > DateTime.UtcNow)
@@ -340,8 +342,17 @@ public sealed partial class World
                 ChangeMana(target, amount);
                 break;
             }
-            case "bless" or "superstrength" or "haste" or "resist":
+            case "bless" or "superstrength" or "haste" or "resist" or "gort" or "resistmagic":
                 Enchant(a, target ?? a, spell, power);
+                break;
+            case "roomlight" or "roomdark" or "killingfields" or "forcesoflight":
+                EnchantRoom(a, spell, power);
+                break;
+            case "rescue":
+                StartRescue(a, spell, power);
+                break;
+            case "manafocus":
+                StartManaFocus(a, spell, power);
                 break;
             default:
                 CastSchoolSpell(a, spell, target, victim, power);
@@ -432,10 +443,10 @@ public sealed partial class World
             return;
         }
         if (a.NextMana == default)
-            a.NextMana = now + MagicRules.ManaTime(s.Attributes, s.Vigor, s.MaxMana);
+            a.NextMana = now + FocusedManaTime(a, MagicRules.ManaTime(s.Attributes, s.Vigor, s.MaxMana));
         else if (now >= a.NextMana)
         {
-            a.NextMana = now + MagicRules.ManaTime(s.Attributes, s.Vigor, s.MaxMana);
+            a.NextMana = now + FocusedManaTime(a, MagicRules.ManaTime(s.Attributes, s.Vigor, s.MaxMana));
             ChangeMana(a, s.Mana < s.MaxMana ? 1 : -1);   // ManaTimer: über dem Maximum sinkt es wieder
         }
     }
@@ -443,6 +454,7 @@ public sealed partial class World
     /// <summary>Bewegung bricht die Trance (BreakTrance).</summary>
     private void BreakTrance(Avatar a)
     {
+        EndManaFocus(a);
         if (a.Casting is not { } c)
             return;
         a.Casting = null;

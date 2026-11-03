@@ -885,6 +885,189 @@
       "effect": "holysymbol",
       "description": "Ein Zeichen der Reinheit Shal'illes, das Untote vertreibt. Braucht Holunderbeeren.",
       "castText": "Deine Hände zeichnen zarte Linien in die Luft – Shal'illes Reinheit als Schutz gegen das Unheilige."
+    },
+    {
+      "key": "light",
+      "sid": 30,
+      "name": "Licht",
+      "icon": "isunlite.bgf",
+      "school": 4,
+      "level": 1,
+      "mana": 5,
+      "chanceToIncrease": 30,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "elderberry",
+          "number": 1
+        }
+      ],
+      "effect": "roomlight",
+      "description": "Magisches Leuchten erfüllt die Umgebung. Braucht eine Holunderbeere.",
+      "castText": "Ein magisches Leuchten breitet sich in der Gegend aus.",
+      "offText": "Der Lichtzauber verblasst.",
+      "unnecessary": "Dieser Ort ist bereits erleuchtet."
+    },
+    {
+      "key": "darkness",
+      "sid": 38,
+      "name": "Dunkelheit",
+      "icon": "idarknes.bgf",
+      "school": 2,
+      "level": 1,
+      "mana": 8,
+      "chanceToIncrease": 30,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "fairywing",
+          "number": 1
+        },
+        {
+          "item": "entrootberry",
+          "number": 1
+        }
+      ],
+      "effect": "roomdark",
+      "description": "Ein Vorhang der Dunkelheit legt sich über den Raum. Braucht einen Feenflügel und eine Entwurzbeere.",
+      "castText": "Ein Vorhang der Dunkelheit senkt sich über den Raum und weckt die Diener Qors.",
+      "offText": "Der Vorhang der Dunkelheit hebt sich.",
+      "unnecessary": "Über diesem Ort liegt bereits Dunkelheit."
+    },
+    {
+      "key": "killingfields",
+      "sid": 39,
+      "name": "Schlachtfeld",
+      "icon": "ikillfel.bgf",
+      "school": 3,
+      "level": 5,
+      "mana": 9,
+      "chanceToIncrease": 35,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "elderberry",
+          "number": 3
+        },
+        {
+          "item": "orctooth",
+          "number": 1
+        }
+      ],
+      "effect": "killingfields",
+      "description": "Kampfeswut erfüllt alle im Raum – jeder Nahkampftreffer richtet mehr Schaden an. Braucht Holunderbeeren und einen Orkzahn.",
+      "castText": "Kraanan lächelt, und Kampfeswut erfüllt dein Herz. Die Erde dürstet nach frisch vergossenem Blut.",
+      "offText": "Der Geist Kraanans verlässt diesen Ort.",
+      "unnecessary": "Dieser Ort ist bereits ein Schlachtfeld."
+    },
+    {
+      "key": "forcesoflight",
+      "sid": 27,
+      "name": "Kräfte des Lichts",
+      "icon": "ifrclite.bgf",
+      "school": 1,
+      "level": 4,
+      "mana": 12,
+      "chanceToIncrease": 40,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "elderberry",
+          "number": 2
+        },
+        {
+          "item": "emerald",
+          "number": 1
+        }
+      ],
+      "effect": "forcesoflight",
+      "description": "Der Geist Shal'illes erfüllt den Ort; wer gutes Karma hat, trifft besser. Braucht Holunderbeeren und einen Smaragd.",
+      "castText": "Dieser Ort ist vom Geist Shal'illes erfüllt.",
+      "offText": "Der Geist Shal'illes verlässt diesen Ort.",
+      "unnecessary": "Dieser Ort ist bereits vom Geist Shal'illes erfüllt."
+    },
+    {
+      "key": "armorofgort",
+      "sid": 74,
+      "name": "Rüstung des Gort",
+      "icon": "igort.bgf",
+      "school": 3,
+      "level": 5,
+      "mana": 10,
+      "chanceToIncrease": 20,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "bluedragonscale",
+          "number": 2
+        }
+      ],
+      "effect": "gort",
+      "description": "Eine unsichtbare Rüstung fängt einen Teil jedes Waffentreffers ab und begrenzt ihn auf 15. Braucht zwei blaue Drachenschuppen.",
+      "castText": "Deine Haut spannt sich, als sich die Rüstung des Gort um dich legt.",
+      "offText": "Deine Rüstung des Gort löst sich auf.",
+      "hitText": "Die Haut von {0} spannt sich, als sich die Rüstung des Gort bildet."
+    },
+    {
+      "key": "resistmagic",
+      "sid": 54,
+      "name": "Magie widerstehen",
+      "icon": "iresmagc.bgf",
+      "school": 3,
+      "level": 5,
+      "mana": 15,
+      "chanceToIncrease": 30,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "bluedragonscale",
+          "number": 1
+        }
+      ],
+      "effect": "resistmagic",
+      "attackType": "spell_all",
+      "durationBase": 40,
+      "durationPerPower": 2,
+      "description": "Kraanan wappnet dich gegen magische Angriffe. Braucht eine blaue Drachenschuppe.",
+      "castText": "Kraanan wappnet dich gegen magische Angriffe.",
+      "offText": "Kraanans Schutz vergeht, magische Angriffe treffen dich wieder voll.",
+      "hitText": "Kraanan wappnet {0} gegen magische Angriffe."
+    },
+    {
+      "key": "rescue",
+      "sid": 7,
+      "name": "Rettung",
+      "icon": "rescuico.bgf",
+      "school": 1,
+      "level": 3,
+      "mana": 16,
+      "chanceToIncrease": 10,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "emerald",
+          "number": 1
+        }
+      ],
+      "effect": "rescue",
+      "description": "Shal'ille bringt dich nach kurzer Zeit in Sicherheit. Braucht einen Smaragd.",
+      "castText": "Du beginnst mit den Vorbereitungen für deine Rettung."
+    },
+    {
+      "key": "manafocus",
+      "sid": 67,
+      "name": "Manafokus",
+      "icon": "imanafoc.bgf",
+      "school": 4,
+      "level": 3,
+      "mana": 1,
+      "castTime": 7000,
+      "chanceToIncrease": 15,
+      "targets": 0,
+      "reagents": [],
+      "effect": "manafocus",
+      "description": "Eine Trance, in der sich dein Mana schneller erholt und Angriffssprüche stärker werden. Jede Bewegung oder ein Schlag beendet sie.",
+      "castText": "Neu gebündelte Magie tobt durch deinen Körper."
     }
   ],
   "startingSpells": [

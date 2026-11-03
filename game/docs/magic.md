@@ -119,3 +119,23 @@ Sprüche ihrer Liste, die es im Spiel schon gibt.
 ## Noch nicht umgesetzt
 Weitere Verzauberungen (Entdecken, Unsichtbarkeit, Nachtsicht …), Raumzauber (Licht, Dunkelheit, Nebel), Wände, Riija/Jala,
 Spruch-Murmeln für Umstehende, Karma-Änderung durch Heilen, Raumboni nach Gelände.
+
+## Raumverzauberungen, Schutz, Rettung, Manafokus (2026-11-03)
+Neu in `WorldRoomMagic.cs`, Werte aus `docs/kod/spells_catalog.json`:
+
+| Spruch | Schule/Stufe | Wirkung |
+|---|---|---|
+| Licht (light.kod) | Faren 1 | Raumlicht + (25 + Stärke) für Random(D/2, D), D = 45 + 3×Stärke s |
+| Dunkelheit (darkness.kod) | Qor 1 | Raumlicht − (Stärke + 25), D = 30 + 2×Stärke s; braucht Feenflügel (Beute der Feen) |
+| Schlachtfeld (killing.kod) | Kraanan 5 | alle Nahkampftreffer im Raum + Random(2, 5), 50 + Stärke s |
+| Kräfte des Lichts (forceslt.kod) | Shal'ille 4 | Treffer + (Stärke + 50) für Spieler mit gutem Karma, 6 × (Stärke/3 + 1) s |
+| Rüstung des Gort (gort.kod) | Kraanan 5 | jeder Monstertreffer − bound(Random(0, Stärke/25), 1, 4), höchstens 15; (Stärke/8 + 1) min |
+| Magie widerstehen (resmagic.kod) | Kraanan 5 | Widerstand Stärke/3 + 7 gegen alle Spruchschäden, (40 + 2×Stärke) s |
+| Rettung (rescue.kod) | Shal'ille 3 | nach 15000 − Stärke×37,5 ms (halb so oft + 5–10 s) in den Raum, in dem man nach dem Tod erwacht |
+| Manafokus (focus.kod) | Faren 3 | Trance: Mana im Takt × (200 − Stärke)/200 (0,5–60 s), Angriffssprüche + Stärke×5/99 + 1 |
+
+Raumverzauberungen gibt es je Raum nur einmal; Licht und Dunkelheit schicken das neue Raumlicht (BP_LIGHT_AMBIENT).
+Abweichungen: Magie widerstehen wirkt erst, wenn Monster zaubern (noch nicht); Rettung kennt Gildenhalle und
+Ko'catan noch nicht; Manafokus endet bei Bewegung oder Nahkampf (im Original bei jeder Trance-brechenden Handlung
+außer Angriffssprüchen); Neuankömmlinge bekommen keinen Hinweis auf die Raumverzauberung; die Schulbonus-Stärke der
+Kräfte des Lichts für Shal'ille-Sprüche fehlt.

@@ -40,6 +40,10 @@ public sealed class Avatar(uint id, string name, Session session)
     /// <summary>Laufende Trance, aktiver Berührungszauber, nächster Manapunkt.</summary>
     public PendingCast? Casting { get; set; }
     public TouchAttack? Touch { get; set; }
+    /// <summary>Rettung (rescue.kod) läuft bis zu diesem Zeitpunkt.</summary>
+    public DateTime? RescueAt { get; set; }
+    /// <summary>Manafokus (focus.kod): Spruchstärke beim Wirken, solange die Trance hält.</summary>
+    public int? ManaFocus { get; set; }
     public DateTime NextMana { get; set; }
     /// <summary>Aktuelles Kampfziel (poKill_target) und ob man seitdem verfehlt wurde (PFLAG_DODGED).</summary>
     public Monster? KillTarget { get; set; }
@@ -68,6 +72,8 @@ public sealed class Room(RoomDefinition definition)
     public List<Monster> Monsters { get; } = new();
     /// <summary>Gegenstände auf dem Boden.</summary>
     public List<FloorItem> Items { get; } = new();
+    /// <summary>Raumverzauberungen nach Spruchnummer (WorldRoomMagic.cs).</summary>
+    public Dictionary<int, RoomEnchantment> Enchantments { get; } = new();
 
     /// <summary>Spawn-Punkte und Monsterarten mit Gewicht (KOD plGenerators/plMonsters).</summary>
     public List<GridPos> Generators { get; } = new();
@@ -151,7 +157,7 @@ public sealed partial class World
     public int Hour(DateTime now) => FixedHour ?? GameClock.Hour(now);
 
     /// <summary>Aktuelles Umgebungslicht eines Raums (für BP_PLAYER).</summary>
-    public byte RoomLight(Room room) => GameClock.RoomLight(room.Definition, Hour(DateTime.UtcNow));
+    public byte RoomLight(Room room) => CurrentLight(room, Hour(DateTime.UtcNow));
 
     /// <summary>Neue Spielstunde: Räume mit geändertem Licht melden BP_LIGHT_AMBIENT (room.kod AmbientLightChanged).</summary>
     private void TickHour(DateTime now)
@@ -166,8 +172,8 @@ public sealed partial class World
         Log.Info($"Spielstunde {hour} (Helligkeit {GameClock.Brightness(hour)} %)");
         foreach (var room in _rooms.Values)
         {
-            byte light = GameClock.RoomLight(room.Definition, hour);
-            if (room.Avatars.Count > 0 && light != GameClock.RoomLight(room.Definition, old))
+            byte light = CurrentLight(room, hour);
+            if (room.Avatars.Count > 0 && light != CurrentLight(room, old))
                 BroadcastRoom(room, GameReplies.LightAmbient(light));
         }
     }
@@ -532,6 +538,7 @@ public sealed partial class World
             foreach (var room in _rooms.Values)
             {
                 TickSpawns(room, now);
+                TickRoomEnchantments(room, now);
                 TickPuzzle(room, now);
                 TickOffers(room, now);
                 foreach (var monster in room.Monsters.ToList())
@@ -541,6 +548,7 @@ public sealed partial class World
                     TickRegen(avatar, now);
                     TickMagic(avatar, now);
                     TickPoison(avatar, now);
+                    TickRescue(avatar, now);
                 }
             }
         }
@@ -695,7 +703,7 @@ public sealed partial class World
             // Widerstände (resist.kod AddResistance) gegen die Angriffsart des Monsters, falls es eine hat.
             if (m.Kind.AttackType is { } type)
                 damage = CombatRules.Resist(damage, EnchantState(victim, "resist", type));
-            damage = AssessPlayerDamage(victim, damage);
+            damage = GortAbsorb(victim, AssessPlayerDamage(victim, damage));
             victim.Hp = Math.Max(0, victim.Hp - damage);
             Tell(victim, $"{Article(m.Kind)} trifft dich für {damage} Schaden.");
             if (victim.Hp > 0 && m.Kind.Poison is { } poison && _random.Next(poison.OneIn) == 0)
@@ -783,6 +791,7 @@ public sealed partial class World
     {
         lock (_gate)
         {
+            EndManaFocus(avatar);
             if (avatar.Room.Definition.NoCombat)
             {
                 Tell(avatar, "Hier ist kein Kampf erlaubt.");   // room.kod ReqSomethingAttack

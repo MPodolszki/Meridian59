@@ -1318,6 +1318,19 @@
       "number": true,
       "plural": "Drachenfliegenaugen",
       "description": "Das schillernde Facettenauge einer Drachenfliege."
+    },
+    {
+      "key": "fairywing",
+      "kodClass": "FairyWing",
+      "name": "Feenflügel",
+      "icon": "farywing.bgf",
+      "value": 30,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Feenflügel",
+      "description": "Ein zarter, schillernder Flügel einer Fee."
     }
   ],
   "treasure": {
@@ -1642,12 +1655,20 @@
         "weight": 20
       },
       {
+        "item": "fairywing",
+        "weight": 15
+      },
+      {
         "item": "inkycap",
         "weight": 5
       }
     ],
     "black_spider": [],
     "dragonfly": [
+      {
+        "item": "dragonflyeye",
+        "weight": 30
+      },
       {
         "item": "meatpie",
         "weight": 20
@@ -1684,6 +1705,10 @@
       }
     ],
     "fairy": [
+      {
+        "item": "fairywing",
+        "weight": 30
+      },
       {
         "item": "mushroom",
         "weight": 20
@@ -1957,6 +1982,10 @@
       {
         "item": "solagh",
         "weight": 40
+      },
+      {
+        "item": "dragonflyeye",
+        "weight": 30
       }
     ],
     "medium": [
@@ -2047,6 +2076,10 @@
       {
         "item": "orctooth",
         "weight": 35
+      },
+      {
+        "item": "dragonflyeye",
+        "weight": 6
       },
       {
         "item": "solagh",
