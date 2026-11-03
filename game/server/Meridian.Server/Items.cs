@@ -146,6 +146,8 @@ public sealed class CharacterState
     /// Zauber je Schule seit der letzten Verbesserung (piSchoolCast).</summary>
     public Attributes Attributes { get; set; } = Attributes.Default;
     public int Karma { get; set; }
+    /// <summary>Heimatstadt (user.kod piHomeroom): Raum des Heimatgasthauses; negativ = in der Ahnenhalle fest gewählt.</summary>
+    public int? Hometown { get; set; }
     public int Mana { get; set; }
     public int MaxMana { get; set; }
     public Dictionary<int, int> Spells { get; } = new();

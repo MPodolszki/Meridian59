@@ -122,6 +122,19 @@ public sealed class WildernessTests : IAsyncDisposable
         Assert.Single(south, e => e.Applies(10, 5));
     }
 
+    [Fact]
+    public async Task HallOfGenealogy_OathSetsTheHometown_OnlyOnce()
+    {
+        var (c, events) = await EnterAsync(156);
+        await c.SayAsync("Marion, trautes Heim.");
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.StartsWith("Sei freundlich zu allen"));
+        var me = _server!.World.Rooms.Single(r => r.Definition.Id == 156).Avatars.Values.Single();
+        Assert.Equal(-202, me.State.Hometown);
+        await c.SayAsync("In Einigkeit stehen wir in Jasper.");
+        await WaitForAsync(c, events, e => e is ClientEvent.Chat ch && ch.Text.StartsWith("Du kannst deine Heimatstadt nicht mehr ändern"));
+        Assert.Equal(-202, me.State.Hometown);
+    }
+
     private async Task<(ClientSession, List<ClientEvent>)> EnterAsync(int startRoom)
     {
         var accounts = AccountStore.Open(_db);

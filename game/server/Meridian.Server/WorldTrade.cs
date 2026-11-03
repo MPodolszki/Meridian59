@@ -1038,6 +1038,7 @@ public sealed partial class World
             ? new SavedMagic(c.Attributes, c.Karma, c.Mana, c.MaxMana, new(c.Spells), new(c.SchoolCasts))
             {
                 Skills = new(c.Skills),
+                Hometown = c.Hometown,
                 Enchantments = c.Enchantments.ToDictionary(kv => kv.Key,
                     kv => new SavedEnchantment(kv.Value.State, (long)Math.Max((kv.Value.Until - DateTime.UtcNow).TotalMilliseconds, 0))),
             }
@@ -1084,6 +1085,7 @@ public sealed partial class World
                     state.MagicInitialized = true;
                     state.Attributes = magic.Attributes;
                     state.Karma = magic.Karma;
+                    state.Hometown = magic.Hometown;
                     state.Mana = magic.Mana;
                     state.MaxMana = magic.MaxMana;
                     foreach (var (sid, ability) in magic.Spells)

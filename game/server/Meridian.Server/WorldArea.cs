@@ -29,6 +29,56 @@ public sealed partial class World
         return new MoveResult.ChangedRoom(target);
     }
 
+    /// <summary>user.kod SetRandomHomeroom: Marion 3, Cor Noth 4, Jasper 3 von 10 (nur vorhandene Gasthäuser).</summary>
+    private int RandomHometown()
+    {
+        int roll = _random.Next(1, 11);
+        int room = roll < 4 ? 202 : roll > 7 ? 370 : 153;
+        return _rooms.ContainsKey(room) ? room : RespawnRoom.Definition.Id;
+    }
+
+    /// <summary>AdminGoToSafety: das Heimatgasthaus; ohne gültige Heimat wird eine ausgewürfelt.</summary>
+    private Room HomeRoom(Avatar a)
+    {
+        if (a.State.Hometown is not { } h || !_rooms.TryGetValue(Math.Abs(h), out var room))
+        {
+            a.State.Hometown = RandomHometown();
+            room = _rooms.GetValueOrDefault(a.State.Hometown.Value) ?? RespawnRoom;
+        }
+        return room;
+    }
+
+    /// <summary>Wohin man nach dem Tod bzw. einer Rettung kommt: Raza hat eigene Regeln, sonst die Heimatstadt.</summary>
+    private Room SafePlace(Avatar a) =>
+        a.Room.Definition.RespawnRoom is { } r && _rooms.TryGetValue(r, out var own) ? own : HomeRoom(a);
+
+    /// <summary>Ahnenhalle von Cor Noth (Coruniv.kod SomeoneSaid): wer den Schwur seiner Stadt spricht, legt die
+    /// Heimatstadt fest – nur einmal.</summary>
+    private static readonly (string Oath, int Room, string Reply)[] HometownOaths =
+    [
+        ("Ich bin in den alten Straßen von Tos aufgewachsen.", 52, "Gewieft und bereit für Ruhm und Reichtum trägst du Tos stolz als deine Heimat."),
+        ("Gutes Barloque, deine königlichen Straßen seien meine Heimat.", 106, "Bleib deinem edlen Blut treu."),
+        ("Ich vertraue mein Wissen der freien Stadt Cor Noth an.", 153, "Vergiss nicht, deine Studien in deiner Beschreibung zu vermerken."),
+        ("In Einigkeit stehen wir in Jasper.", 370, "Suche und vertraue nur deinen Mitbürgern aus Jasper."),
+        ("Marion, trautes Heim.", 202, "Sei freundlich zu allen, auch zu denen, die den städtischen Weg gehen."),
+    ];
+
+    private void HometownOath(Avatar a, string text)
+    {
+        if (a.Room.Definition.KodClass != "CornothUniversity")
+            return;
+        var oath = HometownOaths.FirstOrDefault(o => string.Equals(o.Oath.TrimEnd('.'), text.Trim().TrimEnd('.'), StringComparison.OrdinalIgnoreCase));
+        if (oath.Oath is null || !_rooms.ContainsKey(oath.Room))
+            return;
+        if (a.State.Hometown is < 0)
+        {
+            Tell(a, "Du kannst deine Heimatstadt nicht mehr ändern – sie ist bereits gewählt.");
+            return;
+        }
+        a.State.Hometown = -oath.Room;
+        Tell(a, oath.Reply);
+    }
+
     private MoveResult? Portal(Avatar a, ushort row, ushort col)
     {
         if (a.Room.Definition.Portal is not { } portal)
@@ -49,6 +99,7 @@ public sealed partial class World
         a.PortalWarned = a.OnPortal = false;
         Remove(a);
         var (r, c) = target.ArrivalPoint;
+        a.State.Hometown ??= target.Definition.Id;   // SetRandomHomeroom: das Gasthaus, in dem man ankommt
         Place(a, target, r, c);
         AddExertion(a, -2_000_000);   // volle Ausdauer
         GiveRealWorldObjects(a);

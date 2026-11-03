@@ -119,7 +119,7 @@ public sealed partial class World
         if (a.RescueAt is not { } at || now < at)
             return;
         a.RescueAt = null;
-        var home = a.Room.Definition.RespawnRoom is { } r && _rooms.TryGetValue(r, out var own) ? own : RespawnRoom;
+        var home = SafePlace(a);
         Tell(a, "Eine heilige Kraft rettet dich aus deiner Lage.");
         Remove(a);
         var (row, col) = home.ArrivalPoint;

@@ -91,4 +91,5 @@ Monster-Modelle: 46 eigene prozedurale Modelle mit Animationen (tools/blender/ma
 Zauberschulen Teil 1: 37 von ~150 Sprüchen (Angriff, Schwächung, Fläche, Heilung, Gift heilen; docs/magic.md). Katalog aller Sprüche: docs/kod/spells_catalog.json, docs/spells-original.md (Reihenfolge dort).
 Wildnis (53 Räume, automatisch aus dem KOD: tools/kodroom.py, make_wilderness.py) und Tempel Shal'ille/Kraanan/Qor + Faren-Priesterin als Spruchlehrer (make_temples.py, docs/wilderness.md); Zonen-Übergänge und Spawnzeiten wie im Original. Alle Städte zu Fuß verbunden. Übersicht des Rests: docs/world-remaining.md.
 Offen (Magie): restliche Sprüche (Raumzauber, Wände, Gegenstände, Riija-Illusionen, Jala-Lieder), Monster zaubern, PvP.
+Heimatstadt je Spieler wie im Original (Ahnenhalle Cor Noth, docs/cor.md); zaubernde Monster (docs/monsters.md).
 Offen: Kanalisationen (Jasper, Barloque), Heimatstadt je Spieler, Gruft-Rätsel in Marion, fehlende Sprüche/Gegenstände.

@@ -28,6 +28,8 @@ public sealed record SavedMagic(Attributes Attributes, int Karma, int Mana, int 
     public Dictionary<int, int> Skills { get; init; } = new();
     /// <summary>Persönliche Verzauberungen (SID → Zustand, Restdauer in ms); die Zeit läuft offline nicht weiter.</summary>
     public Dictionary<int, SavedEnchantment> Enchantments { get; init; } = new();
+    /// <summary>Heimatstadt (Raum, negativ = fest gewählt); fehlt in älteren Ständen.</summary>
+    public int? Hometown { get; init; }
 }
 
 public sealed record SavedEnchantment(int State, long RemainingMs);

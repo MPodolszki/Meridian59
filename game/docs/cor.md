@@ -36,3 +36,20 @@ Lernpunkte zählen jetzt Sprüche und Fertigkeiten gemeinsam (wie im Original be
 - Universität: Heimatstadt wählen per Satz (es gibt noch keine Heimatstadt je Spieler), die fünf Bücher.
 - D'Franco: Spruch Beleben (Jala) und Ehering; Solomon: Feenflügel; Rook: Vergessenstrank für Kraanan, Monster-Ratschläge.
 - Stimmungen der NPCs, Gerüchte über das Token, Uhr an der Wand, Gildenhallen und Wildnis um Cor Noth.
+
+## Heimatstadt und Ahnenhalle (2026-11-03)
+Wie user.kod `piHomeroom`: Wer durch das Raza-Portal geht, bekommt das Gasthaus, in dem er ankommt, als Heimat
+(Marion 3, Cor Noth 4, Jasper 3 von 10). Nach dem Tod und mit dem Spruch Rettung erwacht man im Heimatgasthaus
+(Raza bleibt Raza). Ohne gültige Heimat wird eine ausgewürfelt (AdminGoToSafety). In der Ahnenhalle von Cor Noth
+(Coruniv.kod) legt man sie einmal fest, indem man den Schwur der Stadt spricht:
+
+| Stadt | Schwur (Original sinngemäß) |
+|---|---|
+| Tos | „Ich bin in den alten Straßen von Tos aufgewachsen.“ |
+| Barloque | „Gutes Barloque, deine königlichen Straßen seien meine Heimat.“ |
+| Cor Noth | „Ich vertraue mein Wissen der freien Stadt Cor Noth an.“ |
+| Jasper | „In Einigkeit stehen wir in Jasper.“ |
+| Marion | „Marion, trautes Heim.“ |
+
+Gespeichert im Charakter (magic-JSON, `Hometown`, negativ = fest). Abweichung: kein Umweg über die Unterwelt nach dem
+Tod; die Herkunft in der Beschreibung („hat Jasper seit acht Jahren zur Heimat“) fehlt.

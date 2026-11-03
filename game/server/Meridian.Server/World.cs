@@ -478,6 +478,7 @@ public sealed partial class World
                 a.Session.EnsureResource(avatar.Name);
                 a.Session.Post(said);
             }
+            HometownOath(avatar, text);
             // NPCs im Raum antworten, wenn sie sich angesprochen fühlen (alle im Raum hören es).
             foreach (var npc in avatar.Room.Npcs)
             {
@@ -892,7 +893,7 @@ public sealed partial class World
     {
         killer.Target = null;
         // Wiederbelebung mit vollen Lebenspunkten: in Raza im Gasthaus (user.kod), sonst im Wiederbelebungsraum.
-        var home = victim.Room.Definition.RespawnRoom is { } r && _rooms.TryGetValue(r, out var own) ? own : RespawnRoom;
+        var home = SafePlace(victim);
         Tell(victim, $"Du wurdest von {Article(killer.Kind, dative: true)} getötet. Du erwachst in {home.Definition.Name}.");
         BroadcastRoom(victim.Room, GameReplies.Animate(ToRoomObject(victim), GameReplies.DeathGroup, 9, 1500));
         victim.Casting = null;
