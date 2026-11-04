@@ -125,8 +125,9 @@ public sealed class GameServer
     {
         if (_listener is null)
             Start();
-        _ = Task.Run(() => TickLoopAsync(ct), CancellationToken.None);
-        _ = Task.Run(() => SaveLoopAsync(ct), CancellationToken.None);
+        var tick = Task.Run(() => TickLoopAsync(ct), CancellationToken.None);
+        var save = Task.Run(() => SaveLoopAsync(ct), CancellationToken.None);
+        var sessionTasks = new ConcurrentDictionary<int, Task>();
         try
         {
             while (!ct.IsCancellationRequested)
@@ -134,10 +135,14 @@ public sealed class GameServer
                 var client = await _listener!.AcceptTcpClientAsync(ct);
                 var session = new Session(Interlocked.Increment(ref _nextSessionId), client, this);
                 _sessions[session.Id] = session;
-                _ = Task.Run(async () =>
+                sessionTasks[session.Id] = Task.Run(async () =>
                 {
                     try { await session.RunAsync(ct); }
-                    finally { Remove(session); }
+                    finally
+                    {
+                        Remove(session);
+                        sessionTasks.TryRemove(session.Id, out _);
+                    }
                 }, CancellationToken.None);
             }
         }
@@ -147,6 +152,11 @@ public sealed class GameServer
             _listener!.Stop();
             foreach (var s in _sessions.Values)
                 s.Close();
+            // Erst warten, bis Sessions (speichern beim Verlassen), Spieltakt und Speicher-Schleife fertig sind,
+            // damit nach dem letzten Speichern niemand mehr in die Datenbank schreibt.
+            var pending = sessionTasks.Values.Append(tick).Append(save).ToArray();
+            if (!Task.WaitAll(pending, TimeSpan.FromSeconds(10)))
+                Log.Warn("Beim Beenden haben nicht alle Hintergrundaufgaben rechtzeitig aufgehört");
             SaveGame("Serverende");
         }
     }
