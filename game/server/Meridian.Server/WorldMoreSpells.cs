@@ -53,6 +53,10 @@ public sealed partial class World
     {
         switch (spell.Effect)
         {
+            case "illusionaryform":
+                a.Illusion = null;
+                ShowAppearance(a);
+                break;
             case "denial":
             {
                 // Rückzahlung: Gewinn − Gewinn × ((Stärke + 1)/5) / 100, nie unter 1 LP.
@@ -112,7 +116,7 @@ public sealed partial class World
     /// <summary>Magischer Schild (+ 50 + 2 × Stärke) und Schattengestalt (30 + 164 − Raumlicht, 10..150) auf die Abwehr.</summary>
     private int MoreDefense(Avatar a)
     {
-        int def = EnchantState(a, "magicshield");
+        int def = EnchantState(a, "magicshield") + 3 * EnchantState(a, "feigndeath");   // fdeath.kod: + 3 × Stärke
         if (EnchantState(a, "shadowform") > 0)
             def += Math.Clamp(30 + (164 - CurrentLight(a.Room, Hour(DateTime.UtcNow))), 10, 150);
         return def;
@@ -170,6 +174,9 @@ public sealed partial class World
             case "removecurse" when !t.State.Inventory.Any(i => i.Used && i.Kind.Cursed):
             case "curedisease" when !Diseased(t):
                 Tell(a, string.Format(spell.Unnecessary ?? "Das ist nicht nötig.", t.Name));
+                return false;
+            case "illusionaryform" when a.Illusion is not null:
+                Tell(a, spell.Unnecessary ?? "Deine Gestalt ist bereits verändert.");
                 return false;
             case "denial" when a.Hp >= a.MaxHp:
                 Tell(a, spell.Unnecessary ?? "Du bist kerngesund.");
@@ -268,8 +275,117 @@ public sealed partial class World
             case "identify":
                 Identify(a, spell);
                 return true;
+            case "feigndeath":
+                FeignDeath(a, spell, power, now);
+                return true;
+            case "illusionaryform":
+                IllusionaryForm(a, spell, power, now);
+                return true;
         }
         return false;
+    }
+
+    /// <summary>fdeath.kod: scheinbar tot – Waffe, Schild und Helm fallen immer, sonst jeder Gegenstand mit
+    /// Random(1,100) &lt; 10 − Stärke/10 (1..10); falsche Todesmeldung an den Raum; hält, solange die Trance hält und
+    /// alle 5 s 5 Mana gezahlt werden (unter 10 Mana die letzte Runde).</summary>
+    private void FeignDeath(Avatar a, SpellDefinition spell, int power, DateTime now)
+    {
+        var room = a.Room;
+        int dropChance = Math.Clamp(10 - power / 10, 1, 10);
+        foreach (var item in a.State.Inventory.ToList())
+        {
+            bool held = item.Used && item.Kind.Slot is "weapon" or "shield" or "helmet";
+            if (item.Kind.IsMoney || item.Kind.Cursed && item.Used || !held && _random.Next(1, 101) >= dropChance)
+                continue;
+            Take(a, item);
+            PutOnFloor(room, item, a.Row, a.Col);
+        }
+        int roll = _random.Next(1, 101);
+        string killer = roll switch
+        {
+            1 => "einem wütenden Kerl namens Mocker",
+            2 => "einem herabfallenden Klavier",
+            3 => "einem feuerspeienden Häschen",
+            _ => room.MonsterTable.Count > 0 ? Article(room.MonsterTable[0].Kind, capital: false, dative: true) : "einer Riesenratte",
+        };
+        foreach (var other in room.Avatars.Values.Where(o => o != a))
+            Tell(other, $"### {a.Name} wurde gerade von {killer} getötet.");
+        BroadcastRoom(room, GameReplies.Animate(ToRoomObject(a), GameReplies.DeathGroup, 9, 1500));
+        a.State.Enchantments[spell.Sid] = new Enchantment(power, DateTime.MaxValue);
+        a.FeignDrainAt = now.AddSeconds(5);
+        a.Session.Post(GameReplies.AddEnchantment(ToSpellObject(a.Session, spell)));
+        Tell(a, "Du lässt dich fallen und stellst dich tot.");
+    }
+
+    private void TickFeignDeath(Avatar a, DateTime now)
+    {
+        if (a.FeignDrainAt is null && a.State.Enchantments.Count > 0
+            && a.State.Enchantments.Keys.Select(_spells.BySid).FirstOrDefault(s => s?.Effect == "feigndeath") is { } stale)
+            EndEnchantment(a, stale, report: false);   // nach dem Einloggen: Trance ist vorbei
+        if (a.FeignDrainAt is not { } due || now < due)
+            return;
+        if (a.State.Mana < 10)
+        {
+            EndFeignDeath(a);
+            return;
+        }
+        ChangeMana(a, -5);
+        a.FeignDrainAt = now.AddSeconds(5);
+    }
+
+    /// <summary>Die Trance bricht (Bewegung, Angriff, anderer Spruch) oder das Mana reicht nicht mehr.</summary>
+    private void EndFeignDeath(Avatar a)
+    {
+        if (a.FeignDrainAt is null)
+            return;
+        a.FeignDrainAt = null;
+        if (a.State.Enchantments.Keys.Select(_spells.BySid).FirstOrDefault(s => s?.Effect == "feigndeath") is { } spell)
+            EndEnchantment(a, spell, report: true);
+        BroadcastRoom(a.Room, GameReplies.Change(ToRoomObject(a)));
+    }
+
+    /// <summary>illform.kod: Gestalt nach Gewicht a = S − |S − Stufe| (über S doppelt), S = Stärke × 130/100,
+    /// a &lt; −99 → 0, sonst 1..100; Dauer Random(t/2, t), t = 1000 × (90 + 2 × Stärke) ms. Abweichung: die Gestalt
+    /// lässt sich nicht durch Aussprechen eines Monsternamens wählen.</summary>
+    private void IllusionaryForm(Avatar a, SpellDefinition spell, int power, DateTime now)
+    {
+        if (a.Illusion is not null)
+        {
+            Tell(a, spell.Unnecessary ?? "Deine Gestalt ist bereits verändert.");
+            return;
+        }
+        int sp = power * 130 / 100;
+        var weighted = MonsterKind.All.Values.Where(k => k.CanMorphTo && !k.Peaceful).Select(k =>
+        {
+            int diff = Math.Abs(sp - k.Level) * (k.Level > sp ? 2 : 1);
+            int w = sp - diff;
+            return (Kind: k, Weight: w < -99 ? 0 : Math.Clamp(w, 1, 100));
+        }).Where(x => x.Weight > 0).ToList();
+        if (weighted.Count == 0)
+            return;
+        int roll = _random.Next(weighted.Sum(x => x.Weight)), acc = 0;
+        var form = weighted.First(x => (acc += x.Weight) > roll).Kind;
+        int t = 1000 * (90 + 2 * power);
+        a.State.Enchantments[spell.Sid] = new Enchantment(0, now.AddMilliseconds(_random.Next(t / 2, t + 1)));
+        a.Session.Post(GameReplies.AddEnchantment(ToSpellObject(a.Session, spell)));
+        a.Illusion = form;
+        Tell(a, string.Format(spell.CastText ?? "Für andere siehst du nun aus wie: {0}.", form.Name));
+        ShowAppearance(a);
+    }
+
+    /// <summary>Neue Erscheinung des Spielers an alle im Raum (SomethingChanged).</summary>
+    private void ShowAppearance(Avatar a)
+    {
+        foreach (var other in a.Room.Avatars.Values)
+        {
+            other.Session.EnsureResource(a.Name);
+            if (a.Illusion is { } form)
+            {
+                other.Session.EnsureResource(form.Name);
+                other.Session.EnsureResource(form.Icon);
+            }
+            other.Session.Post(GameReplies.Change(ToRoomObject(a)));
+        }
     }
 
     /// <summary>identify.kod: Beschreibung mit verborgenen Eigenschaften (hier: Ladungen, Fluch, Spruchmodifikator).</summary>

@@ -192,6 +192,22 @@ for m in catalog:
     entry.update({k: v for k, v in OVERRIDE.get(key, {}).items() if k != "resistancesFix"})
     out[key] = entry
 
+# CanMorphTo (monster.kod TRUE, überschrieben z. B. vom Dunklen Engel, Yeti, Lich): darf Gestalt für Trugform/Verwandlung sein.
+_battler = root.parent / "kod/object/active/holder/nomoveon/battler"
+_morph = {}
+for _f in _battler.rglob("*.kod"):
+    _t = re.sub(r"%[^\n]*", "", _f.read_text(encoding="latin-1"))
+    _m = re.search(r"^(\w+)\s+is\s+(\w+)", _t, re.M)
+    if _m:
+        _v = re.search(r"CanMorphTo\(\)\s*\{\s*return\s+(\w+)", _t)
+        _morph[_m.group(1).lower()] = (_m.group(2).lower(), None if not _v else _v.group(1).upper() == "TRUE")
+for key, entry in out.items():
+    c = entry["class"].lower()
+    while c in _morph and _morph[c][1] is None:
+        c = _morph[c][0]
+    if c in _morph and _morph[c][1] is False:
+        entry["canMorphTo"] = False
+
 path = root / "server/data/monsters/monsters.json"
 path.parent.mkdir(parents=True, exist_ok=True)
 path.write_text(json.dumps({

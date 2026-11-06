@@ -70,6 +70,7 @@ GERMAN = {
     "forgetwand": ("Zauberstab des Vergessens", "Zauberstäbe des Vergessens", "Ein blasser Stab, an den man sich kaum erinnert."),
     "brittlewand": ("Zauberstab der Sprödigkeit", "Zauberstäbe der Sprödigkeit", "Ein rissiger, alter Stab."),
     "shatterwand": ("Zauberstab des Zerschmetterns", "Zauberstäbe des Zerschmetterns", "Ein eiskalter Stab mit Reif an der Spitze."),
+    "feigndeathpotion": ("Trank des Scheintods", "Tränke des Scheintods", "Ein grauer, kalter Trank, der nach Grabeserde riecht."),
     "swapwand": ("Zauberstab des Tauschs", "Zauberstäbe des Tauschs", "Ein Stab, der nie ganz dort liegt, wo man ihn hingelegt hat."),
 }
 

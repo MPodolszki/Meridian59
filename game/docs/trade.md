@@ -135,3 +135,6 @@ in Metallrüstungen (GetHeatDamage) fehlt.
   Qor (für das Steinkreis-Rätsel in I9, noch nicht umgesetzt), Feuersand (Reagenz).
 - 26 neue Tränke, Schriftrollen und Stäbe zu den neuen Sprüchen (docs/magic.md). Stäbe mit PvP-Sprüchen (Vergessen,
   Spröde, Zerschmettern, Tausch) verweigert der Schutzengel.
+- Bögen und Pfeile siehe docs/combat.md. Beißendes Elixier (Knotenstoß): SID_NODEBURST hat im Original keinen
+  Spruch – Trinken bewirkt nichts. Noch fehlend in den Beutetabellen: Verführungsstab (braucht Begleiter-Monster),
+  Giftnebel-Rolle (braucht Wandsprüche). Ohne Verderben: Tränke werden im Original nach GO_BAD_TIME schlecht.

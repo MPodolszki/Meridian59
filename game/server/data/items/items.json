@@ -2832,6 +2832,153 @@
       "powerMax": 60,
       "chargesMin": 4,
       "chargesMax": 9
+    },
+    {
+      "key": "longbow",
+      "kodClass": "Longbow",
+      "name": "Langbogen",
+      "icon": "bow.bgf",
+      "value": 2500,
+      "types": [
+        "weapon"
+      ],
+      "article": "einen",
+      "slot": "weapon",
+      "weaponType": "ranged",
+      "twoHanded": true,
+      "range": 100,
+      "hitBonus": 100,
+      "proficiency": 456,
+      "overlay": "bowbov.bgf",
+      "windowOverlay": "povbow.bgf",
+      "description": "Ein hoher Bogen aus elastischem Holz. Er trifft weit und genau.",
+      "spellModifier": -20
+    },
+    {
+      "key": "battlebow",
+      "kodClass": "BattleBow",
+      "name": "Kampfbogen",
+      "icon": "bow.bgf",
+      "value": 3000,
+      "types": [
+        "weapon"
+      ],
+      "article": "einen",
+      "slot": "weapon",
+      "weaponType": "ranged",
+      "twoHanded": true,
+      "range": 17,
+      "weaponDamage": 2,
+      "proficiency": 456,
+      "overlay": "bowbov.bgf",
+      "windowOverlay": "povbow.bgf",
+      "description": "Ein kurzer, schwerer Bogen für den Kampf auf nahe Entfernung. Seine Pfeile schlagen hart ein.",
+      "spellModifier": -30
+    },
+    {
+      "key": "arrow",
+      "kodClass": "Arrow",
+      "name": "Pfeil",
+      "icon": "arrow.bgf",
+      "value": 10,
+      "types": [
+        "ammo"
+      ],
+      "number": true,
+      "plural": "Pfeile",
+      "slot": "quiver",
+      "defaultNumber": 20,
+      "damageMin": 1,
+      "damageMax": 5,
+      "attackTypes": [
+        "pierce"
+      ],
+      "description": "Schlank und gerade, mit Federn von Dschungelvögeln – gewöhnliche Munition für einen Bogen."
+    },
+    {
+      "key": "neruditearrow",
+      "kodClass": "NeruditeArrow",
+      "name": "Neruditpfeil",
+      "icon": "arrowner.bgf",
+      "value": 20,
+      "types": [
+        "ammo"
+      ],
+      "number": true,
+      "plural": "Neruditpfeile",
+      "slot": "quiver",
+      "defaultNumber": 5,
+      "damageMin": 2,
+      "damageMax": 6,
+      "attackTypes": [
+        "pierce",
+        "nerudite"
+      ],
+      "description": "Die geschnitzten Spitzen richten etwas mehr Schaden an als gewöhnliche Pfeile – und zersplittert der kleine grüne Stein beim Aufprall, kann das tödlich sein."
+    },
+    {
+      "key": "silverarrow",
+      "kodClass": "SilverArrow",
+      "name": "Silberpfeil",
+      "icon": "arrowsil.bgf",
+      "value": 30,
+      "types": [
+        "ammo"
+      ],
+      "number": true,
+      "plural": "Silberpfeile",
+      "slot": "quiver",
+      "defaultNumber": 10,
+      "damageMin": 2,
+      "damageMax": 6,
+      "attackTypes": [
+        "pierce",
+        "silver"
+      ],
+      "description": "Die scharfe, saubere Spitze reißt böse Wunden. Manche Bogenschützen schwören auf sie gegen Untote."
+    },
+    {
+      "key": "nodeburstpotion",
+      "kodClass": "NodeBurstPotion",
+      "name": "beißendes Elixier",
+      "icon": "potion01.bgf",
+      "value": 120,
+      "types": [
+        "potion"
+      ],
+      "article": "ein",
+      "special": "dud",
+      "description": "Ein Glasfläschchen mit roter Flüssigkeit und beißendem Geruch. Laut dem großen Warnschild öffnet es alle Manaknoten-Verbindungen bis zum Anschlag – und trennt dabei eine für immer."
+    },
+    {
+      "key": "feigndeathpotion",
+      "kodClass": "FeignDeathPotion",
+      "name": "Trank des Scheintods",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke des Scheintods",
+      "description": "Ein grauer, kalter Trank, der nach Grabeserde riecht.",
+      "spell": "feigndeath",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "illusionaryformpotion",
+      "kodClass": "IllusionaryFormPotion",
+      "name": "brauner Trank",
+      "icon": "flask.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "article": "einen",
+      "spell": "illusionaryform",
+      "powerMin": 1,
+      "powerMax": 80,
+      "description": "Ein tiefer, dunkler, trüber, stückiger Trank."
     }
   ],
   "treasure": {
@@ -3041,6 +3188,10 @@
         "weight": 15
       },
       {
+        "item": "neruditearrow",
+        "weight": 5
+      },
+      {
         "item": "emerald",
         "weight": 5
       },
@@ -3112,6 +3263,22 @@
       }
     ],
     "avar_chief": [
+      {
+        "item": "longbow",
+        "weight": 30
+      },
+      {
+        "item": "arrow",
+        "weight": 19
+      },
+      {
+        "item": "neruditearrow",
+        "weight": 15
+      },
+      {
+        "item": "battlebow",
+        "weight": 15
+      },
       {
         "item": "money",
         "weight": 10
@@ -3355,6 +3522,10 @@
     ],
     "black_spider": [
       {
+        "item": "neruditearrow",
+        "weight": 10
+      },
+      {
         "item": "nightvisionpotion",
         "weight": 9
       },
@@ -3419,6 +3590,10 @@
         "weight": 3
       },
       {
+        "item": "feigndeathpotion",
+        "weight": 3
+      },
+      {
         "item": "detectinvisibilitypotion",
         "weight": 3
       },
@@ -3448,6 +3623,10 @@
       },
       {
         "item": "purifypotion",
+        "weight": 3
+      },
+      {
+        "item": "nodeburstpotion",
         "weight": 3
       },
       {
@@ -3550,6 +3729,10 @@
       },
       {
         "item": "entrootberry",
+        "weight": 5
+      },
+      {
+        "item": "illusionaryformpotion",
         "weight": 5
       }
     ],
@@ -4043,6 +4226,10 @@
         "weight": 5
       },
       {
+        "item": "feigndeathpotion",
+        "weight": 5
+      },
+      {
         "item": "resistmagicpotion",
         "weight": 5
       },
@@ -4058,6 +4245,10 @@
       },
       {
         "item": "scimitar",
+        "weight": 12
+      },
+      {
+        "item": "arrow",
         "weight": 12
       },
       {
@@ -4237,6 +4428,10 @@
     ],
     "skeleton3": [
       {
+        "item": "neruditearrow",
+        "weight": 15
+      },
+      {
         "item": "bluemushroom",
         "weight": 15
       },
@@ -4284,6 +4479,10 @@
       },
       {
         "item": "bluedragonscale",
+        "weight": 10
+      },
+      {
+        "item": "silverarrow",
         "weight": 10
       },
       {

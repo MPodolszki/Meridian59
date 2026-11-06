@@ -159,6 +159,85 @@ public sealed class MoreItemsTests : IAsyncLifetime
         Assert.Contains(wand, me.State.Inventory);
     }
 
+    [Fact]
+    public async Task Longbow_ShootsAcrossTheRoom_AndUsesArrows()
+    {
+        var (c, events, me) = await EnterAsync();
+        me.State.Attributes = me.State.Attributes with { Aim = 50 };
+        var shield = Give(me, "metalshield");
+        await UseAsync(c, events, shield);
+        var bow = Give(me, "longbow");
+        await UseAsync(c, events, bow);
+        Assert.False(shield.Used);                       // Bögen brauchen beide Hände
+        var m = _server.World.SpawnMonster(1, Dummy, new GridPos(5, 15));   // 10 Felder entfernt
+
+        int n = events.Count;
+        await c.AttackAsync(m.Id);
+        await WaitForAsync(c, events, _ => Chats(events, n).Any(t => t.Contains("keine Munition")));
+
+        _server.World.GiveItemsForTest(me, [("arrow", 3)]);
+        var arrows = me.State.Inventory.Single(i => i.Kind.Key == "arrow");
+        for (int i = 0; i < 3; i++)
+        {
+            n = events.Count;
+            await Task.Delay(1100);                       // Angriffstakt
+            await c.AttackAsync(m.Id);
+            await WaitForAsync(c, events, _ => Chats(events, n).Any(t => t.Contains("Pfeil auf")));
+        }
+        Assert.DoesNotContain(arrows, me.State.Inventory);   // alle drei verschossen
+        Assert.True(m.Hp < m.MaxHp);
+    }
+
+    [Fact]
+    public void ArrowsFromTreasure_ComeInBundles()
+    {
+        var items = ItemCatalog.Load(Data("items", "items.json"));
+        Assert.Equal(20, items["arrow"].DefaultNumber);    // ammo piNumber
+        Assert.Equal(5, items["neruditearrow"].DefaultNumber);
+        Assert.Equal(10, items["silverarrow"].DefaultNumber);
+        Assert.Equal(-20, items["longbow"].SpellModifier);
+        Assert.Equal(17, items["battlebow"].Range);
+    }
+
+    [Fact]
+    public async Task IllusionaryFormPotion_ShowsPlayerAsMonster()
+    {
+        var (c, events, me) = await EnterAsync();
+        var potion = Give(me, "illusionaryformpotion");
+        int n = events.Count;
+        await c.UseAsync(potion.Id);
+        await WaitForAsync(c, events, _ => Chats(events, n).Any(t => t.Contains("siehst du nun aus wie")));
+        Assert.NotNull(me.Illusion);
+        Assert.True(me.Illusion!.CanMorphTo);
+        Assert.False(MonsterKind.ByKey("darkangel").CanMorphTo);
+    }
+
+    [Fact]
+    public async Task FeignDeath_DropsWeapon_RaisesDefense_EndsOnMove()
+    {
+        var (c, events, me) = await EnterAsync();
+        var spells = SpellBook.Load(Data("spells", "spells.json"));
+        var feign = spells["feigndeath"]!;
+        me.State.Spells[feign.Sid] = 99;
+        me.State.Mana = 99;
+        _server.World.GiveItemsForTest(me, [("solagh", 5), ("rainbowfern", 5)]);
+        var sword = Give(me, "longsword");
+        await UseAsync(c, events, sword);
+        int before = _server.World.PlayerDefense(me);
+        for (int i = 0; i < 10 && me.FeignDrainAt is null; i++)
+        {
+            int n = events.Count;
+            me.State.Mana = 99;
+            await c.CastAsync(Spell.ObjectIdBase + (uint)feign.Sid, []);
+            await WaitForAsync(c, events, _ => Chats(events, n).Any(t => t.Contains("stellst dich tot") || t.Contains("misslungen")));
+        }
+        Assert.NotNull(me.FeignDrainAt);
+        Assert.DoesNotContain(sword, me.State.Inventory);         // Waffe fällt immer
+        Assert.True(_server.World.PlayerDefense(me) > before);
+        await c.MoveAsync((ushort)(me.Row + 64), me.Col, false);
+        await WaitForAsync(c, events, _ => me.FeignDrainAt is null);
+    }
+
     private Item Give(Avatar me, string key)
     {
         _server.World.GiveItemsForTest(me, [(key, 1)]);

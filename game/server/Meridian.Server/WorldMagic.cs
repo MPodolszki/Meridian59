@@ -494,6 +494,7 @@ public sealed partial class World
     private void TickMagic(Avatar a, DateTime now)
     {
         TickEnchantments(a, now);
+        TickFeignDeath(a, now);
         if (a.Casting is { } c && now >= c.Due)
         {
             a.Casting = null;

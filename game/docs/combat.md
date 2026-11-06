@@ -63,3 +63,19 @@ Protokoll:
 - Monster haben `OF_ATTACKABLE`, Spieler `OF_PLAYER`, NPCs keins von beiden.
 - Ausgänge am Raumrand (`plEdge_Exits`): ausgelöst, sobald eine gemeldete Position außerhalb des Rasters liegt
   (Raumgröße `rows`/`cols` in `tos.json`, aus den Layouts).
+
+## Fernkampf mit Bögen (2026-11-06)
+`WorldRanged.cs` nach ranged.kod, bow.kod, stroke/fire.kod, ammo/*.kod:
+
+- Langbogen (Reichweite 100 Felder, Treffer + 100, Spruchstärke −20) und Kampfbogen (17 Felder, Schaden + 2, −30);
+  beide brauchen beide Hände (Schild/Fackel wird abgelegt) und parieren nicht.
+- Technik „Schießen“ (SKID_FIRE 425, Stufe 4, Zielen) statt Hieb, Fertigkeit „Bogenschießen“ (456, Stufe 5); Schießen
+  ist wie Hieb ohne Lernen erlaubt. Lehrer gibt es nur auf Ko'catan (kcweapon.kod).
+- Munition im Köcher (Platz "quiver"); fehlt sie, wird der billigste passende Pfeil eingelegt, sonst „keine
+  Munition“. Jeder Schuss (Treffer oder nicht) kostet einen Pfeil.
+- Schaden = Pfeil (Pfeil 1–5; Neruditpfeil 2–6, mit 10 % zersplittert 3–8; Silberpfeil 2–6, gegen Untote 5–10)
+  + Bogen, × 90/100, dann (Bogenfertigkeit + 1) × 5/100 + (100 + Zielen − 25 (0..40)) % – Zielen statt Stärke.
+  Angriffsart Stich (+ Nerudit bzw. Silber), nicht „nicht magisch“. Adleraugen: Treffer + Zustand, Schaden + 1.
+- Pfeile aus der Beute kommen im Bündel (piNumber: 20 / 5 Nerudit / 10 Silber).
+- Abweichung: kein fliegender Pfeil (SomethingShot), keine Abnutzung (piHits) – der Trefferbonus des Langbogens
+  gilt deshalb immer voll.

@@ -88,6 +88,16 @@ public sealed record ItemKind(string Key, string Name, string Icon, int Value)
     public string? Special { get; init; }
     public int DamageMin { get; init; }
     public int DamageMax { get; init; }
+    /// <summary>Fernwaffe (ranged.kod): Reichweite in Feldern, Trefferbonus (viHit_roll_modifier), Zusatzschaden
+    /// (viWeaponDamage); belegt beide Hände (viUse_Amount = 2).</summary>
+    public int Range { get; init; }
+    public int HitBonus { get; init; }
+    public int WeaponDamage { get; init; }
+    public bool TwoHanded { get; init; }
+    /// <summary>Munition (ammo.kod, Platz "quiver"): Angriffsarten des Pfeils; Bündelgröße beim Erzeugen (piNumber).</summary>
+    public IReadOnlyList<string>? AttackTypes { get; init; }
+    public int DefaultNumber { get; init; } = 1;
+    public bool IsRanged => WeaponType == "ranged";
     public int PowerMin { get; init; } = 30;
     public int PowerMax { get; init; } = 60;
     public int ChargesMin { get; init; } = 1;
@@ -172,6 +182,8 @@ public sealed class Item(uint id, ItemKind kind, int number = 1)
     public string DisplayName => Kind.Number && Number != 1 ? Kind.Plural ?? Kind.Name : Kind.Name;
 
     public string Describe() => Kind.Describe(Number);
+
+    public bool IsRangedWeapon => Kind.IsRanged;
 }
 
 /// <summary>Gegenstand auf dem Boden eines Raums.</summary>

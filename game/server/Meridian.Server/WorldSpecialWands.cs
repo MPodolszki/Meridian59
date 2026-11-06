@@ -13,6 +13,13 @@ public sealed partial class World
     {
         if (IsHeld(a))
             return;
+        if (item.Kind.Special == "dud")
+        {
+            // nodebrsp.kod: SID_NODEBURST hat im Original keinen Spruch – das Elixier bewirkt nichts.
+            Tell(a, $"Du trinkst {item.Describe()}. Dir wird kurz schwindlig, doch sonst geschieht nichts.");
+            TakeNumber(a, item, 1);
+            return;
+        }
         item.Charges ??= _random.Next(item.Kind.ChargesMin, item.Kind.ChargesMax + 1);
         if (item.Charges <= 0)
         {

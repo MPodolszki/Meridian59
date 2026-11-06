@@ -33,7 +33,7 @@ public static class Skill
 {
     public const uint ObjectIdBase = 0x00600000;
     public const int SchoolFencing = 10;
-    public const int Dodge = 401, Parry = 402, Block = 404, Slash = 421, Punch = 430, Brawling = 450;
+    public const int Dodge = 401, Parry = 402, Block = 404, Slash = 421, Fire = 425, Punch = 430, Brawling = 450;
 }
 
 public sealed class SkillBook

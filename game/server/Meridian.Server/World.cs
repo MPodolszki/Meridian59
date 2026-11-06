@@ -48,6 +48,10 @@ public sealed class Avatar(uint id, string name, Session session)
     public DateTime? BlindUntil { get; set; }
     public DateTime NextRingCharge { get; set; }
     public DateTime? PalsyUntil { get; set; }
+    /// <summary>Trugform (illform.kod): erscheint anderen als dieses Monster.</summary>
+    public MonsterKind? Illusion { get; set; }
+    /// <summary>Totstellen (fdeath.kod): nächste Manazahlung; null = nicht scheintot.</summary>
+    public DateTime? FeignDrainAt { get; set; }
     /// <summary>Umnachtet bis (Krankheit Dementia, dement.kod).</summary>
     public DateTime? DementedUntil { get; set; }
     /// <summary>Manafokus (focus.kod): Spruchstärke beim Wirken, solange die Trance hält.</summary>
@@ -195,8 +199,9 @@ public sealed partial class World
     public string PlayerIcon { get; }
     public IReadOnlyCollection<Room> Rooms => _rooms.Values;
 
-    public RoomObject ToRoomObject(Avatar a) =>
-        new(a.Id, _resources[a.Name], new ObjectAppearance(_resources[a.State.Appearance.Body], 1, PlayerOverlays(a), ShirtTranslation(a)),
+    public RoomObject ToRoomObject(Avatar a) => a.Illusion is { } form
+        ? new(a.Id, _resources[form.Name], new ObjectAppearance(_resources[form.Icon]), a.Row, a.Col, a.Angle, FlagPlayer)
+        : new(a.Id, _resources[a.Name], new ObjectAppearance(_resources[a.State.Appearance.Body], 1, PlayerOverlays(a), ShirtTranslation(a)),
             a.Row, a.Col, a.Angle, FlagPlayer);
 
     /// <summary>Getragenes Hemd färbt Körper und Arme (player.kod GetCurrentShirtColor); ohne Hemd keine Übersetzung.</summary>
@@ -892,7 +897,24 @@ public sealed partial class World
                 return;
             }
             m.Asleep = false;   // ein angegriffener Schläfer wacht auf
-            if (Distance(avatar.Row, avatar.Col, m.Row, m.Col) > CombatRules.MeleeRange)
+            var bow = avatar.Touch is null && Weapon(avatar) is { IsRangedWeapon: true } w ? w : null;
+            if (bow is not null)
+            {
+                // fire.kod: Reichweite des Bogens in Feldern, Munition aus dem Köcher (sonst der billigste passende Pfeil).
+                if (Distance(avatar.Row, avatar.Col, m.Row, m.Col) > bow.Kind.Range * 64)
+                {
+                    Tell(avatar, $"{Article(m.Kind, capital: true)} ist außer Reichweite.");
+                    return;
+                }
+                if (now < avatar.NextAttack)
+                    return;
+                if (Quiver(avatar) is null)
+                {
+                    Tell(avatar, "Du hast keine Munition für diese Waffe bereit!");
+                    return;
+                }
+            }
+            else if (Distance(avatar.Row, avatar.Col, m.Row, m.Col) > CombatRules.MeleeRange)
             {
                 Tell(avatar, $"{Article(m.Kind, capital: true)} ist zu weit weg.");
                 return;
@@ -906,7 +928,8 @@ public sealed partial class World
             }
             avatar.NextAttack = now + CombatRules.PlayerAttackCooldown;
             // PayCosts der Technik: 1000 × viSkillExertion (Hieb 2, Faustschlag 5).
-            var strokeSkill = _skills.BySkid(Weapon(avatar) is null || avatar.Touch is not null ? Skill.Punch : Skill.Slash);
+            var strokeSkill = _skills.BySkid(Weapon(avatar) is null || avatar.Touch is not null ? Skill.Punch
+                : bow is not null ? Skill.Fire : Skill.Slash);
             AddExertion(avatar, 1000 * (strokeSkill?.Exertion ?? 2));
             if (Weapon(avatar) is { } swung)
                 SendWindowOverlay(avatar, swung, visible: true, attack: true);
@@ -925,16 +948,21 @@ public sealed partial class World
             var (songHit, songDamage) = SongCombat(avatar, m);
             StopSinging(avatar);
             bool hit = CombatRules.HitChance(PlayerOffense(avatar) + songHit, m.Kind.Defense) >= _random.Next(1, 101);
+            var arrow = bow is not null ? Quiver(avatar) : null;
             if (BerserkRing(avatar) is { } berserk)
                 WearRing(avatar, berserk, "Der Berserkerring zerspringt!");
             PracticeStrike(avatar, m, hit);
             if (!hit)
             {
-                Tell(avatar, $"{Article(m.Kind)} weicht deinem Schlag aus.");
+                if (arrow is not null)
+                    UseArrow(avatar, arrow);
+                Tell(avatar, $"{Article(m.Kind)} weicht deinem {(arrow is null ? "Schlag" : "Schuss")} aus.");
                 return;
             }
             var touchSpell = avatar.Touch?.Spell;
             int damage = PlayerDamage(avatar, m, out _) + songDamage;
+            if (arrow is not null)
+                UseArrow(avatar, arrow);
             if (touchSpell is not null && avatar.Touch is not null)
             {
                 if (touchSpell.HitText is { } hitText)

@@ -482,7 +482,14 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         var room = _avatar!.Room;
         var present = server.World.Snapshot(room);
         foreach (var a in present)
+        {
             EnsureResource(a.Name);
+            if (a.Illusion is { } form)
+            {
+                EnsureResource(form.Name);
+                EnsureResource(form.Icon);
+            }
+        }
         foreach (var n in room.Npcs)
         {
             EnsureResource(n.DisplayName);

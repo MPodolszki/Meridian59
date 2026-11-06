@@ -27,13 +27,16 @@ public sealed partial class World
     public int PlayerOffense(Avatar a)
     {
         var weapon = a.Touch is null ? Weapon(a) : null;   // ein Berührungszauber zählt nicht als Waffe
-        int stroke = SkillOf(a, weapon is null ? Skill.Punch : Skill.Slash);
+        int stroke = SkillOf(a, weapon is null ? Skill.Punch : weapon.Kind.IsRanged ? Skill.Fire : Skill.Slash);
         int prof = weapon is null ? SkillOf(a, Skill.Brawling) : SkillOf(a, weapon.Kind.Proficiency);
         int off = stroke * 3 + prof * 2 + a.State.Attributes.Aim * 4 + BaseMaxHealth(a) * 3 / 2;
         if (weapon is not null)
         {
             off += weapon.Kind.WeaponType switch { "bludgeon" => 75, "thrust" => 125, _ => 0 };
             off += weapon.Kind.WeaponQuality switch { "high" => 50, "nerudite" => 25, _ => 0 };
+            off += weapon.Kind.HitBonus;                            // ranged.kod ModifyHitRoll (ohne Abnutzung voll)
+            if (weapon.Kind.IsRanged)
+                off += EnchantState(a, "eagleeyes");               // Eagleyes.kod ModifyHitRoll
         }
         off += EnchantState(a, "bless");   // plAttack_modifiers: bless.kod ModifyHitRoll
         off += ForcesOfLightBonus(a);       // forceslt.kod ModifyHitRoll
@@ -51,7 +54,8 @@ public sealed partial class World
     public int PlayerDefense(Avatar a)
     {
         var used = a.State.Inventory.Where(i => i.Used).ToList();
-        bool armed = used.Any(i => i.Kind.Slot == "weapon") || a.Touch is not null;
+        // Fernwaffen parieren nicht (ranged.kod GetParryAbility = 0).
+        bool armed = used.Any(i => i.Kind.Slot == "weapon" && !i.Kind.IsRanged) || a.Touch is not null;
         var shield = used.FirstOrDefault(i => i.Kind.Slot == "shield" && !i.Kind.Light);
         int parry = armed ? SkillOf(a, Skill.Parry) : 0;
         int block = shield is not null && SkillOf(a, Skill.Block) > 0
@@ -72,6 +76,15 @@ public sealed partial class World
         {
             d = touch.Damage;
             attackType = touch.Spell.AttackType ?? "magic";
+        }
+        else if (Weapon(a) is { IsRangedWeapon: true } bow)
+        {
+            d = ArrowDamage(a, bow, m, out var types);
+            attackType = "pierce";
+            d += BlessDamage(a) + KillingFieldsBonus(a) + KaraholDamage(a);
+            if (a.PalsyUntil is not null)
+                d = d * 3 / 4;
+            return Math.Max(CombatRules.Resist(d, m.Kind.ResistanceTo(types)), 1);
         }
         else if (Weapon(a) is { } weapon)
         {
@@ -202,7 +215,7 @@ public sealed partial class World
         if (!hit || swings[prof] < 75)
             return;
         swings[prof] = 0;
-        int stroke = weapon is null ? Skill.Punch : Skill.Slash;
+        int stroke = weapon is null ? Skill.Punch : weapon.Kind.IsRanged ? Skill.Fire : Skill.Slash;
         bool trainProf = a.State.Skills.ContainsKey(prof) && _random.Next(1, 101) <= (weapon is null ? 50 : 40);
         int skid = trainProf ? prof : stroke;
         if (weapon is null || SkillOf(a, skid) < m.Kind.Level)

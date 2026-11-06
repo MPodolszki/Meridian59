@@ -222,3 +222,11 @@ Lehrer nach plFor_sale: General (Erkennen, Illusion bannen, Gift widerstehen, Fr
 Marion-Ältester (Waffenruhe), Jasper-Ältester (Blitz, Umnachtung), Barloque-Schmied (Magischer Schild),
 Barloque-Apotheker (Hitze). Riija-Sprüche lehrt nur der Mönch auf Ko'catan. Der Tos-Schmied fehlt noch.
 Ausrüstung ändert die Spruchstärke (docs/trade.md).
+
+Ergänzt (2026-11-06): **Totstellen** (Riija 1, fdeath.kod): Waffe, Schild und Helm fallen, andere Gegenstände mit
+Random(1,100) < 10 − Stärke/10; falsche Meldung „### X wurde gerade von … getötet.“ an den Raum (Mörder: erstes
+Monster des Raums, 1–3 % Mocker/Klavier/Häschen); Abwehr + 3 × Stärke; alle 5 s 5 Mana, unter 10 Mana Ende; endet
+bei Bewegung, Angriff oder anderem Spruch (Abw.: kein Leichen-Trugbild, nur die Todesanimation; Monster lassen sich
+wie im Original nicht täuschen). **Trugform** (Riija 3, illform.kod): erscheint anderen als Monster (Gewicht
+S − |S − Stufe|, über S doppelt, S = Stärke × 1,3; nur CanMorphTo), Random(t/2, t), t = (90 + 2 × Stärke) s; auch
+als brauner Trank (Stärke 1–80). Abw.: Gestalt nicht per Monstername wählbar.

@@ -88,6 +88,7 @@ public sealed partial class World
     /// <summary>Der Barde bricht die Trance (Bewegung, Kampf, anderer Zauber): sein Lied endet.</summary>
     private void StopSinging(Avatar a)
     {
+        EndFeignDeath(a);
         if (a.Room.Song is { } song && song.Singer == a)
             EndSong(a.Room, song, quiet: false);
     }

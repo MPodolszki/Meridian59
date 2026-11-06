@@ -2340,6 +2340,57 @@
       "effect": "pvp",
       "description": "Tauscht zufällig einen deiner Gegenstände gegen einen des Ziels. Braucht Federn des Dunklen Engels, Yrxl-Saft und lila Pilze.",
       "castTime": 3000
+    },
+    {
+      "key": "feigndeath",
+      "sid": 142,
+      "name": "Totstellen",
+      "icon": "ifeignde.bgf",
+      "school": 5,
+      "level": 1,
+      "mana": 5,
+      "chanceToIncrease": 40,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "solagh",
+          "number": 1
+        },
+        {
+          "item": "rainbowfern",
+          "number": 1
+        }
+      ],
+      "effect": "feigndeath",
+      "description": "Lässt dich tot erscheinen – hoffentlich macht dich niemand wirklich dazu. Braucht Solagh und Regenbogenfarne.",
+      "offText": "Du erhebst dich wieder."
+    },
+    {
+      "key": "illusionaryform",
+      "sid": 77,
+      "name": "Trugform",
+      "icon": "iillufrm.bgf",
+      "school": 5,
+      "level": 3,
+      "mana": 15,
+      "chanceToIncrease": 40,
+      "targets": 0,
+      "castTime": 6000,
+      "reagents": [
+        {
+          "item": "webmoss",
+          "number": 2
+        },
+        {
+          "item": "rainbowfern",
+          "number": 3
+        }
+      ],
+      "effect": "illusionaryform",
+      "description": "Du erscheinst für eine Weile als Monster. Je stärker der Spruch, desto mächtiger die Gestalt. Braucht Netzmoos und Regenbogenfarne.",
+      "castText": "Für andere siehst du nun aus wie: {0}.",
+      "offText": "Deine Trugform vergeht; du siehst wieder aus wie du selbst.",
+      "unnecessary": "Deine Gestalt ist bereits verändert."
     }
   ],
   "startingSpells": [

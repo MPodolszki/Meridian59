@@ -240,6 +240,11 @@ public sealed partial class World
             // Zwei Ringe (linke und rechte Hand), sonst ein Gegenstand je Platz.
             var worn = avatar.State.Inventory.Where(i => i.Used && i.Kind.Slot == slot).ToList();
             var replaced = (slot == "ring" ? worn.Take(Math.Max(0, worn.Count - 1)) : worn).ToList();
+            // Bögen brauchen beide Hände (ranged.kod viUse_Amount = 2): Schild/Fackel bzw. Bogen wird abgelegt.
+            if (item.Kind.TwoHanded)
+                replaced.AddRange(avatar.State.Inventory.Where(i => i.Used && i.Kind.Slot == "shield"));
+            if (slot == "shield")
+                replaced.AddRange(avatar.State.Inventory.Where(i => i.Used && i.Kind.TwoHanded));
             if (replaced.Any(i => HeldByCurse(avatar, i)))
                 return;
             foreach (var other in replaced)
@@ -259,6 +264,7 @@ public sealed partial class World
                 "armor" or "shirt" or "legs" or "gloves" => $"Du ziehst {item.Describe()} an.",
                 "helmet" => $"Du setzt {item.Describe()} auf.",
                 "ring" => $"Du steckst {item.Describe()} an.",
+                "quiver" => $"Du steckst {item.Describe()} in den Köcher.",
                 _ => item.Kind.Light ? $"Du zündest {item.Describe()} an." : $"Du nimmst {item.Describe()} in die Hand.",
             });
         }
@@ -437,7 +443,7 @@ public sealed partial class World
             sum += percent;
             if (roll > sum)
                 continue;
-            int number = kind.IsMoney ? 1 + 2 * Math.Max(1, _random.Next(level / 2, 3 * level / 2 + 1)) : 1;
+            int number = kind.IsMoney ? 1 + 2 * Math.Max(1, _random.Next(level / 2, 3 * level / 2 + 1)) : kind.DefaultNumber;
             return NewItem(kind, number);
         }
         return null;

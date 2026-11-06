@@ -132,6 +132,28 @@
       "requisite": "aim",
       "exertion": 0,
       "description": "Waffenkunst Stufe 2: Umgang mit dem Kurzschwert."
+    },
+    {
+      "key": "fire",
+      "skid": 425,
+      "name": "Schießen",
+      "icon": "fibowico.bgf",
+      "level": 4,
+      "chanceToIncrease": 50,
+      "requisite": "aim",
+      "exertion": 2,
+      "description": "Waffenkunst Stufe 4: die Grundtechnik für jede Schusswaffe."
+    },
+    {
+      "key": "archery",
+      "skid": 456,
+      "name": "Bogenschießen",
+      "icon": "archrico.bgf",
+      "level": 5,
+      "chanceToIncrease": 15,
+      "requisite": "aim",
+      "exertion": 0,
+      "description": "Waffenkunst Stufe 5: geschickter Umgang mit jedem gewöhnlichen Bogen."
     }
   ],
   "startingSkills": [

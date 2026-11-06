@@ -31,7 +31,8 @@
       "bodyShape": "plant",
       "size": "medium",
       "undead": false,
-      "resistances": {}
+      "resistances": {},
+      "canMorphTo": false
     },
     "ant": {
       "class": "Ant",
@@ -419,7 +420,8 @@
             "upTo": 100
           }
         ]
-      }
+      },
+      "canMorphTo": false
     },
     "deathspider": {
       "class": "DeathSpider",
@@ -494,7 +496,8 @@
         "thrust": 40,
         "nerudite": 25,
         "magic": -10
-      }
+      },
+      "canMorphTo": false
     },
     "dragonflypet": {
       "class": "DragonFlyPet",
@@ -529,7 +532,8 @@
         "thrust": 40,
         "nerudite": 25,
         "magic": -10
-      }
+      },
+      "canMorphTo": false
     },
     "dragonflyqueen": {
       "class": "DragonFlyQueen",
@@ -565,7 +569,8 @@
         "thrust": 40,
         "nerudite": 25,
         "magic": -10
-      }
+      },
+      "canMorphTo": false
     },
     "duskrat": {
       "class": "DuskRat",
@@ -702,7 +707,8 @@
       },
       "special": {
         "ranged": "Fernangriff Schock-Projektil mit Licht (attack type 0, spell SHOCK)."
-      }
+      },
+      "canMorphTo": false
     },
     "evilent": {
       "class": "EvilEnt",
@@ -834,7 +840,8 @@
       },
       "special": {
         "ranged": "wie EvilFairy"
-      }
+      },
+      "canMorphTo": false
     },
     "flytrap": {
       "class": "flytrap",
@@ -861,7 +868,8 @@
         "shock": 60,
         "acid": 60,
         "weapon_all": -30
-      }
+      },
+      "canMorphTo": false
     },
     "frogman": {
       "class": "Frogman",
@@ -892,7 +900,8 @@
         "nonmagic": 65,
         "unholy": -30,
         "cold": -10
-      }
+      },
+      "canMorphTo": false
     },
     "fungusbeast": {
       "class": "FungusBeast",
@@ -1061,7 +1070,8 @@
       },
       "special": {
         "burrow": "Unterirdisch (pbSurfaced=FALSE); erster Angriff = Auftauch-Angriff (ANIM_POPUPATTACK), danach 500 ms PostPop; taucht bei Zustandswechsel ab; hinterlässt Schleimspur-Objekte (GroundWormTrailClump)."
-      }
+      },
+      "canMorphTo": false
     },
     "groundwormlarva": {
       "class": "GroundWormLarva",
@@ -1098,7 +1108,8 @@
       },
       "special": {
         "burrow": "wie GroundWorm"
-      }
+      },
+      "canMorphTo": false
     },
     "groundwormqueen": {
       "class": "GroundWormQueen",
@@ -1136,7 +1147,8 @@
       },
       "special": {
         "burrow": "wie GroundWorm"
-      }
+      },
+      "canMorphTo": false
     },
     "guard": {
       "class": "Guard",
@@ -1221,7 +1233,8 @@
             "upTo": 100
           }
         ]
-      }
+      },
+      "canMorphTo": false
     },
     "kriipa": {
       "class": "Kriipa",
@@ -1255,7 +1268,8 @@
         "fire": 30,
         "slash": -25,
         "nerudite": -25
-      }
+      },
+      "canMorphTo": false
     },
     "lich": {
       "class": "Lich",
@@ -1309,7 +1323,8 @@
       },
       "special": {
         "magicResist": "Immun gegen schädliche Qor-Sprüche; 60% Resist (x1.5 Dazzle); Spellpower < 30 immer resistiert."
-      }
+      },
+      "canMorphTo": false
     },
     "lupoggking": {
       "class": "LupoggKing",
@@ -1348,7 +1363,8 @@
         "acid": -20,
         "fire": -20,
         "nerudite": -40
-      }
+      },
+      "canMorphTo": false
     },
     "lupogg": {
       "class": "Lupogg",
@@ -1412,7 +1428,8 @@
       "resistances": {},
       "special": {
         "dormant": "Ruht (SPEED_NONE, NPC-Verhalten) bis Spieler in Sicht (Sichtweite 3); wacht auf (100%) -> SPEED_AVERAGE, Name \"living statue\"."
-      }
+      },
+      "canMorphTo": false
     },
     "molluskmonster": {
       "class": "MolluskMonster",
@@ -1903,7 +1920,8 @@
       "resistances": {
         "spell_all": 40,
         "magic": 40
-      }
+      },
+      "canMorphTo": false
     },
     "scorpion": {
       "class": "Scorpion",
@@ -2399,7 +2417,8 @@
         "acid": 80,
         "nerudite": -80,
         "nonmagic": 80
-      }
+      },
+      "canMorphTo": false
     },
     "thrasher": {
       "class": "Thrasher",
@@ -2538,7 +2557,8 @@
             "upTo": 100
           }
         ]
-      }
+      },
+      "canMorphTo": false
     },
     "zombie": {
       "class": "Zombie",

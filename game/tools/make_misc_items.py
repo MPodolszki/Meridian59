@@ -51,6 +51,34 @@ NEW = [
     {"key": "firesand", "kodClass": "FireSand", "name": "Feuersand", "icon": "firesand.bgf", "value": 30,
      "types": ["reagent"], "number": True, "plural": "Feuersand",
      "description": "Seltsam warm und von ungewöhnlicher Farbe – dieser Sand ist ein begehrtes Reagenz."},
+    {"key": "longbow", "kodClass": "Longbow", "name": "Langbogen", "icon": "bow.bgf", "value": 2500,
+     "types": ["weapon"], "article": "einen", "slot": "weapon", "weaponType": "ranged", "twoHanded": True,
+     "range": 100, "hitBonus": 100, "proficiency": 456, "overlay": "bowbov.bgf", "windowOverlay": "povbow.bgf",
+     "description": "Ein hoher Bogen aus elastischem Holz. Er trifft weit und genau."},
+    {"key": "battlebow", "kodClass": "BattleBow", "name": "Kampfbogen", "icon": "bow.bgf", "value": 3000,
+     "types": ["weapon"], "article": "einen", "slot": "weapon", "weaponType": "ranged", "twoHanded": True,
+     "range": 17, "weaponDamage": 2, "proficiency": 456, "overlay": "bowbov.bgf", "windowOverlay": "povbow.bgf",
+     "description": "Ein kurzer, schwerer Bogen für den Kampf auf nahe Entfernung. Seine Pfeile schlagen hart ein."},
+    {"key": "arrow", "kodClass": "Arrow", "name": "Pfeil", "icon": "arrow.bgf", "value": 10, "types": ["ammo"],
+     "number": True, "plural": "Pfeile", "slot": "quiver", "defaultNumber": 20, "damageMin": 1, "damageMax": 5,
+     "attackTypes": ["pierce"],
+     "description": "Schlank und gerade, mit Federn von Dschungelvögeln – gewöhnliche Munition für einen Bogen."},
+    {"key": "neruditearrow", "kodClass": "NeruditeArrow", "name": "Neruditpfeil", "icon": "arrowner.bgf",
+     "value": 20, "types": ["ammo"], "number": True, "plural": "Neruditpfeile", "slot": "quiver", "defaultNumber": 5,
+     "damageMin": 2, "damageMax": 6, "attackTypes": ["pierce", "nerudite"],
+     "description": "Die geschnitzten Spitzen richten etwas mehr Schaden an als gewöhnliche Pfeile – und zersplittert "
+                    "der kleine grüne Stein beim Aufprall, kann das tödlich sein."},
+    {"key": "silverarrow", "kodClass": "SilverArrow", "name": "Silberpfeil", "icon": "arrowsil.bgf", "value": 30,
+     "types": ["ammo"], "number": True, "plural": "Silberpfeile", "slot": "quiver", "defaultNumber": 10,
+     "damageMin": 2, "damageMax": 6, "attackTypes": ["pierce", "silver"],
+     "description": "Die scharfe, saubere Spitze reißt böse Wunden. Manche Bogenschützen schwören auf sie gegen Untote."},
+    {"key": "nodeburstpotion", "kodClass": "NodeBurstPotion", "name": "beißendes Elixier", "icon": "potion01.bgf",
+     "value": 120, "types": ["potion"], "article": "ein", "special": "dud",
+     "description": "Ein Glasfläschchen mit roter Flüssigkeit und beißendem Geruch. Laut dem großen Warnschild öffnet es "
+                    "alle Manaknoten-Verbindungen bis zum Anschlag – und trennt dabei eine für immer."},
+    {"key": "illusionaryformpotion", "kodClass": "IllusionaryFormPotion", "name": "brauner Trank", "icon": "flask.bgf",
+     "value": 60, "types": ["potion"], "article": "einen", "spell": "illusionaryform", "powerMin": 1, "powerMax": 80,
+     "description": "Ein tiefer, dunkler, trüber, stückiger Trank."},
     {"key": "orechunk", "kodClass": "OreChunk", "name": "Erzbrocken", "icon": "ore.bgf", "value": 1000, "types": [],
      "article": "einen", "description": "Ein riesiger, unhandlicher Felsbrocken. Kräftige silberne Adern lassen einen "
                                         "großen verborgenen Wert vermuten."},
@@ -116,7 +144,7 @@ for item in data["items"]:
     cls = (item.get("kodClass") or "").lower()
     if not cls:
         continue
-    if item.get("weaponType"):
+    if item.get("weaponType") and item["weaponType"] != "ranged":
         mod = WEAPON_TYPE.get(item["weaponType"], 0) + WEAPON_QUALITY.get(item.get("weaponQuality", "normal"), 0)
     else:
         mod = classvar(cls, "viSpell_modifier") or 0
