@@ -34,7 +34,7 @@ public sealed partial class World
             return false;
         if (SpellBanned(m.Room, 101))   // Zauberbann: zum Schweigen zu bringende Monster zaubern gar nicht
             return false;
-        if (_random.Next(cast.OneIn) != 0)
+        if (_random.Next(now < m.DementedUntil ? cast.OneIn * 2 : cast.OneIn) != 0)
             return false;
         int roll = _random.Next(1, 101);
         var pick = cast.Spells.FirstOrDefault(s => roll <= s.UpTo);
@@ -72,6 +72,8 @@ public sealed partial class World
     {
         switch (spell.Effect)
         {
+            case "attack" when Deflects(victim, m, spell, power):
+                break;
             case "attack":
             {
                 // atakspel.kod: Random(min, max) × (50 + Stärke/2) / 99, Widerstand des Spielers (Art und alle Sprüche).
@@ -83,14 +85,17 @@ public sealed partial class World
             case "hold":
             {
                 int d = 2000 + 40 * power;
+                if (FreeAction(victim, TimeSpan.FromMilliseconds(_random.Next(d / 2, d + 1))) is not { } hold)
+                    break;
                 Tell(victim, "Deine Muskeln erstarren – du kannst dich nicht mehr bewegen!");
-                Paralyze(victim, TimeSpan.FromMilliseconds(_random.Next(d / 2, d + 1)));
+                Paralyze(victim, hold);
                 break;
             }
             case "blind":
             {
                 int d = 5 + power / 6;
-                Blind(victim, TimeSpan.FromSeconds(Math.Clamp(_random.Next(d / 2, d + 1), 3, 20)));
+                if (EagleEyes(victim, TimeSpan.FromSeconds(Math.Clamp(_random.Next(d / 2, d + 1), 3, 20))) is { } blind)
+                    Blind(victim, blind);
                 break;
             }
             case "enfeeble":
@@ -169,6 +174,11 @@ public sealed partial class World
         {
             a.PalsyUntil = null;
             Tell(a, "Die Schwäche weicht aus deinen Gliedern.");
+        }
+        if (a.DementedUntil is { } dm && now >= dm)
+        {
+            a.DementedUntil = null;
+            Tell(a, "Deine geistigen Kräfte kehren in voller Stärke zurück.");
         }
     }
 

@@ -33,7 +33,7 @@ public sealed partial class World
         if (weapon is not null)
         {
             off += weapon.Kind.WeaponType switch { "bludgeon" => 75, "thrust" => 125, _ => 0 };
-            off += weapon.Kind.WeaponQuality == "high" ? 50 : 0;
+            off += weapon.Kind.WeaponQuality switch { "high" => 50, "nerudite" => 25, _ => 0 };
         }
         off += EnchantState(a, "bless");   // plAttack_modifiers: bless.kod ModifyHitRoll
         off += ForcesOfLightBonus(a);       // forceslt.kod ModifyHitRoll
@@ -83,9 +83,15 @@ public sealed partial class World
             // ATCK_WEAP_NONMAGIC bzw. _MAGIC (verzauberte Waffe), dazu die Weihe heilig/unheilig.
             var types = new List<string> { attackType };
             var ench = WeaponEnchantOf(a, weapon);
-            types.Add(ench == "magic" || weapon.Kind.WeaponQuality == "magic" ? "magic" : "nonmagic");
+            // Nerudit (neruswd.kod piAttack_type = THRUST + NERUDITE) zählt nicht als „nicht magisch“.
+            if (ench == "magic" || weapon.Kind.WeaponQuality == "magic")
+                types.Add("magic");
+            else if (weapon.Kind.WeaponQuality != "nerudite")
+                types.Add("nonmagic");
             if (ench is "holy" or "unholy")
                 types.Add(ench);
+            if (weapon.Kind.WeaponQuality == "nerudite")
+                types.Add("nerudite");   // ATCK_WEAP_NERUDITE
             d += BlessDamage(a) + KillingFieldsBonus(a) + KaraholDamage(a);
             if (BerserkRing(a) is not null)
                 d += _random.Next(1, 5);         // besring.kod ModifyDamage

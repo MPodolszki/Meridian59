@@ -293,7 +293,10 @@
       "article": "eine",
       "description": "Eine pechgetränkte Fackel.",
       "slot": "shield",
-      "light": true
+      "light": true,
+      "spellModifierSchools": {
+        "4": 10
+      }
     },
     {
       "key": "flask",
@@ -359,7 +362,8 @@
       "description": "Eine Rüstung aus vernieteten Eisenringen.",
       "slot": "armor",
       "damageReduce": 2,
-      "defenseBonus": -50
+      "defenseBonus": -50,
+      "spellModifier": -15
     },
     {
       "key": "axe",
@@ -377,7 +381,8 @@
       "weaponQuality": "normal",
       "windowOverlay": "povaxe.bgf",
       "overlay": "axeov.bgf",
-      "proficiency": 455
+      "proficiency": 455,
+      "spellModifier": -15
     },
     {
       "key": "hammer",
@@ -413,7 +418,8 @@
       "weaponQuality": "low",
       "windowOverlay": "povmace.bgf",
       "overlay": "maceov.bgf",
-      "proficiency": 452
+      "proficiency": 452,
+      "spellModifier": 5
     },
     {
       "key": "longsword",
@@ -431,7 +437,8 @@
       "weaponQuality": "normal",
       "windowOverlay": "povsword.bgf",
       "overlay": "swordov.bgf",
-      "proficiency": 451
+      "proficiency": 451,
+      "spellModifier": -10
     },
     {
       "key": "martyrscroll",
@@ -521,7 +528,8 @@
       "weaponQuality": "low",
       "overlay": "shswdov.bgf",
       "windowOverlay": "povshswd.bgf",
-      "proficiency": 457
+      "proficiency": 457,
+      "spellModifier": -5
     },
     {
       "key": "scimitar",
@@ -539,7 +547,8 @@
       "weaponQuality": "high",
       "overlay": "scimov.bgf",
       "windowOverlay": "povscim.bgf",
-      "proficiency": 453
+      "proficiency": 453,
+      "spellModifier": -20
     },
     {
       "key": "mysticsword",
@@ -557,7 +566,8 @@
       "weaponQuality": "high",
       "overlay": "mystwdov.bgf",
       "windowOverlay": "povmystsw.bgf",
-      "proficiency": 451
+      "proficiency": 451,
+      "spellModifier": -15
     },
     {
       "key": "entrootberry",
@@ -1789,7 +1799,8 @@
       "description": "Aus massiven Platten gehärteten Stahls; sie schützt vor allem außer den wildesten Angriffen. Sie trägt das Zeichen von Fehr'loi Qan.",
       "slot": "armor",
       "damageReduce": 6,
-      "defenseBonus": -200
+      "defenseBonus": -200,
+      "spellModifier": -30
     },
     {
       "key": "scalearmor",
@@ -1804,7 +1815,8 @@
       "description": "Tausende sich überlappende Stahlschuppen. Stärker als ein Kettenhemd und leichter als Platte.",
       "slot": "armor",
       "damageReduce": 4,
-      "defenseBonus": -100
+      "defenseBonus": -100,
+      "spellModifier": -20
     },
     {
       "key": "neruditearmor",
@@ -1819,7 +1831,8 @@
       "description": "Aus mächtigem Nerudit geschmiedet, leichter und haltbarer als gewöhnliche Platte – ein Meisterstück von Ixla cha'Totlak.",
       "slot": "armor",
       "damageReduce": 5,
-      "defenseBonus": -150
+      "defenseBonus": -150,
+      "spellModifier": -20
     },
     {
       "key": "simplehelm",
@@ -1834,7 +1847,8 @@
       "description": "Stahl und Kettenglieder geben dem Träger dieses gepolsterten Helms mäßigen Schutz.",
       "slot": "helmet",
       "damageReduce": 1,
-      "defenseBonus": 20
+      "defenseBonus": 20,
+      "spellModifier": -5
     },
     {
       "key": "circlet",
@@ -1864,7 +1878,11 @@
       "description": "Frische grüne Efeublätter um einen Holzreif gewunden – kühl und erfrischend auf der Stirn.",
       "slot": "helmet",
       "damageReduce": 0,
-      "defenseBonus": 10
+      "defenseBonus": 10,
+      "spellModifierSchools": {
+        "1": 15,
+        "2": -15
+      }
     },
     {
       "key": "gauntlet",
@@ -1895,7 +1913,11 @@
       "description": "Der Schädel auf dem Schild soll Gegner einschüchtern; er ist eher Zierde als Schutz, hält aber einiges aus.",
       "slot": "shield",
       "damageReduce": 2,
-      "defenseBonus": 20
+      "defenseBonus": 20,
+      "spellModifierSchools": {
+        "1": -15,
+        "2": 15
+      }
     },
     {
       "key": "firering",
@@ -2107,7 +2129,10 @@
       "article": "eine",
       "slot": "instrument",
       "instrumentLevel": 30,
-      "description": "Die vollkommenste Laute, die du je gesehen hast. Man sagt, Jala selbst habe eine genau gleiche besessen. Sie verleiht den Liedern eines Barden mehr Kraft."
+      "description": "Die vollkommenste Laute, die du je gesehen hast. Man sagt, Jala selbst habe eine genau gleiche besessen. Sie verleiht den Liedern eines Barden mehr Kraft.",
+      "spellModifierSchools": {
+        "6": 10
+      }
     },
     {
       "key": "jalanecklace",
@@ -2122,6 +2147,691 @@
       "slot": "neck",
       "instrumentLevel": 5,
       "description": "Eine eng anliegende Halskette mit einer goldenen Musiknote – für jemanden, der sich Barde nennt, sicher von Wert."
+    },
+    {
+      "key": "orechunk",
+      "kodClass": "OreChunk",
+      "name": "Erzbrocken",
+      "icon": "ore.bgf",
+      "value": 1000,
+      "types": [],
+      "article": "einen",
+      "description": "Ein riesiger, unhandlicher Felsbrocken. Kräftige silberne Adern lassen einen großen verborgenen Wert vermuten."
+    },
+    {
+      "key": "neruditeorechunk",
+      "kodClass": "NeruditeOreChunk",
+      "name": "Neruditbrocken",
+      "icon": "neruore.bgf",
+      "value": 1500,
+      "types": [],
+      "article": "einen",
+      "description": "Ein riesiger, hässlicher grüner Felsbrocken mit leuchtenden Adern. Er muss ein Vermögen wert sein."
+    },
+    {
+      "key": "spideregg",
+      "kodClass": "SpiderEgg",
+      "name": "Spinnenei",
+      "icon": "spdregg.bgf",
+      "value": 250,
+      "types": [],
+      "article": "ein",
+      "description": "Ein Ei, groß wie eine Melone, mit zäher, lederiger Schale. Innen schwappt eine Flüssigkeit."
+    },
+    {
+      "key": "key",
+      "kodClass": "Key",
+      "name": "Schlüssel",
+      "icon": "fekey.bgf",
+      "value": 80,
+      "types": [],
+      "article": "einen",
+      "description": "Ein kunstvoll geformter Schlüssel mit der Inschrift eines Zauberers."
+    },
+    {
+      "key": "scepter",
+      "kodClass": "Scepter",
+      "name": "Reliquie des Qor",
+      "icon": "scepter.bgf",
+      "value": 70,
+      "types": [],
+      "article": "eine",
+      "description": "Der Gegenstand trägt die Zeichen Qors. Eine Inschrift lautet: „Der wahre Diener bringe dies an den öden Ort und spreche meinen Namen.“"
+    },
+    {
+      "key": "neruditesword",
+      "kodClass": "NeruditeSword",
+      "name": "Neruditschwert",
+      "icon": "nerswd.bgf",
+      "value": 1000,
+      "types": [
+        "weapon"
+      ],
+      "article": "ein",
+      "description": "Schnell und stark – die Neruditwaffe liegt gut in der Hand.",
+      "slot": "weapon",
+      "weaponType": "thrust",
+      "weaponQuality": "nerudite",
+      "windowOverlay": "povnersw.bgf",
+      "overlay": "nerswdov.bgf",
+      "proficiency": 451,
+      "spellModifier": -5
+    },
+    {
+      "key": "ringoflethargy",
+      "kodClass": "RingofLethargy",
+      "name": "Ring der Lethargie",
+      "icon": "ring3.bgf",
+      "value": 70,
+      "types": [
+        "ring"
+      ],
+      "article": "einen",
+      "slot": "ring",
+      "cursed": true,
+      "vigorRestDrop": 20,
+      "tortureExertion": 400000,
+      "description": "Der Ring sieht schon von hier gefährlich aus. Vielleicht solltest du ihn nicht tragen.",
+      "useText": "Kaum steckt der Ring am Finger, fühlst du dich ausgelaugt und außer Atem.",
+      "tortureText": "Als du den Ring abziehen willst, fließt die Kraft aus deinem Körper! Unwillkürlich steckst du ihn wieder an – du bist an ihn gebunden und brauchst besondere Hilfe, um ihn loszuwerden.",
+      "uncurseText": "Der Ring springt von selbst von deinem Finger. Endlich kannst du wieder frei atmen!"
+    },
+    {
+      "key": "disciplerobe",
+      "kodClass": "DiscipleRobe",
+      "name": "Jüngerrobe",
+      "icon": "robe.bgf",
+      "value": 2000,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "slot": "armor",
+      "defenseBonus": 20,
+      "variants": [
+        "disciplerobeshalille",
+        "disciplerobeqor",
+        "disciplerobekraanan",
+        "disciplerobefaren",
+        "discipleroberiija",
+        "disciplerobejala"
+      ],
+      "description": "Schwer und warm. Jüngerroben zeugen von glühender (manche sagen: ungesunder) Hingabe an eine Schule."
+    },
+    {
+      "key": "firewand",
+      "kodClass": "FireWand",
+      "name": "Feuerstab",
+      "icon": "wand2.bgf",
+      "value": 150,
+      "types": [
+        "wand"
+      ],
+      "article": "einen",
+      "special": "fire",
+      "chargesMin": 4,
+      "chargesMax": 12,
+      "damageMin": 4,
+      "damageMax": 10,
+      "description": "Ein rußgeschwärzter Stab, dessen Spitze glimmt."
+    },
+    {
+      "key": "healwand",
+      "kodClass": "HealWand",
+      "name": "Heilstab",
+      "icon": "healwand.bgf",
+      "value": 200,
+      "types": [
+        "wand"
+      ],
+      "article": "einen",
+      "special": "heal",
+      "chargesMin": 5,
+      "chargesMax": 5,
+      "damageMin": 2,
+      "damageMax": 10,
+      "description": "Ein glatter, heller Stab, der sanft pulsiert."
+    },
+    {
+      "key": "vampirewand",
+      "kodClass": "VampireWand",
+      "name": "Vampirstab",
+      "icon": "wand3.bgf",
+      "value": 200,
+      "types": [
+        "wand"
+      ],
+      "article": "einen",
+      "special": "vampire",
+      "chargesMin": 10,
+      "chargesMax": 18,
+      "damageMin": 2,
+      "damageMax": 6,
+      "description": "Ein knochenbleicher Stab, an dem dunkle Adern entlanglaufen."
+    },
+    {
+      "key": "staffofjolting",
+      "kodClass": "StaffOfJolting",
+      "name": "Stab der Erschütterung",
+      "icon": "joltstaf.bgf",
+      "value": 200,
+      "types": [
+        "wand"
+      ],
+      "article": "einen",
+      "special": "jolt",
+      "chargesMin": 25,
+      "chargesMax": 35,
+      "description": "Ein schwerer Stab, der in der Hand leise brummt."
+    },
+    {
+      "key": "disciplerobeshalille",
+      "kodClass": "DiscipleRobe",
+      "name": "Jüngerrobe",
+      "icon": "robe.bgf",
+      "value": 2000,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "slot": "armor",
+      "defenseBonus": 20,
+      "discipleSchool": 1,
+      "description": "Schwer und warm. Die Robe trägt das Zeichen Shal'illes und stärkt Sprüche dieser Schule."
+    },
+    {
+      "key": "disciplerobeqor",
+      "kodClass": "DiscipleRobe",
+      "name": "Jüngerrobe",
+      "icon": "robe.bgf",
+      "value": 2000,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "slot": "armor",
+      "defenseBonus": 20,
+      "discipleSchool": 2,
+      "description": "Schwer und warm. Die Robe trägt das Zeichen Qors und stärkt Sprüche dieser Schule."
+    },
+    {
+      "key": "disciplerobekraanan",
+      "kodClass": "DiscipleRobe",
+      "name": "Jüngerrobe",
+      "icon": "robe.bgf",
+      "value": 2000,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "slot": "armor",
+      "defenseBonus": 20,
+      "discipleSchool": 3,
+      "description": "Schwer und warm. Die Robe trägt das Zeichen Kraanans und stärkt Sprüche dieser Schule."
+    },
+    {
+      "key": "disciplerobefaren",
+      "kodClass": "DiscipleRobe",
+      "name": "Jüngerrobe",
+      "icon": "robe.bgf",
+      "value": 2000,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "slot": "armor",
+      "defenseBonus": 20,
+      "discipleSchool": 4,
+      "description": "Schwer und warm. Die Robe trägt das Zeichen Farens und stärkt Sprüche dieser Schule."
+    },
+    {
+      "key": "discipleroberiija",
+      "kodClass": "DiscipleRobe",
+      "name": "Jüngerrobe",
+      "icon": "robe.bgf",
+      "value": 2000,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "slot": "armor",
+      "defenseBonus": 20,
+      "discipleSchool": 5,
+      "description": "Schwer und warm. Die Robe trägt das Zeichen Riijas und stärkt Sprüche dieser Schule."
+    },
+    {
+      "key": "disciplerobejala",
+      "kodClass": "DiscipleRobe",
+      "name": "Jüngerrobe",
+      "icon": "robe.bgf",
+      "value": 2000,
+      "types": [
+        "armor"
+      ],
+      "article": "eine",
+      "slot": "armor",
+      "defenseBonus": 20,
+      "discipleSchool": 6,
+      "description": "Schwer und warm. Die Robe trägt das Zeichen Jalas und stärkt Sprüche dieser Schule."
+    },
+    {
+      "key": "firesand",
+      "kodClass": "FireSand",
+      "name": "Feuersand",
+      "icon": "firesand.bgf",
+      "value": 30,
+      "types": [
+        "reagent"
+      ],
+      "number": true,
+      "plural": "Feuersand",
+      "description": "Seltsam warm und von ungewöhnlicher Farbe – dieser Sand ist ein begehrtes Reagenz."
+    },
+    {
+      "key": "anonymitypotion",
+      "kodClass": "AnonymityPotion",
+      "name": "Trank der Namenlosigkeit",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der Namenlosigkeit",
+      "description": "Ein farbloser Trank ohne jeden Geruch.",
+      "spell": "anonymity",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "baitpotion",
+      "kodClass": "BaitPotion",
+      "name": "Ködertrank",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Ködertränke",
+      "description": "Ein Trank, der verführerisch nach Braten riecht.",
+      "spell": "bait",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "cloakpotion",
+      "kodClass": "CloakPotion",
+      "name": "Trank der Verhüllung",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der Verhüllung",
+      "description": "Ein rauchgrauer Trank.",
+      "spell": "cloak",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "curediseasepotion",
+      "kodClass": "CureDiseasePotion",
+      "name": "Trank gegen Krankheit",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke gegen Krankheit",
+      "description": "Ein heller Kräutertrank, der nach Holunder duftet.",
+      "spell": "curedisease",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "deflectpotion",
+      "kodClass": "DeflectPotion",
+      "name": "Trank der Ablenkung",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der Ablenkung",
+      "description": "Eine spiegelnde Flüssigkeit, in der man sich selbst sieht.",
+      "spell": "deflect",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "denialpotion",
+      "kodClass": "DenialPotion",
+      "name": "Trank der Verleugnung",
+      "icon": "flask.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der Verleugnung",
+      "description": "Ein rosaroter Trank, süß wie eine Lüge.",
+      "spell": "denial",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "detectevilpotion",
+      "kodClass": "DetectEvilPotion",
+      "name": "Trank der Bosheitserkennung",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der Bosheitserkennung",
+      "description": "Ein weißer, milchiger Trank.",
+      "spell": "detectevil",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "detectgoodpotion",
+      "kodClass": "DetectGoodPotion",
+      "name": "Trank der Güteerkennung",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der Güteerkennung",
+      "description": "Ein schwarzer, öliger Trank.",
+      "spell": "detectgood",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "detectinvisibilitypotion",
+      "kodClass": "DetectInvisibilityPotion",
+      "name": "Trank des wahren Blicks",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke des wahren Blicks",
+      "description": "Eine glasklare Flüssigkeit, die man kaum sieht.",
+      "spell": "detectinvisible",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "eagleeyespotion",
+      "kodClass": "EagleEyesPotion",
+      "name": "Trank der Adleraugen",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der Adleraugen",
+      "description": "Ein goldgelber Trank, der in den Augen brennt.",
+      "spell": "eagleeyes",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "freeactionpotion",
+      "kodClass": "FreeActionPotion",
+      "name": "Trank der freien Bewegung",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der freien Bewegung",
+      "description": "Eine dünne, quirlige Flüssigkeit, die im Fläschchen nie zur Ruhe kommt.",
+      "spell": "freeaction",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "magicshieldpotion",
+      "kodClass": "MagicShieldPotion",
+      "name": "Trank des magischen Schilds",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke des magischen Schilds",
+      "description": "Ein silbrig schimmernder Trank.",
+      "spell": "magicshield",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "resistpoisonpotion",
+      "kodClass": "ResistPoisonPotion",
+      "name": "Trank der Giftfestigkeit",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke der Giftfestigkeit",
+      "description": "Eine trübe, bittere Flüssigkeit.",
+      "spell": "resistpoison",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "removecursepotion",
+      "kodClass": "RemoveCursePotion",
+      "name": "Trank des Fluchlösens",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Tränke des Fluchlösens",
+      "description": "Ein smaragdgrüner Trank, der nach frischem Regen riecht.",
+      "spell": "removecurse",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "shadowformpotion",
+      "kodClass": "ShadowFormPotion",
+      "name": "Schattentrank",
+      "icon": "potion01.bgf",
+      "value": 60,
+      "types": [
+        "potion"
+      ],
+      "plural": "Schattentränke",
+      "description": "Eine Flüssigkeit, so dunkel, dass sie das Licht schluckt.",
+      "spell": "shadowform",
+      "powerMin": 20,
+      "powerMax": 60
+    },
+    {
+      "key": "dispellillusionscroll",
+      "kodClass": "DispellIllusionScroll",
+      "name": "Schriftrolle der Entzauberung",
+      "icon": "scr05.bgf",
+      "value": 120,
+      "types": [
+        "scroll"
+      ],
+      "plural": "Schriftrollen der Entzauberung",
+      "description": "Eine Schriftrolle mit klaren, scharfen Zeichen.",
+      "spell": "dispelillusion",
+      "powerMin": 30,
+      "powerMax": 60
+    },
+    {
+      "key": "heatscroll",
+      "kodClass": "HeatScroll",
+      "name": "Schriftrolle der Hitze",
+      "icon": "scr08.bgf",
+      "value": 120,
+      "types": [
+        "scroll"
+      ],
+      "plural": "Schriftrollen der Hitze",
+      "description": "Eine Schriftrolle, die sich warm anfühlt.",
+      "spell": "heat",
+      "powerMin": 30,
+      "powerMax": 60
+    },
+    {
+      "key": "trucescroll",
+      "kodClass": "TruceScroll",
+      "name": "Schriftrolle der Waffenruhe",
+      "icon": "scr07.bgf",
+      "value": 120,
+      "types": [
+        "scroll"
+      ],
+      "plural": "Schriftrollen der Waffenruhe",
+      "description": "Eine Schriftrolle mit Shal'illes Zeichen des Friedens.",
+      "spell": "truce",
+      "powerMin": 30,
+      "powerMax": 60
+    },
+    {
+      "key": "brittlewand",
+      "kodClass": "BrittleWand",
+      "name": "Zauberstab der Sprödigkeit",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Zauberstäbe der Sprödigkeit",
+      "description": "Ein rissiger, alter Stab.",
+      "spell": "brittle",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 4,
+      "chargesMax": 9
+    },
+    {
+      "key": "dementwand",
+      "kodClass": "DementWand",
+      "name": "Zauberstab der Umnachtung",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Zauberstäbe der Umnachtung",
+      "description": "Ein verdrehter, dunkler Stab.",
+      "spell": "dement",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 4,
+      "chargesMax": 9
+    },
+    {
+      "key": "forgetwand",
+      "kodClass": "ForgetWand",
+      "name": "Zauberstab des Vergessens",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Zauberstäbe des Vergessens",
+      "description": "Ein blasser Stab, an den man sich kaum erinnert.",
+      "spell": "forget",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 4,
+      "chargesMax": 9
+    },
+    {
+      "key": "identifywand",
+      "kodClass": "IdentifyWand",
+      "name": "Zauberstab des Erkennens",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Zauberstäbe des Erkennens",
+      "description": "Ein schlichter Stab mit einem eingelassenen Auge.",
+      "spell": "identify",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 4,
+      "chargesMax": 9
+    },
+    {
+      "key": "markofdishonorwand",
+      "kodClass": "MarkOfDishonorWand",
+      "name": "Zauberstab der Schande",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Zauberstäbe der Schande",
+      "description": "Ein Stab mit Shal'illes Zeichen, verkehrt herum eingeschnitzt.",
+      "spell": "markofdishonor",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 4,
+      "chargesMax": 9
+    },
+    {
+      "key": "shatterwand",
+      "kodClass": "ShatterWand",
+      "name": "Zauberstab des Zerschmetterns",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Zauberstäbe des Zerschmetterns",
+      "description": "Ein eiskalter Stab mit Reif an der Spitze.",
+      "spell": "shatter",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 1,
+      "chargesMax": 2
+    },
+    {
+      "key": "slitherwand",
+      "kodClass": "SlitherWand",
+      "name": "Schlitterstab",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Schlitterstäbe",
+      "description": "Ein gewundener Stab, der sich wie eine Schlange anfühlt.",
+      "spell": "slitherbolt",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 4,
+      "chargesMax": 9
+    },
+    {
+      "key": "swapwand",
+      "kodClass": "SwapWand",
+      "name": "Zauberstab des Tauschs",
+      "icon": "wand6.bgf",
+      "value": 120,
+      "types": [
+        "wand"
+      ],
+      "plural": "Zauberstäbe des Tauschs",
+      "description": "Ein Stab, der nie ganz dort liegt, wo man ihn hingelegt hat.",
+      "spell": "swap",
+      "powerMin": 30,
+      "powerMax": 60,
+      "chargesMin": 4,
+      "chargesMax": 9
     }
   ],
   "treasure": {
@@ -2349,6 +3059,10 @@
       {
         "item": "discordscroll",
         "weight": 1
+      },
+      {
+        "item": "identifywand",
+        "weight": 1
       }
     ],
     "thrasher": [
@@ -2415,6 +3129,10 @@
         "weight": 1
       },
       {
+        "item": "brittlewand",
+        "weight": 1
+      },
+      {
         "item": "killingfieldscroll",
         "weight": 1
       }
@@ -2442,6 +3160,14 @@
       },
       {
         "item": "curepoisonpotion",
+        "weight": 4
+      },
+      {
+        "item": "curediseasepotion",
+        "weight": 4
+      },
+      {
+        "item": "removecursepotion",
         "weight": 4
       },
       {
@@ -2487,7 +3213,15 @@
         "weight": 5
       },
       {
+        "item": "removecursepotion",
+        "weight": 1
+      },
+      {
         "item": "yrxlsap",
+        "weight": 1
+      },
+      {
+        "item": "neruditesword",
         "weight": 1
       },
       {
@@ -2503,6 +3237,10 @@
       {
         "item": "orctooth",
         "weight": 30
+      },
+      {
+        "item": "orechunk",
+        "weight": 10
       },
       {
         "item": "scimitar",
@@ -2530,6 +3268,10 @@
       },
       {
         "item": "ruby",
+        "weight": 3
+      },
+      {
+        "item": "neruditeorechunk",
         "weight": 3
       },
       {
@@ -2561,7 +3303,19 @@
         "weight": 2
       },
       {
+        "item": "curediseasepotion",
+        "weight": 2
+      },
+      {
+        "item": "removecursepotion",
+        "weight": 2
+      },
+      {
         "item": "purifypotion",
+        "weight": 2
+      },
+      {
+        "item": "ringoflethargy",
         "weight": 2
       },
       {
@@ -2625,7 +3379,19 @@
         "weight": 3
       },
       {
+        "item": "shadowformpotion",
+        "weight": 3
+      },
+      {
+        "item": "removecursepotion",
+        "weight": 3
+      },
+      {
         "item": "resistshockpotion",
+        "weight": 3
+      },
+      {
+        "item": "resistpoisonpotion",
         "weight": 3
       },
       {
@@ -2641,11 +3407,39 @@
         "weight": 3
       },
       {
+        "item": "magicshieldpotion",
+        "weight": 3
+      },
+      {
         "item": "karaholscursepotion",
         "weight": 3
       },
       {
+        "item": "anonymitypotion",
+        "weight": 3
+      },
+      {
+        "item": "detectinvisibilitypotion",
+        "weight": 3
+      },
+      {
+        "item": "detectgoodpotion",
+        "weight": 3
+      },
+      {
+        "item": "detectevilpotion",
+        "weight": 3
+      },
+      {
         "item": "curepoisonpotion",
+        "weight": 3
+      },
+      {
+        "item": "curediseasepotion",
+        "weight": 3
+      },
+      {
+        "item": "baitpotion",
         "weight": 3
       },
       {
@@ -2654,6 +3448,14 @@
       },
       {
         "item": "purifypotion",
+        "weight": 3
+      },
+      {
+        "item": "denialpotion",
+        "weight": 3
+      },
+      {
+        "item": "deflectpotion",
         "weight": 3
       }
     ],
@@ -2779,6 +3581,10 @@
       {
         "item": "inkycap",
         "weight": 4
+      },
+      {
+        "item": "magicshieldpotion",
+        "weight": 1
       }
     ],
     "ghost": [
@@ -2811,6 +3617,14 @@
         "weight": 7
       },
       {
+        "item": "vampirewand",
+        "weight": 7
+      },
+      {
+        "item": "disciplerobe",
+        "weight": 5
+      },
+      {
         "item": "diamond",
         "weight": 5
       },
@@ -2823,8 +3637,16 @@
         "weight": 5
       },
       {
+        "item": "firewand",
+        "weight": 4
+      },
+      {
         "item": "holdwand",
         "weight": 2
+      },
+      {
+        "item": "trucescroll",
+        "weight": 1
       }
     ],
     "high_human": [
@@ -2845,6 +3667,10 @@
         "weight": 7
       },
       {
+        "item": "healwand",
+        "weight": 7
+      },
+      {
         "item": "money",
         "weight": 7
       },
@@ -2858,6 +3684,10 @@
       },
       {
         "item": "bluemushroom",
+        "weight": 5
+      },
+      {
+        "item": "ringoflethargy",
         "weight": 5
       },
       {
@@ -2881,11 +3711,23 @@
         "weight": 4
       },
       {
+        "item": "vampirewand",
+        "weight": 3
+      },
+      {
+        "item": "scepter",
+        "weight": 3
+      },
+      {
         "item": "darkangelfeather",
         "weight": 3
       },
       {
         "item": "bluedragonscale",
+        "weight": 3
+      },
+      {
+        "item": "freeactionpotion",
         "weight": 3
       }
     ],
@@ -3177,6 +4019,10 @@
         "weight": 10
       },
       {
+        "item": "cloakpotion",
+        "weight": 10
+      },
+      {
         "item": "firering",
         "weight": 5
       },
@@ -3199,6 +4045,10 @@
       {
         "item": "resistmagicpotion",
         "weight": 5
+      },
+      {
+        "item": "baitpotion",
+        "weight": 5
       }
     ],
     "orc_chief": [
@@ -3213,6 +4063,14 @@
       {
         "item": "neruditearmor",
         "weight": 9
+      },
+      {
+        "item": "neruditesword",
+        "weight": 9
+      },
+      {
+        "item": "orechunk",
+        "weight": 4
       },
       {
         "item": "uncutseraphym",
@@ -3240,6 +4098,10 @@
       },
       {
         "item": "blindwand",
+        "weight": 1
+      },
+      {
+        "item": "heatscroll",
         "weight": 1
       }
     ],
@@ -3269,6 +4131,10 @@
         "weight": 3
       },
       {
+        "item": "ringoflethargy",
+        "weight": 3
+      },
+      {
         "item": "money",
         "weight": 2
       },
@@ -3287,6 +4153,10 @@
         "weight": 10
       },
       {
+        "item": "slitherwand",
+        "weight": 8
+      },
+      {
         "item": "dragonflyeye",
         "weight": 6
       },
@@ -3301,6 +4171,10 @@
       {
         "item": "torch",
         "weight": 5
+      },
+      {
+        "item": "disciplerobe",
+        "weight": 4
       },
       {
         "item": "gauntlet",
@@ -3320,6 +4194,14 @@
       },
       {
         "item": "money",
+        "weight": 2
+      },
+      {
+        "item": "staffofjolting",
+        "weight": 2
+      },
+      {
+        "item": "dispellillusionscroll",
         "weight": 2
       }
     ],
@@ -3441,11 +4323,23 @@
         "weight": 1
       },
       {
+        "item": "dementwand",
+        "weight": 1
+      },
+      {
         "item": "enfeeblewand",
+        "weight": 1
+      },
+      {
+        "item": "forgetwand",
         "weight": 1
       }
     ],
     "spider_queen": [
+      {
+        "item": "spideregg",
+        "weight": 40
+      },
       {
         "item": "berserkerring",
         "weight": 11
@@ -3513,6 +4407,10 @@
         "weight": 5
       },
       {
+        "item": "cloakpotion",
+        "weight": 3
+      },
+      {
         "item": "holdwand",
         "weight": 2
       },
@@ -3522,6 +4420,10 @@
       },
       {
         "item": "platearmor",
+        "weight": 1
+      },
+      {
+        "item": "key",
         "weight": 1
       },
       {

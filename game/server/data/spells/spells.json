@@ -1695,6 +1695,651 @@
       "description": "Alle im Raum gewinnen ihr Mana schneller zurück, solange das Lied erklingt.",
       "castText": "Ein erfrischendes Lied erklingt.",
       "offText": "Das Lied verklingt."
+    },
+    {
+      "key": "removecurse",
+      "sid": 31,
+      "name": "Fluch lösen",
+      "icon": "iremcurs.bgf",
+      "school": 1,
+      "level": 2,
+      "mana": 9,
+      "chanceToIncrease": 30,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "emerald",
+          "number": 1
+        }
+      ],
+      "effect": "removecurse",
+      "description": "Löst die magische Bindung an einen verfluchten Gegenstand. Braucht Smaragde.",
+      "castText": "Shal'ille reißt den verfluchten Gegenstand von deinem Körper.",
+      "unnecessary": "Shal'ille findet keinen verfluchten Gegenstand, den sie entfernen könnte."
+    },
+    {
+      "key": "curedisease",
+      "sid": 40,
+      "name": "Krankheit heilen",
+      "icon": "icuredis.bgf",
+      "school": 1,
+      "level": 3,
+      "mana": 9,
+      "chanceToIncrease": 40,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "herbs",
+          "number": 3
+        },
+        {
+          "item": "elderberry",
+          "number": 2
+        }
+      ],
+      "effect": "curedisease",
+      "description": "Reine, heilende Kraft brennt Krankheiten aus dem Körper. Braucht Kräuter und Holunderbeeren.",
+      "castText": "Die Kraft Shal'illes brennt die Krankheit aus deinem Körper.",
+      "unnecessary": "{0} ist nicht krank."
+    },
+    {
+      "key": "resistpoison",
+      "sid": 130,
+      "name": "Gift widerstehen",
+      "icon": "irespois.bgf",
+      "school": 3,
+      "level": 2,
+      "mana": 10,
+      "chanceToIncrease": 15,
+      "targets": 1,
+      "castTime": 2000,
+      "reagents": [],
+      "effect": "resistpoison",
+      "description": "Stärkt die Abwehrkräfte und schützt vor manchen Giften.",
+      "castText": "Dein Körper kribbelt kurz, und du fühlst dich ein wenig seltsam.",
+      "offText": "Das seltsame Gefühl der Unempfindlichkeit lässt nach.",
+      "hitText": "Deine Magie stärkt {0} gegen Gift.",
+      "exertion": 5
+    },
+    {
+      "key": "freeaction",
+      "sid": 151,
+      "name": "Freie Bewegung",
+      "icon": "ifreeact.bgf",
+      "school": 3,
+      "level": 3,
+      "mana": 10,
+      "chanceToIncrease": 15,
+      "targets": 1,
+      "castTime": 2000,
+      "reagents": [
+        {
+          "item": "redmushroom",
+          "number": 1
+        },
+        {
+          "item": "purplemushroom",
+          "number": 1
+        }
+      ],
+      "effect": "freeaction",
+      "durationBase": 180,
+      "durationPerPower": 3,
+      "description": "Kraanans Liebe zum Kampf wehrt Magie ab, die deine Bewegungen hemmen will. Braucht rote und lila Pilze.",
+      "castText": "Ein Schwall von Kraft und fließender Bewegung durchströmt deinen Körper.",
+      "offText": "Das seltsame Gefühl der Freiheit lässt nach.",
+      "hitText": "Du schenkst {0} freie Bewegung.",
+      "exertion": 5
+    },
+    {
+      "key": "magicshield",
+      "sid": 12,
+      "name": "Magischer Schild",
+      "icon": "armorico.bgf",
+      "school": 3,
+      "level": 3,
+      "mana": 9,
+      "chanceToIncrease": 35,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "mushroom",
+          "number": 2
+        },
+        {
+          "item": "redmushroom",
+          "number": 1
+        }
+      ],
+      "effect": "magicshield",
+      "description": "Ruft für einige Minuten einen Schild magischer Energie, der Schläge ablenkt. Braucht Pilze und rote Pilze.",
+      "castText": "Ein schützender Schild magischer Energie bildet sich um dich.",
+      "offText": "Der magische Schild löst sich auf.",
+      "hitText": "Ein schützender Schild magischer Energie bildet sich um {0}."
+    },
+    {
+      "key": "deflect",
+      "sid": 138,
+      "name": "Ablenken",
+      "icon": "imirror.bgf",
+      "school": 3,
+      "level": 4,
+      "mana": 20,
+      "chanceToIncrease": 20,
+      "targets": 1,
+      "castTime": 3000,
+      "reagents": [
+        {
+          "item": "solagh",
+          "number": 1
+        },
+        {
+          "item": "kriipaclaw",
+          "number": 1
+        }
+      ],
+      "effect": "deflect",
+      "durationBase": 20,
+      "durationPerPower": 1,
+      "description": "Kraanans Wille bildet eine Barriere, die schädliche Angriffszauber auf ihren Wirker zurückwerfen kann. Braucht Solagh und Kriipa-Klauen.",
+      "castText": "Eine magische Barriere umgibt dich.",
+      "offText": "Die magische Barriere, die dich schützt, scheint zu schwinden.",
+      "hitText": "Du spürst, wie eine magische Barriere {0} umgibt.",
+      "exertion": 10
+    },
+    {
+      "key": "detectinvisible",
+      "sid": 123,
+      "name": "Unsichtbares sehen",
+      "icon": "idetinvi.bgf",
+      "school": 3,
+      "level": 3,
+      "mana": 15,
+      "chanceToIncrease": 15,
+      "targets": 1,
+      "castTime": 3000,
+      "reagents": [],
+      "effect": "detectinvisible",
+      "description": "Lässt dich sehen, wen andere nicht sehen können.",
+      "castText": "Deine Augen kribbeln.",
+      "offText": "Deine Sicht wird wieder gewöhnlich.",
+      "hitText": "Die Augen von {0} pulsieren kurz.",
+      "exertion": 5
+    },
+    {
+      "key": "detectevil",
+      "sid": 125,
+      "name": "Böses erkennen",
+      "icon": "idetevil.bgf",
+      "school": 1,
+      "level": 1,
+      "mana": 10,
+      "chanceToIncrease": 15,
+      "targets": 1,
+      "castTime": 3000,
+      "reagents": [
+        {
+          "item": "fairywing",
+          "number": 1
+        }
+      ],
+      "effect": "detectevil",
+      "description": "Zeigt dir die Schänder ihres Namens: alle Bösen, die verdorbener sind, als du rein bist. Braucht Feenflügel.",
+      "castText": "Du spürst die Finsternis in den Herzen um dich herum.",
+      "offText": "Deine Sicht wird wieder gewöhnlich.",
+      "hitText": "Du schenkst {0} die Gabe, Böses zu spüren.",
+      "exertion": 5
+    },
+    {
+      "key": "detectgood",
+      "sid": 124,
+      "name": "Gutes erkennen",
+      "icon": "idetgood.bgf",
+      "school": 2,
+      "level": 1,
+      "mana": 10,
+      "chanceToIncrease": 15,
+      "targets": 1,
+      "castTime": 3000,
+      "reagents": [
+        {
+          "item": "fairywing",
+          "number": 1
+        }
+      ],
+      "effect": "detectgood",
+      "description": "Zeigt dir die widerlich Reinen: alle Guten, die reiner sind, als du verdorben bist. Braucht Feenflügel.",
+      "castText": "Du spürst alles Gute, das nur darauf wartet, geschändet zu werden.",
+      "offText": "Deine Sicht wird wieder gewöhnlich.",
+      "hitText": "{0} kann nun die Reinen sehen.",
+      "exertion": 5
+    },
+    {
+      "key": "eagleeyes",
+      "sid": 162,
+      "name": "Adleraugen",
+      "icon": "ieagleye.bgf",
+      "school": 3,
+      "level": 4,
+      "mana": 5,
+      "chanceToIncrease": 20,
+      "targets": 1,
+      "castTime": 2000,
+      "reagents": [],
+      "effect": "eagleeyes",
+      "durationBase": 120,
+      "durationPerPower": 2,
+      "description": "Übernatürlich scharfe Augen: Schutz vor Blendung und bessere Treffer auf Entfernung.",
+      "castText": "Deine Augen brennen, und die Welt springt in unwirkliche Klarheit.",
+      "offText": "Die Welt wirkt irgendwie weniger deutlich und lebendig.",
+      "hitText": "Du schenkst {0} übernatürliche Sicht.",
+      "exertion": 10
+    },
+    {
+      "key": "shadowform",
+      "sid": 76,
+      "name": "Schattengestalt",
+      "icon": "ishadfrm.bgf",
+      "school": 5,
+      "level": 1,
+      "mana": 5,
+      "chanceToIncrease": 30,
+      "targets": 1,
+      "castTime": 3000,
+      "reagents": [
+        {
+          "item": "rainbowfern",
+          "number": 3
+        }
+      ],
+      "effect": "shadowform",
+      "description": "Verwandelt das Ziel in einen Schattenriss: schwerer zu treffen, je dunkler es ist. Braucht Regenbogenfarne.",
+      "castText": "Du verschmilzt mit deinem Schatten.",
+      "offText": "Du nimmst wieder deine eigenen Farben an.",
+      "hitText": "{0} verschmilzt mit dem eigenen Schatten.",
+      "exertion": 5
+    },
+    {
+      "key": "cloak",
+      "sid": 152,
+      "name": "Umhang",
+      "icon": "icloak.bgf",
+      "school": 2,
+      "level": 1,
+      "mana": 5,
+      "chanceToIncrease": 20,
+      "targets": 1,
+      "castTime": 2000,
+      "reagents": [
+        {
+          "item": "entrootberry",
+          "number": 2
+        }
+      ],
+      "effect": "cloak",
+      "durationBase": 300,
+      "durationPerPower": 33,
+      "description": "Qor hüllt deinen Astralleib in wandernde Schatten und entzieht dich magischer Ortung. Braucht Entwurzelbeeren.",
+      "castText": "Es fühlt sich an, als wäre dein Geist irgendwie undeutlich geworden.",
+      "offText": "Du fühlst dich auffälliger.",
+      "hitText": "Du legst einen magischen Umhang um {0}."
+    },
+    {
+      "key": "denial",
+      "sid": 105,
+      "name": "Verleugnung",
+      "icon": "idenial.bgf",
+      "school": 5,
+      "level": 4,
+      "mana": 15,
+      "chanceToIncrease": 20,
+      "targets": 0,
+      "castTime": 1000,
+      "reagents": [
+        {
+          "item": "firesand",
+          "number": 2
+        },
+        {
+          "item": "solagh",
+          "number": 1
+        }
+      ],
+      "effect": "denial",
+      "description": "Du redest dir deine Wunden weg – doch wenn der Schwindel endet, sind sie noch genauso tief. Braucht Feuersand und Solagh.",
+      "castText": "Deine Wunden verschwinden verdächtig.",
+      "offText": "Autsch – du wirst an deine frühere Erschöpfung erinnert.",
+      "unnecessary": "Hm, du kannst dich nicht von vollkommener Gesundheit überzeugen.",
+      "exertion": 5
+    },
+    {
+      "key": "anonymity",
+      "sid": 86,
+      "name": "Namenlosigkeit",
+      "icon": "ianonymo.bgf",
+      "school": 5,
+      "level": 1,
+      "mana": 15,
+      "chanceToIncrease": 40,
+      "targets": 0,
+      "castTime": 5000,
+      "reagents": [
+        {
+          "item": "rainbowfern",
+          "number": 2
+        },
+        {
+          "item": "firesand",
+          "number": 1
+        }
+      ],
+      "effect": "anonymity",
+      "description": "Macht dich undeutlich und für alle unkenntlich, denen du dich nicht zu erkennen gibst. Braucht Regenbogenfarne und Feuersand.",
+      "castText": "Deine Züge verblassen, und du fühlst dich undeutlich.",
+      "offText": "Du fühlst dich plötzlich wieder mehr wie du selbst.",
+      "exertion": 10
+    },
+    {
+      "key": "bait",
+      "sid": 115,
+      "name": "Köder",
+      "icon": "idistrac.bgf",
+      "school": 5,
+      "level": 2,
+      "mana": 8,
+      "chanceToIncrease": 15,
+      "targets": 0,
+      "castTime": 2000,
+      "reagents": [
+        {
+          "item": "webmoss",
+          "number": 1
+        },
+        {
+          "item": "firesand",
+          "number": 1
+        }
+      ],
+      "effect": "bait",
+      "description": "Macht dich für Monster in der Nähe überaus appetitlich. Braucht Netzmoos und Feuersand.",
+      "castText": "Ein köstlicher Duft erfüllt die Luft. Dir läuft das Wasser im Mund zusammen – bis du merkst, dass der Duft von dir ausgeht!"
+    },
+    {
+      "key": "slitherbolt",
+      "sid": 117,
+      "name": "Schlitterblitz",
+      "icon": "orcspel.bgf",
+      "school": 7,
+      "level": 5,
+      "mana": 10,
+      "chanceToIncrease": 7,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "bluemushroom",
+          "number": 2
+        },
+        {
+          "item": "orctooth",
+          "number": 1
+        }
+      ],
+      "effect": "attack",
+      "attackType": "shock",
+      "minDamage": 12,
+      "maxDamage": 19,
+      "description": "Schleudert einen über den Boden schlitternden Blitz auf das Ziel.",
+      "hitText": "Der Schlitterblitz trifft {0}!"
+    },
+    {
+      "key": "dement",
+      "sid": 64,
+      "name": "Umnachtung",
+      "icon": "idement.bgf",
+      "school": 5,
+      "level": 4,
+      "mana": 6,
+      "chanceToIncrease": 30,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "solagh",
+          "number": 2
+        },
+        {
+          "item": "uncutseraphym",
+          "number": 1
+        }
+      ],
+      "effect": "dement",
+      "description": "Schickt den Geist des Ziels in finstere, verwirrende Gedanken und erschwert ihm einige Minuten lang das Zaubern. Braucht Solagh und ungeschliffene Seraphym.",
+      "castText": "Du spürst eine unangenehme Gegenwart.",
+      "hitText": "{0} wirkt verwirrt."
+    },
+    {
+      "key": "markofdishonor",
+      "sid": 44,
+      "name": "Mal der Schande",
+      "icon": "imarkdis.bgf",
+      "school": 1,
+      "level": 4,
+      "mana": 12,
+      "chanceToIncrease": 30,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "emerald",
+          "number": 1
+        }
+      ],
+      "effect": "markofdishonor",
+      "description": "Lenkt Shal'illes Unmut auf ein Ziel. Ein gezeichnetes Monster wendet sich gegen dich. Braucht Smaragde.",
+      "castText": "Shal'ille wählt dich zur Strafe aus. Deine Lebenskraft schwindet.",
+      "hitText": "Die Augen Shal'illes richten sich auf {0}."
+    },
+    {
+      "key": "truce",
+      "sid": 26,
+      "name": "Waffenruhe",
+      "icon": "itruce.bgf",
+      "school": 1,
+      "level": 4,
+      "mana": 20,
+      "chanceToIncrease": 15,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "emerald",
+          "number": 1
+        },
+        {
+          "item": "yrxlsap",
+          "number": 1
+        }
+      ],
+      "effect": "truce",
+      "description": "Shal'ille ruft ihren Verbündeten Faren an und schließt für einige Minuten einen Waffenstillstand mit den Geschöpfen der Natur. Braucht Smaragd und Yrxl-Saft.",
+      "castText": "Eine betäubende Ruhe legt sich auf deinen Geist. Du bringst es nicht über dich, eine Waffe gegen die Natur zu erheben.",
+      "offText": "Die Ruhe weicht von deinem Geist. Du bist wieder kampfbereit.",
+      "unnecessary": "Kampf mit Monstern ist hier ohnehin unmöglich.",
+      "exertion": 10
+    },
+    {
+      "key": "heat",
+      "sid": 33,
+      "name": "Hitze",
+      "icon": "iheat.bgf",
+      "school": 4,
+      "level": 3,
+      "mana": 8,
+      "chanceToIncrease": 35,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "redmushroom",
+          "number": 1
+        },
+        {
+          "item": "firesand",
+          "number": 1
+        }
+      ],
+      "effect": "heat",
+      "description": "Farens Erdmagie erhitzt alle Rüstungen im Raum, bis sie das Fleisch ihrer Träger versengen. Braucht rote Pilze und Feuersand.",
+      "castText": "Farens Erdmagie erfüllt den Raum und bringt alle Rüstungen zum Glühen.",
+      "offText": "Das rüstungserhitzende Feld löst sich auf.",
+      "unnecessary": "Auf diesem Ort liegt bereits Hitze."
+    },
+    {
+      "key": "dispelillusion",
+      "sid": 89,
+      "name": "Illusion bannen",
+      "icon": "idispill.bgf",
+      "school": 3,
+      "level": 4,
+      "mana": 20,
+      "chanceToIncrease": 20,
+      "targets": 0,
+      "reagents": [
+        {
+          "item": "dragonflyeye",
+          "number": 1
+        },
+        {
+          "item": "uncutseraphym",
+          "number": 1
+        },
+        {
+          "item": "solagh",
+          "number": 2
+        }
+      ],
+      "effect": "dispelillusion",
+      "description": "Versucht, alle Illusionen in deiner Nähe aufzulösen – der Fluch der Riija-Schule.",
+      "castText": "Du schielst kurz, damit die Illusionen um dich herum verblassen.",
+      "exertion": 15
+    },
+    {
+      "key": "identify",
+      "sid": 80,
+      "name": "Erkennen",
+      "icon": "iidentif.bgf",
+      "school": 1,
+      "level": 3,
+      "mana": 10,
+      "chanceToIncrease": 15,
+      "targets": 0,
+      "castTime": 15000,
+      "reagents": [
+        {
+          "item": "orctooth",
+          "number": 1
+        }
+      ],
+      "effect": "identify",
+      "description": "Enthüllt die besonderen Eigenschaften deiner Gegenstände. Braucht Orkzähne.",
+      "castText": "Du konzentrierst dich auf deine Habe und siehst …",
+      "exertion": 15
+    },
+    {
+      "key": "forget",
+      "sid": 102,
+      "name": "Vergessen",
+      "icon": "iforget.bgf",
+      "school": 5,
+      "level": 2,
+      "mana": 20,
+      "chanceToIncrease": 25,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "firesand",
+          "number": 2
+        },
+        {
+          "item": "uncutseraphym",
+          "number": 2
+        }
+      ],
+      "effect": "pvp",
+      "description": "Lässt das Opfer seine eigenen Fähigkeiten vergessen. Braucht Feuersand und ungeschliffene Seraphym.",
+      "exertion": 10
+    },
+    {
+      "key": "brittle",
+      "sid": 58,
+      "name": "Spröde",
+      "icon": "ibrittle.bgf",
+      "school": 4,
+      "level": 4,
+      "mana": 8,
+      "chanceToIncrease": 20,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "mushroom",
+          "number": 3
+        },
+        {
+          "item": "purplemushroom",
+          "number": 2
+        }
+      ],
+      "effect": "pvp",
+      "description": "Lässt die Waffe des Ziels um Jahre altern, bis sie brüchig wird. Braucht Pilze und lila Pilze.",
+      "exertion": 4
+    },
+    {
+      "key": "shatter",
+      "sid": 57,
+      "name": "Zerschmettern",
+      "icon": "ishatter.bgf",
+      "school": 4,
+      "level": 5,
+      "mana": 12,
+      "chanceToIncrease": 20,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "redmushroom",
+          "number": 3
+        },
+        {
+          "item": "purplemushroom",
+          "number": 3
+        }
+      ],
+      "effect": "pvp",
+      "description": "Farens eisige Magie zerschmettert Gegenstände im Gepäck des Ziels. Braucht rote und lila Pilze.",
+      "castTime": 6000
+    },
+    {
+      "key": "swap",
+      "sid": 55,
+      "name": "Tausch",
+      "icon": "iswap.bgf",
+      "school": 2,
+      "level": 5,
+      "mana": 9,
+      "chanceToIncrease": 10,
+      "targets": 1,
+      "reagents": [
+        {
+          "item": "darkangelfeather",
+          "number": 1
+        },
+        {
+          "item": "yrxlsap",
+          "number": 1
+        },
+        {
+          "item": "purplemushroom",
+          "number": 1
+        }
+      ],
+      "effect": "pvp",
+      "description": "Tauscht zufällig einen deiner Gegenstände gegen einen des Ziels. Braucht Federn des Dunklen Engels, Yrxl-Saft und lila Pilze.",
+      "castTime": 3000
     }
   ],
   "startingSpells": [

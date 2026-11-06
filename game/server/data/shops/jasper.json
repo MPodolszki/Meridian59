@@ -151,6 +151,12 @@
           "number": 4
         }
       ]
+    },
+    "JasperElder": {
+      "spells": [
+        "dement",
+        "lightning"
+      ]
     }
   }
 }

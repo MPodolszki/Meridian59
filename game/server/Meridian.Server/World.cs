@@ -48,6 +48,8 @@ public sealed class Avatar(uint id, string name, Session session)
     public DateTime? BlindUntil { get; set; }
     public DateTime NextRingCharge { get; set; }
     public DateTime? PalsyUntil { get; set; }
+    /// <summary>Umnachtet bis (Krankheit Dementia, dement.kod).</summary>
+    public DateTime? DementedUntil { get; set; }
     /// <summary>Manafokus (focus.kod): Spruchstärke beim Wirken, solange die Trance hält.</summary>
     public int? ManaFocus { get; set; }
     public DateTime NextMana { get; set; }
@@ -717,6 +719,8 @@ public sealed partial class World
             }
         }
 
+        if (Truce(room))   // ROOM_NO_MOB_COMBAT: weder Schlag noch Spruch
+            return;
         if (m.Target is { } caster && now >= m.NextAttack && m.Kind.Casting is { } cast && now >= m.ManaBombUntil
             && TryMonsterCast(m, caster, cast, inRange, now))
             return;
@@ -846,7 +850,7 @@ public sealed partial class World
         else
             a.NextRegen = default;
 
-        if (a.State.Vigor < CombatRules.VigorRestThreshold)
+        if (a.State.Vigor < VigorRestThreshold(a))
         {
             if (a.NextRest == default)
                 a.NextRest = now + SongRegen(a.Room, "invigorate", CombatRules.RestTime);
@@ -872,6 +876,11 @@ public sealed partial class World
             if (avatar.Room.Definition.NoCombat)
             {
                 Tell(avatar, "Hier ist kein Kampf erlaubt.");   // room.kod ReqSomethingAttack
+                return;
+            }
+            if (Truce(avatar.Room))
+            {
+                Tell(avatar, "Eine betäubende Ruhe hindert dich daran, eine Waffe gegen die Natur zu erheben.");
                 return;
             }
             var m = avatar.Room.Monsters.FirstOrDefault(x => x.Id == targetId && x.Alive);

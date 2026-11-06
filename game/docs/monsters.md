@@ -24,9 +24,8 @@ verweisen darauf (`"kind": "giantrat"`). Namen und Beschreibungen sind eigene Ü
   jedes Monster mit Beute verweist auf eine vorhandene Tabelle. Ablauf wie monster.kod CreateTreasure /
   TreasureType: Anzahl 1 + Stufe/55 + Random(0, Schwierigkeit/3), höchstens 6 (MOB_ONE_TREASURE, Geist: genau 1);
   Gewichte auf 100 normiert (Rest auf den ersten Eintrag), Wurf 0..100; Geld 1 + 2 × Random(Stufe/2, 3·Stufe/2).
-  Abweichungen: Gegenstände, die es noch nicht gibt (Pfeile/Bögen, Nerudit-Waffen und -Erz, ~20 Tränke, ~10
-  Zauberstäbe/Schriftrollen, Lethargie-Ring, Jüngerrobe, Spinnenei, Schlüssel), fehlen; die übrigen Gewichte werden
-  dadurch etwas größer. Es fehlen außerdem Waffen mit Zusatzkräften (piDiff_seed/piItem_Att_chance, 24 Tabellen),
+  Abweichungen: Gegenstände, die es noch nicht gibt, fehlen (Stand siehe `python3 tools/make_treasure.py`);
+  die übrigen Gewichte werden dadurch etwas größer. Es fehlen außerdem Waffen mit Zusatzkräften (piDiff_seed/piItem_Att_chance, 24 Tabellen),
   Marken des Ratsspiels, der Siegelring für Neulinge und das Neuwürfeln unzugänglicher Spruchgegenstände.
 
 ## Noch nicht umgesetzt

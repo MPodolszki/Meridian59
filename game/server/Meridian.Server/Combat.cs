@@ -69,7 +69,7 @@ public static class CombatRules
             "slash" => (5, 11),     // WEAPON_DAMAGE_HIGH
             _ => (PlayerMinDamage, PlayerMaxDamage),
         };
-        int bonus = weapon.WeaponQuality switch { "low" => -1, "high" => 1, _ => 0 };
+        int bonus = weapon.WeaponQuality switch { "low" => -1, "high" or "nerudite" => 1, _ => 0 };
         return (min + bonus, max + bonus);
     }
 }
@@ -288,6 +288,8 @@ public sealed class Monster(uint id, MonsterKind kind, Room room, GridPos home)
     public DateTime HeldUntil { get; set; }
     public DateTime BlindUntil { get; set; }
     public DateTime PalsyUntil { get; set; }
+    /// <summary>Umnachtung (dement.kod ENCH_DEMENTIA): zaubert halb so oft.</summary>
+    public DateTime DementedUntil { get; set; }
     /// <summary>Mana zaubernder Monster (−1 = noch nicht gesetzt) und letzte Erholung.</summary>
     public int Mana { get; set; } = -1;
     public DateTime ManaTick { get; set; }

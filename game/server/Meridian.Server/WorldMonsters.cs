@@ -32,6 +32,8 @@ public sealed partial class World
     /// lossRate/1000 Lebenspunkte (nie unter 1) bis zum Ende der Dauer. Eine neue Vergiftung verstärkt die alte.</summary>
     private void Poison(Avatar a, PoisonAttack poison, DateTime now)
     {
+        if (ResistsPoison(a))
+            return;
         a.State.Vigor = Math.Max(0, a.State.Vigor - 20);
         bool fresh = !a.Poisoned;
         a.PoisonLossRate += poison.LossRate;

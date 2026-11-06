@@ -34,6 +34,9 @@
         {
           "item": "flask"
         }
+      ],
+      "spells": [
+        "heat"
       ]
     },
     "BarloqueBartender": {
@@ -152,6 +155,9 @@
           ],
           "reply": "All diese schönen Waffen, und du willst einen Streitkolben. Na schön, dann verkaufe ich dir eben einen."
         }
+      ],
+      "spells": [
+        "magicshield"
       ]
     }
   }

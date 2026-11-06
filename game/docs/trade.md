@@ -110,4 +110,28 @@ viValue_average):
 
 Zwei Ringe gleichzeitig (linke und rechte Hand). Abweichungen: Haltbarkeit (piHits) von Rüstungen, Helmen und
 Handschuhen fehlt; Ringe sind sofort erkennbar (im Original zeigen Widerstandsringe ihre Art erst später); Hitze
-in Metallrüstungen (GetHeatDamage) fehlt; viSpell_modifier der Rüstungen auf die Zauberchance fehlt.
+in Metallrüstungen (GetHeatDamage) fehlt.
+
+## Gegenstände aus den Beutetabellen (2026-11-06)
+`tools/make_misc_items.py` (danach `make_spellitems.py`, `make_treasure.py`):
+
+- **Spruchmodifikator** (item.kod GetBaseSpellModifier → spell.kod GetSpellPower): jeder benutzte Gegenstand ändert
+  die Spruchstärke. Werte aus viSpell_modifier der Klasse oder Elternklasse (Kette −15, Schuppe −20, Platte −30,
+  Nerudit −20, einfacher Helm −5, Robe +10), Waffen nach weapon.kod (Hieb −15, Stich −10, Schlag 0; niedrige
+  Qualität +5, hohe −5, Nerudit +5). Schulabhängig: Fackel Faren +10, Orkschild Shal'ille −15/Qor +15, Efeukranz
+  Shal'ille +15/Qor −15, wahre Laute Jala +10.
+- **Jüngerrobe** (robedisc.kod): Rüstung mit Abwehr +20; beim Erzeugen eine von sechs Schulen (Random(1,6)), Sprüche
+  dieser Schule + 4 × höchste gelernte Stufe (bis 20), andere + 5. Abweichung: belegt nur den Rüstungsplatz (im
+  Original auch die Beine), keine Schulfarben im Client.
+- **Neruditschwert** (neruswd.kod): Stich, Treffer + 25, Schaden + 1, Angriffsart Stich + Nerudit (nicht
+  „nicht magisch“): Trolle −80 %, Lupoggs −25 %, Dunkle Engel +75 %. Abweichung: ohne Haltbarkeit zersplittert es nie.
+- **Ring der Lethargie** (lethring.kod): verflucht – Ablegen, Fallenlassen, Anbieten scheitern und kosten
+  400 000 Anstrengung (≈ 40 Ausdauer); senkt die Erholungsschwelle um 20 (mind. 10). Nur „Fluch lösen“ nimmt ihn ab.
+- **Sonderstäbe** (specwand/*.kod): Feuerstab (4–12 Ladungen, Feuer 4–10), Vampirstab (10–18, unheilig/Blitz 2–6,
+  heilt Schaden − 1), Treffer bei Random(1,100) < Mystik + Zielen (10..90); Heilstab (5, heilt 2–10, hier auf sich
+  selbst); Stab der Erschütterung (25–35, trifft nur Spieler – ohne PvP nur die Meldung). Abweichung: Ziel ist das
+  nächste Monster (wie bei Spruchstäben), Karmaverlust des Vampirstabs fehlt.
+- Ohne Funktion (wie im Original reine Gegenstände): Erzbrocken, Neruditbrocken, Spinnenei, Schlüssel, Reliquie des
+  Qor (für das Steinkreis-Rätsel in I9, noch nicht umgesetzt), Feuersand (Reagenz).
+- 26 neue Tränke, Schriftrollen und Stäbe zu den neuen Sprüchen (docs/magic.md). Stäbe mit PvP-Sprüchen (Vergessen,
+  Spröde, Zerschmettern, Tausch) verweigert der Schutzengel.

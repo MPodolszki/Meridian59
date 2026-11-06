@@ -42,6 +42,9 @@
           ],
           "reply": "Ich habe ein paar aus ihren verrottenden Schädeln oben in den Bergen gezogen … ich bin ein kleiner Sammler."
         }
+      ],
+      "spells": [
+        "truce"
       ]
     },
     "MarionHealer": {

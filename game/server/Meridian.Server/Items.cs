@@ -22,7 +22,7 @@ public sealed record ItemKind(string Key, string Name, string Icon, int Value)
     /// <summary>Ausrüstungsplatz: "weapon", "shield" (auch Fackel), "armor", Kleidung "shirt" (ITEM_USE_SHIRT) bzw.
     /// "legs" (ITEM_USE_LEGS); null = nicht ausrüstbar.</summary>
     public string? Slot { get; init; }
-    /// <summary>Waffen (weapon.kod): "bludgeon", "thrust", "slash"; Qualität "low", "normal", "high".</summary>
+    /// <summary>Waffen (weapon.kod): "bludgeon", "thrust", "slash"; Qualität "low", "normal", "high", "nerudite".</summary>
     public string? WeaponType { get; init; }
     public string WeaponQuality { get; init; } = "normal";
     /// <summary>Waffenfertigkeit (viProficiency_needed, SKID), z. B. 452 Streitkolbenkampf.</summary>
@@ -66,6 +66,28 @@ public sealed record ItemKind(string Key, string Name, string Icon, int Value)
     public bool Invisible { get; init; }
     /// <summary>Instrument (instrum.kod viInstrument_strength): Laute 20, edle/wahre Laute 30, Jala-Halskette 5.</summary>
     public int InstrumentLevel { get; init; }
+    /// <summary>item.kod GetBaseSpellModifier: Zu-/Abschlag auf die Spruchstärke, solange benutzt (Plattenrüstung −30,
+    /// Robe +10, Waffen nach Typ/Qualität); SpellModifierSchools ersetzt ihn je Schule (Fackel: Faren +10).</summary>
+    public int SpellModifier { get; init; }
+    public IReadOnlyDictionary<int, int>? SpellModifierSchools { get; init; }
+    /// <summary>Jüngerrobe (robedisc.kod): Schule der Robe; Sprüche dieser Schule + 4 × höchste gelernte Stufe (bis 20),
+    /// andere + 5.</summary>
+    public int DiscipleSchool { get; init; }
+    /// <summary>Verflucht (IsCursed, Ring der Lethargie): lässt sich nicht ablegen, fallen lassen oder weitergeben, bis
+    /// „Fluch lösen“ ihn entfernt; jeder Versuch kostet TortureExertion Anstrengung.</summary>
+    public bool Cursed { get; init; }
+    public int TortureExertion { get; init; }
+    /// <summary>Senkt die Ausdauerschwelle, unter der man sich erholt (lethring.kod piVigorRestThresholdChange).</summary>
+    public int VigorRestDrop { get; init; }
+    public string? UseText { get; init; }
+    public string? TortureText { get; init; }
+    public string? UncurseText { get; init; }
+    /// <summary>Beim Erzeugen wird zufällig eine dieser Arten (Jüngerrobe: Schule nach Random(1, 6)).</summary>
+    public IReadOnlyList<string>? Variants { get; init; }
+    /// <summary>Sonderstab (specwand/*.kod): "fire", "heal", "vampire", "jolt"; Wirkung DamageMin..DamageMax.</summary>
+    public string? Special { get; init; }
+    public int DamageMin { get; init; }
+    public int DamageMax { get; init; }
     public int PowerMin { get; init; } = 30;
     public int PowerMax { get; init; } = 60;
     public int ChargesMin { get; init; } = 1;

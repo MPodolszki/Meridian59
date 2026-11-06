@@ -12,7 +12,7 @@ public sealed record RoomEnchantment(SpellDefinition Spell, int State, DateTime 
 public sealed partial class World
 {
     private static bool IsRoomEnchantment(SpellDefinition s) =>
-        s.Effect is "roomlight" or "roomdark" or "killingfields" or "forcesoflight" or "antimagic" or "winds";
+        s.Effect is "roomlight" or "roomdark" or "killingfields" or "forcesoflight" or "antimagic" or "winds" or "truce" or "heat";
 
     /// <summary>Lichtänderung durch Licht/Dunkelheit (AddBaseLight).</summary>
     private static int LightDelta(Room room) => room.Enchantments.Values.Sum(e => e.Spell.Effect switch
@@ -49,6 +49,8 @@ public sealed partial class World
             "killingfields" => (1, 50 + power),
             "antimagic" => (power / 2 + 25, Half(60 + power)),
             "winds" => (power / 4, 60),                           // winds.kod: Dauer immer 60 s
+            "truce" => (1, Half(20 + power)),                     // truce.kod
+            "heat" => (power, 300),                               // heat.kod HEAT_TIME
             _ => (power, 6 * (power / 3 + 1)),                    // Kräfte des Lichts
         };
         room.Enchantments[spell.Sid] = new RoomEnchantment(spell, state, DateTime.UtcNow.AddSeconds(seconds));
@@ -248,6 +250,11 @@ public sealed partial class World
         }
         if (IsRoomEnchantment(spell) && !CanEnchantRoom(a, spell))
             return;
+        if (spell.Effect == "pvp")
+        {
+            Tell(a, "Dein Schutzengel lässt nicht zu, dass du damit andere Spieler angreifst.");
+            return;
+        }
         Tell(a, item.Kind.Is("potion") ? $"Du trinkst {item.Describe()}."
             : wand ? $"Du richtest {item.Describe()} aus." : $"Du liest {item.Describe()}.");
         if (wand)

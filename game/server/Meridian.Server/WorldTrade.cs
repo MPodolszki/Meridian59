@@ -20,7 +20,40 @@ public sealed partial class World
 
     public ItemCatalog Items => _items;
 
-    private Item NewItem(ItemKind kind, int number = 1) => new(++_nextItemId, kind, number);
+    private Item NewItem(ItemKind kind, int number = 1)
+    {
+        if (kind.Variants is { Count: > 0 } variants && _items.TryGet(variants[_random.Next(variants.Count)], out var variant))
+            kind = variant;
+        return new(++_nextItemId, kind, number);
+    }
+
+    /// <summary>Verfluchter, angelegter Gegenstand (ReqLeaveOwner/ReqUnuse): bleibt, der Versuch kostet Ausdauer
+    /// (TortureOwner). true = der Gegenstand darf den Besitzer nicht verlassen.</summary>
+    private bool HeldByCurse(Avatar a, Item item)
+    {
+        if (!item.Used || !item.Kind.Cursed)
+            return false;
+        Tell(a, item.Kind.TortureText ?? $"{Capitalize(item.Describe())} lässt sich nicht lösen – ein Fluch bindet dich daran.");
+        AddExertion(a, item.Kind.TortureExertion);
+        return true;
+    }
+
+    /// <summary>Fluch lösen (RemoveCurseAllItems): alle verfluchten Gegenstände werden abgelegt; true = es gab welche.</summary>
+    private bool RemoveCurses(Avatar a)
+    {
+        var cursed = a.State.Inventory.Where(i => i.Used && i.Kind.Cursed).ToList();
+        foreach (var item in cursed)
+        {
+            UnuseLocked(a, item, quiet: true);
+            if (item.Kind.UncurseText is { } text)
+                Tell(a, text);
+        }
+        return cursed.Count > 0;
+    }
+
+    /// <summary>Ausdauerschwelle für das Erholen (player.kod piVigorRestThreshold, Ring der Lethargie senkt sie, mind. 10).</summary>
+    private static int VigorRestThreshold(Avatar a) =>
+        Math.Max(10, CombatRules.VigorRestThreshold - a.State.Inventory.Where(i => i.Used).Sum(i => i.Kind.VigorRestDrop));
 
     // ------------------------------------------------------------------ Darstellung
 
@@ -192,6 +225,11 @@ public sealed partial class World
                 UseSpellItem(avatar, item);
                 return;
             }
+            if (item.Kind.Special is not null)
+            {
+                UseSpecialWand(avatar, item);
+                return;
+            }
             if (item.Kind.Slot is not { } slot)
             {
                 Tell(avatar, $"Mit {item.Describe()} kannst du nichts anfangen.");
@@ -201,12 +239,17 @@ public sealed partial class World
                 return;
             // Zwei Ringe (linke und rechte Hand), sonst ein Gegenstand je Platz.
             var worn = avatar.State.Inventory.Where(i => i.Used && i.Kind.Slot == slot).ToList();
-            foreach (var other in slot == "ring" ? worn.Take(Math.Max(0, worn.Count - 1)) : worn)
+            var replaced = (slot == "ring" ? worn.Take(Math.Max(0, worn.Count - 1)) : worn).ToList();
+            if (replaced.Any(i => HeldByCurse(avatar, i)))
+                return;
+            foreach (var other in replaced)
                 UnuseLocked(avatar, other, quiet: false);
             if (item.Kind.ChargesMax > 1)
                 item.Charges ??= _random.Next(item.Kind.ChargesMin, item.Kind.ChargesMax + 1);
             item.Used = true;
             avatar.Session.Post(GameReplies.Use(item.Id));
+            if (item.Kind.UseText is { } useText)
+                Tell(avatar, useText);
             SendWindowOverlay(avatar, item, visible: true);
             if (item.Kind.Overlay is not null || slot is "shield" or "shirt" or "legs")
                 AppearanceChanged(avatar);
@@ -225,7 +268,7 @@ public sealed partial class World
     {
         lock (_gate)
         {
-            if (avatar.State.Find(id) is { Used: true } item)
+            if (avatar.State.Find(id) is { Used: true } item && !HeldByCurse(avatar, item))
                 UnuseLocked(avatar, item, quiet: false);
         }
     }
@@ -340,7 +383,7 @@ public sealed partial class World
         {
             foreach (var r in refs)
             {
-                if (avatar.State.Find(r.Id) is not { } item)
+                if (avatar.State.Find(r.Id) is not { } item || HeldByCurse(avatar, item))
                     continue;
                 Item dropped;
                 if (item.Kind.Number)
@@ -588,7 +631,7 @@ public sealed partial class World
             var offered = new List<(Item Source, Item Offer)>();
             foreach (var r in refs)
             {
-                if (avatar.State.Find(r.Id) is not { } item)
+                if (avatar.State.Find(r.Id) is not { } item || HeldByCurse(avatar, item))
                     return;
                 offered.Add(item.Kind.Number
                     ? (item, NewItem(item.Kind, (int)Math.Min(r.Amount ?? 1, (uint)item.Number)))
@@ -783,7 +826,7 @@ public sealed partial class World
         var list = new List<(Item Source, Item Offer)>();
         foreach (var r in refs)
         {
-            if (a.State.Find(r.Id) is not { } item || list.Any(o => o.Source == item))
+            if (a.State.Find(r.Id) is not { } item || list.Any(o => o.Source == item) || HeldByCurse(a, item))
                 return null;
             if (item.Kind.Number)
             {

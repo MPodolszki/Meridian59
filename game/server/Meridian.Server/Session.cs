@@ -496,7 +496,7 @@ public sealed class Session(int id, TcpClient client, GameServer server)
         }
         var objects = present.Select(server.World.ToRoomObject)
             .Concat(room.Npcs.Select(server.World.ToRoomObject))
-            .Concat(monsters.Select(server.World.ToRoomObject))
+            .Concat(monsters.Select(m => server.World.ToRoomObject(m, _avatar)))
             .Concat(server.World.FloorItemsIn(room, this))
             .ToList();
         PostGame(GameReplies.RoomContents(room.ObjectId, objects));

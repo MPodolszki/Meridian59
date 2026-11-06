@@ -11,10 +11,20 @@
         "vampiricdrain"
       ]
     },
+    "HunterGhost": {
+      "markup": 3,
+      "spells": [
+        "deflect"
+      ]
+    },
     "JealousGeneral": {
       "markup": 3,
       "spells": [
-        "haste"
+        "identify",
+        "dispelillusion",
+        "haste",
+        "resistpoison",
+        "freeaction"
       ],
       "skills": [
         "block"

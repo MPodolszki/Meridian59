@@ -10,7 +10,8 @@ namespace Meridian.Server;
 public sealed partial class World
 {
     private static bool IsEnchantment(SpellDefinition s) =>
-        s.Effect is "bless" or "superstrength" or "haste" or "resist" or "gort" or "resistmagic" or "karahol" or "nightvision";
+        s.Effect is "bless" or "superstrength" or "haste" or "resist" or "gort" or "resistmagic" or "karahol" or "nightvision"
+        || MoreEnchantments.Contains(s.Effect);
 
     /// <summary>CanPayCosts: auf sich selbst darf man neu wirken (CanRecastSelfEnchantment = TRUE), auf andere nicht.</summary>
     private bool CanEnchant(Avatar caster, Avatar target, SpellDefinition spell)
@@ -47,6 +48,8 @@ public sealed partial class World
             "karahol" => (40 + power / 2) * 1000,            // karahol.kod: fest
             _ => _random.Next(duration / 2, duration + 1),
         };
+        if (MoreEnchantment(target, spell, power) is { } more)
+            (state, ms) = more;
         target.State.Enchantments[spell.Sid] = new Enchantment(state, DateTime.UtcNow.AddMilliseconds(ms));
         Tell(target, spell.CastText ?? "Dein Körper kribbelt vor magischer Energie.");
         if (caster != target)
@@ -68,6 +71,7 @@ public sealed partial class World
         a.Session.Post(GameReplies.RemoveEnchantment(spell.ObjectId));
         if (spell.Effect == "nightvision")
             a.Session.Post(GameReplies.LightPlayer(PlayerLight(a)));
+        EndMoreEnchantment(a, spell, old.State);
         // karahol.kod EndEnchantment: danach gelähmt für ein Sechstel der Dauer (ohne Schutz durch freie Bewegung).
         if (spell.Effect == "karahol" && report)
             Paralyze(a, TimeSpan.FromMilliseconds((40 + old.State / 2) * 1000 / 6));
@@ -104,7 +108,7 @@ public sealed partial class World
     }
 
     /// <summary>Schirm (umbrella.kod): Abwehr + 250; Unsichtbarkeit (invis.kod): + 25 + Stärke.</summary>
-    private int DefenseBonus(Avatar a) => (EnchantState(a, "umbrella") > 0 ? 250 : 0) + EnchantState(a, "invisibility");
+    private int DefenseBonus(Avatar a) => (EnchantState(a, "umbrella") > 0 ? 250 : 0) + EnchantState(a, "invisibility") + MoreDefense(a);
 
     /// <summary>Schirm gegen Untote: Schaden − Schaden × (Stärke/20)/10, mindestens 1.</summary>
     private int UmbrellaReduce(Avatar a, MonsterKind attacker, int damage)

@@ -191,3 +191,34 @@ Lehrer: Spielmann Parrin Aragone (wandernd, docs/wanderers.md) acht Lieder; Heil
 Shal'ille, Unheilige die der Qor. Lauten gibt es auf dem Festland nur als Beute (verkauft werden sie auf Ko'catan).
 Noch nicht: Tanz (Jig), Destillieren, Mana kristallisieren; Lautstärke ohne Einfluss der Instrumentenqualität; Musik
 des Liedes im Client; Stimmung der NPCs.
+
+## Sprüche Teil 3: Schutz, Flüche, Raum (2026-11-06)
+97 Sprüche. Umgesetzt in `WorldMoreSpells.cs`, Formeln aus docs/kod/spells_catalog.json:
+
+| Spruch | Wirkung |
+|---|---|
+| Fluch lösen (Shal'ille 2) | legt alle verfluchten Gegenstände ab; ohne Fluch „keinen verfluchten Gegenstand“ |
+| Krankheit heilen (Shal'ille 3) | Random(1,100) < Stärke: Lähmung (Schwäche) und Umnachtung weg; sonst Restdauer − Stärke % (Abw.: im Original Werte zurück) |
+| Gift widerstehen (Kraanan 2) | neue Vergiftung abgewehrt bei Random(1,100) < Stärke (10..99), 450–900 s |
+| Freie Bewegung (Kraanan 3) | Zustand Stärke/2 + 5 (10..50): Festhalten ausweichen bei Random(0,100) ≤ Z × 15/100, sonst Dauer − Dauer × Z/150 |
+| Magischer Schild (Kraanan 3) | Abwehr + 50 + 2 × Stärke, (1 + (Stärke+5)/10) Minuten |
+| Ablenken (Kraanan 4) | Angriffszauber von Monstern mit Random(0,100) < Stärke × 3/4 (10..75) zurück auf den Wirker (halbe Stärke) |
+| Adleraugen (Kraanan 4) | Blendung abwehren bei Random(0,100) ≤ Z × 5/100, sonst Dauer − Dauer × Z/200 (Fernkampfbonus noch ohne Bögen) |
+| Schattengestalt (Riija 1) | Abwehr + (30 + 164 − Raumlicht), 10..150; 60 + 3 × Stärke s |
+| Böses/Gutes erkennen (Shal'ille/Qor 1) | Monster/Spieler mit Karma < −10 (bzw. > 10) und stärker als das eigene blinken (OF_FLASHING) |
+| Unsichtbares sehen, Umhang, Namenlosigkeit | Verzauberung mit Dauer wie im Original; Wirkung fehlt noch (Unsichtbare Spieler, Jagd/Séance, Namen) |
+| Verleugnung (Riija 4) | sofort volle LP; am Ende Rückzahlung Gewinn − Gewinn × ((Stärke+1)/5)/100, nie unter 1 LP |
+| Köder (Riija 2) | jedes Monster greift mit Random(1,100) < 25 + Stärke/2 (mit Ziel: /4) den Wirker an |
+| Umnachtung (Riija 4) | Monster zaubern (300 + 16 × Stärke) × 100 ms lang halb so oft |
+| Mal der Schande (Shal'ille 4) | Monster wendet sich gegen den Wirker (auf Spieler: PvP) |
+| Waffenruhe (Shal'ille 4) | Raum ohne Kampf zwischen Spielern und Monstern (auch keine Monsterzauber), Random(d/2, d), d = 20 + Stärke s |
+| Hitze (Faren 3), Illusion bannen (Kraanan 4) | treffen im Original nur PK-fähige Spieler bzw. wirken nur für PK-fähige Wirker – ohne PvP nur die Meldung |
+| Erkennen (Shal'ille 3) | zeigt Ladungen, Fluch, Spruchmodifikator und Spruch aller eigenen Gegenstände (Abw.: kein Einzelziel) |
+| Schlitterblitz (Schule 7) | Angriffszauber Blitz 12–19, nur als Stab und für Ork-Zauberer |
+| Vergessen, Spröde, Zerschmettern, Tausch | nur gegen Spieler – der Schutzengel verbietet es, bis es PvP gibt |
+
+Lehrer nach plFor_sale: General (Erkennen, Illusion bannen, Gift widerstehen, Freie Bewegung), Druidengeist
+(Ablenken), Tempel (Fluch lösen, Krankheit heilen, Böses/Gutes erkennen, Umhang, Adleraugen, Unsichtbares sehen …),
+Marion-Ältester (Waffenruhe), Jasper-Ältester (Blitz, Umnachtung), Barloque-Schmied (Magischer Schild),
+Barloque-Apotheker (Hitze). Riija-Sprüche lehrt nur der Mönch auf Ko'catan. Der Tos-Schmied fehlt noch.
+Ausrüstung ändert die Spruchstärke (docs/trade.md).

@@ -177,9 +177,30 @@ public sealed partial class World
                 break;
         }
         int power = ability / 2 + Math.Clamp(primary, 0, s.School == 6 ? 40 : 30) + Math.Clamp(secondary, 0, 10);
+        power += ItemSpellModifier(a, s);
         power += ConvergenceBonus(a.Room);
         power -= RoomEnchantState(a.Room, "antimagic");   // antimag.kod: − (Stärke/2 + 25) für jeden Spruch im Raum
         return Math.Clamp(power, MagicRules.SpellPowerMin, MagicRules.SpellPowerMax);
+    }
+
+    /// <summary>spell.kod GetSpellPower: Summe von GetSpellModifier aller benutzten Gegenstände.</summary>
+    private int ItemSpellModifier(Avatar a, SpellDefinition s)
+    {
+        int sum = 0;
+        foreach (var item in a.State.Inventory.Where(i => i.Used))
+        {
+            var k = item.Kind;
+            if (k.DiscipleSchool > 0)
+                sum += k.DiscipleSchool == s.School
+                    ? Math.Clamp(4 * a.State.Spells.Keys.Select(_spells.BySid).Where(sp => sp?.School == s.School)
+                        .Select(sp => sp!.Level).DefaultIfEmpty(0).Max(), 0, 20)
+                    : 5;
+            else if (k.SpellModifierSchools is { } bySchool)
+                sum += bySchool.GetValueOrDefault(s.School);
+            else
+                sum += k.SpellModifier;
+        }
+        return sum;
     }
 
     // ------------------------------------------------------------------ Zaubern (UserCast)

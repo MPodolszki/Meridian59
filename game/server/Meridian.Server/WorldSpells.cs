@@ -8,7 +8,7 @@ namespace Meridian.Server;
 public sealed partial class World
 {
     /// <summary>Wirkungen, die ein Monster als Ziel brauchen (gegen Spieler noch nicht: kein PvP).</summary>
-    private static readonly HashSet<string> MonsterEffects = ["attack", "drain", "hold", "blind", "dazzle", "enfeeble", "vertigo"];
+    private static readonly HashSet<string> MonsterEffects = ["attack", "drain", "hold", "blind", "dazzle", "enfeeble", "vertigo", "dement", "markofdishonor"];
     /// <summary>Schädliche Raumwirkungen; in Räumen ohne Kampf verboten (ReqSomethingAttack).</summary>
     private static readonly HashSet<string> RoomAttackEffects = ["earthquake", "finalrites", "flash", "holysymbol"];
 
@@ -26,6 +26,13 @@ public sealed partial class World
             Tell(a, "Hier ist kein Kampf erlaubt.");
             return false;
         }
+        if (MonsterEffects.Contains(e) && victim is not null && Truce(a.Room))
+        {
+            Tell(a, "Eine betäubende Ruhe hindert dich daran, gegen die Natur zu kämpfen.");
+            return false;
+        }
+        if (!MonsterEffects.Contains(e) && !CanTargetMore(a, spell, target))
+            return false;
         if (MonsterEffects.Contains(e))
         {
             if (victim is null)
@@ -39,6 +46,7 @@ public sealed partial class World
                 "hold" when now < victim.HeldUntil => "{0} wird bereits festgehalten.",
                 "blind" or "dazzle" when now < victim.BlindUntil => "{0} ist bereits geblendet.",
                 "enfeeble" or "vertigo" when now < victim.PalsyUntil => "{0} ist bereits geschwächt.",
+                "dement" when now < victim.DementedUntil => "Dieses arme Wesen ist bereits umnachtet.",
                 _ => null,
             };
             if (already is not null)
@@ -212,6 +220,9 @@ public sealed partial class World
             }
             case "holysymbol":
                 HolySymbol(a, spell, power, now);
+                break;
+            default:
+                ApplyMoreSpell(a, spell, target, victim, power);
                 break;
         }
     }

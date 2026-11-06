@@ -6,9 +6,13 @@
       "spells": [
         "minorheal",
         "holyweapon",
+        "detectevil",
         "holytouch",
+        "removecurse",
         "curepoison",
+        "curedisease",
         "rescue",
+        "markofdishonor",
         "purify",
         "forcesoflight",
         "majorheal",
@@ -36,6 +40,7 @@
         "killingfields",
         "resistmagic",
         "armorofgort",
+        "eagleeyes",
         "relay"
       ]
     },
@@ -43,12 +48,15 @@
       "markup": 3,
       "spells": [
         "darkness",
+        "detectgood",
         "acidtouch",
         "karaholscurse",
         "unholyweapon",
         "enfeeble",
         "hold",
+        "swap",
         "invisibility",
+        "cloak",
         "profaneresonance"
       ]
     },
@@ -64,8 +72,10 @@
         "touchofflame",
         "icyfingers",
         "manafocus",
+        "brittle",
         "fireball",
         "earthquake",
+        "shatter",
         "mystictouch"
       ]
     }
